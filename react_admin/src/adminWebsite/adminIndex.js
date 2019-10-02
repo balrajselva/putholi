@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Menu from './components/menu/Menu';
 import './css/adminIndex.css';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +10,8 @@ class adminIndex extends Component {
     render() {
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
+                <Header/>
+                <Menu/>
                  {/* Content Wrapper. Contains page content */}
                  <div className="content-wrapper">
                     {/* Content Header (Page header) */}
@@ -40,6 +45,8 @@ class adminIndex extends Component {
                     {/* /.content */}
                 </div>
                 {/* /.content-wrapper */}
+
+                <Footer/>
             </div>
         );
     }

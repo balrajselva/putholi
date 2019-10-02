@@ -3,6 +3,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Menu from './components/menu/Menu';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
+import './components/header/Header.css';
 import './css/adminMainPage.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -33,17 +34,13 @@ class adminAccessReview extends Component {
                 user:this.state.users[i],
                 currentUser:this.state.currentUser
             };
-            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved")
+            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser")
                 continue;
-            else if(this.state.currentUser.role==="Admin" && (this.state.users[i].role==="Admin" ||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver"|| this.state.users[i].status==="AdminReviewed" || this.state.users[i].status==="ReviewerConfirmed"))
+            else if(this.state.currentUser.role==="Admin" && (this.state.users[i].role==="Admin" || this.state.users[i].status==="AdminReviewed" || this.state.users[i].status==="ReviewerConfirmed"))
                 continue;
-            else if(this.state.currentUser.role==="Reviewer" && (this.state.users[i].status==="ReviewerConfirmed" ||this.state.users[i].role==="Admin"|| this.state.users[i].role==="Reviewer" ||this.state.users[i].role==="Approver"||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="New User")))
+            else if(this.state.currentUser.role==="Reviewer" && (this.state.users[i].status==="ReviewerConfirmed" || this.state.users[i].role==="Reviewer" ||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="New User")))
                 continue;
-            else if(this.state.currentUser.role==="Approver" && (this.state.users[i].status==="AdminReviewed" || this.state.users[i].role==="Admin"||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver" ||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="New User")))
-                continue;
-            else if(this.state.currentUser.role==="Super User" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperUserReviewed"))
-                continue;
-            else if(this.state.currentUser.role==="Super Admin" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="New User"))
+            else if(this.state.currentUser.role==="Approver" && (this.state.users[i].status==="AdminReviewed" || this.state.users[i].role==="Approver" ||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="New User")))
                 continue;
             else{
                 rows.push(<tr>
@@ -62,9 +59,10 @@ class adminAccessReview extends Component {
     }   
     render() {
         return (
-            <div>
             <div class="adminContainer" style={{fontSize:"large"}}>
                 {this.state.getUserList?this.userList():null}
+                <Header currentUser={this.state.currentUser}/>
+                <Menu currentUser={this.state.currentUser}/>
                 {/* Content Wrapper. Contains page content */}
                 <div className="content-wrapper">
                     {/* Content Header (Page header) */}
@@ -132,7 +130,8 @@ class adminAccessReview extends Component {
                         </div>
                     </section>
                 </div>
-                </div>
+                            {/* /.content */}
+                <Footer/>
             </div>
         );
     }

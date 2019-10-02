@@ -42,7 +42,4 @@ public class Quotation implements Serializable {
 	@Column(name = "requirement_id")
 	private long requirementId;
 	
-	@Column(name = "quotation_validity_date")
-	private String quotationValidityDate;
-	
 }

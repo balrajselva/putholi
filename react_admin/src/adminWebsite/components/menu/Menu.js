@@ -4,20 +4,6 @@ import { Link } from 'react-router-dom';
 
 class Menu extends Component {
     render() {
-        const accessReview={
-          pathname:"/accessreview",
-          user:this.props.currentUser
-        }
-        const adminNewSchoolReview={
-          pathname:"/adminNewSchoolReview",
-          user:this.props.currentUser,
-          ...this.props
-        }
-        const adminPendingWorkflow={
-          pathname:"/adminPendingWorkflow",
-          user:this.props.currentUser,
-          ...this.props
-        }
         return (
             <div>
             {/* Left side column. contains the logo and sidebar */}
@@ -30,7 +16,7 @@ class Menu extends Component {
                       <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
                     </div>
                     <div className="pull-left info">
-                      <p>{this.props.currentUser.firstName}</p>
+                      <p>Admin</p>
                       <a href="#"><i className="fa fa-circle text-success" /> Online</a>
                     </div>
                   </div>
@@ -48,7 +34,7 @@ class Menu extends Component {
                   {/* sidebar menu: : style can be found in sidebar.less */}
                   <ul className="sidebar-menu" data-widget="tree">
                     <li className="header">Admin Previlleges</li>
-                    <li className="active treeview">
+                    <li className="treeview">
                       <a href="">
                         <i className="fa fa-pie-chart" />
                         <span>Assignments</span>
@@ -56,10 +42,10 @@ class Menu extends Component {
                           <i className="fa fa-angle-left pull-right" />
                         </span>
                       </a>
-                      <ul className="treeview-menu ">
-                        <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
-                        <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
-                        <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
+                      <ul className="treeview-menu">
+                      <li><Link to="/adminAccessReview"><i className="fa fa-circle-o" /> Access Reviews</Link></li>
+                              <li><Link to="/adminNewSchoolReview"><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
+                              <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
                         <li><a href="newly_added_schools.html"><i className="fa fa-circle-o" /> Assign Schools to Volunteer </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Users and Roles</a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Events</a></li>
@@ -103,7 +89,7 @@ class Menu extends Component {
                         <li><a href="admin_initiate_workorder.html"><i className="fa fa-circle-o" />Initiate Workorder</a></li>
                       </ul>
                     </li>
-                    <li className="active treeview">
+                    <li className="treeview">
                       <a href="admin_initiate_workorder.html">
                         <i className="fa fa-folder" /> <span>Workflow Management</span>
                         <span className="pull-right-container">
@@ -111,7 +97,7 @@ class Menu extends Component {
                         </span>
                       </a>
                       <ul className="treeview-menu">
-                        <li><Link to={adminPendingWorkflow}><i className="fa fa-circle-o" />Pending Workflows</Link></li>
+                        <li><a href="#"><i className="fa fa-circle-o" />Pending Workflows</a></li>
                         <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li>
                       </ul>
                     </li>

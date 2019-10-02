@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Menu from './components/menu/Menu';
 import './components/header/Header.css';
 import './css/adminMainPage.css';
 import { withRouter, Link } from 'react-router-dom';
@@ -24,10 +27,6 @@ class adminRoleCheck extends Component {
           this.state.status="ReviewerConfirmed";
         else if(this.state.currentUser.role==="Approver")
           this.state.status="ApprovedUser";
-        else if(this.state.currentUser.role==="Super User")
-          this.state.status="SuperUserReviewed";
-        else if(this.state.currentUser.role==="Super Admin")
-          this.state.status="SuperAdminApproved";
       }
       else{
         if(this.state.currentUser.role==="Admin")
@@ -36,10 +35,6 @@ class adminRoleCheck extends Component {
           this.state.status="ReviewerRejected";
         else if(this.state.currentUser.role==="Approver")
           this.state.status="ApprovedRejected";
-        else if(this.state.currentUser.role==="Super User")
-          this.state.status="SuperUserRejected";
-        else if(this.state.currentUser.role==="Super Admin")
-          this.state.status="SuperAdminRejected";
       }
       axios.put("http://localhost:6060/puthuyir/updateUser/"+this.state.user.userid+"/"+this.state.status)
       .then(res=>{
@@ -63,13 +58,15 @@ class adminRoleCheck extends Component {
         let reviewButtonContent="";
         if(this.state.currentUser.role==="Admin")
           reviewButtonContent="Send for Review";
-        else if(this.state.currentUser.role==="Reviewer" || this.state.currentUser.role==="Super User")
+        else if(this.state.currentUser.role==="Reviewer")
           reviewButtonContent="Recommend to Approve";
-        else if(this.state.currentUser.role==="Approver" || this.state.currentUser.role==="Super Admin")
+        else if(this.state.currentUser.role==="Approver")
           reviewButtonContent="Approve";
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
                 {this.state.getUserList?this.userList():null}
+                <Header currentUser={this.state.currentUser}/>
+                <Menu currentUser={this.state.currentUser}/>
                 <div className="content-wrapper">
                   <section className="content-header">
                     <h1>
@@ -142,6 +139,7 @@ class adminRoleCheck extends Component {
                     </div>
                   </section>
                 </div>
+                <Footer/>
                 {this.state.spinner?<div class="spinner"></div>:null}
             </div>
         );
