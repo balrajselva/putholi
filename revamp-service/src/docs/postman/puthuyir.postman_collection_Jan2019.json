@@ -1,0 +1,1939 @@
+{
+	"info": {
+		"_postman_id": "9468e563-c311-4e7b-8d6d-cf55b980685b",
+		"name": "puthuyir",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /school",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"schoolInfo\":{  \r\n      \"schoolRegNo\":\"ABC123\",\r\n      \"schoolName\":\"Gov High School\",\r\n      \"schoolType\":\"High School\",\r\n      \"numberOfTeachers\":10,\r\n      \"numberOfStudents\":50\r\n   },\r\n   \"contacts\":{  \r\n      \"priName\":\"Kumar\",\r\n      \"priNum\":\"991234567\",\r\n      \"priEmail\":\"kumar@gmail.com\",\r\n      \"secName\":\"Saravanan\",\r\n      \"secNum\":\"991234568\",\r\n      \"secEmail\":\"sara@gmail.com\"\r\n   },\r\n   \"address\":{  \r\n      \"addressLine1\":\"12 Vivekanandar Street\",\r\n      \"addressLine2\":\"Pudhu Nagar\",\r\n      \"city\":\"chennai\",\r\n      \"district\":\"kanchipuram\",\r\n      \"locality\":\"tambaram\",\r\n      \"pinCode\":\"612345\"\r\n   },\r\n   \"proofOfIdentity\":1,\r\n   \"requirements\":[  \r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Sports\",\r\n         \"assetName\":\"Bat\",\r\n         \"quantity\":3\r\n      },\r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Infrastructure\",\r\n         \"assetName\":\"Bench\",\r\n         \"quantity\":10\r\n      }\r\n   ]\r\n}"
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST /school",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n   \"schoolInfo\":{  \r\n      \"schoolRegNo\":\"ABC123\",\r\n      \"schoolName\":\"Gov High School\",\r\n      \"schoolType\":\"High School\",\r\n      \"numberOfTeachers\":10,\r\n      \"numberOfStudents\":50\r\n   },\r\n   \"contacts\":{  \r\n      \"priName\":\"Kumar\",\r\n      \"priNum\":\"991234567\",\r\n      \"priEmail\":\"kumar@gmail.com\",\r\n      \"secName\":\"Saravanan\",\r\n      \"secNum\":\"991234568\",\r\n      \"secEmail\":\"sara@gmail.com\"\r\n   },\r\n   \"address\":{  \r\n      \"addressLine1\":\"12 Vivekanandar Street\",\r\n      \"addressLine2\":\"Pudhu Nagar\",\r\n      \"city\":\"chennai\",\r\n      \"district\":\"kanchipuram\",\r\n      \"locality\":\"tambaram\",\r\n      \"pinCode\":\"612345\"\r\n   },\r\n   \"proofOfIdentity\":1,\r\n   \"requirements\":[  \r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Sports\",\r\n         \"assetName\":\"Bat\",\r\n         \"quantity\":3\r\n      },\r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Infrastructure\",\r\n         \"assetName\":\"Bench\",\r\n         \"quantity\":10\r\n      }\r\n   ]\r\n}"
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"name": "access-control-allow-credentials",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"name": "access-control-allow-origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 12 Aug 2018 02:02:18 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "vary",
+							"value": "Origin",
+							"name": "vary",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"body": "{\"schoolId\":2,\"schoolInfo\":{\"schoolInfoId\":2,\"schoolRegNo\":\"ABC123\",\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"numberOfStudents\":50,\"numberOfTeachers\":10},\"contacts\":{\"contactsId\":2,\"priName\":\"Kumar\",\"priNum\":\"991234567\",\"priEmail\":\"kumar@gmail.com\",\"secName\":\"Saravanan\",\"secNum\":\"991234568\",\"secEmail\":\"sara@gmail.com\"},\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\",\"pinCode\":\"612345\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":3,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1534039338861},{\"requirementId\":4,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1534039338865}],\"dateAdded\":1534039338848,\"status\":\"REGISTERED\"}"
+				}
+			]
+		},
+		{
+			"name": "POST /user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"address\": {\r\n    \"addressLine1\": \"10 Vivekanandar Street\",\r\n    \"addressLine2\": \"Pudhu Nagar\",\r\n    \"city\": \"puzhal\",\r\n    \"district\": \"tiruvallur\"\r\n  },\r\n  \t \"identityProof\": 1,\r\n  \"firstName\": \"Kumar\",\r\n  \"lastName\": \"Arunachalam\",\r\n  \"emailAddress\": \"kumar@gmail.com\",\r\n\t\"phoneNumber\":\"991234566\",\r\n\t\"roleId\":\"beneficiary\",\r\n\t\"status\":\"REGISTERED\"\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/user",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"user"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST /user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n  \"address\": {\r\n    \"addressLine1\": \"10 Vivekanandar Street\",\r\n    \"addressLine2\": \"Pudhu Nagar\",\r\n    \"city\": \"puzhal\",\r\n    \"district\": \"tiruvallur\"\r\n  },\r\n  \t \"identityProof\": 1,\r\n  \"firstName\": \"Kumar\",\r\n  \"lastName\": \"Arunachalam\",\r\n  \"emailAddress\": \"kumar@gmail.com\",\r\n\t\"phoneNumber\":\"991234566\",\r\n\t\"roleId\":\"beneficiary\",\r\n\t\"status\":\"REGISTERED\"\r\n  \r\n}"
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/user",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"user"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"name": "access-control-allow-credentials",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"name": "access-control-allow-origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Mon, 06 Aug 2018 00:44:24 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "vary",
+							"value": "Origin",
+							"name": "vary",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"body": "{\"userid\":1,\"firstName\":\"Kumar\",\"lastName\":\"Arunachalam\",\"phoneNumber\":\"991234566\",\"emailAddress\":\"kumar@gmail.com\",\"address\":{\"addressId\":5,\"addressLine1\":\"10 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"identityProof\":1,\"roleId\":\"beneficiary\",\"status\":\"REGISTERED\",\"dateCreated\":1533516264236}"
+				}
+			]
+		},
+		{
+			"name": "POST /image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileUpload",
+							"type": "file",
+							"src": null
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/image",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"image"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST /image",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileUpload",
+									"type": "file",
+									"src": null
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/image",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"image"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"name": "access-control-allow-credentials",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"name": "access-control-allow-origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:05:55 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"key": "vary",
+							"value": "Origin",
+							"name": "vary",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"body": "{\"imageId\":2,\"image\":null}"
+				}
+			]
+		},
+		{
+			"name": "GET /school/{id}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school/2",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /school/name/{contains}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school/name/hi",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school",
+						"name",
+						"hi"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /school/name/{contains}",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school/name/hi",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school",
+								"name",
+								"hi"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Mon, 06 Aug 2018 00:45:42 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516175000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516175000}],\"dateAdded\":1533516175000,\"status\":\"REGISTERED\"},{\"schoolId\":3,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":3,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":3,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516177000},{\"requirementId\":4,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516177000}],\"dateAdded\":1533516177000,\"status\":\"REGISTERED\"},{\"schoolId\":4,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":4,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":5,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516185000},{\"requirementId\":6,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516185000}],\"dateAdded\":1533516185000,\"status\":\"REGISTERED\"}]"
+				},
+				{
+					"name": "GET /school/{id}",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school/2",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:59:36 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}"
+				}
+			]
+		},
+		{
+			"name": "GET /school/city/{cityid}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school/city/chennai",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school",
+						"city",
+						"chennai"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /school/city/{cityid}",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school/city/chennai",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school",
+								"city",
+								"chennai"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:59:47 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school/district/{districtId}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school/district/kanchipuram",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school",
+						"district",
+						"kanchipuram"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /school/district/{districtId}",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school/district/kanchipuram",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school",
+								"district",
+								"kanchipuram"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 23:00:23 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school/locality/{localityId}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school/locality/tambaram",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school",
+						"locality",
+						"tambaram"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /school/locality/{localityId}",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school/locality/tambaram",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school",
+								"locality",
+								"tambaram"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 23:41:30 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/school",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"school"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /school",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/school",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"school"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:05 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"tiruvallur\",\"city\":\"puzhal\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533506623000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":10,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"new\",\"assetType\":\"sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533506646000},{\"requirementId\":2,\"reqType\":\"new\",\"assetType\":\"infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533506646000}],\"dateAdded\":1533506646000,\"status\":\"REGISTERED\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/state",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/state",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"lookup",
+						"field",
+						"state"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/state",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/state",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"lookup",
+								"field",
+								"state"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:15 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"state\",\"key\":\"TN\",\"value\":\"Tamil Nadu\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/district by state",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/district?parentfield=state&parentkey=TN",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"district"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "state"
+						},
+						{
+							"key": "parentkey",
+							"value": "TN"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/district by state",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/district?parentfield=state&parentkey=TN",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"district"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "state"
+								},
+								{
+									"key": "parentkey",
+									"value": "TN"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:23 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"district\",\"key\":\"kanchipuram\",\"value\":\"Kanchipuram\",\"parentField\":\"state\",\"parentKey\":\"TN\"},{\"field\":\"district\",\"key\":\"tiruvallur\",\"value\":\"Tiruvallur\",\"parentField\":\"state\",\"parentKey\":\"TN\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/city",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/city",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"lookup",
+						"field",
+						"city"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/city",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/city",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"lookup",
+								"field",
+								"city"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:30 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"city\",\"key\":\"ennore\",\"value\":\"Ennore\",\"parentField\":\"district\",\"parentKey\":\"tiruvallur\"},{\"field\":\"city\",\"key\":\"padappai\",\"value\":\"Padappai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"puzhal\",\"value\":\"Puzhal\",\"parentField\":\"district\",\"parentKey\":\"tiruvallur\"},{\"field\":\"city\",\"key\":\"vallakottai\",\"value\":\"Vallakottai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/city by district",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/city?parentfield=district&parentkey=kanchipuram",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"city"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "district"
+						},
+						{
+							"key": "parentkey",
+							"value": "kanchipuram"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/city by district",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/city?parentfield=district&parentkey=kanchipuram",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"city"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "district"
+								},
+								{
+									"key": "parentkey",
+									"value": "kanchipuram"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:55:10 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"city\",\"key\":\"chennai\",\"value\":\"Chennai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"padappai\",\"value\":\"Padappai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"vallakottai\",\"value\":\"Vallakottai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/locality by city",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/locality?parentfield=city&parentkey=chennai",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"locality"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "city"
+						},
+						{
+							"key": "parentkey",
+							"value": "chennai"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/locality by city",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/locality?parentfield=city&parentkey=chennai",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"locality"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "city"
+								},
+								{
+									"key": "parentkey",
+									"value": "chennai"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:56:14 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"locality\",\"key\":\"pallavaram\",\"value\":\"Pallavaram\",\"parentField\":\"city\",\"parentKey\":\"chennai\"},{\"field\":\"locality\",\"key\":\"sholinganallur\",\"value\":\"Sholinganallur\",\"parentField\":\"city\",\"parentKey\":\"chennai\"},{\"field\":\"locality\",\"key\":\"tambaram\",\"value\":\"Tambaram\",\"parentField\":\"city\",\"parentKey\":\"chennai\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/reqtype",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/reqtype",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"lookup",
+						"field",
+						"reqtype"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/reqtype",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/reqtype",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"lookup",
+								"field",
+								"reqtype"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:48 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"reqtype\",\"key\":\"maintenance\",\"value\":\"Maintenance\",\"parentField\":null,\"parentKey\":null},{\"field\":\"reqtype\",\"key\":\"new\",\"value\":\"New Requirement\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/assettype",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/assettype",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"lookup",
+						"field",
+						"assettype"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/assettype",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/assettype",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"lookup",
+								"field",
+								"assettype"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:56 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"assettype\",\"key\":\"infrastructure\",\"value\":\"Infrastructure\",\"parentField\":null,\"parentKey\":null},{\"field\":\"assettype\",\"key\":\"others\",\"value\":\"Others\",\"parentField\":null,\"parentKey\":null},{\"field\":\"assettype\",\"key\":\"sports\",\"value\":\"Sports\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/asset by assettype",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/asset?parentfield=assettype&parentkey=Sports",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"asset"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "assettype"
+						},
+						{
+							"key": "parentkey",
+							"value": "Sports"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /lookup/field/asset by assettype",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/lookup/field/asset?parentfield=assettype&parentkey=Sports",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"asset"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "assettype"
+								},
+								{
+									"key": "parentkey",
+									"value": "Sports"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:08:02 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"field\":\"asset\",\"key\":\"football\",\"value\":\"Football\",\"parentField\":\"assettype\",\"parentKey\":\"sports\"},{\"field\":\"asset\",\"key\":\"other_sports\",\"value\":\"Others\",\"parentField\":\"assettype\",\"parentKey\":\"sports\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/schooltype",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/lookup/field/schooltype",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"lookup",
+						"field",
+						"schooltype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /roles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/roles",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"roles"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /roles",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:6060/puthuyir/roles",
+							"host": [
+								"localhost"
+							],
+							"port": "6060",
+							"path": [
+								"puthuyir",
+								"roles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"name": "content-type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:08:12 GMT",
+							"name": "date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"name": "server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"name": "transfer-encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"body": "[{\"roleId\":\"admin\",\"roleName\":\"Admin /Super user\",\"accessLevel\":\"\"},{\"roleId\":\"approver\",\"roleName\":\"Approver\",\"accessLevel\":\"\"},{\"roleId\":\"beneficiary\",\"roleName\":\"Beneficiary\",\"accessLevel\":\"\"},{\"roleId\":\"sponsor\",\"roleName\":\"Sponsor\",\"accessLevel\":\"\"},{\"roleId\":\"volunteer\",\"roleName\":\"Volunteer\",\"accessLevel\":\"\"}]"
+				}
+			]
+		},
+		{
+			"name": "getQuotations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/quotations",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"quotations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "geQuotation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/quotation/1",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"quotation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setQuotation",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"collectedBy\": \"test000\",\n    \"imageId\": 1,\n    \"isQuotationActive\": \"Y\",\n    \"phone\": \"7324207001\",\n    \"quotatedAmount\": 1000,\n    \"quotationDate\": \"2018-12-11T12:17:42.000+0000\",\n    \"quotationStatus\": \"new\",\n    \"quotationValidityDate\": \"2018-12-11T12:17:42.000+0000\",\n    \"reviewer\": \"test6\",\n    \"traderName\": \"test6\",\n    \"verifiedBy\": \"test6\",\n    \"addressId\": \"3\",\n    \"requirementId\": \"2\",\n    \"schoolId\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/quotation",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"quotation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotationStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/quotation?quotationStatus=new",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"quotation"
+					],
+					"query": [
+						{
+							"key": "quotationStatus",
+							"value": "new"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "quotationsBySchool",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:6060/puthuyir/2/quotations",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"puthuyir",
+						"2",
+						"quotations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

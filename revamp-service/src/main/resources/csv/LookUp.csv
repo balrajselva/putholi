@@ -1,0 +1,36 @@
+Id,Name,Field,Key,Value,ParentField,ParentKey
+1,BATHROOM,asset,bathroom,Bathroom,assettype,infrastructure
+2,FOOTBALL,asset,football,Football,assettype,sports
+3,OTHERS_INFRA,asset,other_infra,OthersInfra,assettype,infrastructure
+4,OTHERS_SPORTS,asset,other_sports,OthersSports,assettype,sports
+5,ASSET_OTHERS,asset,others,Others,assettype,others
+6,INFRASTRUCTURE,assettype,infrastructure,Infrastructure,null,null
+7,ASSERTTYPE_OTHERS,assettype,others,Others,null,null
+8,SPORTS,assettype,sports,Sports,null,null
+9,CHENNAI,city,chennai,Chennai,district,kanchipuram
+10,ENNORE,city,ennore,Ennore,district,tiruvallur
+11,PADAPPAI,city,padappai,Padappai,district,kanchipuram
+12,PUZHAL,city,puzhal,Puzhal,district,tiruvallur
+13,VELLAKOTTAI,city,vallakottai,Vallakottai,district,kanchipuram
+14,KANCHIPURAM,district,kanchipuram,Kanchipuram,state,TN
+15,TIRUVALLUR,district,tiruvallur,Tiruvallur,state,TN
+16,PALLAVARAM,locality,pallavaram,Pallavaram,city,chennai
+17,SHOLINGANALLUR,locality,sholinganallur,Sholinganallur,city,chennai
+18,TAMBARAM,locality,tambaram,Tambaram,city,chennai
+19,MAINTENANCE,reqtype,maintenance,Maintenance,null,null
+20,NEW_REQ,reqtype,new,New Requirement,null,null
+21,HIGHER_SEC_SCHOOL,schooltype,highersecondary,Higher Secondary School,null,null
+22,MIDDLE_SCHOOL,schooltype,middle,Middle School,null,null
+23,NURSERY,schooltype,nursery,Nursery,null,null
+24,PRIMART,schooltype,primary,Primary,null,null
+25,SECONDARY_SCHOOL,schooltype,secondary,Secondary School,null,null
+26,TAMILNADU,state,TN,Tamil Nadu,null,null
+27,SCHOOL_REGISTERED,projectstatus,schoolRegistered,SchoolRegistered,null,null
+28,PROJECT_CREATED,projectstatus,projectCreated,ProjectCreated,null,null
+29,PROJECT_COMPLETED,projectstatus,projectCompleted,ProjectCompleted,null,null
+30,PROJECT_CANCELLED,projectstatus,projectCancelled,ProjectCancelled,null,null
+31,REQ_ADDED,projectstatus,reqAdded,ReqAdded,null,null
+32,REQ_VIEWED,projectstatus,reqViewed,ReqViewed,null,null
+33,REQ_MODIFIED,projectstatus,reqModified,ReqModified,null,null
+34,REQ_CONFIRMED,projectstatus,reqConfirmed,ReqConfirmed,null,null
+35,REQ_FULFILLED,projectstatus,reqFulfilled,ReqFullFilled,null,null
