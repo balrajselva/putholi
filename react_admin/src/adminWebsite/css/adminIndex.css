@@ -1,0 +1,9 @@
+.content-wrapper{
+    margin-left: 270px;
+}
+@media (max-width: 767px){
+.content-wrapper {
+    margin-left: 0;
+}
+}
+
