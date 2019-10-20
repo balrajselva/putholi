@@ -74,7 +74,7 @@ public class School extends AuditableEntity implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
-	@Column(name = "status")
+	@Column(name = "school_status")
 	@Enumerated(EnumType.STRING)
 	private PuthuyirLookUp status;
 
@@ -88,9 +88,6 @@ public class School extends AuditableEntity implements java.io.Serializable {
 
 	@Transient
 	private List<Requirement> requirements;
-
-	@Column(name = "project_id")
-	private long project_id;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "school", cascade = CascadeType.ALL)
 	@JsonIgnore

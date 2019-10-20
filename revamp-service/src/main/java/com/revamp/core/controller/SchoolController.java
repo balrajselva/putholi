@@ -56,11 +56,16 @@ public class SchoolController {
 			HttpServletRequest request) {
 
 		try {
-			Map<String, byte[]> filesInBytes = WebUtilities
-					.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+			System.out.println("..regFormModel.getPayload().."+regFormModel.getPayload());
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
-			long id = schoolService.save(school, filesInBytes,imgPath);
-		} catch (IOException ex) {
+			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+				Map<String, byte[]> filesInBytes = WebUtilities
+						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+				long id = schoolService.save(school, filesInBytes,imgPath);
+			} else {
+				long id = schoolService.save(school, null, imgPath);
+			}
+					} catch (IOException ex) {
 			ex.printStackTrace();
 			return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}

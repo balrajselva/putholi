@@ -1,9 +1,5 @@
 package com.revamp.core.model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -15,10 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.revamp.core.lookup.PuthuyirLookUp;
-
-import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

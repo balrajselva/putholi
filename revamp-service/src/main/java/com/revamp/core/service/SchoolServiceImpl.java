@@ -40,12 +40,14 @@ public class SchoolServiceImpl implements SchoolService {
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
-		files.forEach((k,v) -> {
-			String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
-			SchoolImage si = new SchoolImage(filePath+k,v,school.getProofOfId().getComments());
-			si.setSchool(school);
-			school.getSchoolImages().add(si);
-		});
+		if (files != null && files.size() > 0) {
+			files.forEach((k,v) -> {
+				String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
+				SchoolImage si = new SchoolImage(filePath+k,v,school.getProofOfId().getComments());
+				si.setSchool(school);
+				school.getSchoolImages().add(si);
+			});
+		}
 		
 		Set<Project> project = new HashSet<Project>();
 		project.add(this.createDefaultProject(school));
@@ -55,8 +57,9 @@ public class SchoolServiceImpl implements SchoolService {
 		this.setUser(school);
 		
 		schoolRepository.save(school);
-		
-		this.saveImgToFS(imgPath,fileSubPath,school.getSchoolImages());
+		if (files != null && files.size() > 0) {
+			this.saveImgToFS(imgPath,fileSubPath,school.getSchoolImages());
+		}
 		return school.getSchoolId();
 	}
 	
