@@ -1,16 +1,7 @@
 package com.revamp.core.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -62,23 +53,20 @@ public class User  extends AuditableEntity{
 	@Column(name = "phonenumber")
 	private String phoneNumber;
 
-	@Column(name = "emailaddress")
-	@Getter(AccessLevel.PUBLIC) 
-	@Setter(AccessLevel.PUBLIC)
+	@Column(name = "emailaddress",unique = true)
+	@Email
 	private String emailAddress;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
-	private Address address;
 
 	@Column(name = "status")
 	private String status;
 
 	@Column(name = "password")
 	private String password;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "proof_id")
-	private IdentityProof proof;
+	private IdentityProof identityProof;
 	
 }

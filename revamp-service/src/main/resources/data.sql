@@ -268,7 +268,7 @@ null,
 null);
 
 
-/* quotation insert */
+/* quotation insert
 INSERT INTO `revamp_db`.`quotation`
 (`quotation_id`,
 `image_id`,
@@ -295,7 +295,7 @@ VALUES
 '1', '1', '100', '1', 'test', '1', NULL, NULL, NULL, NULL, NULL, '2018-12-26 23:13:34', '2018-12-26 23:13:34', '1', '1', NULL, NULL, NULL, NULL, NULL);
 
 
-
+*/
 
 
 

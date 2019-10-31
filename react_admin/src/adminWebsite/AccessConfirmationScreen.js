@@ -7,8 +7,6 @@ class AccessConfirmationScreen extends Component {
     render() {
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
-                <Header/>
-                <Menu/>
                 <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <section className="content-header">
@@ -78,8 +76,6 @@ class AccessConfirmationScreen extends Component {
                 </section>
                 {/* /.content */}
                 </div>
-
-                <Footer/>
             </div>
         );
     }
