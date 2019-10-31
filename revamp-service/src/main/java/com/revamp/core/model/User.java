@@ -35,7 +35,7 @@ public class User  extends AuditableEntity{
 	@Column(name = "lastname")
 	private String lastName;
 	
-	/*@Column(name="gender")
+	@Column(name="gender")
 	private String gender;
 	
 	@Column(name="sponsorname")
@@ -43,13 +43,13 @@ public class User  extends AuditableEntity{
 	
 	@Column(name="sponsormail")
 	private String sponsorEmail;
-	*/
+	
 	@Column(name = "role")
 	private String role;
 	
-	/*@Column(name = "comments")
+	@Column(name = "comments")
 	private String comments;
-*/
+
 	@Column(name = "phonenumber")
 	private String phoneNumber;
 
@@ -57,27 +57,16 @@ public class User  extends AuditableEntity{
 	@Email
 	private String emailAddress;
 
-
-	/*@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
-	private Address address;
-*/
 	@Column(name = "status")
 	private String status;
 
 	@Column(name = "password")
 	private String password;
 
-	/*@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
-	*/
-
-	/*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "proof_id")
-	private IdentityProof proof;
-	*/
-
-/*	@OneToOne(cascade = CascadeType.ALL)
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	private IdentityProof identityProof;
-	*/
+	
 }

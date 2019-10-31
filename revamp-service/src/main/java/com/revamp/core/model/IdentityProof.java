@@ -28,10 +28,9 @@ public class IdentityProof extends AuditableEntity implements java.io.Serializab
 	private long userid;
 	
 	@Column(name="identity_proof")
-	private BigInteger proof;
-	
-	/*@OneToOne(mappedBy = "proof")
-	private User user;*/
+	private BigInteger identityProof;
 
-
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private User user;
 }

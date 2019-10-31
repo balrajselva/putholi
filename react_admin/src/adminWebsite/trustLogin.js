@@ -34,7 +34,7 @@ class trustLogin extends Component {
               user : res.data
             });
           }
-          else if(res.data!=="" && (res.data.role==="Admin" ||res.data.role==="Approver" ||res.data.role==="Reviewer") && res.data.status==="ApprovedUser"){
+          else if(res.data!=="" && (res.data.role==="Admin" ||res.data.role==="Approver" ||res.data.role==="Reviewer" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/accessReview',
               user: res.data 
@@ -47,11 +47,12 @@ class trustLogin extends Component {
             });
           }
           else{
-          document.getElementById("password").style.borderColor="red";
-          this.setState({errorMessage:"Please enter valid password"})
-          this.refs.submit_btn.removeAttribute("disabled");
-          this.setState({spinner:false});
-        }
+            document.getElementById("password").style.borderColor="red";
+            this.setState({
+              errorMessage:"Please enter valid password",
+              spinner:false})
+            this.refs.submit_btn.removeAttribute("disabled");
+          }
       })
     }
     else{
