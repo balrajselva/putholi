@@ -56,6 +56,7 @@ public class School extends AuditableEntity implements java.io.Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_info_id")
+	@JsonProperty("schoolInfo")
 	private SchoolInfo schoolInfo;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -82,10 +83,10 @@ public class School extends AuditableEntity implements java.io.Serializable {
 	@Transient
 	private ProofOfId proofOfId;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	/*@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-
+*/
 	@Transient
 	private List<Requirement> requirements;
 

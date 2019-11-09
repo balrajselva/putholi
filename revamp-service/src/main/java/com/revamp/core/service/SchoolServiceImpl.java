@@ -54,7 +54,7 @@ public class SchoolServiceImpl implements SchoolService {
 		school.setProjects(project);
 		
 		//set user to the Requirement.
-		this.setUser(school);
+		//this.setUser(school);
 		
 		schoolRepository.save(school);
 		if (files != null && files.size() > 0) {
@@ -63,16 +63,25 @@ public class SchoolServiceImpl implements SchoolService {
 		return school.getSchoolId();
 	}
 	
-	private void setUser(School school) {
-		//TODO: currently cd it is hard coded to User ID 2.
-		User beneUser = this.userRepository.findById((long) 2).orElse(null);
-	
-		school.setUser(beneUser);
-		school.getRequirements().forEach(req -> {
-			req.setUser(beneUser);
-			req.setStatus(PuthuyirLookUp.REQ_ADDED);
-		});
+	@Transactional
+	public long save(final School school) {
+		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
+		Set<Project> project = new HashSet<Project>();
+		project.add(this.createDefaultProject(school));
+		school.setProjects(project);
+		//set user to the Requirement.
+		//this.setUser(school);
+		schoolRepository.save(school);
+		return school.getSchoolId();
 	}
+	
+	/*
+	 * private void setUser(School school) { //TODO: currently cd it is hard coded
+	 * to User ID 2. User beneUser = this.userRepository.findById((long)
+	 * 2).orElse(null); school.setUser(beneUser);
+	 * school.getRequirements().forEach(req -> { req.setUser(beneUser);
+	 * req.setStatus(PuthuyirLookUp.REQ_ADDED); }); }
+	 */
 	
 	private Project createDefaultProject(School school) {
 		Project project = new Project();
@@ -133,10 +142,10 @@ public class SchoolServiceImpl implements SchoolService {
 		return schoolRepository.findByAddressLocality(localityId);
 	}
 	
-	@Override
-	public List<School> getByUserId(long userId) {
-		return schoolRepository.getByUserId(userId);
-	}
+	/*
+	 * @Override public List<School> getByUserId(long userId) { return
+	 * schoolRepository.getByUserId(userId); }
+	 */
 
 	@Override
 	public School get(long id) {

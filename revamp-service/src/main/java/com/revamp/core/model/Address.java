@@ -1,11 +1,14 @@
 package com.revamp.core.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
@@ -28,8 +31,13 @@ public class Address extends AuditableEntity implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+
+	@Column(name = "address_id")
 	private long id;
+
+	/*
+	 * @Column(name = "userid",nullable =false) private long userid;
+	 */
 
 	@Column(name = "address_line_1")
 	private String addressLine1;
@@ -54,5 +62,8 @@ public class Address extends AuditableEntity implements java.io.Serializable {
 
 	@Column(name="country")
 	private String country;
-	
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private User user;
 }

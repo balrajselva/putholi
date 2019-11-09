@@ -16,9 +16,10 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
 
 	public List<School> findByAddressLocality(@Param("locality") String locality);
 
-	@Query("FROM School s where s.user.userid = :userId")
-	public List<School> getByUserId(@Param("userId") long userId);
-
-	@Query("FROM School s where s.user.userid = :userId")
-	public List<School> getByStatus(@Param("userId") long userId);
+	/*
+	 * @Query("FROM School s where s.user.userid = :userId") public List<School>
+	 * getByUserId(@Param("userId") long userId);
+	 */
+	/*@Query("FROM School s where s.user.userid = :userId")
+	public List<School> getByStatus(@Param("userId") long userId);*/
 }

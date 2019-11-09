@@ -51,7 +51,7 @@ public class SchoolController {
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/school")
+	/*@PostMapping("/school")
 	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute SchoolRegFormModel regFormModel,
 			HttpServletRequest request) {
 
@@ -71,8 +71,16 @@ public class SchoolController {
 		}
 		return new ResponseEntity("Successfully uploaded!", HttpStatus.OK);
 
-	}
+	}*/
 
+	 @PostMapping("/school")
+	 public ResponseEntity<?> registerSchool(@RequestBody School school,
+				HttpServletRequest request) {
+		System.out.println("..school..."+school); 
+		long id = schoolService.save(school, null, imgPath);
+		return new ResponseEntity("Successfully uploaded!", HttpStatus.OK);
+	 }
+	 
 
 	/**
 	 * 
@@ -91,11 +99,11 @@ public class SchoolController {
 	 * @param schoolId
 	 * @return
 	 */
-	@GetMapping("/school/user/{id}")
-	public ResponseEntity<List<School>> getSchoolByUserId(@PathVariable("id") long userId) {
-		List<School> list = schoolService.getByUserId(userId);
-		return ResponseEntity.ok().body(list);
-	}
+	/*
+	 * @GetMapping("/school/user/{id}") public ResponseEntity<List<School>>
+	 * getSchoolByUserId(@PathVariable("id") long userId) { List<School> list =
+	 * schoolService.getByUserId(userId); return ResponseEntity.ok().body(list); }
+	 */
 
 	
 	/**
