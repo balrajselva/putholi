@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
-import Menu from './components/menu/Menu';
+import React, { Component } from 'react'
 
-class AccessRejectionScreen extends Component {
+export default class adminSchoolCheck extends Component {
     render() {
         return (
-            <div class="adminContainer" style={{fontSize:"large"}}>
-                <div className="content-wrapper">
+            <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <h1>
-                    Access Request's Rejection Screen
-                    <small>Requested on</small>
+                    Cuddalore Boys School
+                    <small>added on</small>
                     </h1>
                     <ol className="breadcrumb">
-                    <li><a href="../../admin_main_screen.html"><i className="fa fa-dashboard" /> Home</a></li>
+                    <li><a href="../../index.html"><i className="fa fa-dashboard" /> Home</a></li>
                     </ol>
                 </section>
                 {/* Main content */}
@@ -37,19 +33,43 @@ class AccessRejectionScreen extends Component {
                             <i className="fa fa-envelope bg-blue" />
                             <div className="timeline-item">
                             <span className="time"><i className="fa fa-clock-o" /> 12:05</span>
-                            <h3 className="timeline-header"><a href="#">Access Request for Jagan </a> as "Volunteer" is complete</h3>
+                            <h3 className="timeline-header"><a href="#">Requirements</a> listed below</h3>
                             <div className="timeline-body">
                                 <div className="box-body">
-                                <h4>User will receive an email with the reason for access rejection.</h4>
-                                Based on the reason, user can submit additional details to get the appropriate access. Please check your email for more details. 
-                                </div></div></div></li>
+                                <ul>
+                                    <li>100 Chairs &amp; Tables</li>
+                                    <li>3 Digital Boards</li>
+                                    <li>2 Toilets</li>
+                                </ul>
+                                <h3>Address of the School</h3>
+                                Cuddalore Boys School
+                                24, Nethaji Street
+                                Cuddalore -1
+                                Contact number - 093445 43223
+                                </div>
+                            </div>
+                            <div className="timeline-footer">
+                                <a className="btn btn-default">Click to view School Pictures</a>
+                                <a href="beneficiary_edit_project_link.html" className="btn btn-danger btn-xs">Return to Beneficiary</a>
+                                <a href="../../newly_added_schools.html" className="btn btn-primary btn-xs">Confirm Requirements</a>
+                                <a href="../../newly_added_schools.html" className="btn btn-primary btn-xs">Back to School List</a>
+                            </div>
+                            </div>
+                        </li>
                         {/* END timeline item */}
                         {/* timeline item */}
                         <li>
                             <i className="fa fa-user bg-aqua" />
                             <div className="timeline-item">
                             <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
-                            <h3 className="timeline-header no-border">User Access Request is rejected and the details sent by email on 10-10-2018</h3>
+                            <h3 className="timeline-header no-border">Beneficiary to resubmit the requirements</h3>
+                            </div>
+                        </li>
+                        <li>
+                            <i className="fa fa-user bg-aqua" />
+                            <div className="timeline-item">
+                            <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
+                            <h3 className="timeline-header no-border"><a href="#">Admin History - </a> Initial Check complete</h3>
                             </div>
                         </li>
                         {/* END timeline item */}
@@ -75,9 +95,7 @@ class AccessRejectionScreen extends Component {
                 </section>
                 {/* /.content */}
                 </div>
-            </div>
-        );
+
+        )
     }
 }
-
-export default AccessRejectionScreen;

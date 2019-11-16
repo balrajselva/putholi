@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
-import Menu from './components/menu/Menu';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
 import './components/header/Header.css';
 import './css/adminMainPage.css';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 class adminNewSchoolReview extends Component {
+    state={
+        getSchools:true,
+        schools:null
+    }
+    getSchools=()=>{
+        Axios.get("http://localhost:6060/puthuyir/school")
+        .then(res=>{
+            console.log(res.data)
+        })
+        this.setState({getSchools:false})
+    }
     render() {
+        const newTo = { 
+            pathname: "/adminSchoolCheck", 
+            currentUser:this.props.currentUser,
+            user:this.props.currentUser,
+            ...this.props
+        };
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
-                <Header />
-                <Menu />
+                {this.state.getSchools?this.getSchools():null}
                 {/* Content Wrapper. Contains page content */}
                 <div className="content-wrapper">
                     {/* Content Header (Page header) */}
@@ -30,13 +44,11 @@ class adminNewSchoolReview extends Component {
                     <section className="content">
                         {/* Small boxes (Stat box) */}
                         <div className="row" >
-                        <SmallBoxCard content="Approver" linkTo="/approver" colour="bg-aqua"/>
+                        <SmallBoxCard content="Admin"  linkTo="/admin" colour="bg-green"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Admin" linkTo="/admin" colour="bg-green"/>
+                        <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Volunteer" linkTo="/volunteer" colour="bg-yellow"/>
-                        {/* ./col */}
-                        <SmallBoxCard content="Reviewer" linkTo="/reviewer" colour="bg-red"/>
+                        <SmallBoxCard content="Logout" linkTo="/logout" colour="bg-red"/>
                         {/* ./col */}
                         </div>
                         {/* /.row */}
@@ -77,7 +89,7 @@ class adminNewSchoolReview extends Component {
                                     <td><span className="label label-warning">Initial Admin Check</span></td>
                                     <td>Cuddalore</td>
                                     <td>Nellikuppam</td>
-                                    <td><a href="newly_added_schools.html">Click for Details</a></td>
+                                    <td><a href=""><Link to={newTo}>Click for Details</Link></a></td>
                                 </tr>
                                 <tr>
                                     <td>782324</td>
@@ -173,7 +185,6 @@ class adminNewSchoolReview extends Component {
 
                 </section>
                 </div>
-                <Footer/>
             </div>
         );
     }

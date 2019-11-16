@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import RegisterForm from '../adminWebsite/components/registerForm/registerForm';
 
 class trustRegister extends Component {
+  saveUser=(user)=>{
+    if(!document.getElementById('checkBox1').checked){
+      document.getElementById('checkBox1').style.borderColor="red";
+    }
+    else
+      this.props.saveUser(user);
+  }
     render() {
         return (
           <body className="hold-transition register-page">
@@ -11,7 +18,20 @@ class trustRegister extends Component {
               </div>
               <div className="register-box-body">
                 <p className="login-box-msg"><b>Register a new membership</b></p>
-                <RegisterForm saveUser={(user)=>this.props.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/>
+                <div className="row">
+                      <div className="form-group has-feedback col-md-6">
+                        <input type="text" className="form-control" disabled value={"Default Role : Trust Member"}></input>
+                        <span className="glyphicon glyphicon-user form-control-feedback" />
+                      </div>
+                      <div className="form-group has-feedback col-md-6">
+                        <input type="text" className="form-control" disabled value={"Annual membership : 10,000 INR"}/>
+                        <span className="glyphicon glyphicon-euro form-control-feedback" />
+                        <div className="checkbox icheck" style={{marginLeft:'4%'}}>
+                          <input type="checkbox" id="checkBox1"/> I agree to the <a href="#">terms and conditions</a>
+                      </div>
+                      </div>
+                    </div>
+                <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/>
               </div>
             </div>
           </body>

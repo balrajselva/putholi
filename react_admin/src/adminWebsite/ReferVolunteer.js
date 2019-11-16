@@ -154,18 +154,16 @@ class ReferVolunteer extends Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.props.location.user}/>
-                <SponsorMenu currentUser={this.props.location.user}/>
                 <div className="content-wrapper">
                     {/* Content Header (Page header) */}
                     <section className="content-header">
                         {/* Small boxes (Stat box) */}
                         <div className="row">
-                            <SmallBoxCard content="Sponsor" linkTo="/sponsor" colour="bg-green"/>
+                            <SmallBoxCard content={this.props.location.user.role} linkTo="/trustMemberScreen" colour="bg-green"/>
                             {/* ./col */}
                             <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
                             {/* ./col */}
-                            <SmallBoxCard content="Logout" linkTo="/reviewer" colour="bg-red"/>{/* ./col */}
+                            <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                         </div>
                         <h1>
                         Sponsor
@@ -244,7 +242,6 @@ class ReferVolunteer extends Component {
                     {/* /.content */}
                     </div>
                     {this.state.spinner?<div class="spinner"></div>:null}
-                <Footer/>
             </div>
         );
     }
