@@ -112,7 +112,7 @@ class registerForm extends Component {
             });
             document.getElementById('email').style.borderColor="red";
         }
-        else if(this.state.phoneNumber===null || this.state.phoneNumber.match(/^\d{10}$/)){
+        else if(this.state.phoneNumber===null || this.state.phoneNumber.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)){
             this.setState({
                 lastErrorField:"phoneNumber",
                 errorMessage:"Please enter valid mobile number"

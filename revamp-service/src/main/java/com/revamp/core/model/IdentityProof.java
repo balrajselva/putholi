@@ -1,17 +1,13 @@
 package com.revamp.core.model;
 
-import java.math.BigInteger;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.Proxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Proxy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "identity_proof")
@@ -24,8 +20,8 @@ public class IdentityProof extends AuditableEntity implements java.io.Serializab
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userid", nullable = false)
-	private long userid;
+	@Column(name = "id", nullable = false)
+	private long id;
 	
 	@Column(name="identity_proof")
 	private BigInteger identityProof;
