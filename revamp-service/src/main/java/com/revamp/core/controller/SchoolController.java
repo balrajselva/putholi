@@ -1,6 +1,7 @@
 package com.revamp.core.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revamp.core.model.DEOInfo;
 import com.revamp.core.model.School;
 import com.revamp.core.model.SchoolRegFormModel;
 import com.revamp.core.service.SchoolService;
@@ -96,12 +97,12 @@ public class SchoolController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/school")
+	@GetMapping("/getAllSchools")
 	@ResponseBody
 	public ResponseEntity<List<School>> getAll(@RequestBody(required = false) School school,
 			HttpServletRequest request) {
 		List<School> schools = schoolService.getAll();
-
+		System.out.println("All schools---"+schools);
 		return ResponseEntity.ok().body(schools);
 	}
 
@@ -136,6 +137,13 @@ public class SchoolController {
 	public ResponseEntity<List<School>> getAllByLocality(@PathVariable("localityid") String localityId) {
 		List<School> schools = schoolService.getAllByLocality(localityId);
 		return ResponseEntity.ok().body(schools);
+	}
+
+	@PostMapping("/school/saveDEOresponse")
+	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
+		System.out.println(deoInfo);
+		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
+		return ResponseEntity.ok().body(deoInfo1);
 	}
 
 }

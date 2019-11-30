@@ -19,6 +19,7 @@ import AdminSchoolCheck from '../adminWebsite/adminSchoolCheck';
 import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
+import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
 
 class App extends Component {
   state = {
@@ -68,6 +69,7 @@ class App extends Component {
             <AdminLayoutRoute path="/accessReview" history={history} component={()=><AdminAccessReview/>}/>
             <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={()=><AdminSchoolCheck/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
+            <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
           </Switch>

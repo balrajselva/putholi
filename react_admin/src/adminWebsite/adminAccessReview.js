@@ -12,7 +12,8 @@ class adminAccessReview extends Component {
     state={
         currentUser:this.props.location.user,
         users:"",
-        getUserList:true
+        getUserList:true,
+        spinner:true
     }
     userList=()=>{
         axios.get("http://localhost:6060/puthuyir/user")
@@ -20,13 +21,15 @@ class adminAccessReview extends Component {
             console.log(res.data)
             this.setState({
                 users:res.data,
-                getUserList:false
+                getUserList:false,
+                spinner:false
             })
         })
         console.log(this.state.users);
     }
     createTable=()=>{
         var rows=[];
+        let rowsUpdated=false;
         for(let i=0;i<this.state.users.length;i++){
             const newTo = { 
                 pathname: "/adminRoleCheck", 
@@ -46,6 +49,7 @@ class adminAccessReview extends Component {
             else if(this.state.currentUser.role==="Super Admin" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="New User"))
                 continue;
             else{
+                rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.users[i].userid}</td>
                     <td>{this.state.users[i].firstName}</td>
@@ -58,6 +62,8 @@ class adminAccessReview extends Component {
                 </tr>)
             }
         }
+        if(rowsUpdated==false)
+            rows.push(<tr ><td align="center" colSpan="8">No new records found!</td></tr>)
         return rows;
     }   
     render() {
@@ -122,6 +128,7 @@ class adminAccessReview extends Component {
                                                 <th>Details</th>
                                             </tr>
                                             {this.state.getUserList?null:this.createTable()}
+                                            {this.state.spinner?<div class="spinner"></div>:null}
                                         </tbody>
                                         </table>
                                     </div>

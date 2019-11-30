@@ -1,20 +1,18 @@
 package com.revamp.core.web.util;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.revamp.core.model.Requirement;
+import com.revamp.core.model.School;
+import com.revamp.core.model.SchoolImage;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.revamp.core.model.Project;
-import com.revamp.core.model.Requirement;
-import com.revamp.core.model.School;
-import com.revamp.core.model.SchoolImage;
 
 public class SchoolSerializer extends StdSerializer<School> {
 
@@ -30,7 +28,7 @@ public class SchoolSerializer extends StdSerializer<School> {
 
 	@Override
 	public void serialize(School school, JsonGenerator jgen, SerializerProvider provider)
-			throws IOException, JsonProcessingException {
+			throws IOException {
 		try {
 		jgen.writeStartObject();
 		jgen.writeNumberField("id", school.getSchoolId());

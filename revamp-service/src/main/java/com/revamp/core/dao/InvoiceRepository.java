@@ -1,11 +1,10 @@
 package com.revamp.core.dao;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.revamp.core.model.Invoice;
+import org.springframework.data.repository.CrudRepository;
 
 public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
 
-	public Invoice findByName(String name);
+	Invoice findByName(String name);
 	
 }

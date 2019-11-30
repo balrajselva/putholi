@@ -72,7 +72,6 @@ class RegistrationPage extends Component {
     render() {
         return (
             <div>
-                <HeaderComponent/>
                 <LoginModal showModal={this.state.showModal} 
                     toggleModal={this.toggleModal} 
                     onLoginFacebook={this.handleLoginWithFacebook}
@@ -82,7 +81,6 @@ class RegistrationPage extends Component {
                     this.state.userDetailsForm?<UserDetailsForm user={this.state.user} saveUser={(user)=>this.saveUser(user)}/>:null
                 }
                 {this.state.progressVisible?window.alert(<CircularProgress class="class"/>):null}
-                <FooterComponent/>
             </div>
         );
     }

@@ -1,5 +1,14 @@
 package com.revamp.core.service;
 
+import com.revamp.core.dao.DEORepository;
+import com.revamp.core.dao.SchoolRepository;
+import com.revamp.core.dao.UserRepository;
+import com.revamp.core.lookup.PuthuyirLookUp;
+import com.revamp.core.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,21 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.revamp.core.dao.SchoolRepository;
-import com.revamp.core.dao.UserRepository;
-import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.model.Project;
-import com.revamp.core.model.Requirement;
-import com.revamp.core.model.School;
-import com.revamp.core.model.SchoolImage;
-import com.revamp.core.model.User;
-
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class SchoolServiceImpl implements SchoolService {
 
 	@Autowired
@@ -33,6 +29,9 @@ public class SchoolServiceImpl implements SchoolService {
 	
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private DEORepository deoRepository;
 
 	@Transactional
 	public long save(final School school, Map<String, byte[]> files, String imgPath) {
@@ -54,7 +53,7 @@ public class SchoolServiceImpl implements SchoolService {
 		school.setProjects(project);
 		
 		//set user to the Requirement.
-		//this.setUser(school);
+		this.setUser(school);
 		
 		schoolRepository.save(school);
 		if (files != null && files.size() > 0) {
@@ -63,25 +62,16 @@ public class SchoolServiceImpl implements SchoolService {
 		return school.getSchoolId();
 	}
 	
-	@Transactional
-	public long save(final School school) {
-		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
-		Set<Project> project = new HashSet<Project>();
-		project.add(this.createDefaultProject(school));
-		school.setProjects(project);
-		//set user to the Requirement.
-		//this.setUser(school);
-		schoolRepository.save(school);
-		return school.getSchoolId();
-	}
+	private void setUser(School school) {
+		//TODO: currently cd it is hard coded to User ID 2.
+		User beneUser = this.userRepository.findById((long) 2).orElse(null);
 	
-	/*
-	 * private void setUser(School school) { //TODO: currently cd it is hard coded
-	 * to User ID 2. User beneUser = this.userRepository.findById((long)
-	 * 2).orElse(null); school.setUser(beneUser);
-	 * school.getRequirements().forEach(req -> { req.setUser(beneUser);
-	 * req.setStatus(PuthuyirLookUp.REQ_ADDED); }); }
-	 */
+		school.setUser(beneUser);
+		school.getRequirements().forEach(req -> {
+			req.setUser(beneUser);
+			req.setStatus(PuthuyirLookUp.REQ_ADDED);
+		});
+	}
 	
 	private Project createDefaultProject(School school) {
 		Project project = new Project();
@@ -142,10 +132,15 @@ public class SchoolServiceImpl implements SchoolService {
 		return schoolRepository.findByAddressLocality(localityId);
 	}
 	
-	/*
-	 * @Override public List<School> getByUserId(long userId) { return
-	 * schoolRepository.getByUserId(userId); }
-	 */
+	@Override
+	public List<School> getByUserId(long userId) {
+		return schoolRepository.getByUserId(userId);
+	}
+
+	@Override
+	public DEOInfo saveDEOresponse(DEOInfo deoInfo) {
+		return deoRepository.save(deoInfo);
+	}
 
 	@Override
 	public School get(long id) {

@@ -1,30 +1,20 @@
 package com.revamp.core.controller;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.ServletException;
-
+import com.revamp.core.model.User;
+import com.revamp.core.response.UserResponse;
+import com.revamp.core.service.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.revamp.core.model.User;
-import com.revamp.core.response.UserResponse;
-import com.revamp.core.service.UserService;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import javax.servlet.ServletException;
+import java.util.Date;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost")
 @RestController
@@ -132,10 +122,10 @@ public class UserController {
 	}	
 	
 	@PostMapping("/verify_user")
-	public User loginUser(@RequestBody User login){
+	public ResponseEntity<User> loginUser(@RequestBody User login){
 		User user=userService.findByEmailAddressPassword(login.getEmailAddress(),login.getPassword());
 		System.out.println(user);
-		return (user);
+		return ResponseEntity.ok().body(user);
 	}
 
 }

@@ -33,7 +33,7 @@ public class DEOfile extends AuditableEntity implements java.io.Serializable{
     private byte[] image;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name="deo_info_id", nullable=false)
     private DEOInfo deoInfo;
 
     @Column(name = "date_created")
@@ -41,8 +41,4 @@ public class DEOfile extends AuditableEntity implements java.io.Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
-    @PrePersist
-    protected void onCreate() {
-        dateCreate = new Date();
-    }
 }

@@ -1,19 +1,15 @@
 package com.revamp.core.service;
 
-import java.util.List;
-
+import com.revamp.core.dao.LookupRepository;
+import com.revamp.core.model.Lookup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.revamp.core.dao.LookupRepository;
-import com.revamp.core.model.FundAllotment;
-import com.revamp.core.model.Lookup;
-import com.revamp.core.model.Role;
+import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class LookupServiceImpl implements LookupService {
 
 	@Autowired

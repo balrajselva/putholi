@@ -11,7 +11,7 @@ class adminNewSchoolReview extends Component {
         schools:null
     }
     getSchools=()=>{
-        Axios.get("http://localhost:6060/puthuyir/school")
+        Axios.get("http://localhost:6060/puthuyir/getAllSchools")
         .then(res=>{
             console.log(res.data)
         })
@@ -48,7 +48,7 @@ class adminNewSchoolReview extends Component {
                         {/* ./col */}
                         <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Logout" linkTo="/logout" colour="bg-red"/>
+                        <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>
                         {/* /.row */}
@@ -83,58 +83,13 @@ class adminNewSchoolReview extends Component {
                                     <th>Details</th>
                                 </tr>
                                 <tr>
-                                    <td>183</td>
-                                    <td>Cuddalore Boys School</td>
+                                    <td>111</td>
+                                    <td>Government Boys School</td>
                                     <td>11-7-2014</td>
                                     <td><span className="label label-warning">Initial Admin Check</span></td>
-                                    <td>Cuddalore</td>
+                                    <td>Tiruppur</td>
                                     <td>Nellikuppam</td>
                                     <td><a href=""><Link to={newTo}>Click for Details</Link></a></td>
-                                </tr>
-                                <tr>
-                                    <td>782324</td>
-                                    <td>Villupuram Boys School</td>
-                                    <td>22-3-2018</td>
-                                    <td><span className="label label-success">Inital Review Complete</span></td>
-                                    <td>Cuddalore</td>
-                                    <td>Nellikuppam</td>
-                                    <td><a href="newly_added_schools.html">Click for Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3333</td>
-                                    <td>Panruti Girls School</td>
-                                    <td>29-5-2017</td>
-                                    <td><span className="label label-warning">DEO Approved</span></td>
-                                    <td>Cuddalore</td>
-                                    <td>Nellikuppam</td>
-                                    <td><a href="newly_added_schools.html">Click for Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>29090</td>
-                                    <td>Chidambaram Boys School</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="label label-success">Initiate workorder</span></td>
-                                    <td>Chidambarram</td>
-                                    <td>Cuddalore</td>
-                                    <td><a href="admin_initiate_workorder.html">Click for Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2383</td>
-                                    <td>Sholinganallur Boys School</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="label label-success">Project Completed</span></td>
-                                    <td>Cuddalore</td>
-                                    <td>Nellikuppam</td>
-                                    <td>Closed</td>
-                                </tr>
-                                <tr>
-                                    <td>58223</td>
-                                    <td>Comibatore Boys School</td>
-                                    <td>22-5-2016</td>
-                                    <td><span className="label label-danger">Rejected Scenario's to be derived</span></td>
-                                    <td>Cuddalore</td>
-                                    <td>Nellikuppam</td>
-                                    <td><a href="pages/UI/volunteer_assignment_screen.html">Re-assign to Volunteer</a></td>
                                 </tr>
                                 </tbody></table>
                             </div>

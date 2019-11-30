@@ -14,7 +14,7 @@ import java.sql.Blob;
 import java.util.Set;
 
 @Entity
-@Table(name = "DEO_info")
+@Table(name = "deo_info")
 @EntityListeners(AuditingEntityListener.class)
 @Proxy(lazy = false)
 @Getter
@@ -35,6 +35,7 @@ public class DEOInfo extends AuditableEntity implements java.io.Serializable {
     private String status;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name="deo_file_id")
     @JsonIgnore
     private DEOfile deoFile;
 }

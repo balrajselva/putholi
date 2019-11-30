@@ -1,27 +1,23 @@
 package com.revamp.core.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 
 @Entity
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Proxy(lazy = false)
 @Data
 @Getter (AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
+@ToString
 public class User  extends AuditableEntity{
 
 	@Id
@@ -63,9 +59,11 @@ public class User  extends AuditableEntity{
 	@Column(name = "password")
 	private String password;
 
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
-	
+
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL)
 	private IdentityProof identityProof;
 	

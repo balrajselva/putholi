@@ -73,7 +73,7 @@ class adminRoleCheck extends Component {
                 <div className="content-wrapper">
                   <section className="content-header">
                     <h1>
-                      Jagan kumar
+                      {this.props.location.user.firstName}
                       <small>added on</small>
                     </h1>
                     <ol className="breadcrumb">

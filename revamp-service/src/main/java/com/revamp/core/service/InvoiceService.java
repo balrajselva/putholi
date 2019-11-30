@@ -1,11 +1,9 @@
 package com.revamp.core.service;
 
-import java.util.List;
-
+import com.revamp.core.model.Invoice;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.revamp.core.model.FundAllotment;
-import com.revamp.core.model.Invoice;
+import java.util.List;
 /**
  * 
  * @author Puthuyir Dev Team
@@ -13,8 +11,8 @@ import com.revamp.core.model.Invoice;
  */
 public interface InvoiceService {
 	
-	public Invoice uploadInvoice(MultipartFile[] files,Invoice invoice);
+	Invoice uploadInvoice(MultipartFile[] files, Invoice invoice);
 	
-	public Invoice getFile(long fileId);
+	Invoice getFile(long fileId);
 	List<Invoice> getAllInvoice();
 }

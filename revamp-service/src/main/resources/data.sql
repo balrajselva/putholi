@@ -1,98 +1,38 @@
-/*Address*/
-INSERT INTO `revamp_db`.`address` (`address_id`, `address_line_1`, `address_line_2`, `city_id`, `pin_code`) 
-VALUES ('1', 'test', 'test', 'india', '767698'),
-('2', 'test2', 'test2', 'USA', '767698'),
-('3', 'test3', 'test3', 'England', '767698');
-
-
-
-/*Role*/
-insert into revamp_db.role
-(roleid, rolename, accesslevel) 
-values ('admin','Admin /Super user', ''),
- ('sponsor','Sponsor', ''),
- ('volunteer', 'Volunteer',''),
- ('beneficiary', 'Beneficiary', ''),
- ('approver','Approver','');
-
-/* User */
-INSERT INTO `revamp_db`.`user` (`userid`, `firstname`, `lastname`, `addressid`, `roleid`, `emailaddress`, `password`)
-VALUES ('1', 'Kamalkanth', 'Durairaj', '1', 'admin', 'dkamalkanth@gmail.com', 'admin'),
-('2', 'Jagan', 'Lastname', '2', 'beneficiary', 'jagan@gmail.com', 'jagan'),
-('3', 'MuthySamy', 'Ganapathy', '1', 'admin', 'mapmuthu@gmail.com', 'muthu');
-
-
-/********************************************************
-State
-********************************************************/
-INSERT INTO `revamp_db`.`lookup` (`field`,`key`,`value`,`parent_field`,`parent_key`)VALUES
-('state','TN','Tamil Nadu',null,null);
-
-
-/********************************************************
-District
-********************************************************/
-INSERT INTO `revamp_db`.`lookup`(`field`,`key`,`value`,`parent_field`,`parent_key`) VALUES
-('district','kanchipuram','Kanchipuram','state','TN'),
-('district','tiruvallur','Tiruvallur','state','TN');
-
-
-/********************************************************
-City
-********************************************************/
-INSERT INTO `revamp_db`.`lookup`(`field`,`key`,`value`,`parent_field`,`parent_key`) VALUES
-('city','ennore','Ennore','district','tiruvallur'),
-('city','puzhal','Puzhal','district','tiruvallur'),
-('city','padappai','Padappai','district','kanchipuram'),
-('city','vallakottai','Vallakottai','district','kanchipuram'),
-('city','chennai','Chennai','district','kanchipuram');
-
-/********************************************************
-Locality
-********************************************************/
-
-INSERT INTO `revamp_db`.`lookup`(`field`,`key`,`value`,`parent_field`,`parent_key`) VALUES
-('locality','tambaram','Tambaram','city','chennai'),
-('locality','pallavaram','Pallavaram','city','chennai'),
-('locality','sholinganallur','Sholinganallur','city','chennai');
 
 /********************************************************
 Requirement Type
 ********************************************************/
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('reqtype',
+('159','reqtype',
 'new',
 'New Requirement',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('reqtype',
+('189','reqtype',
 'maintenance',
 'Maintenance',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('assettype',
+('12','assettype',
 'sports',
 'Sports',
 null,
@@ -103,13 +43,12 @@ null);
 Asset type
 ********************************************************/
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('assettype',
+('190','assettype',
 'infrastructure',
 'Infrastructure',
 null,
@@ -117,13 +56,12 @@ null);
 
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('assettype',
+('021','assettype',
 'others',
 'Others',
 null,
@@ -134,65 +72,60 @@ null);
 Asset
 ********************************************************/
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('asset',
+('109','asset',
 'football',
 'Football',
 'assettype',
 'sports');
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('asset',
+('169','asset',
 'other_sports',
 'Others',
 'assettype',
 'sports');
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('asset',
+('168','asset',
 'bathroom',
 'Bathroom',
 'assettype',
 'infrastructure');
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('asset',
+('167','asset',
 'other_infra',
 'Others',
 'assettype',
 'infrastructure');
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('asset',
+('166','asset',
 'others',
 'Others',
 'assettype',
@@ -203,65 +136,60 @@ VALUES
 School Type
 ********************************************************/
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('schooltype',
+('155','schooltype',
 'nursery',
 'Nursery',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('schooltype',
+('145','schooltype',
 'primary',
 'Primary',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('schooltype',
+('1','schooltype',
 'middle',
 'Middle School',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('schooltype',
+('100','schooltype',
 'secondary',
 'Secondary School',
 null,
 null);
 
 INSERT INTO `revamp_db`.`lookup`
-(`field`,
-`key`,
-`value`,
+(`lookup_id`,`key_field`,
+`key_value`,
 `parent_field`,
 `parent_key`)
 VALUES
-('schooltype',
+('112','schooltype',
 'highersecondary',
 'Higher Secondary School',
 null,
