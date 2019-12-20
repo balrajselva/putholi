@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -31,6 +33,8 @@ import lombok.EqualsAndHashCode;
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
 @Data
+@Getter
+@Setter
 public class SchoolImage extends AuditableEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2136842348977561820L;
@@ -68,7 +72,7 @@ public class SchoolImage extends AuditableEntity implements java.io.Serializable
 	}
 
 	@Column(name = "comments")
-	private String comments;
+	String comments;
 	
 	@Column(name = "filepath")
 	private String filePath;

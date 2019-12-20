@@ -26,11 +26,23 @@ class trustRegister extends Component {
                       <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" disabled value={"Annual membership : 10,000 INR"}/>
                         <span className="glyphicon glyphicon-euro form-control-feedback" />
-                        <div className="checkbox icheck" style={{marginLeft:'4%'}}>
+                    </div>
+                  </div>
+                  <div className="row">
+                  <div className="form-group has-feedback col-md-6">
+                        <select className="form-control select2" id="selectedLocality" style={{width: '100%'}}>
+                            <option selected="selected">Payment option</option>
+                            <option>Bi-Monthly (2000 INR)</option>
+                            <option>Yearly (10,000 INR + service tax)</option>
+                            </select>
+                        <span className="glyphicon glyphicon-euro form-control-feedback"/>
+                    </div>
+                    <div className="form-group has-feedback col-md-6">
+                    <div className="checkbox icheck" style={{marginLeft:'4%'}}>
                           <input type="checkbox" id="checkBox1"/> I agree to the <a href="#">terms and conditions</a>
                       </div>
                       </div>
-                    </div>
+                  </div>
                 <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/>
               </div>
             </div>

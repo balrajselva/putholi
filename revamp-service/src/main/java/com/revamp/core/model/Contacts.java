@@ -31,22 +31,22 @@ public class Contacts extends AuditableEntity implements java.io.Serializable {
 	private long contactsId;
 
 	@Column(name = "pri_name")
-	private String priName;
+	private String primaryConName;
 
 	@Column(name = "pri_num")
-	private String priNum;
+	private String primaryConNum;
 
 	@Column(name = "pri_email")
-	private String priEmail;
+	private String primaryConMail;
 
 	@Column(name = "sec_name")
-	private String secName;
+	private String secondaryConName;
 
 	@Column(name = "sec_num")
-	private String secNum;
+	private String secondaryConNum;
 
 	@Column(name = "sec_email")
-	private String secEmail;
+	private String secondaryConMail;
 
 	
 }

@@ -61,28 +61,47 @@ class RegistrationPage extends Component {
             userDetailsForm:true,
             showModal:false
         })
+        
     };
     saveUser=(updatedUser)=>{
         this.setState({user:updatedUser});
         axios.post('http://localhost:6060/puthuyir/user',updatedUser)
         .then(res=>{
             console.log(res);
+            this.props.history.push({
+                pathname: '/schoolRegistration',
+                user: res.data
+            });
+        })
+    }
+    handleSubmit=(email, password)=>{
+        console.log(password);
+        let user={
+            emailAddress:email,
+            password:password
+        }
+        axios.post('http://localhost:6060/puthuyir/verify_user',user)
+        .then(res=>{
+            console.log(res);
+            this.props.history.push({
+                pathname: '/schoolRegistration',
+                user: res.data
+            });
         })
     }
     render() {
         return (
             <div>
-                <HeaderComponent/>
                 <LoginModal showModal={this.state.showModal} 
                     toggleModal={this.toggleModal} 
                     onLoginFacebook={this.handleLoginWithFacebook}
                     onSignupEmail={this.handleSignupByEmail}
+                    onLoginEmail={this.handleSubmit}
                 />
                 {
                     this.state.userDetailsForm?<UserDetailsForm user={this.state.user} saveUser={(user)=>this.saveUser(user)}/>:null
                 }
                 {this.state.progressVisible?window.alert(<CircularProgress class="class"/>):null}
-                <FooterComponent/>
             </div>
         );
     }

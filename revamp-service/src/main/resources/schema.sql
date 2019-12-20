@@ -12,11 +12,12 @@ CREATE TABLE IF NOT EXISTS revamp_db.address(
 	address_id INT NOT NULL AUTO_INCREMENT,
 	address_line_1 VARCHAR(90),
 	address_line_2 VARCHAR(90),
-	district_id VARCHAR(45),
-	city_id VARCHAR(45),
-    locality_id VARCHAR(45),
-    pin_code VARCHAR(10),
+	district VARCHAR(45),
+	city VARCHAR(45),
+    locality VARCHAR(45),
+    pincode VARCHAR(10),
     state VARCHAR(10),
+    country VARCHAR(10),
 	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     created_date datetime DEFAULT NULL,
   	created_by varchar(45) DEFAULT NULL,
@@ -75,21 +76,21 @@ CREATE TABLE IF NOT EXISTS revamp_db.user(
   firstname varchar(45) NOT NULL,
   lastname varchar(45) NOT NULL,
   status varchar(45) DEFAULT 'REGISTERED',
-addressid INT not null,  
-  roleid varchar(45) NOT NULL,
+  /*addressid INT not null, */ 
+  role varchar(45) NOT NULL,
   phonenumber varchar(45) DEFAULT NULL,
   emailaddress varchar(45) DEFAULT NULL,
   password varchar(50) DEFAULT NULL,
-  passwordhint varchar(500) DEFAULT NULL,
+  /*passwordhint varchar(500) DEFAULT NULL,*/
   created_date datetime DEFAULT NULL,
   	created_by varchar(45) DEFAULT NULL,
   	modified_by varchar(45) DEFAULT NULL,
   	modified_date datetime DEFAULT NULL,
-  PRIMARY KEY (userid),
-FOREIGN KEY (addressid) REFERENCES revamp_db.address (address_id),  
-  FOREIGN KEY (roleid) REFERENCES revamp_db.role (roleid)
-  ON DELETE NO ACTION
-ON UPDATE CASCADE
+  PRIMARY KEY (userid)
+/*FOREIGN KEY (addressid) REFERENCES revamp_db.address (address_id),  */
+  /*FOREIGN KEY (roleid) REFERENCES revamp_db.role (roleid)*/
+  /*ON DELETE NO ACTION
+ON UPDATE CASCADE*/
 );
 
 /********************************************************
@@ -103,7 +104,7 @@ CREATE TABLE IF NOT EXISTS revamp_db.school(
     address_id INT NOT NULL,
     school_info_id INT NOT NULL,
     school_status VARCHAR(45) NOT NULL,
-    user_id INT NOT NULL,
+    /**user_id INT NOT NULL,*/
 	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
 	created_date datetime DEFAULT NULL,
   	created_by varchar(45) DEFAULT NULL,
@@ -112,8 +113,8 @@ CREATE TABLE IF NOT EXISTS revamp_db.school(
 	PRIMARY KEY (school_id),
 	FOREIGN KEY (contacts_id) REFERENCES contacts (contacts_id),
 	FOREIGN KEY (address_id) REFERENCES address (address_id),
-	FOREIGN KEY (school_info_id) REFERENCES schoolinfo (school_info_id),
-    FOREIGN KEY (user_id) REFERENCES user (userid)
+	FOREIGN KEY (school_info_id) REFERENCES schoolinfo (school_info_id)
+    /*FOREIGN KEY (user_id) REFERENCES user (userid)*/
 	ON DELETE NO ACTION
 	ON UPDATE CASCADE
 );

@@ -1,10 +1,10 @@
 package com.revamp.core.service;
 
+import com.revamp.core.model.DEOInfo;
+import com.revamp.core.model.School;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import com.revamp.core.model.School;
 
 public interface SchoolService {
 
@@ -24,4 +24,5 @@ public interface SchoolService {
 	
 	List<School> getByUserId(long userId);
 
+    DEOInfo saveDEOresponse(DEOInfo deoInfo);
 }

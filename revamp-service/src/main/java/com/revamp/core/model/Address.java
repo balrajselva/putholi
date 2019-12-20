@@ -1,19 +1,14 @@
 package com.revamp.core.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Proxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Proxy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
@@ -21,7 +16,6 @@ import lombok.ToString;
 @Proxy(lazy = false)
 @Getter
 @Setter
-@ToString
 public class Address extends AuditableEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1956522127988632591L;
@@ -54,5 +48,9 @@ public class Address extends AuditableEntity implements java.io.Serializable {
 
 	@Column(name="country")
 	private String country;
-	
+
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	@JsonBackReference
+	private User user;
 }

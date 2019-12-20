@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class Menu extends Component {
     render() {
         const accessReview={
-          pathname:"/accessreview",
+          pathname:"/accessReview",
           user:this.props.currentUser
         }
         const adminNewSchoolReview={
@@ -15,6 +15,11 @@ class Menu extends Component {
         }
         const adminPendingWorkflow={
           pathname:"/adminPendingWorkflow",
+          user:this.props.currentUser,
+          ...this.props
+        }
+        const adminUploadDEOresponse={
+          pathname:"/adminUploadDEOresponse",
           user:this.props.currentUser,
           ...this.props
         }
@@ -112,6 +117,7 @@ class Menu extends Component {
                       </a>
                       <ul className="treeview-menu">
                         <li><Link to={adminPendingWorkflow}><i className="fa fa-circle-o" />Pending Workflows</Link></li>
+                        <li><Link to={adminUploadDEOresponse}><i className="fa fa-circle-o" />Upload DEO response</Link></li>
                         <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li>
                       </ul>
                     </li>

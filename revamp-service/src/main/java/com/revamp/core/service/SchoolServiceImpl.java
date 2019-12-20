@@ -1,5 +1,14 @@
 package com.revamp.core.service;
 
+import com.revamp.core.dao.DEORepository;
+import com.revamp.core.dao.SchoolRepository;
+import com.revamp.core.dao.UserRepository;
+import com.revamp.core.lookup.PuthuyirLookUp;
+import com.revamp.core.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,21 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.revamp.core.dao.SchoolRepository;
-import com.revamp.core.dao.UserRepository;
-import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.model.Project;
-import com.revamp.core.model.Requirement;
-import com.revamp.core.model.School;
-import com.revamp.core.model.SchoolImage;
-import com.revamp.core.model.User;
-
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class SchoolServiceImpl implements SchoolService {
 
 	@Autowired
@@ -34,6 +30,9 @@ public class SchoolServiceImpl implements SchoolService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private DEORepository deoRepository;
+
 	@Transactional
 	public long save(final School school, Map<String, byte[]> files, String imgPath) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
@@ -41,11 +40,14 @@ public class SchoolServiceImpl implements SchoolService {
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
 		if (files != null && files.size() > 0) {
+
 			files.forEach((k,v) -> {
+				Set<SchoolImage> siSet = new HashSet<SchoolImage>();
 				String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
 				SchoolImage si = new SchoolImage(filePath+k,v,school.getProofOfId().getComments());
 				si.setSchool(school);
-				school.getSchoolImages().add(si);
+				siSet.add(si);
+				school.setSchoolImages(siSet);
 			});
 		}
 		
@@ -136,6 +138,11 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public List<School> getByUserId(long userId) {
 		return schoolRepository.getByUserId(userId);
+	}
+
+	@Override
+	public DEOInfo saveDEOresponse(DEOInfo deoInfo) {
+		return deoRepository.save(deoInfo);
 	}
 
 	@Override

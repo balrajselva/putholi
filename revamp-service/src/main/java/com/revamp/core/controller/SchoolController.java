@@ -1,12 +1,11 @@
 package com.revamp.core.controller;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revamp.core.model.DEOInfo;
+import com.revamp.core.model.School;
+import com.revamp.core.model.SchoolRegFormModel;
+import com.revamp.core.service.SchoolService;
+import com.revamp.core.web.util.WebUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +13,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revamp.core.model.School;
-import com.revamp.core.model.SchoolRegFormModel;
-import com.revamp.core.service.SchoolService;
-import com.revamp.core.web.util.WebUtilities;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -35,6 +28,7 @@ import com.revamp.core.web.util.WebUtilities;
  */
 @RestController
 @PropertySource(value= {"classpath:application.properties"})
+@CrossOrigin(origins = "http://localhost")
 public class SchoolController {
 	private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
@@ -52,11 +46,11 @@ public class SchoolController {
 	 * @return
 	 */
 	@PostMapping("/school")
-	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute SchoolRegFormModel regFormModel,
+	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 			HttpServletRequest request) {
 
 		try {
-			System.out.println("..regFormModel.getPayload().."+regFormModel.getPayload());
+			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
@@ -67,9 +61,9 @@ public class SchoolController {
 			}
 					} catch (IOException ex) {
 			ex.printStackTrace();
-			return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity("Successfully uploaded!", HttpStatus.OK);
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 
 	}
 
@@ -104,12 +98,12 @@ public class SchoolController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/school")
+	@GetMapping("/getAllSchools")
 	@ResponseBody
 	public ResponseEntity<List<School>> getAll(@RequestBody(required = false) School school,
 			HttpServletRequest request) {
 		List<School> schools = schoolService.getAll();
-
+		System.out.println("All schools---"+schools);
 		return ResponseEntity.ok().body(schools);
 	}
 
@@ -144,6 +138,13 @@ public class SchoolController {
 	public ResponseEntity<List<School>> getAllByLocality(@PathVariable("localityid") String localityId) {
 		List<School> schools = schoolService.getAllByLocality(localityId);
 		return ResponseEntity.ok().body(schools);
+	}
+
+	@PostMapping("/school/saveDEOresponse")
+	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
+		System.out.println(deoInfo);
+		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
+		return ResponseEntity.ok().body(deoInfo1);
 	}
 
 }

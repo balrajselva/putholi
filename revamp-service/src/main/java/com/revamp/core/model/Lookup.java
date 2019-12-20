@@ -1,46 +1,40 @@
 package com.revamp.core.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import lombok.*;
 import org.hibernate.annotations.Proxy;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name = "lookup")
 @Proxy(lazy = false)
-@Data public class Lookup {
+@Getter (AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
+@ToString
+@Data
+public class Lookup implements java.io.Serializable{
 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "lookup_id")
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private Long lookup_id;
 	
-	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) private Long lookup_id;
-	
-	
-	@Column(name = "field")
-    private String field;
+	@Column(name = "key_field")
+	private String key_field;
 
-	
-	@Column(name = "key")
-	private String key;
-
-	@Column(name = "value")
-	private String value;
+	@Column(name = "key_value")
+	private String key_value;
 
 	@Column(name = "parent_field")
-	private String parentField;
+	private String parent_field;
 
 	@Column(name = "parent_key")
-	private String parentKey;
+	private String parent_key;
 
 	
 }

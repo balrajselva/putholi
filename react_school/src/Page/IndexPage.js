@@ -38,7 +38,7 @@ class indexPage extends Component{
             icon1:{
                 img:'icon1',
                 title:'Donate to School',
-                pageLink:'showAllSchoolsForDonation',
+                pageLink:'donation',
                 content:'Click to contribute your fund for development of a selected school '
             },
             icon2:{
@@ -68,7 +68,7 @@ class indexPage extends Component{
         return(
             
             <div>
-                <HeaderComponent/>
+               
                 <div className="page_container">
                     <CarouselComponent/>
                     <div className="wrap planning">
@@ -91,12 +91,12 @@ class indexPage extends Component{
                         </div>
                     </div>
                 </div>
-                <FooterComponent/>
+                
                 <LoginModal showModal={this.state.showModal} 
                     toggleModal={this.toggleModal} 
                     onLoginFacebook={this.handleLoginWithFacebook}
                     onSignupEmail={this.handleSignupByEmail}/>
-                <FooterComponent/>
+                
             </div>
         
         );

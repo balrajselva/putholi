@@ -1,20 +1,19 @@
 package com.revamp.core.service;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.revamp.core.dao.DonationRepository;
 import com.revamp.core.dao.ProjectRepository;
 import com.revamp.core.dao.UserRepository;
 import com.revamp.core.model.Donation;
 import com.revamp.core.model.Project;
 import com.revamp.core.payload.DonationPayLoad;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class DonationServiceImpl implements DonationService {
 
 	@Autowired
