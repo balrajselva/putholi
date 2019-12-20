@@ -53,7 +53,7 @@ class UserDetailsForm extends Component {
                 password:this.state.password
             }
         console.log(user);
-        // this.props.saveUser(user);
+        this.props.saveUser(user);
     }
     handleChange=({target})=>{
         this.setState({ [target.id]: target.value });

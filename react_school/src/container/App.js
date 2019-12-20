@@ -17,6 +17,8 @@ import HeaderComponent from '../components/HeaderComponent';
 import FooterComponent from '../components/FooterComponent';
 import DonationDetails from '../components/donation/details';
 import DonationForm from '../components/donation/donateForm';
+import AddSchool from '../components/schoolRegister/addSchool';
+import TrackDonation from '../components/donation/trackDonation';
 
 function App() {
   
@@ -31,14 +33,14 @@ function App() {
           <Route path="/features" component={()=><FeaturesPage  />}/>
           <Route path="/blog" component={()=><BlogPage  />}/>
           <Route path="/gallery" component={()=><GalleryPage  />}/>
-          <Route path="/schoolregistration" component={()=><SchoolRegistrationPage/>}/>
-          <Route path="/registrationPage" component={()=><RegistrationPage/>}/>
+          <Route path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
+          <Route path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
           <Route path="/donation" component={()=><Donation/>}/>
           <Route path="/donationDetails" component={()=><DonationDetails/>}/>
-          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>          
-          
+          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>       
+          <Route path="/trackDonation" component={()=><TrackDonation/>}/>             
         </Switch>
-<FooterComponent/>
+        <FooterComponent/>
       </Router>
       
     </div>
