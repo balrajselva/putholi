@@ -71,65 +71,15 @@ null);
 /********************************************************
 Asset
 ********************************************************/
-INSERT INTO `revamp_db`.`lookup`
-(`lookup_id`,`key_field`,
-`key_value`,
-`parent_field`,
-`parent_key`)
-VALUES
-('109','asset',
-'football',
-'Football',
-'assettype',
-'sports');
+INSERT INTO `revamp_db`.`lookup`(`lookup_id`,`key_field`,`key_value`,`parent_field`,`parent_key`)VALUES('109','asset','Football','assettype','sports');
 
-INSERT INTO `revamp_db`.`lookup`
-(`lookup_id`,`key_field`,
-`key_value`,
-`parent_field`,
-`parent_key`)
-VALUES
-('169','asset',
-'other_sports',
-'Others',
-'assettype',
-'sports');
+INSERT INTO `revamp_db`.`lookup`(`lookup_id`,`key_field`,`key_value`,`parent_field`,`parent_key`)VALUES('169','asset','other_sports','Others','assettype','sports');
 
-INSERT INTO `revamp_db`.`lookup`
-(`lookup_id`,`key_field`,
-`key_value`,
-`parent_field`,
-`parent_key`)
-VALUES
-('168','asset',
-'bathroom',
-'Bathroom',
-'assettype',
-'infrastructure');
+INSERT INTO `revamp_db`.`lookup`(`lookup_id`,`key_field`,`key_value`,`parent_field`,`parent_key`VALUES('168','asset','Bathroom','assettype','infrastructure');
 
-INSERT INTO `revamp_db`.`lookup`
-(`lookup_id`,`key_field`,
-`key_value`,
-`parent_field`,
-`parent_key`)
-VALUES
-('167','asset',
-'other_infra',
-'Others',
-'assettype',
-'infrastructure');
+INSERT INTO `revamp_db`.`lookup`(`lookup_id`,`key_field`,`key_value`,`parent_field`,`parent_key`)VALUES('167','asset','Infrastructure','assettype','Library')
 
-INSERT INTO `revamp_db`.`lookup`
-(`lookup_id`,`key_field`,
-`key_value`,
-`parent_field`,
-`parent_key`)
-VALUES
-('166','asset',
-'others',
-'Others',
-'assettype',
-'others');
+INSERT INTO `revamp_db`.`lookup` (`lookup_id`,`key_field`,`key_value`,`parent_field`,`parent_key`)VALUES('166','asset','Others','assettype','others');
 
 
 /********************************************************

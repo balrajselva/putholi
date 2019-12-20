@@ -123,6 +123,7 @@ public class UserController {
 	
 	@PostMapping("/verify_user")
 	public ResponseEntity<User> loginUser(@RequestBody User login){
+		System.out.println(login);
 		User user=userService.findByEmailAddressPassword(login.getEmailAddress(),login.getPassword());
 		System.out.println(user);
 		return ResponseEntity.ok().body(user);

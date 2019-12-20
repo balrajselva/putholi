@@ -28,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @PropertySource(value= {"classpath:application.properties"})
+@CrossOrigin(origins = "http://localhost")
 public class SchoolController {
 	private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
@@ -45,11 +46,11 @@ public class SchoolController {
 	 * @return
 	 */
 	@PostMapping("/school")
-	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute SchoolRegFormModel regFormModel,
+	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 			HttpServletRequest request) {
 
 		try {
-			System.out.println("..regFormModel.getPayload().."+regFormModel .getPayload());
+			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities

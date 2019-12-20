@@ -40,11 +40,14 @@ public class SchoolServiceImpl implements SchoolService {
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
 		if (files != null && files.size() > 0) {
+
 			files.forEach((k,v) -> {
+				Set<SchoolImage> siSet = new HashSet<SchoolImage>();
 				String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
 				SchoolImage si = new SchoolImage(filePath+k,v,school.getProofOfId().getComments());
 				si.setSchool(school);
-				school.getSchoolImages().add(si);
+				siSet.add(si);
+				school.setSchoolImages(siSet);
 			});
 		}
 		

@@ -11,12 +11,14 @@ import java.util.List;
 @Repository
 public interface LookupRepository extends CrudRepository<Lookup, Long> {
 
-	@Query("FROM Lookup where field = :field and parent_field = :parentField and parent_key = :parentKey")
-    List<Lookup> lookupByParent(@Param("field") String field, @Param("parentField") String parentField,
+	@Query("SELECT l FROM Lookup l where l.parent_field = :parentField and l.parent_key = :parentKey")
+    List<Lookup> lookupByParent( @Param("parentField") String parentField,
                                 @Param("parentKey") String parentKey);
 
 
-	@Query("FROM Lookup where field = :field")
+	@Query("SELECT l FROM Lookup l where l.parent_key = :field")
     List<Lookup> lookup(@Param("field") String field);
 
+	@Query("SELECT DISTINCT parent_key from Lookup ORDER BY parent_key")
+	List<Lookup> getAll();
 }

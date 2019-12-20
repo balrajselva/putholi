@@ -2,37 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminRoleCheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminRoleCheck.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminUploadDEOresponse.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminUploadDEOresponse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/menu/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/menu/Menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/container/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/container/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/components/Tabs/Tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/Tabs/Tabs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/contact_form/UserDetailsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/contact_form/UserDetailsForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_school/src/container/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/container/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/RevampServicesApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/RevampServicesApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/LookupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/LookupController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/InvoiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/InvoiceRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/LookupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/LookupRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/QuotationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/QuotationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/CsvReaderWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/CsvReaderWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUpEnumGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUpEnumGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/IdentityProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/IdentityProof.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/ProofOfId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/ProofOfId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Contacts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Contacts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Lookup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Lookup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/DonationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/DonationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/SchoolImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/SchoolImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/LookupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/LookupService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/LookupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/LookupServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/web/util/SchoolSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/web/util/SchoolSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/revamp.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/revamp.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -145,6 +135,26 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java</url>
           <line>3</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

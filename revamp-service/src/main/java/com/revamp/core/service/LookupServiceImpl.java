@@ -13,19 +13,27 @@ import java.util.List;
 public class LookupServiceImpl implements LookupService {
 
 	@Autowired
-	private LookupRepository lookup;
-
-	
+	private LookupRepository lookupRepo;
 
 	@Override
 	public List<Lookup> lookup(String field) {
-		return lookup.lookup(field);
+		return lookupRepo.lookup(field);
 	}
 
 	@Override
-	public List<Lookup> lookupByParent(String field, String parentField,
+	public List<Lookup> lookupByParent( String parentField,
 			String parentKey) {
-		return lookup.lookupByParent(field, parentField, parentKey);
+		return lookupRepo.lookupByParent(parentField, parentKey);
+	}
+
+	@Override
+	public Lookup save(Lookup lookup) {
+		return lookupRepo.save(lookup);
+	}
+
+	@Override
+	public List<Lookup> getAll() {
+		return lookupRepo.getAll();
 	}
 
 }
