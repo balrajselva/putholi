@@ -164,10 +164,6 @@ class AddSchool extends Component {
          axios.post("http://localhost:6060/puthuyir/lookup/save",lookup)
          .then(res=>{
             console.log(res.data);
-            window.alert("School added sucessfully!")
-         })
-         .catch(error=>{
-            window.alert("Update failed due to "+error);
          })
       } 
       else if(hasError===null){

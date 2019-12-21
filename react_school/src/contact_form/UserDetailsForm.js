@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/Component_CSS/UserDetailsForm.css';
 import axios from 'axios';
 import Spinner from '../components/spinner/spinner';
+import { withRouter } from 'react-router';
 
 class UserDetailsForm extends Component {
     state={
@@ -33,7 +34,6 @@ class UserDetailsForm extends Component {
     
     submitClicked=(e)=>{
         e.preventDefault();
-        this.setState({spinner:true});
         var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         
@@ -205,6 +205,10 @@ class UserDetailsForm extends Component {
             reader.readAsDataURL(file)
         }
     }
+    onCancel=(e)=>{
+        e.preventDefault();
+        this.props.history.push("/index");
+    }
 
     render() {
         return (
@@ -294,7 +298,7 @@ class UserDetailsForm extends Component {
                     </tr>
                     <tr>
                         <td>Confirm password : </td>
-                        <td><input class="form-control" type="text" id="confirmPassword" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="password" id="confirmPassword" onChange={this.handleChange}/></td>
                     </tr>
                     <tr>
                         <td>Upload Identity proof : </td>
@@ -314,7 +318,7 @@ class UserDetailsForm extends Component {
                     <tr>
                         <td></td>
                         <td><button type="button" class="btn btn-success" onClick={(e)=>this.submitClicked(e)}>Submit</button></td>
-                        <td><button type="button" class="btn btn-danger" onClick="resetForm()">Cancel</button></td>
+                        <td><button type="button" class="btn btn-danger" onClick={()=>this.onCancel()}>Cancel</button></td>
                     </tr>
                     <div class="btn-group" role="group" >
                    
@@ -327,4 +331,4 @@ class UserDetailsForm extends Component {
     }
 }
 
-export default UserDetailsForm;
+export default withRouter(UserDetailsForm);

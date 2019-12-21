@@ -65,18 +65,17 @@ class RegistrationPage extends Component {
         
     };
     saveUser=(updatedUser)=>{
-        this.setState({user:updatedUser});
+        this.setState({user:updatedUser,spinner:true});
         axios.post('http://localhost:6060/puthuyir/user',updatedUser)
         .then(res=>{
             console.log(res);
             this.props.history.push({
-                pathname: '/schoolRegistration',
+                pathname: '/confirm',
                 user: res.data
             });
         })
     }
     handleSubmit=(email, password)=>{
-        this.setState({spinner:true})
         console.log(password);
         let user={
             emailAddress:email,
@@ -85,10 +84,15 @@ class RegistrationPage extends Component {
         axios.post('http://localhost:6060/puthuyir/verify_user',user)
         .then(res=>{
             console.log(res);
-            this.props.history.push({
-                pathname: '/schoolRegistration',
-                user: res.data
-            });
+            if(res.data!=""){
+                this.props.history.push({
+                    pathname: '/schoolRegistration',
+                    user: res.data
+                });
+            }
+            else{
+                window.alert("Please provide valid credentials");
+            }
         })
     }
     render() {
@@ -102,9 +106,9 @@ class RegistrationPage extends Component {
                     emailRegex={/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/}
                 />
                 {
-                    this.state.userDetailsForm?<UserDetailsForm user={this.state.user} saveUser={(user)=>this.saveUser(user)}/>:null
+                    this.state.userDetailsForm?<UserDetailsForm {...this.props} user={this.state.user} saveUser={(user)=>this.saveUser(user)}/>:null
                 }
-                {this.state.spinner?<div class="spinner" style={{background:"grey"}}></div>:null}
+                {this.state.spinner?<div class="spinner" ></div>:null}
             </div>
         );
     }
