@@ -19,6 +19,7 @@ import DonationDetails from '../components/donation/details';
 import DonationForm from '../components/donation/donateForm';
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
+import ConfirmationPage from '../Page/ConfirmationPage';
 
 function App() {
   
@@ -35,6 +36,7 @@ function App() {
           <Route path="/gallery" component={()=><GalleryPage  />}/>
           <Route path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
           <Route path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
+          <Route path="/confirm" component={()=><ConfirmationPage/>}/>
           <Route path="/donation" component={()=><Donation/>}/>
           <Route path="/donationDetails" component={()=><DonationDetails/>}/>
           <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>       

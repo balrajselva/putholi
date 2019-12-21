@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/contact_form/UserDetailsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/contact_form/UserDetailsForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/IdentityProof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/IdentityProof.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
