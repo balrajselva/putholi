@@ -6,30 +6,138 @@ import Spinner from '../components/spinner/spinner';
 class UserDetailsForm extends Component {
     state={
         firstName:this.props.user.firstName,
-        lastName:"",
-        gender:"",
-        addressLine_1:"",
-        addressLine_2:"",
-        pincode:"",
-        locality:"",
-        selectedLocality:"",
-        district:"",
-        city:"",
-        state:"",
-        country:"",
-        role:"", 
+        lastName:null,
+        gender:null,
+        addressLine_1:null,
+        addressLine_2:null,
+        pincode:null,
+        locality:null,
+        selectedLocality:null,
+        district:null,
+        city:null,
+        state:null,
+        country:null,
+        role:null, 
         email:this.props.user.emailAddress,
-        phoneNumber:"",
-        identityProof:"",
-        comments:"",
+        phoneNumber:null,
+        identityProof:null,
+        comments:null,
         password:this.props.user.password,
-        localImageUrl:"",
-        confirmPassword:"",
+        localImageUrl:null,
+        confirmPassword:null,
         createDropDown:false,
-        spinner:false
+        spinner:false,
+        lastErrorField:null,
+        errorMessage:null
     }
     
-    submitClicked=()=>{
+    submitClicked=(e)=>{
+        e.preventDefault();
+        this.setState({spinner:true});
+        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
+        
+        if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
+            this.setState({
+                lastErrorField:"confirmPassword",
+                errorMessage:"Please enter atleast 8 character password or check whether password and confirm passowrd are same."
+            });
+            document.getElementById('confirmPassword').style.borderColor="red";
+        }
+        else if(this.state.firstName===null){
+            this.setState({
+                lastErrorField:"firstName",
+                errorMessage:"Please enter First name"
+        });
+            document.getElementById('firstName').style.borderColor="red";
+        }
+        else if(this.state.gender===null){
+            this.setState({
+                lastErrorField:"gender",
+                errorMessage:"Please select gender"
+            });
+            document.getElementById('gender').style.borderColor="red";
+        }
+        else if(this.state.role===null){
+            this.setState({
+                lastErrorField:"role",
+                errorMessage:"Please select role"
+            });
+            document.getElementById('role').style.borderColor="red";
+        }
+        else if(this.state.identityProof===null){
+            this.setState({
+                lastErrorField:"identityProof",
+                errorMessage:"Please upload Identity Proof"
+            });
+            document.getElementById('identityProof').style.borderColor="red";
+        }
+        else if(this.state.email===null || !emailRegex.test(this.state.email)){
+            this.setState({
+                lastErrorField:"email",
+                errorMessage:"Please enter valid email ID"
+            });
+            document.getElementById('email').style.borderColor="red";
+        }
+        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
+            this.setState({
+                lastErrorField:"phoneNumber",
+                errorMessage:"Please enter valid mobile number"
+            });
+            document.getElementById('phoneNumber').style.borderColor="red";
+        }
+        else if(this.state.addressLine_1===null){
+            this.setState({
+                lastErrorField:"addressLine_1",
+                errorMessage:"Please enter Address Line 1"
+            });
+            document.getElementById('addressLine_1').style.borderColor="red";
+        }
+        else if(this.state.pincode===null){
+            this.setState({
+                lastErrorField:"pincode",
+                errorMessage:"Please enter pincode"
+            });
+            document.getElementById('pincode').style.borderColor="red";
+        }
+        else if(this.state.selectedLocality===null){
+            this.setState({
+                lastErrorField:"selectedLocality",
+                errorMessage:"Please select locality"
+            });
+            document.getElementById('selectedLocality').style.borderColor="red";
+        }
+        else if(this.state.state===null){
+            this.setState({lastErrorField:"state"});
+            document.getElementById('state').style.borderColor="red";
+        }
+        else if(this.state.city===null){
+            this.setState({lastErrorField:"city"});
+            document.getElementById('city').style.borderColor="red";
+        }
+        else if(this.state.district===null){
+            this.setState({lastErrorField:"district"});
+            document.getElementById('district').style.borderColor="red";
+        }
+        else if(this.state.country===null){
+            this.setState({lastErrorField:"country"});
+            document.getElementById('country').style.borderColor="red";
+        }
+        else{
+            document.getElementById('confirmPassword').style.borderColor="#d2d6de";
+            document.getElementById('firstName').style.borderColor="#d2d6de";
+            document.getElementById('gender').style.borderColor="#d2d6de";
+            document.getElementById('role').style.borderColor="#d2d6de";
+            document.getElementById('addressLine_1').style.borderColor="#d2d6de";
+            document.getElementById('pincode').style.borderColor="#d2d6de";
+            document.getElementById('selectedLocality').style.borderColor="#d2d6de";
+            document.getElementById('state').style.borderColor="#d2d6de";
+            document.getElementById('city').style.borderColor="#d2d6de";
+            document.getElementById('district').style.borderColor="#d2d6de";
+            document.getElementById('country').style.borderColor="#d2d6de";
+            document.getElementById('identityProof').style.borderColor="#d2d6de";
+            document.getElementById('email').style.borderColor="#d2d6de";
+            document.getElementById('phoneNumber').style.borderColor="#d2d6de";
         const user={
                 firstName:this.props.user.firstName,
                 lastName:this.state.lastName,
@@ -54,9 +162,14 @@ class UserDetailsForm extends Component {
             }
         console.log(user);
         this.props.saveUser(user);
+        }
     }
     handleChange=({target})=>{
         this.setState({ [target.id]: target.value });
+        if(this.state.lastErrorField!==null){
+            document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
+            this.setState({errorMessage:null})
+        }
         if(target.id==="pincode" && target.value.length===6){
             this.setState({spinner:true});
             axios.get("https://api.postalpincode.in/pincode/"+target.value)
@@ -88,7 +201,6 @@ class UserDetailsForm extends Component {
                     identityProof:file,
                     localImageUrl:reader.result
                 })
-                console.log(this.state.localImageUrl,this.state.identityProof);
             }
             reader.readAsDataURL(file)
         }
@@ -181,6 +293,10 @@ class UserDetailsForm extends Component {
                         <td><input class="form-control" type="text" id="phoneNumber" onChange={this.handleChange}/></td>
                     </tr>
                     <tr>
+                        <td>Confirm password : </td>
+                        <td><input class="form-control" type="text" id="confirmPassword" onChange={this.handleChange}/></td>
+                    </tr>
+                    <tr>
                         <td>Upload Identity proof : </td>
                         <td><input class="form-control" type="file" id="identityProof" accept="image/x-png,image/jpeg" onChange={this.handleChange}/></td>
                         <td colSpan="2">{this.state.localImageUrl?<div>Id proof preview:</div>:null}</td>
@@ -191,9 +307,14 @@ class UserDetailsForm extends Component {
                         <td colSpan="2">{this.state.localImageUrl?<img width="80%" height="100%" src={this.state.localImageUrl} alt="pic"/>:null}</td>
                     </tr>
                     <tr>
+                    <td colSpan="3"><div style={{color:"red",fontSize:"15px",marginBottom:"5px"}}>
+                                       {this.state.errorMessage}
+                                    </div></td>
+                    </tr>
+                    <tr>
                         <td></td>
-                        <td><button type="button" class="btn btn-success" onClick={()=>this.submitClicked()}>Submit</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="resetForm()">Cancel</button></td>
+                        <td><button type="button" class="btn btn-success" onClick={(e)=>this.submitClicked(e)}>Submit</button></td>
+                        <td><button type="button" class="btn btn-danger" onClick="resetForm()">Cancel</button></td>
                     </tr>
                     <div class="btn-group" role="group" >
                    
