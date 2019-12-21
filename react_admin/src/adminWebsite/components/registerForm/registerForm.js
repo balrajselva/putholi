@@ -31,6 +31,8 @@ class registerForm extends Component {
     }
 
     submitClicked=()=>{
+        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
         if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
@@ -105,14 +107,14 @@ class registerForm extends Component {
             });
             document.getElementById('identityProof').style.borderColor="red";
         }
-        else if(this.state.email===null){
+        else if(this.state.email===null || !emailRegex.test(this.state.email)){
             this.setState({
                 lastErrorField:"email",
                 errorMessage:"Please enter valid email ID"
             });
             document.getElementById('email').style.borderColor="red";
         }
-        else if(this.state.phoneNumber===null || this.state.phoneNumber.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)){
+        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
             this.setState({
                 lastErrorField:"phoneNumber",
                 errorMessage:"Please enter valid mobile number"

@@ -40,7 +40,8 @@ class RegistrationPage extends Component {
             comments:"",
             password:"",
         },
-        userDetailsForm:false
+        userDetailsForm:false,
+        spinner:false
         };
     toggleModal = () => {
     this.setState({ showModal: !this.state.showModal });
@@ -75,6 +76,7 @@ class RegistrationPage extends Component {
         })
     }
     handleSubmit=(email, password)=>{
+        this.setState({spinner:true})
         console.log(password);
         let user={
             emailAddress:email,
@@ -97,11 +99,12 @@ class RegistrationPage extends Component {
                     onLoginFacebook={this.handleLoginWithFacebook}
                     onSignupEmail={this.handleSignupByEmail}
                     onLoginEmail={this.handleSubmit}
+                    emailRegex={/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/}
                 />
                 {
                     this.state.userDetailsForm?<UserDetailsForm user={this.state.user} saveUser={(user)=>this.saveUser(user)}/>:null
                 }
-                {this.state.progressVisible?window.alert(<CircularProgress class="class"/>):null}
+                {this.state.spinner?<div class="spinner" style={{background:"grey"}}></div>:null}
             </div>
         );
     }

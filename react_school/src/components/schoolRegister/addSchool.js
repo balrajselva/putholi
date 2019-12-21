@@ -58,7 +58,7 @@ class AddSchool extends Component {
       })
     }
     handleChange=({target})=>{
-      document.getElementById(target.id).style.borderColor="#d2d6de";
+
       this.setState({ 
           [target.id]: target.value , 
           lastErrorField:null,
@@ -119,8 +119,7 @@ class AddSchool extends Component {
   }
   currentPincode=()=>{
       if(this.state.pincode!=null && this.state.pincode.length!=6){
-          this.setState({pinCode:""});
-          document.getElementById("pincode").value="";
+          this.setState({pinCode:""})
       }
   }
   addRequirement=(e)=>{
@@ -165,6 +164,10 @@ class AddSchool extends Component {
          axios.post("http://localhost:6060/puthuyir/lookup/save",lookup)
          .then(res=>{
             console.log(res.data);
+            window.alert("School added sucessfully!")
+         })
+         .catch(error=>{
+            window.alert("Update failed due to "+error);
          })
       } 
       else if(hasError===null){
@@ -187,135 +190,99 @@ class AddSchool extends Component {
    }
    handleSubmit=(e)=>{
       e.preventDefault();
-      if(this.state.lastErrorField!==null)
-            document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
+      var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+      var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.schoolRegNum===null ){
             this.setState({
                 lastErrorField:"schoolRegNum",
                 errorMessage:"Please provide School Registration number"
             });
-            document.getElementById('schoolRegNum').style.borderColor="red";
+      
         }
         else if(this.state.schoolName===null){
             this.setState({
                 lastErrorField:"schoolName",
                 errorMessage:"Please enter school name"
         });
-            document.getElementById('schoolName').style.borderColor="red";
+      
         }
         else if(this.state.schoolType===null){
             this.setState({
                 lastErrorField:"schoolType",
                 errorMessage:"Please select school type"
             });
-            document.getElementById('schoolType').style.borderColor="red";
+      
         }
         else if(this.state.numOfStudents===null){
             this.setState({
                 lastErrorField:"numOfStudents",
                 errorMessage:"Please provide number of students"
             });
-            document.getElementById('numOfStudents').style.borderColor="red";
+      
         }
         else if(this.state.numOfTeachers===null){
          this.setState({
              lastErrorField:"numOfTeachers",
              errorMessage:"Please provide number of teachers"
          });
-         document.getElementById('numOfTeachers').style.borderColor="red";
-     }
+   
+         }
+         else if(this.state.secondaryConMail===null || !emailRegex.test(this.state.secondaryConMail)){
+            this.setState({
+               lastErrorField:"secondaryConMail",
+               errorMessage:"Please provide valid secondary contact email"
+            });
+         }
+         else if(this.state.secondaryConName===null){
+               this.setState({
+                  lastErrorField:"secondaryConName",
+                  errorMessage:"Please provide secondary contact name"
+               });
+         }
+         else if(this.state.secondaryConNum===null || !mobNumRegex.test(this.state.secondaryConNum)){
+            this.setState({
+               lastErrorField:"secondaryConNum",
+               errorMessage:"Please provide valid secondary contact mobile number"
+            });
+         }
         else if(this.state.addressLine_1===null){
             this.setState({
                 lastErrorField:"addressLine_1",
                 errorMessage:"Please enter Address Line 1"
             });
-            document.getElementById('addressLine_1').style.borderColor="red";
+      
         }
         else if(this.state.pincode===null){
             this.setState({
                 lastErrorField:"pincode",
                 errorMessage:"Please enter pincode"
             });
-            document.getElementById('pincode').style.borderColor="red";
+      
         }
         else if(this.state.selectedLocality===null){
             this.setState({
                 lastErrorField:"selectedLocality",
                 errorMessage:"Please select locality"
             });
-            document.getElementById('selectedLocality').style.borderColor="red";
-        }
-        else if(this.state.state===null){
-            this.setState({lastErrorField:"state"});
-            document.getElementById('state').style.borderColor="red";
-        }
-        else if(this.state.city===null){
-            this.setState({lastErrorField:"city"});
-            document.getElementById('city').style.borderColor="red";
-        }
-        else if(this.state.district===null){
-            this.setState({lastErrorField:"district"});
-            document.getElementById('district').style.borderColor="red";
-        }
-        else if(this.state.country===null){
-            this.setState({lastErrorField:"country"});
-            document.getElementById('country').style.borderColor="red";
-        }
+      
+         }
         else if(this.state.fileInput===null){
             this.setState({
                 lastErrorField:"fileInput",
                 errorMessage:"Please upload School Images"
             });
-            document.getElementById('fileInput').style.borderColor="red";
+      
         }
-        else if(this.state.secondaryConMail===null){
-            this.setState({
-                lastErrorField:"secondaryConMail",
-                errorMessage:"Please provide secondary contact email"
-            });
-            document.getElementById('secondaryConMail').style.borderColor="red";
-        }
-        else if(this.state.secondaryConName===null){
-            this.setState({
-                lastErrorField:"secondaryConName",
-                errorMessage:"Please provide secondary contact name"
-            });
-            document.getElementById('secondaryConName').style.borderColor="red";
-        }
-        else if(this.state.secondaryConNum===null){
-         this.setState({
-             lastErrorField:"secondaryConNum",
-             errorMessage:"Please provide secondary contact mobile number"
-         });
-         document.getElementById('secondaryConNum').style.borderColor="red";
-     }
+        
         else if(this.state.reqList===null){
          this.setState({
-             lastErrorField:"reqList",
+             lastErrorField:"req",
              errorMessage:"Please add atleast one requirement"
          });
-         document.getElementById('reqList').style.borderColor="red";
-     }
+         }
         else{
-            document.getElementById('schoolRegNum').style.borderColor="#d2d6de";
-            document.getElementById('schoolName').style.borderColor="#d2d6de";
-            document.getElementById('schoolType').style.borderColor="#d2d6de";
-            document.getElementById('numOfStudents').style.borderColor="#d2d6de";
-            document.getElementById('numOfTeachers').style.borderColor="#d2d6de";
-            document.getElementById('secondaryConMail').style.borderColor="#d2d6de";
-            document.getElementById('secondaryConNum').style.borderColor="#d2d6de";
-            document.getElementById('secondaryConName').style.borderColor="#d2d6de";
-            document.getElementById('addressLine_1').style.borderColor="#d2d6de";
-            document.getElementById('pincode').style.borderColor="#d2d6de";
-            document.getElementById('selectedLocality').style.borderColor="#d2d6de";
-            document.getElementById('state').style.borderColor="#d2d6de";
-            document.getElementById('city').style.borderColor="#d2d6de";
-            document.getElementById('district').style.borderColor="#d2d6de";
-            document.getElementById('country').style.borderColor="#d2d6de";
-            document.getElementById('fileInput').style.borderColor="#d2d6de";
-            document.getElementById('reqList').style.borderColor="#d2d6de";
-
-      let schoolDetails={
+         this.setState({spinner:true});
+         let schoolDetails={
          schoolInfo:{
             schoolRegNo:this.state.schoolRegNum,
             schoolName:this.state.schoolName,
@@ -355,8 +322,13 @@ class AddSchool extends Component {
          headers:{'Content-Type':'multipart/form-data'}
       })
       .then(res=>{
-         console.log(res)
+         console.log(res);
+         window.alert("School added sucessfully!")
       })
+      .catch(error=>{
+         window.alert("Failed due to "+error);
+      })
+      this.props.history.push("/index");
    }
    }
    getLookup=()=>{
@@ -561,7 +533,7 @@ class AddSchool extends Component {
                                     </div>
                                  </div>
                                  <div className="control-group">
-                                    <button className="input-large" onClick={(e)=>this.addRequirement(e)}>Add requirement</button>
+                                    <button className="input-large" id="req" onClick={(e)=>this.addRequirement(e)}>Add requirement</button>
                                     <div style={{color:"red",fontSize:"15px",marginTop:"5px"}}>
                                        {this.state.reqError}
                                     </div>
