@@ -204,19 +204,41 @@ CREATE TABLE IF NOT EXISTS revamp_db.requirement(
 
 DROP TABLE IF EXISTS revamp_db.donation;
 
-CREATE TABLE IF NOT EXISTS revamp_db.donation(
-	donation_id INT NOT NULL AUTO_INCREMENT,
-    project_id INT NOT NULL,
-    payment_mode VARCHAR(45) NOT NULL,
-    amount INT NOT NULL,
-    payment_status VARCHAR(45) NOT NULL,
-    createdate datetime(6) DEFAULT NULL,
-    created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-	PRIMARY KEY (donation_id),
-    CONSTRAINT FK_donation_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS revamp_db.donation (
+  `donation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `tracking_id` varchar(45) NOT NULL,
+  `payment_mode` varchar(45) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `donationuserid` int(11) NOT NULL,
+  `payment_status` varchar(45) NOT NULL,
+  `createdate` datetime(6) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`donation_id`),
+  KEY `FK_donation_project_id` (`project_id`),
+  KEY `FK_donation_donor_id` (`donationuserid`),
+  CONSTRAINT `FK_donation_donor_id` FOREIGN KEY (`donationuserid`) REFERENCES `donation_user` (`donationuserid`),
+  CONSTRAINT `FK_donation_project_id` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS revamp_db.donation_user;
+
+CREATE TABLE IF NOT EXISTS revamp_db.donation_user (
+  `donationuserid` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(45) NOT NULL,
+  `lastname` varchar(45) NOT NULL,
+  `phonenumber` varchar(45) DEFAULT NULL,
+  `emailaddress` varchar(45) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `passwordhint` varchar(500) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(45) DEFAULT NULL,
+  `modified_by` varchar(45) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`donationuserid`)
 );
 
 DROP TABLE IF EXISTS revamp_db.quotation;
