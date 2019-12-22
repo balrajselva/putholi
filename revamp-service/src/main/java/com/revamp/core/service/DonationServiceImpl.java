@@ -56,5 +56,11 @@ public class DonationServiceImpl implements DonationService {
 	public Donation donate (DonationPayLoad donationPayLoad) {
 		return null;
 	}
+	
+	@Transactional
+	public Donation savePaymentUser(Donation donation) {
+		return donationRepository.save(donation);
+		
+	}
 
 }
