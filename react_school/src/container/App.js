@@ -12,6 +12,12 @@ import BlogPage from '../Page/BlogPage';
 import GalleryPage from '../Page/GalleryPage';
 import RegistrationPage from '../Page/RegistrationPage';
 import SchoolRegistrationPage from '../Page/SchoolRegistrationPage';
+import Donation  from '../Page/Donation';
+import DonationDetails from '../components/donation/details';
+import DonationForm from '../components/donation/donateForm';
+import DonationPayment from '../components/donation/donationPayment';
+import DonationConfirmationPage from '../components/donation/paymentConfirmationPage';
+
 
 function App() {
   
@@ -26,6 +32,12 @@ function App() {
           <Route path="/gallery" component={()=><GalleryPage  />}/>
           <Route path="/schoolregistration" component={()=><SchoolRegistrationPage/>}/>
           <Route path="/registrationPage" component={()=><RegistrationPage/>}/>
+          <Route path="/donation" component={()=><Donation/>}/>
+          <Route path="/donationDetails" component={()=><DonationDetails/>}/>
+          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>  
+          <Route path="/donationPayment" component={()=><DonationPayment/>}/>         
+          <Route path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage/>}/>  
+         
           
         </Switch>
       </Router>
