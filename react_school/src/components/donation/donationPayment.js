@@ -31,7 +31,7 @@ paymentMode:'CASH'
   .then(response => {
      this.props.history.push({
        pathname: '/donationPaymentConfirmation',
-       user: paymentUserPayload,
+       user: response.data,
       });
     })
   
