@@ -9,6 +9,7 @@ import '../css/skins/tango/skin.css';
 import '../css/Page_CSS/IndexPage.css';
 import SocialMediaComponent from '../components/SocialMediaComponent.js';
 import OnHoverDropDownComponent from '../components/OnHoverDropDownComponent.js';
+import { withRouter } from 'react-router';
 
 class HeaderComponent extends Component {
     
@@ -70,4 +71,4 @@ class HeaderComponent extends Component {
     }
 }
 
-export default HeaderComponent;
+export default withRouter(HeaderComponent);

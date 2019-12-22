@@ -67,7 +67,7 @@ public class SchoolServiceImpl implements SchoolService {
 	
 	private void setUser(School school) {
 		//TODO: currently cd it is hard coded to User ID 2.
-		User beneUser = this.userRepository.findById((long) 2).orElse(null);
+		User beneUser = this.userRepository.findById(school.getUser().getUserid()).orElse(null);
 	
 		school.setUser(beneUser);
 		school.getRequirements().forEach(req -> {

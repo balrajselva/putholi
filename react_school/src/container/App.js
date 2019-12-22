@@ -1,8 +1,7 @@
-import React from 'react';
+import React,{Component} from 'react';
 import './App.css';
 import {withRouter,Router,Switch} from 'react-router-dom';
 import history from './history';
-
 import Route from 'react-router-dom/Route';
 
 import IndexPage from '../Page/IndexPage';
@@ -11,44 +10,46 @@ import AboutPage from '../Page/AboutPage';
 import BlogPage from '../Page/BlogPage';
 import GalleryPage from '../Page/GalleryPage';
 import RegistrationPage from '../Page/RegistrationPage';
-import SchoolRegistrationPage from '../Page/SchoolRegistrationPage';
 import Donation  from '../Page/Donation';
-import HeaderComponent from '../components/HeaderComponent';
-import FooterComponent from '../components/FooterComponent';
 import DonationDetails from '../components/donation/details';
 import DonationForm from '../components/donation/donateForm';
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
+import SchoolLayout from '../components/layouts/schoolLayout';
 
-function App() {
-  
+class App extends Component {
+  render(){
+  const SchoolLayoutRoute=({component:Component,...rest})=>{
+    return(
+      <Route {...rest} render={props=>(
+        <SchoolLayout {...props}>
+          <Component {...props}/>
+        </SchoolLayout>
+      )}/>
+    )
+  }
   return (
     <div>   
-      
       <Router history={history}>
-        <HeaderComponent/>
         <Switch>
-          <Route path="/index" component={()=><IndexPage  />}/>
-          <Route path="/about" component={()=><AboutPage  />}/>
-          <Route path="/features" component={()=><FeaturesPage  />}/>
-          <Route path="/blog" component={()=><BlogPage  />}/>
-          <Route path="/gallery" component={()=><GalleryPage  />}/>
-          <Route path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
-          <Route path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
-          <Route path="/confirm" component={()=><ConfirmationPage/>}/>
-          <Route path="/donation" component={()=><Donation/>}/>
-          <Route path="/donationDetails" component={()=><DonationDetails/>}/>
-          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>  
-          <Route path="/trackDonation" component={()=><TrackDonationPage/>}/>         
-          
+          <SchoolLayoutRoute path="/index" component={()=><IndexPage  />}/>
+          <SchoolLayoutRoute path="/about" component={()=><AboutPage  />}/>
+          <SchoolLayoutRoute path="/features" component={()=><FeaturesPage  />}/>
+          <SchoolLayoutRoute path="/blog" component={()=><BlogPage  />}/>
+          <SchoolLayoutRoute path="/gallery" component={()=><GalleryPage  />}/>
+          <SchoolLayoutRoute path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
+          <SchoolLayoutRoute path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
+          <SchoolLayoutRoute path="/confirm" component={()=><ConfirmationPage/>}/>
+          <SchoolLayoutRoute path="/donation" component={()=><Donation/>}/>
+          <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails/>}/>
+          <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm/>}/>       
+          <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation/>}/>             
         </Switch>
-<FooterComponent/>
       </Router>
-      
     </div>
-
   );
+  }
 }
 
 export default withRouter(App);

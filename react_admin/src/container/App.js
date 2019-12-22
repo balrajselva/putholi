@@ -5,7 +5,6 @@ import history from './history';
 import axios from 'axios';
 
 import Route from 'react-router-dom/Route';
-import AdminIndex from '../adminWebsite/adminIndex';
 import SponsorLayout from '../adminWebsite/components/layouts/SponsorLayout';
 import AdminLayout from '../adminWebsite/components/layouts/AdminLayout';
 import AdminNewSchoolReview from '../adminWebsite/adminNewSchoolReview';

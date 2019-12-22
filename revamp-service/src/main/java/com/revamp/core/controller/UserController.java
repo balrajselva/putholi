@@ -1,7 +1,9 @@
 package com.revamp.core.controller;
 
+import com.revamp.core.model.School;
 import com.revamp.core.model.User;
 import com.revamp.core.response.UserResponse;
+import com.revamp.core.service.SchoolService;
 import com.revamp.core.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +25,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	private UserResponse userResponse;
+
+	@Autowired
+	private SchoolService schoolService;
 
 	//---Register user---
 	/**
@@ -126,6 +131,8 @@ public class UserController {
 		System.out.println(login);
 		User user=userService.findByEmailAddressPassword(login.getEmailAddress(),login.getPassword());
 		System.out.println(user);
+//			List<School> school=schoolService.getByUserId(user.getUserid());
+//			System.out.println(school);
 		return ResponseEntity.ok().body(user);
 	}
 

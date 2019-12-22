@@ -4,6 +4,7 @@ import './style.css';
 import '../../css/School_registration.css';
 import Tabs from '../../components/Tabs/Tabs';
 import axios from 'axios';
+import EditRequirements from './EditRequirements';
 
 class AddSchool extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class AddSchool extends Component {
       secondaryConMail:null,
       schoolRegistration:null,
       addressLine_2:null,
-      pinCode:null,
+      pincode:null,
       locality:null,
       selectedLocality:null,
       district:null,
@@ -46,6 +47,7 @@ class AddSchool extends Component {
       reqList:[],
       addReq:false,
       getLookup:true,
+      lastPincode:null,
       assetTypeList:null,
       assetNameList:null,
       reqError:null
@@ -66,7 +68,7 @@ class AddSchool extends Component {
           errorMessage:null
       });
       if(target.id==="pincode" && target.value.length===6){
-          this.setState({spinner:true});
+          this.setState({spinner:true,lastPincode:target.value});
           axios.get("https://api.postalpincode.in/pincode/"+target.value)
           .then(res=>{
               console.log(res);
@@ -119,7 +121,10 @@ class AddSchool extends Component {
   }
   currentPincode=()=>{
       if(this.state.pincode!=null && this.state.pincode.length!=6){
-          this.setState({pinCode:""})
+          this.setState({pincode:""})
+      }
+      if(this.state.selectedLocality!==null && this.state.pincode.length < 6){
+         this.setState({pincode:this.state.lastPincode});
       }
   }
   addRequirement=(e)=>{
@@ -308,7 +313,8 @@ class AddSchool extends Component {
             image:this.state.fileInput,
             comments:this.state.comments,
          },
-         requirements:this.state.reqList
+         requirements:this.state.reqList,
+         user:this.props.location.user
       }
       console.log(schoolDetails);
       var regFormModel=new FormData();
@@ -319,12 +325,13 @@ class AddSchool extends Component {
       })
       .then(res=>{
          console.log(res);
-         window.alert("School added sucessfully!")
+         window.alert("School added sucessfully!");
+         this.props.history.push("/index");
       })
       .catch(error=>{
          window.alert("Failed due to "+error);
+         this.props.history.push("/index");
       })
-      this.props.history.push("/index");
    }
    }
    getLookup=()=>{
@@ -440,7 +447,7 @@ class AddSchool extends Component {
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Pincode</label>
                                     <div className="controls">
-                                       <input type="text" className="input-xlarge" id="pincode" value={this.state.pinCode} onChange={this.handleChange}></input>
+                                       <input type="text" className="input-xlarge" id="pincode" value={this.state.pincode} onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -580,59 +587,7 @@ class AddSchool extends Component {
                            </div>
                         </div>
                            
-                        <div label="Edit Requirements">
-                           <div className="row">
-                              <div className="span10">
-                                 <div className="control-group">
-                                    <label className="control-label" for="select01">Requirement Type</label>
-                                    <div className="controls">
-                                       <select id="projType" disabled="">
-                                          <option>New</option>
-                                       </select>
-                                    </div>
-                                 </div>
-                                 <div className="control-group">
-                                    <table className="table table-bordered table-striped">
-                                       <thead>
-                                          <tr>
-                                             <th>S.No</th>
-                                             <th>Project Type</th>
-                                             <th>Asset Type</th>
-                                             <th>Asset Name</th>
-                                             <th>Quantity</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody>
-                                          <tr>
-                                             <td><button type="button" className="dark_btn">Edit</button>
-                                             </td>
-                                             <td>New</td>
-                                             <td>Sports</td>
-                                             <td>Football</td>
-                                             <td>10</td>
-                                          </tr>
-                                          <tr>
-                                             <td><button type="button" className="dark_btn">Edit</button>
-                                             </td>
-                                             <td>New</td>
-                                             <td>Infrastructure</td>
-                                             <td>Chairs</td>
-                                             <td>10</td>
-                                          </tr>
-                                          <tr>
-                                             <td><button type="button" className="dark_btn">Edit</button>
-                                             </td>
-                                             <td>New</td>
-                                             <td>Infrastructure</td>
-                                             <td>Bathroom</td>
-                                             <td>5</td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
-                           </div>                   
-                        </div>
+                        <EditRequirements {...this.props}/>
                         </Tabs>
                         <div class="form-actions">
                            <div style={{color:"red",fontSize:"15px",marginBottom:"5px"}}>
