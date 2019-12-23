@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS revamp_db.school(
     address_id INT NOT NULL,
     school_info_id INT NOT NULL,
     school_status VARCHAR(45) NOT NULL,
-    /**user_id INT NOT NULL,*/
+    /*user_id INT NOT NULL,*/
 	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
 	created_date datetime DEFAULT NULL,
   	created_by varchar(45) DEFAULT NULL,
@@ -185,7 +185,7 @@ DROP TABLE IF EXISTS revamp_db.requirement;
 CREATE TABLE IF NOT EXISTS revamp_db.requirement(
   requirement_id int NOT NULL AUTO_INCREMENT,
   project_id int NOT NULL,
-  user_id int NOT NULL,
+  /*user_id int NOT NULL,*/
   reqtype varchar(45) NOT NULL,
   assettype varchar(45) NOT NULL,
   assetname varchar(45) NOT NULL,
@@ -194,12 +194,12 @@ CREATE TABLE IF NOT EXISTS revamp_db.requirement(
   date_created datetime DEFAULT CURRENT_TIMESTAMP,
   priority varchar(45) DEFAULT NULL,
   created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
+  created_by varchar(45) DEFAULT NULL,
+  modified_by varchar(45) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
   PRIMARY KEY (requirement_id),
-  CONSTRAINT project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user (userid)
+  CONSTRAINT project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
+  /*CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user (userid)*/
 );
 
 
@@ -207,17 +207,20 @@ DROP TABLE IF EXISTS revamp_db.donation;
 
 CREATE TABLE IF NOT EXISTS revamp_db.donation(
 	donation_id INT NOT NULL AUTO_INCREMENT,
-    project_id INT NOT NULL,
-    payment_mode VARCHAR(45) NOT NULL,
-    amount INT NOT NULL,
-    payment_status VARCHAR(45) NOT NULL,
-    createdate datetime(6) DEFAULT NULL,
-    created_date datetime DEFAULT NULL,
+	project_id INT NOT NULL,
+	tracking_id VARCHAR(45) NOT NULL,
+	payment_mode VARCHAR(45) NOT NULL,
+	amount INT NOT NULL,
+	donor_id INT NOT NULL,
+	payment_status VARCHAR(45) NOT NULL,
+	createdate datetime(6) DEFAULT NULL,
+	created_date datetime DEFAULT NULL,
   	created_by varchar(45) DEFAULT NULL,
   	modified_by varchar(45) DEFAULT NULL,
   	modified_date datetime DEFAULT NULL,
 	PRIMARY KEY (donation_id),
-    CONSTRAINT FK_donation_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
+	CONSTRAINT FK_donation_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
+	CONSTRAINT FK_donation_donor_id FOREIGN KEY (donor_id) REFERENCES USER (userid) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS revamp_db.quotation;
@@ -265,8 +268,8 @@ CREATE TABLE IF NOT EXISTS revamp_db.fundallotment(
   	modified_by varchar(45) DEFAULT NULL,
   	modified_date datetime DEFAULT NULL,
 	PRIMARY KEY (fundallotment_id),
-    CONSTRAINT FK_fundallotment_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id),
-    CONSTRAINT FK_fundallotment_user_id FOREIGN KEY (userid) REFERENCES user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT FK_fundallotment_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id)
+    /*CONSTRAINT FK_fundallotment_user_id FOREIGN KEY (userid) REFERENCES user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION*/
 );
 
 DROP TABLE IF EXISTS revamp_db.invoice;

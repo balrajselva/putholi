@@ -1,25 +1,31 @@
 package com.revamp.core.service;
 
-import com.revamp.core.dao.DonationRepository;
-import com.revamp.core.dao.ProjectRepository;
-import com.revamp.core.dao.UserRepository;
-import com.revamp.core.model.Donation;
-import com.revamp.core.model.Project;
-import com.revamp.core.payload.DonationPayLoad;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.revamp.core.converter.TrackDonationConverter;
+import com.revamp.core.dao.DonationRepository;
+import com.revamp.core.dao.ProjectRepository;
+import com.revamp.core.dao.UserRepository;
+import com.revamp.core.dto.TrackDonationDTO;
+import com.revamp.core.model.Donation;
+import com.revamp.core.model.Project;
+import com.revamp.core.payload.DonationPayLoad;
+import com.revamp.core.payload.TrackDonationResponsePayLoad;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class DonationServiceImpl implements DonationService {
 
+	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	
 	@Autowired
 	private DonationRepository donationRepository;
 
-	
 	@Autowired
 	private ProjectRepository projectRepository;
 
@@ -29,6 +35,7 @@ public class DonationServiceImpl implements DonationService {
 	@Transactional
 	@Override
 	public Donation donate(Donation donation) {
+		donation.setTracking_id(this.getTrackingId()+"-"+donation.getDonor().getUserid());
 		this.donationRepository.save(donation);
 		Optional<Project> project = this.projectRepository.findById(donation.getProject().getProjectId());
 		if(project.isPresent()) {
@@ -37,6 +44,22 @@ public class DonationServiceImpl implements DonationService {
 			this.projectRepository.save(dbProject);
 		}
 		return donation;
+	}
+	
+	public TrackDonationResponsePayLoad findMyDonation(String trackingId) {
+		List<TrackDonationDTO> list = donationRepository.findByTrackingId(trackingId); 
+		TrackDonationConverter converter = new TrackDonationConverter();
+		return converter.convert(list);
+	}
+	
+	private String getTrackingId() {
+		StringBuilder builder = new StringBuilder();
+		int count=8;
+		while (count-- != 0) {
+		int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+		builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+		}
+		return builder.toString();
 	}
 	
 	private void setUpdatedProject(Project dbProject, Donation donation) {
