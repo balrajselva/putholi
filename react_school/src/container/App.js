@@ -39,10 +39,11 @@ function App() {
           <Route path="/confirm" component={()=><ConfirmationPage/>}/>
           <Route path="/donation" component={()=><Donation/>}/>
           <Route path="/donationDetails" component={()=><DonationDetails/>}/>
-          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>       
-          <Route path="/trackDonation" component={()=><TrackDonation/>}/>             
+          <Route path="/donationRegistrationForm" component={()=><DonationForm/>}/>  
+          <Route path="/trackDonation" component={()=><TrackDonationPage/>}/>         
+          
         </Switch>
-        <FooterComponent/>
+<FooterComponent/>
       </Router>
       
     </div>

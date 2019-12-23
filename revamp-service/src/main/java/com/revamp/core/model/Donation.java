@@ -69,6 +69,7 @@ public class Donation extends AuditableEntity implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 
+	@Column(name = "tracking_id")
+	private String tracking_id;
 	
-
 }
