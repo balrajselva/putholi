@@ -51,18 +51,11 @@ class Donation extends Component {
     </div>
     <div className="wrap">
            <div className="container inner_content">
-         
-   {/* <SearchBox placeholder = 'Donation'
-           handleEvent = {e => this.setState({searchField : e.target.value})}/>
-     */}
         <DonationList donationList = {filteredDonationList}/>
-      
         
  </div>
  </div>
  </div>
- 
-        
      )
  }  
 
