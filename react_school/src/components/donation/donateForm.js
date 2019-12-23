@@ -69,7 +69,8 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "projectId": this.props.history.location.state.state[0].projects[0].projectId
+        "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+        "requirements": this.props.history.location.state.state[0].requirements
       }
 
       if (isValid) {
@@ -101,11 +102,10 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "projectId": this.props.history.location.state.state[0].projects[0].projectId
+        "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+        "requirements": this.props.history.location.state.state[0].requirements
       }
-      params = {
-        emailAddress: data.get('email'),
-      }
+
 
       if (isValid) {
 
@@ -153,32 +153,23 @@ class DonationForm extends Component {
       });
 
       if (flagOption === "2") {
-        params = {
-          firstName: data.get('firstName'),
-          lastName: data.get('lastName'),
-          emailAddress: data.get('email'),
-          phoneNumber: data.get('phoneNumber'),
-          password: data.get('passwordOption')
+        if (this.state.isRegisteredClicked === "1") {
+          params = {
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
+            emailAddress: data.get('email'),
+            phoneNumber: data.get('phoneNumber'),
+            password: data.get('passwordOption')
+          }
+        } else {
+          params = {
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
+            emailAddress: data.get('email'),
+            phoneNumber: data.get('phoneNumber'),
+            password: ''
+          }
         }
-
-        // if (localStorage.getItem('emailFlag') === "FAILURE") {
-
-        //   requestJSON = [
-        //     {
-
-        //       contribution: data.get('contribution'),
-        //       firstName: JSON.parse(localStorage.getItem('LoginInforValidation')).firstName,
-        //       lastName: JSON.parse(localStorage.getItem('LoginInforValidation')).lastName,
-        //       phoneNumber: JSON.parse(localStorage.getItem('LoginInforValidation')).phoneNumber,
-        //       email: JSON.parse(localStorage.getItem('LoginInforValidation')).emailAddress,
-        //       schoolName: this.props.history.location.state.state[0].schoolInfo.schoolName,
-        //       projectId: this.props.history.location.state.state[0].projects[0].projectId
-        //     }
-        //   ]
-
-        //   this.props.history.push('donationPayment', { state: requestJSON });
-        // }
-
 
       }
 
@@ -220,7 +211,7 @@ class DonationForm extends Component {
       else if (data.get('password').length === 0) {
         passwordError = "Please enter the password";
       }
-     
+
 
       if (userNameError) {
         this.setState({
@@ -240,7 +231,7 @@ class DonationForm extends Component {
     }
 
     if (this.state.isClicked === "2") {
-       if (data.get('firstName').length === 0) {
+      if (data.get('firstName').length === 0) {
         firstNameError = "Please enter the firstName";
       }
 
@@ -261,7 +252,7 @@ class DonationForm extends Component {
         passwordError = "Please enter the password";
       }
 
-     
+
 
       if (firstNameError) {
         this.setState({
@@ -348,7 +339,7 @@ class DonationForm extends Component {
 
 
   render() {
-   
+
     return (
       <div>
         <div className="page_container">
@@ -471,17 +462,7 @@ class DonationForm extends Component {
                             </div>
                           </div>
                         </div>
-                        <div style={{ display: this.state.isAlreadyDonorRegistered }}>
-                          <div className="control-group success" id="multibn">
-                            <label className="control-label" for="inputSuccess">Password</label>
-                            <div className="controls">
-                              <input type="text" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
-                              <div style={{ fontSize: 12, color: "red" }}  >
-                                {this.state.passwordError}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+
 
 
                         <div className="control-group success" id="multibn">
@@ -506,6 +487,18 @@ class DonationForm extends Component {
                               </label>
                             </div>
                           </div>
+                          <div style={{ display: this.state.isAlreadyDonorRegistered }}>
+                            <div className="control-group success" id="multibn">
+                              <label className="control-label" for="inputSuccess">Password</label>
+                              <div className="controls">
+                                <input type="text" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
+                                <div style={{ fontSize: 12, color: "red" }}  >
+                                  {this.state.passwordError}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                           <div className="form-actions" id="multibn">
                             <button type="submit" className="btn send_btn">Go to Payment Gateway</button>
                             <button className="btn dark_btn">Cancel</button>
@@ -522,12 +515,6 @@ class DonationForm extends Component {
           </div>
         </div>
       </div>
-
-
-
-
-
-
 
     );
   }
