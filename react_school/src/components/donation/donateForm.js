@@ -70,12 +70,15 @@ class DonationForm extends Component {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+        "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
+        "collectedAmount":data.get('yourContribution'),
+        "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
         "requirements": this.props.history.location.state.state[0].requirements
       }
 
       if (isValid) {
 
-        axios.post('http://localhost:6060/puthuyir/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
+        axios.post('http://localhost:8088/puthuyir/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
           .then((response) => {
             if (response.data.emailAddress === "email") {
               this.setState({
@@ -103,6 +106,9 @@ class DonationForm extends Component {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+        "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
+        "collectedAmount": data.get('yourContribution'),
+        "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
         "requirements": this.props.history.location.state.state[0].requirements
       }
 
@@ -378,7 +384,7 @@ class DonationForm extends Component {
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">Collected Amount</label>
                         <div className="controls">
-                          <input readOnly className="input-xlarge disabled" id="disabledInput" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
+                          <input readOnly className="input-xlarge disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
                         </div>
 
                       </div>
@@ -505,6 +511,8 @@ class DonationForm extends Component {
                           </div>
                         </div>
                       </div>
+
+
                     </fieldset>
                   </form>
                 </div>
@@ -513,6 +521,13 @@ class DonationForm extends Component {
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
     );
   }
 
