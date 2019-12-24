@@ -38,7 +38,7 @@ public class SchoolServiceImpl implements SchoolService {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
-		school.setStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
+		school.setSchoolStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
 		if (files != null && files.size() > 0) {
 
 			files.forEach((k,v) -> {

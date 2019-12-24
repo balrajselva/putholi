@@ -111,7 +111,6 @@ public class UserController {
 		userService.deleteUser(id);
 		return new ResponseEntity<>("DELETE Response", HttpStatus.OK);
 	}
-	
 
 	//---Register user---
 	/**
@@ -131,8 +130,8 @@ public class UserController {
 		System.out.println(login);
 		User user=userService.findByEmailAddressPassword(login.getEmailAddress(),login.getPassword());
 		System.out.println(user);
-//			List<School> school=schoolService.getByUserId(user.getUserid());
-//			System.out.println(school);
+//		List<School> school=schoolService.getByUserId(user.getUserid());
+//		System.out.println(school);
 		return ResponseEntity.ok().body(user);
 	}
 

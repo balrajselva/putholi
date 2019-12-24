@@ -116,7 +116,7 @@ class adminRoleCheck extends Component {
                               <div className="timeline-footer">
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
-                                <Link to={{pathname:"/accessReview", users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
+                                <Link to={{pathname:"/accessReview", users:this.state.users, user:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
                           </li>

@@ -54,9 +54,9 @@ public class SchoolController {
 			if (regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				schoolService.save(school, filesInBytes, imgPath);
+				long id = schoolService.save(school, filesInBytes,imgPath);
 			} else {
-				schoolService.save(school, null, imgPath);
+				long id = schoolService.save(school, null, imgPath);
 			}
 		} catch (IOException ex) {
 			logger.debug("Error on multiUploadFileModel {}", ex);
@@ -88,6 +88,7 @@ public class SchoolController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	
 	/**
 	 * 
 	 * @param school
@@ -99,7 +100,7 @@ public class SchoolController {
 	public ResponseEntity<List<School>> getAll(@RequestBody(required = false) School school,
 			HttpServletRequest request) {
 		List<School> schools = schoolService.getAll();
-		logger.info("All schools---{}", schools);
+		System.out.println("All schools---"+schools);
 		return ResponseEntity.ok().body(schools);
 	}
 
@@ -137,9 +138,10 @@ public class SchoolController {
 	}
 
 	@PostMapping("/school/saveDEOresponse")
-	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo) {
-		logger.info("deoInfo {}", deoInfo);
-		return ResponseEntity.ok().body(schoolService.saveDEOresponse(deoInfo));
+	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
+		System.out.println(deoInfo);
+		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
+		return ResponseEntity.ok().body(deoInfo1);
 	}
 
 }

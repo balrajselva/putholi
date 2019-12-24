@@ -65,12 +65,14 @@ class App extends Component {
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin />}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
-            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={()=><AdminNewSchoolReview/>}/>
-            <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={()=><AdminPendingWorkflow/>}/>
-            <AdminLayoutRoute path="/accessReview" history={history} component={()=><AdminAccessReview/>}/>
-            <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={()=><AdminSchoolCheck/>}/>
+            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>}/>
+            <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
+            <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
+            <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
+            <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
+            <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
             <Route path="/viewRequirements" history={history} component={()=><RequirementHome/>}/>}/>

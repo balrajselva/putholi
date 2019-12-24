@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
-import Menu from './components/menu/Menu';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
 import './css/adminMainPage.css';
 import { Link } from 'react-router-dom';
@@ -44,9 +41,9 @@ class adminAccessReview extends Component {
                 continue;
             else if(this.state.currentUser.role==="Approver" && (this.state.users[i].status==="AdminReviewed" || this.state.users[i].role==="Admin"||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver" ||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="New User") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="New User")))
                 continue;
-            else if(this.state.currentUser.role==="Super User" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperUserReviewed"))
+            else if(this.state.currentUser.role==="Super User" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].role==="beneficiary" || this.state.users[i].status==="SuperUserReviewed"))
                 continue;
-            else if(this.state.currentUser.role==="Super Admin" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="New User"))
+            else if(this.state.currentUser.role==="Super Admin" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].role==="beneficiary" || this.state.users[i].status==="New User"))
                 continue;
             else{
                 rowsUpdated=true;
