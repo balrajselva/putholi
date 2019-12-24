@@ -12,7 +12,9 @@ class DonationPayment extends Component {
       project: {
         projectId: this.props.history.location.user.projectId
       }
-    }
+    };
+     
+
     let donationUserIdPL = {
       donationuserid: {
         donationuserid: this.props.history.location.user.donationuserid
@@ -24,6 +26,29 @@ class DonationPayment extends Component {
       paymentStatus: 'PENDING',
       paymentMode: 'CASH'
     };
+    
+let projectUpdatePayload = {}
+var finalCollectedAmount = Number(this.props.history.location.user.contribution)+ Number(this.props.history.location.user.ContributionAmount);
+    
+    if ((Number(this.props.history.location.user.contribution < Number(this.props.history.location.user.collectedAmount)))) {
+      projectUpdatePayload={
+        
+          projectId: this.props.history.location.user.projectId,
+          estimate: this.props.history.location.user.estimate,
+          collectedAmount: finalCollectedAmount,
+                status:'PROJECT_INCOMPLETED'
+       
+      }
+    }
+    else{
+      projectUpdatePayload={
+          projectId: this.props.history.location.user.projectId,
+          estimate: this.props.history.location.user.estimate,
+          collectedAmount: finalCollectedAmount,
+          status:'PROJECT_COMPLETED'
+        
+      }
+    }
 
     var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload);
 
@@ -31,14 +56,17 @@ class DonationPayment extends Component {
       .then(response => {
         this.props.history.push({
           pathname: '/donationPaymentConfirmation',
-          user: response.data,
-        });
+           user: response.data,
+         });
+      })
+      axios.post('http://localhost:6060/puthuyir/project', projectUpdatePayload, { headers: { 'Accept': 'application/json' } })
+      .then(response => {
+      
       })
 
   }
   render() {
     const requirements = this.props.history.location.user.requirements;
-
     return (
 
       <div className="page_container">
