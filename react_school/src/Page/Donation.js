@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import HeaderComponent from '../components/HeaderComponent.js';
-import FooterComponent from '../components/FooterComponent';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom';
 import DonationList from '../components/donation/donationList';
 import {SearchBox} from '../components/search/searchComponent';
 import '../components/donation/donation_style.css'
@@ -17,7 +14,7 @@ class Donation extends Component {
      }
  
  componentDidMount() {
-    fetch('http://localhost:8088/puthuyir/school')
+    fetch('http://localhost:6060/puthuyir/school')
      .then(response => 
           response.json()) 
  .then(users => this.setState({ donationList: users }));
