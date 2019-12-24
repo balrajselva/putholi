@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -41,7 +42,6 @@ import lombok.ToString;
 @Proxy(lazy = false)
 @Getter
 @Setter
-@ToString
 public class Project extends AuditableEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5416628745442805358L;
