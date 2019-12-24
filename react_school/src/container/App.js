@@ -13,6 +13,8 @@ import RegistrationPage from '../Page/RegistrationPage';
 import Donation  from '../Page/Donation';
 import DonationDetails from '../components/donation/details';
 import DonationForm from '../components/donation/donateForm';
+import DonationPayment from '../components/donation/donationPayment';
+import DonationConfirmationPage from '../components/donation/paymentConfirmationPage';
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
