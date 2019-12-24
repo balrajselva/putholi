@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import HeaderComponent from '../components/HeaderComponent.js';
-import FooterComponent from '../components/FooterComponent';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom';
 import DonationList from '../components/donation/donationList';
 import {SearchBox} from '../components/search/searchComponent';
 import '../components/donation/donation_style.css'
@@ -24,10 +21,6 @@ class Donation extends Component {
  
  }
  
-   
- 
-  
- 
  render() {
        const { donationList,searchField} = this.state;
        var filteredDonationList = '';
@@ -40,7 +33,7 @@ class Donation extends Component {
 
        
        return (
-           <div>
+          
                 <div className="page_container">
         <div className="breadcrumb">
         <div className="wrap">
@@ -49,22 +42,14 @@ class Donation extends Component {
         </div>
         </div>
     </div>
-           <div className="page_container">
-         <div className='card-list'>
-   <div className='donation-container'>
-   <SearchBox placeholder = 'Donation'
-           handleEvent = {e => this.setState({searchField : e.target.value})}/>
-    
+    <div className="wrap">
+           <div className="container inner_content">
         <DonationList donationList = {filteredDonationList}/>
-      
-        
+ </div>
+ </div>
  </div>
  
-         </div>
-         </div>
-         </div>
-         </div>
-         
+        
      )
  }  
 
