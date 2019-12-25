@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DonationList from '../components/donation/donationList';
-import {SearchBox} from '../components/search/searchComponent';
 import '../components/donation/donation_style.css'
 class Donation extends Component {
 
@@ -14,7 +13,7 @@ class Donation extends Component {
      }
  
  componentDidMount() {
-    fetch('http://localhost:6060/puthuyir/school')
+    fetch('http://localhost:6060/puthuyir/getAllSchools')
      .then(response => 
           response.json()) 
  .then(users => this.setState({ donationList: users }));

@@ -17,9 +17,19 @@ public class EmailUser {
 	 
 	 private List<String> cc;
 	 
+	 private String toAddress;
+	 
 	 private String subject;
 	 
 	 private String message;
+	 
+	 private String trackId;
+	 
+	 private String schoolName;
+	 
+	 private String yourContirbutionAmount;
+	 
+	 private String name;
 	 
 	 private String fromEmailAddress;
 	 

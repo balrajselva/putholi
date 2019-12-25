@@ -69,6 +69,7 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
+        "schoolId" :this.props.history.location.state.state[0].id,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount":data.get('yourContribution'),
@@ -105,6 +106,7 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
+        "schoolId" :this.props.history.location.state.state[0].id,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount": data.get('yourContribution'),
@@ -115,7 +117,7 @@ class DonationForm extends Component {
 
       if (isValid) {
 
-        axios.post('http://localhost:6060/puthuyir/donate/findByEmailId', params, { headers: { 'Accept': 'application/json' } })
+        axios.post('http://localhost:8088/puthuyir/donate/findByEmailId', params, { headers: { 'Accept': 'application/json' } })
           .then(response => {
             if (response.data === "SUCCESS") {
               this.setState({
@@ -128,7 +130,7 @@ class DonationForm extends Component {
               });
 
               console.log("Before loading", params);
-              axios.post('http://localhost:6060/puthuyir/donate/save', params, { headers: { 'Accept': 'application/json' } })
+              axios.post('http://localhost:8088/puthuyir/donate/save', params, { headers: { 'Accept': 'application/json' } })
                 .then((response) => {
                   var requestPayload = Object.assign(requestJSON, response.data);
                   this.props.history.push({

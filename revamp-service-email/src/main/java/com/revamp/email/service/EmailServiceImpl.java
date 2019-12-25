@@ -66,11 +66,10 @@ public class EmailServiceImpl implements EmailService {
 		MimeMessageHelper mail = new MimeMessageHelper(message);
 		
 		Map model = new HashMap();
-		model.put("schoolName", this.get(1).getSchoolInfo().getSchoolName());
-		model.put("schoolType",this.get(1).getSchoolInfo().getSchoolType());
-        model.put("name", "User");
-        model.put("location", "Chennai");
-        model.put("signature", "Puthuyir");
+		model.put("schoolName",user.getSchoolName());
+		model.put("name", user.getName());
+        model.put("trackId", user.getTrackId());
+        model.put("DonatedAmount", user.getYourContirbutionAmount());
         user.setModel(model);
 		
 	    
@@ -78,14 +77,12 @@ public class EmailServiceImpl implements EmailService {
 		 * This send() contains an Object of MIME Message as an Parameter
 		 */
 		try {
-			 Template t = freemarkerConfig.getTemplate("email-template.ftl");
+			 Template t = freemarkerConfig.getTemplate("donar-email.ftl");
 			 
 			// TODO
-			if (user.getTo() != null && user.getTo().size() > 0) {
-				mail.setTo(user.getTo().toArray(new String[user.getTo().size()]));
-			} else {
+			
 				mail.setTo(user.getToEmailAddress());
-			}
+			
 			mail.setFrom(user.getFrom());
 			mail.setSubject(user.getSubject());
 			   String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
@@ -141,7 +138,7 @@ public class EmailServiceImpl implements EmailService {
 			helper.setCc("");
 		}
   //TODO need to change the file url 
-		FileSystemResource file = new FileSystemResource("/Users/aadaarshguhan/Documents/Kamalkanth-Durairaj.docx");
+		FileSystemResource file = new FileSystemResource("/Users/aadaarshguhan/Documents/Durairaj_Kamalkanth.docx");
 		helper.addAttachment(file.getFilename(), file);
 		try {
 			logger.info("Hitting JavaMailSender to send attachment to user Mailbox ");

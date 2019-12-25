@@ -27,15 +27,17 @@
         <tr>
             <td bgcolor="#eaeaea" style="padding: 40px 30px 40px 30px;">
                 <p>Dear ${name},</p>
-                <p>School Name  : ${schoolName}</b></p>
-                <p>School Type  : ${schoolType}</b></p>
-                <p>Thanks</p>
+                <p> Thank you for your donation. Your generosity is appreciated! Here the details of your donation :
+                <p>School Name :${schoolName} </p>
+                <p>Donated Amount : ${DonatedAmount}</p>
+                <p>Track ID : ${trackId} </p>
+                <p>Track Donation Link :</p>
+                
             </td>
         </tr>
         <tr>
             <td bgcolor="#777777" style="padding: 30px 30px 30px 30px;">
-                <p>${signature}</p>
-                <p>${location}</p>
+                
             </td>
         </tr>
     </table>
