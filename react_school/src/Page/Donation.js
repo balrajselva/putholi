@@ -14,7 +14,7 @@ class Donation extends Component {
      }
  
  componentDidMount() {
-    fetch('http://localhost:6060/puthuyir/schoolFetch')
+    fetch('http://localhost:6060/puthuyir/getAllSchools')
      .then(response => 
           response.json()) 
  .then(users => this.setState({ donationList: users }));
