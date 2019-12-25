@@ -38,7 +38,7 @@ public class SchoolServiceImpl implements SchoolService {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
-		school.setSchoolStatus(PuthuyirLookUp.SCHOOL_REGISTERED);
+		school.setSchoolStatus("SCHOOL_REGISTERED");
 		if (files != null && files.size() > 0) {
 
 			files.forEach((k,v) -> {
@@ -143,6 +143,11 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public DEOInfo saveDEOresponse(DEOInfo deoInfo) {
 		return deoRepository.save(deoInfo);
+	}
+
+	public School updateSchoolStatus(long id, String status) {
+		schoolRepository.updateSchoolStatus(id, status);
+		return schoolRepository.findById(id).orElse(null);
 	}
 
 	@Override

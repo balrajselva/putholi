@@ -25,4 +25,6 @@ public interface SchoolService {
 	List<School> getByUserId(long userId);
 
     DEOInfo saveDEOresponse(DEOInfo deoInfo);
+
+	School updateSchoolStatus(long id, String status);
 }

@@ -49,9 +49,9 @@ public class SchoolController {
 			HttpServletRequest request) {
 
 		try {
-			logger.info("..regFormModel.getPayload()..{}", regFormModel);
+			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
-			if (regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
 				long id = schoolService.save(school, filesInBytes,imgPath);
@@ -77,6 +77,7 @@ public class SchoolController {
 		return ResponseEntity.ok().body(school);
 	}
 
+	
 	/**
 	 * 
 	 * @param schoolId
@@ -88,9 +89,15 @@ public class SchoolController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	
+	@PutMapping("/updateSchool/{id}/{status}")
+	public ResponseEntity<School> updateUser(@PathVariable long id, @PathVariable String status) {
+		System.out.println("Update school"+id+""+status);
+		School school = schoolService.updateSchoolStatus(id, status);
+		return ResponseEntity.ok().body(school);
+	}
+
 	/**
-	 * 
+	 *
 	 * @param school
 	 * @param request
 	 * @return

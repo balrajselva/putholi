@@ -1,6 +1,7 @@
 package com.revamp.core.dao;
 
 import com.revamp.core.model.School;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,8 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
 
 	@Query("FROM School s where s.user.userid = :userId")
     List<School> getByStatus(@Param("userId") long userId);
+
+	@Modifying
+	@Query("UPDATE School s set s.schoolStatus = :status, modifiedDate = now() where s.schoolId = :id")
+	void updateSchoolStatus(@Param("id") long id, @Param("status") String status);
 }

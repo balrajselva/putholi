@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
 import './components/header/Header.css';
 import './css/adminMainPage.css';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 
 class adminNewSchoolReview extends Component {
     state={
         schools:null,
         spinner:true,
-        currentUser:this.props.location.user
+        user:this.props.location.user
     }
     componentDidMount(){
         axios.get("http://localhost:6060/puthuyir/getAllSchools")
@@ -31,22 +31,18 @@ class adminNewSchoolReview extends Component {
         for(let i=0;i<this.state.schools.length;i++){
             const newTo = { 
                 pathname: "/adminSchoolCheck", 
-                user:this.state.schools[i],
-                currentUser:this.props.location.currentUser,
+                school:this.state.schools[i],
+                user:this.props.location.user,
                 ...this.props
             };
             if(this.state.schools[i].schoolStatus==="AdminRejected" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
                 continue;
-            else if(this.state.currentUser.role==="Admin" && (this.state.schools[i].schoolStatus==="AdminConfirmed"))
+            else if(this.state.user.role==="Admin" && (this.state.schools[i].schoolStatus==="AdminReviewed"))
                 continue;
-            else if(this.state.currentUser.role==="Reviewer" && (this.state.schools[i].schoolStatus==="ReviewerConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
+            else if(this.state.user.role==="Reviewer" && (this.state.schools[i].schoolStatus==="ReviewerConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
                 continue;
-            else if(this.state.currentUser.role==="Approver" && (this.state.schools[i].schoolStatus==="AdminConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
+            else if(this.state.user.role==="Approver" && (this.state.schools[i].schoolStatus==="AdminReviewed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
                 continue;
-            // else if(this.state.currentUser.role==="Super User" && (this.state.schools[i].role==="Super User"||this.state.schools[i].role==="Super Admin"||this.state.schools[i].role==="Trust Member" ||this.state.schools[i].role==="Co-ordinator" || this.state.schools[i].role==="Fund Raiser" || this.state.schools[i].role==="Volunteer" || this.state.schools[i].role==="beneficiary" || this.state.schools[i].schoolStatus==="SuperUserReviewed"))
-            //     continue;
-            // else if(this.state.currentUser.role==="Super Admin" && (this.state.schools[i].role==="Super User"||this.state.schools[i].role==="Super Admin"||this.state.schools[i].role==="Trust Member" ||this.state.schools[i].role==="Co-ordinator" || this.state.schools[i].role==="Fund Raiser" || this.state.schools[i].role==="Volunteer" || this.state.schools[i].schoolStatus==="SuperAdminApproved" || this.state.schools[i].role==="beneficiary" || this.state.schools[i].schoolStatus==="New User"))
-            //     continue;
             else{
                 rowsUpdated=true;
                 rows.push(<tr>
@@ -126,41 +122,6 @@ class adminNewSchoolReview extends Component {
                                 {this.state.spinner?<div class="spinner"></div>:null}
                                 </tbody></table>
                             </div>
-                            {/* /.box-header */}
-                            {/*<div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
-                        <tr>
-                            <th>School ID</th>
-                            <th>School Name</th>
-                            <th>Date Added</th>
-                            <th>Status</th>
-                    <th>District</th>
-                    <th>Town</th>
-                            <th>Details</th>
-                        </tr>
-
-                        <tr>
-                            <td>183</td>
-                            <td>Cuddalore Boys School</td>
-                            <td>11-7-2014</td>
-                    <td><span class="label label-warning">Finalize Quotations</span></td>
-                            <td>Cuddalore</td>
-                    <td>Nellikuppam</td>
-                    <td><a href="pages/UI/trustee_approver.html">Click for Details</a></td>
-                        </tr>
-                        <tr>
-                            <td>183</td>
-                            <td>Cuddalore Boys School</td>
-                            <td>11-7-2014</td>
-                    <td><span class="label label-success">Vendor Selection Complete</span></td>
-                            <td>Cuddalore</td>
-                    <td>Nellikuppam</td>
-                    <td>Click for Details</td>
-                        </tr>
-
-                        </table>
-                    </div>*/}
-                            {/* /.box-body */}
                         </div>
                         {/* /.box */}
                         </div>
@@ -170,7 +131,6 @@ class adminNewSchoolReview extends Component {
                     {/* /.box */}
                 </div>
                 </div>
-
                 </section>
                 </div>
             </div>
@@ -178,4 +138,4 @@ class adminNewSchoolReview extends Component {
     }
 }
 
-export default adminNewSchoolReview;
+export default withRouter(adminNewSchoolReview);

@@ -35,7 +35,7 @@ class adminRoleCheck extends Component {
         else if(this.state.currentUser.role==="Reviewer")
           this.state.status="ReviewerRejected";
         else if(this.state.currentUser.role==="Approver")
-          this.state.status="ApprovedRejected";
+          this.state.status="ApproverRejected";
         else if(this.state.currentUser.role==="Super User")
           this.state.status="SuperUserRejected";
         else if(this.state.currentUser.role==="Super Admin")
@@ -54,6 +54,7 @@ class adminRoleCheck extends Component {
           });
         }
         else{
+          this.setState({spinner:false});
           window.alert("Status update failed");
         }
       })

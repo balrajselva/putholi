@@ -23,7 +23,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class School extends AuditableEntity implements java.io.Serializable {
+public class School extends AuditableEntity {
 
 	private static final long serialVersionUID = 8607633702511344481L;
 
@@ -54,8 +54,7 @@ public class School extends AuditableEntity implements java.io.Serializable {
 
 	@Column(name = "school_status")
 	@JsonProperty("schoolStatus")
-	@Enumerated(EnumType.STRING)
-	private PuthuyirLookUp schoolStatus;
+	private String schoolStatus;
 
 	@JsonProperty("proofOfId")
 	@Transient

@@ -4,19 +4,14 @@
     <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminRoleCheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminRoleCheck.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/layouts/AdminLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/layouts/AdminLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/css/adminIndex.css" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/css/adminIndex.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/SchoolImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/SchoolImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +42,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -124,10 +119,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java</url>
           <line>1</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java</url>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

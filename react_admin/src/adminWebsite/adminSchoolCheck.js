@@ -1,13 +1,64 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import axios from 'axios';
 
-export default class adminSchoolCheck extends Component {
+class adminSchoolCheck extends Component {
+    state={
+        spinner:false,
+        status:null
+    }
+    createReqList=()=>{
+        let rows=[];
+        for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
+        rows.push(<li>{this.props.location.school.projects[0].requirements[i].reqType}-{this.props.location.school.projects[0].requirements[i].assetName}-{this.props.location.school.projects[0].requirements[i].quantity}</li>)
+        }
+        return rows;
+    }
+    updateStatus=({target})=>{
+        this.setState({
+          spinner:true, 
+          status:target.id
+        });
+        if(target.id==="Accepted"){
+          if(this.props.location.user.role==="Admin")
+            this.state.status="AdminReviewed";
+          else if(this.props.location.user.role==="Reviewer")
+            this.state.status="ReviewerConfirmed";
+          else if(this.props.location.user.role==="Approver")
+            this.state.status="ApprovedSchool";
+        }
+        else{
+          if(this.props.location.user.role==="Admin")
+            this.state.status="AdminRejected";
+          else if(this.props.location.user.role==="Reviewer")
+            this.state.status="ReviewerRejected";
+          else if(this.props.location.user.role==="Approver")
+            this.state.status="ApproverRejected";
+        }
+        axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
+        .then(res=>{
+          if(res.data!==""){
+            console.log(res.data);
+            this.setState({spinner:false});
+            window.alert("Status updated successfully");
+            this.props.history.push({ 
+              pathname:"/adminNewSchoolReview", 
+              user:this.props.location.user
+            });
+          }
+        })
+        .catch(error=>{
+            this.setState({spinner:false});
+            window.alert("Status updated failed due to "+error);
+        })
+      }
     render() {
         return (
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <h1>
-                    Cuddalore Boys School
+                    {this.props.location.school.schoolInfo.schoolName}
                     <small>added on</small>
                     </h1>
                     <ol className="breadcrumb">
@@ -24,7 +75,7 @@ export default class adminSchoolCheck extends Component {
                         {/* timeline time label */}
                         <li className="time-label">
                             <span className="bg-red">
-                            10 Feb. 2014
+                            {this.props.location.school.createdDate.split("T")[0]}
                             </span>
                         </li>
                         {/* /.timeline-label */}
@@ -37,22 +88,26 @@ export default class adminSchoolCheck extends Component {
                             <div className="timeline-body">
                                 <div className="box-body">
                                 <ul>
-                                    <li>100 Chairs &amp; Tables</li>
-                                    <li>3 Digital Boards</li>
-                                    <li>2 Toilets</li>
+                                    {this.createReqList()}
                                 </ul>
-                                <h3>Address of the School</h3>
-                                Cuddalore Boys School
-                                24, Nethaji Street
-                                Cuddalore -1
-                                Contact number - 093445 43223
+                                <h4>Address of the School</h4>
+                                <ul>
+                                    <li>
+                                        {this.props.location.school.address.addressLine1},
+                                        {this.props.location.school.address.addressLine2},
+                                        {this.props.location.school.address.locality},
+                                        {this.props.location.school.address.city},
+                                        {this.props.location.school.address.district},
+                                        {this.props.location.school.address.state}.
+                                    </li>
+                                </ul>
                                 </div>
                             </div>
                             <div className="timeline-footer">
-                                <a className="btn btn-default">Click to view School Pictures</a>
-                                <a href="beneficiary_edit_project_link.html" className="btn btn-danger btn-xs">Return to Beneficiary</a>
-                                <a href="../../newly_added_schools.html" className="btn btn-primary btn-xs">Confirm Requirements</a>
-                                <a href="../../newly_added_schools.html" className="btn btn-primary btn-xs">Back to School List</a>
+                                <a className="btn btn-default">Click to view School Pictures</a>&nbsp;
+                                <a id="Returned" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Return to Beneficiary</a>&nbsp;
+                                <a id="Accepted" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm Requirements</a>&nbsp;
+                                <Link to={{pathname:"/adminNewSchoolReview", user:this.props.location.user}} className="btn btn-primary btn-xs">Back to List</Link>
                             </div>
                             </div>
                         </li>
@@ -94,8 +149,11 @@ export default class adminSchoolCheck extends Component {
                     {/* /.row */}
                 </section>
                 {/* /.content */}
+                {this.state.spinner?<div class="spinner"></div>:null}
                 </div>
 
         )
     }
 }
+
+export default withRouter(adminSchoolCheck);
