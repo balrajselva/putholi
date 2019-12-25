@@ -27,17 +27,16 @@ import java.util.Map;
  *
  */
 @RestController
-@PropertySource(value= {"classpath:application.properties"})
+@PropertySource(value = { "classpath:application.properties" })
 @CrossOrigin(origins = "http://localhost")
 public class SchoolController {
-	private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
 	@Autowired
 	private SchoolService schoolService;
-	
-	 @Value("${image.path}")
-     private String imgPath;
 
+	@Value("${image.path}")
+	private String imgPath;
 
 	/**
 	 * 
@@ -50,23 +49,22 @@ public class SchoolController {
 			HttpServletRequest request) {
 
 		try {
-			System.out.println("..regFormModel.getPayload().."+regFormModel );
+			logger.info("..regFormModel.getPayload()..{}", regFormModel);
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+			if (regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				long id = schoolService.save(school, filesInBytes,imgPath);
+				schoolService.save(school, filesInBytes, imgPath);
 			} else {
-				long id = schoolService.save(school, null, imgPath);
+				schoolService.save(school, null, imgPath);
 			}
-					} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException ex) {
+			logger.debug("Error on multiUploadFileModel {}", ex);
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 
 	}
-
 
 	/**
 	 * 
@@ -79,7 +77,6 @@ public class SchoolController {
 		return ResponseEntity.ok().body(school);
 	}
 
-	
 	/**
 	 * 
 	 * @param schoolId
@@ -91,7 +88,6 @@ public class SchoolController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	
 	/**
 	 * 
 	 * @param school
@@ -103,7 +99,7 @@ public class SchoolController {
 	public ResponseEntity<List<School>> getAll(@RequestBody(required = false) School school,
 			HttpServletRequest request) {
 		List<School> schools = schoolService.getAll();
-		System.out.println("All schools---"+schools);
+		logger.info("All schools---{}", schools);
 		return ResponseEntity.ok().body(schools);
 	}
 
@@ -141,10 +137,9 @@ public class SchoolController {
 	}
 
 	@PostMapping("/school/saveDEOresponse")
-	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
-		System.out.println(deoInfo);
-		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
-		return ResponseEntity.ok().body(deoInfo1);
+	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo) {
+		logger.info("deoInfo {}", deoInfo);
+		return ResponseEntity.ok().body(schoolService.saveDEOresponse(deoInfo));
 	}
 
 }
