@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DonationList from '../components/donation/donationList';
-import {SearchBox} from '../components/search/searchComponent';
 import '../components/donation/donation_style.css'
 class Donation extends Component {
 
