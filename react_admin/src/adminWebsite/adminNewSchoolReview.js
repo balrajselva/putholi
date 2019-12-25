@@ -120,7 +120,8 @@ class adminNewSchoolReview extends Component {
                                 </tr>
                                 {this.state.schools!==null ? this.createTable():null}
                                 {this.state.spinner?<div class="spinner"></div>:null}
-                                </tbody></table>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                         {/* /.box */}

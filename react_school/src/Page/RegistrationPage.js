@@ -80,13 +80,13 @@ class RegistrationPage extends Component {
         axios.post('http://localhost:6060/puthuyir/verify_user',user)
         .then(res=>{
             console.log(res);
-            if(res.data.status === "SuperAdminApproved"){
+            if(res.data.status === "ApprovedUser" && res.data.role==="beneficiary"){
                 this.props.history.push({
                     pathname: '/schoolRegistration',
                     user: res.data
                 });
             }
-            else if(res.data !== ""){
+            else if(res.data.status !== "ApprovedUser" && res.data.role==="beneficiary"){
                 this.props.history.push({
                     pathname: '/confirm'
                 });

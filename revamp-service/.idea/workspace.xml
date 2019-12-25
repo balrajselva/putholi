@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminAccessReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/SchoolRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/lookup/PuthuyirLookUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

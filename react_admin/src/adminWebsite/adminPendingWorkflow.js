@@ -1,10 +1,64 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
 import './components/header/Header.css';
 import './css/adminMainPage.css';
+import axios from 'axios';
 
-export default class adminPendingWorkflow extends Component {
+class adminPendingWorkflow extends Component {
+    state={
+        schools:null,
+        spinner:false
+    }
+    componentDidMount(){
+        axios.get("http://localhost:6060/puthuyir/getAllSchools")
+        .then(res=>{
+            console.log(res.data)
+            this.setState({
+                schools:res.data,
+                spinner:false
+            });
+        })
+        .catch(error=>{
+            this.setState({spinner:false});
+            window.alert("Unable to get school details due to "+error)
+        })
+    }
+    createTable=()=>{
+        var rows=[];
+        let rowsUpdated=false;
+        for(let i=0;i<this.state.schools.length;i++){
+            let nextPage=null;
+            var pageLink=null;
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool"){
+                nextPage="adminUploadDEOresponse"
+                pageLink="Upload DEO response"
+            }
+            const newTo = { 
+                pathname: "/"+nextPage, 
+                school:this.state.schools[i],
+                user:this.props.location.user,
+                ...this.props
+            };
+            if(this.state.schools[i].schoolStatus!=="ApprovedSchool")
+                continue;
+            else{
+                rowsUpdated=true;
+                rows.push(<tr>
+                    <td>{this.state.schools[i].schoolId}</td>
+                    <td>{this.state.schools[i].schoolInfo.schoolRegNo}</td>
+                    <td>{this.state.schools[i].schoolInfo.schoolName}</td>
+                    <td>{this.state.schools[i].createdDate.split("T")[0]}</td>
+                    <td><span className="label label-warning">{this.state.schools[i].schoolStatus}</span></td>
+                    <td>{this.state.schools[i].address.district}</td>
+                <td><a href=""><Link to={newTo}>{pageLink}</Link></a></td>
+                </tr>)
+            }
+        }
+        if(rowsUpdated==false)
+            rows.push(<tr ><td align="center" colSpan="8">No new records found!</td></tr>)
+        return rows;
+    }   
     render() {
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
@@ -29,7 +83,7 @@ export default class adminPendingWorkflow extends Component {
                         {/* ./col */}
                         <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Logout" linkTo="/logout" colour="bg-red"/>
+                        <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>
                         {/* /.row */}
@@ -51,153 +105,21 @@ export default class adminPendingWorkflow extends Component {
                 </div>
                 {/* /.box-header */}
                 <div className="box-body table-responsive no-padding">
-                    <table className="table table-hover">
-                    <tbody><tr>
-                        <th>School ID</th>
-                        <th>School Name</th>
-                        <th>Date Added</th>
-                        <th>Status</th>
-                        <th>District</th>
-                        <th>Town</th>
-                        <th>Details</th>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-warning">Initial Admin Check</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="pages/UI/new_school_admin_check.html">View Requirements</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Inital Review Complete</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="pages/mailbox/admin_mailbox.html">Initiate email to DEO</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-primary">DEO Response Pending</span></td>
-                        <td>Trichy</td>
-                        <td>Trichy</td>
-                        <td><a href="pages/UI/admin_upload_DEO_Response.html">Click to Upload</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-warning">DEO Approved</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="pages/UI/volunteer_assignment_screen.html">Assign to Volunteer</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Volunteer Accepted</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="Volunteer.html">Go to Volunteer</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-info">Volunteer Verfification Complete</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="Volunteer.html">Request for Quotation</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-info">Analyse Quotation</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="pages/UI/admin_review_quotation.html">Click for an Action</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-info">Enable Quotatoin ReSubmission</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="Volunteer.html">Re-assign to Volunteer</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-info">Quotation Approved</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="fund_allotment.html">View Fund Collection</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Fund Collection Status</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="fund_allotment.html">Request for Allotment</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-warning">Fund Collection Status</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td>In Progress</td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Fund Allotted</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="Volunteer.html">Send Work Order</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Review Work Completion</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="#">Final Review</a></td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-success">Requirement Closed</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td>Complete</td>
-                        </tr>
-                        <tr>
-                        <td>183</td>
-                        <td>Cuddalore Boys School</td>
-                        <td>11-7-2014</td>
-                        <td><span className="label label-danger">Rejected Scenario's to be derived</span></td>
-                        <td>Cuddalore</td>
-                        <td>Nellikuppam</td>
-                        <td><a href="#">Re-assign to Volunteer</a></td>
-                        </tr>
-                    </tbody></table>
-                </div>
+                <table className="table table-hover">
+                                <tbody><tr>
+                                    <th>School ID</th>
+                                    <th>Reg no</th>
+                                    <th>Name</th>
+                                    <th>Date Added</th>
+                                    <th>Status</th>
+                                    <th>Town</th>
+                                    <th>Details</th>
+                                </tr>
+                                {this.state.schools!==null ? this.createTable():null}
+                                {this.state.spinner?<div class="spinner"></div>:null}
+                                </tbody>
+                            </table>
+                                   </div>
                 {/* /.box-body */}
                 </div>
                 {/* /.box */}
@@ -209,3 +131,4 @@ export default class adminPendingWorkflow extends Component {
         )
     }
 }
+export default withRouter(adminPendingWorkflow);

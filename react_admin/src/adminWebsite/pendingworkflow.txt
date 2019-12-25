@@ -1,0 +1,146 @@
+ <table className="table table-hover">
+                    <tbody><tr>
+                        <th>School ID</th>
+                        <th>School Name</th>
+                        <th>Date Added</th>
+                        <th>Status</th>
+                        <th>District</th>
+                        <th>Town</th>
+                        <th>Details</th>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-warning">Initial Admin Check</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="pages/UI/new_school_admin_check.html">View Requirements</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Inital Review Complete</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="pages/mailbox/admin_mailbox.html">Initiate email to DEO</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-primary">DEO Response Pending</span></td>
+                        <td>Trichy</td>
+                        <td>Trichy</td>
+                        <td><a href="pages/UI/admin_upload_DEO_Response.html">Click to Upload</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-warning">DEO Approved</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="pages/UI/volunteer_assignment_screen.html">Assign to Volunteer</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Volunteer Accepted</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="Volunteer.html">Go to Volunteer</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-info">Volunteer Verfification Complete</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="Volunteer.html">Request for Quotation</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-info">Analyse Quotation</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="pages/UI/admin_review_quotation.html">Click for an Action</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-info">Enable Quotatoin ReSubmission</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="Volunteer.html">Re-assign to Volunteer</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-info">Quotation Approved</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="fund_allotment.html">View Fund Collection</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Fund Collection Status</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="fund_allotment.html">Request for Allotment</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-warning">Fund Collection Status</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td>In Progress</td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Fund Allotted</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="Volunteer.html">Send Work Order</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Review Work Completion</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="#">Final Review</a></td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-success">Requirement Closed</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td>Complete</td>
+                        </tr>
+                        <tr>
+                        <td>183</td>
+                        <td>Cuddalore Boys School</td>
+                        <td>11-7-2014</td>
+                        <td><span className="label label-danger">Rejected Scenario's to be derived</span></td>
+                        <td>Cuddalore</td>
+                        <td>Nellikuppam</td>
+                        <td><a href="#">Re-assign to Volunteer</a></td>
+                        </tr>
+                    </tbody></table>
