@@ -19,6 +19,8 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
+import RequirementHome from '../adminWebsite/requirement';
+import AddQuotation from '../adminWebsite/quotation'
 
 class App extends Component {
   state = {
@@ -71,6 +73,8 @@ class App extends Component {
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
+            <Route path="/viewRequirements" history={history} component={()=><RequirementHome/>}/>}/>
+            <Route path="/addQuotation" history={history} component={()=><AddQuotation/>}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}
