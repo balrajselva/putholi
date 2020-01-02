@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import {withRouter} from 'react-router-dom';
 
 class EmailDEOTrigger extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
             schoolList: [],
             toAddress: null,
@@ -13,15 +15,15 @@ class EmailDEOTrigger extends Component {
             selectedFile: [],
             attachmentFile: null,
             imageURL: ''
-
-
+           
         }
+       
+        this.routeParam = props.match.params.schoolID;
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.submitClicked = this.submitClicked.bind(this);
     }
     componentDidMount() {
-        console.log("Calling component");
-        fetch('http://localhost:6060/puthuyir/school/1')
+         fetch('http://localhost:6060/puthuyir/school/'+this.routeParam)
             .then(response =>
                 response.json())
             .then(users => this.setState({ schoolList: users }));
@@ -162,4 +164,4 @@ class EmailDEOTrigger extends Component {
 
         )
     }
-} export default EmailDEOTrigger;
+} export default withRouter(EmailDEOTrigger);

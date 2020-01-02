@@ -63,7 +63,7 @@ class App extends Component {
             <Route path="/confirmation" component={()=><ConfirmatinScreen/>}/>
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin />}/>
-            <Route path="/emailDEO"  component={()=><DEOEmailTrigger/>}/>
+            <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={()=><AdminNewSchoolReview/>}/>
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={()=><AdminPendingWorkflow/>}/>
