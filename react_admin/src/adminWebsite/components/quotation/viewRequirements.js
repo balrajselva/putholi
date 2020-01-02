@@ -47,8 +47,8 @@ class requirementHome extends Component {
                             Add Quotation
                     </button>
                     {/* <Link to={{pathname:"/addQuotation", users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Add Quotation</Link> */}
-                    </td>
-                    <td>{this.state.requirements[i].details}</td>                    
+                    </td>                    
+                    <td><input type="text" className="form-control" id="cost" value={this.state.requirements[i].details} placeholder="Details"/></td>
                 </tr>)			
         }
         if(rowsUpdated==false)

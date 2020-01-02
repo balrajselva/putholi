@@ -9,6 +9,9 @@ class addQuotation extends Component {
         quotationDate:null,
         quotationValidDate:null,
         quotationPreparedBy:null,
+        quantity:null,
+        description:null,
+        cost:null,
         lastErrorField:null
     }
 
@@ -40,10 +43,16 @@ saveClicked=()=>{
         document.getElementById('quotationDate').style.borderColor="#d2d6de";
         document.getElementById('quotationValidDate').style.borderColor="#d2d6de";
         document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";
+        document.getElementById('quantity').style.borderColor="#d2d6de";
+        document.getElementById('description').style.borderColor="#d2d6de";
+        document.getElementById('cost').style.borderColor="#d2d6de";
         const quotation={
             quotationDate:this.state.quotationDate,
             quotationValidDate:this.state.quotationValidDate,
             quotationPreparedBy:this.state.quotationPreparedBy,
+            quantity:this.state.quantity,
+            description:this.state.description,
+            cost:this.state.cost
         }
         console.log(quotation);
         this.props.saveQuotation(quotation);
@@ -73,7 +82,16 @@ render() {
                 </div>
                 <div className="form-group has-feedback col-md-6">
                     <input type="text" className="form-control" id="quotationPreparedBy" value={this.state.quotationPreparedBy} placeholder="Quotation PreparedBy" onChange={this.handleChange}/>
-                </div>					
+                </div>
+                <div className="form-group has-feedback col-md-6">
+                    <input type="text" className="form-control" id="quantity" value={this.state.quantity} placeholder="Quantity" onChange={this.handleChange}/>
+                </div>	
+                <div className="form-group has-feedback col-md-6">
+                    <input type="text" className="form-control" id="description" value={this.state.description} placeholder="Description" onChange={this.handleChange}/>
+                </div>	
+                <div className="form-group has-feedback col-md-6">
+                    <input type="text" className="form-control" id="cost" value={this.state.cost} placeholder="Cost" onChange={this.handleChange}/>
+                </div>	                                                					
             </div>
             <div className="col-md-6">
                     <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.saveClicked()}>Save</button><br/>
