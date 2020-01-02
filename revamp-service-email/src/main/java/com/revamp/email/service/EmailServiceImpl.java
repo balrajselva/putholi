@@ -1,7 +1,11 @@
 package com.revamp.email.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,6 +19,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revamp.email.dao.EmailRepository;
 import com.revamp.email.exception.SendMailAttachmentException;
@@ -115,33 +121,51 @@ public class EmailServiceImpl implements EmailService {
 	 * 
 	 * @param User details to send the attachement and email infos.
 	 */
-	@Override
-	public String sendEmailWithAttachment(EmailUser user) throws MessagingException {
+	public String sendEmailWithAttachment(EmailUser user, MultipartFile[] files) throws MessagingException {
 		logger.info("EmailServiceImpl:sendEmailWithAttachment Method entry");
 
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		
-		if (user.getTo() != null && user.getTo().size() > 1) {
+		Map model = new HashMap();
+		
+		model.put("requirements",user.getRequirements());
+		model.put("schoolName", user.getSchoolName());
+		
+        user.setModel(model);
+		
+	    
+        try {
+		
+		
 
-			helper.setTo(user.getTo().toArray(new String[user.getTo().size()]));
-		} else {
-			helper.setTo(user.getToEmailAddress());
-		}
-		helper.setFrom(user.getFrom());
-		helper.setSubject(user.getSubject());
-		helper.setText(user.getMessage());
-		if (user.getCc() != null && user.getCc().size() > 0) {
-			helper.setCc(user.getCc().toArray(new String[user.getCc().size()]));
-		} else {
-			helper.setCc("");
-		}
-  //TODO need to change the file url 
-		FileSystemResource file = new FileSystemResource("/Users/aadaarshguhan/Documents/Durairaj_Kamalkanth.docx");
-		helper.addAttachment(file.getFilename(), file);
-		try {
+		
+      
+       
+
+        
+           
+	
+       
+		
+		
+		//helper.addAttachment();
+		
+			
 			logger.info("Hitting JavaMailSender to send attachment to user Mailbox ");
+			Template t = freemarkerConfig.getTemplate("emailInitiateDEO.ftl");
+			   String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
+			    helper.setTo(user.getToEmailAddress());
+				helper.setFrom(user.getFromEmailAddress());
+				helper.setSubject(user.getSubject());
+				  helper.setText(html,true);
+				  for (MultipartFile multipartFile : files) {
+		            	 String fileName = multipartFile.getOriginalFilename();
+		            		helper.addAttachment(fileName,multipartFile);
+		            	
+		            }
+		        
 
 			javaMailSender.send(mimeMessage);
 			logger.info("Successfully JavaMailSender send the attachment to user Mailbox ");
@@ -158,6 +182,8 @@ public class EmailServiceImpl implements EmailService {
 	public School get(long id) {
 		return emailRepo.findById(id).orElse(null);
 	}
+
+
 	
 	
 	

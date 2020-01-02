@@ -1,5 +1,6 @@
 package com.revamp.email.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,13 @@ import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revamp.email.exception.SendMailAttachmentException;
 import com.revamp.email.exception.SendMailException;
 import com.revamp.email.model.EmailUser;
@@ -73,23 +79,37 @@ public class EmailController {
 	 * 
 	 * @return
 	 * @throws MessagingException
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
-	@PostMapping("/send-mail-attachment")
-	public String sendWithAttachment(@RequestBody EmailUser user) throws MessagingException {
+	@PostMapping("/sendattachment")
+	public String sendWithAttachment(@RequestParam("user") String json,@RequestParam("attachmentFile") MultipartFile[] files) throws MessagingException, JsonParseException, JsonMappingException, IOException {
 		logger.info("EmailController:sendWithAttachment Method entry");
+		
+		System.out.println("Enter user drails"+ json.toString());
+		
+		EmailUser user = new ObjectMapper().readValue(json,EmailUser.class);
+		
 		/*
 		 * Creating a User with the help of User class that we have declared and setting
 		 * Email address of the sender.
 		 */
 		// TODO Changes the below values and reading from requestBody values to set
+		
+		
 		user.setFromEmailAddress("dkamalkanth@gmail.com");
+		
+		System.out.println("display the prequirement"+user.getRequirements().size());
+		
+		
 
 		/*
 		 * Here we will call sendEmailWithAttachment() for Sending mail to the sender
 		 * that contains a attachment.
 		 */
 		try {
-			notificationService.sendEmailWithAttachment(user);
+			notificationService.sendEmailWithAttachment(user,files);
 		} catch (MailException mailException) {
 			throw new SendMailAttachmentException(mailException.getMessage());
 		}
