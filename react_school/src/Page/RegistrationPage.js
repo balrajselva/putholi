@@ -40,11 +40,11 @@ class RegistrationPage extends Component {
         spinner:false
         };
     toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
+        this.setState({ showModal: !this.state.showModal });
     };
     
     handleLoginWithFacebook = () => {
-    console.log("Login with Facebook...");
+        console.log("Login with Facebook...");
     };
 
     handleSignupByEmail = (email, username, password) => {

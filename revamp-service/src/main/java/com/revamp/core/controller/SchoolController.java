@@ -5,6 +5,7 @@ import com.revamp.core.model.DEOInfo;
 import com.revamp.core.model.School;
 import com.revamp.core.model.SchoolRegFormModel;
 import com.revamp.core.service.SchoolService;
+import com.revamp.core.service.UserService;
 import com.revamp.core.web.util.WebUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +36,12 @@ public class SchoolController {
 	@Autowired
 	private SchoolService schoolService;
 
-	@Value("${image.path}")
-	private String imgPath;
+	@Autowired
+	private UserService userService;
+
+	 @Value("${image.path}")
+     private String imgPath;
+
 
 	/**
 	 * 
@@ -77,7 +82,6 @@ public class SchoolController {
 		return ResponseEntity.ok().body(school);
 	}
 
-	
 	/**
 	 * 
 	 * @param schoolId
@@ -144,11 +148,30 @@ public class SchoolController {
 		return ResponseEntity.ok().body(schools);
 	}
 
-	@PostMapping("/school/saveDEOresponse")
-	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
-		System.out.println(deoInfo);
-		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
-		return ResponseEntity.ok().body(deoInfo1);
-	}
+    @PostMapping("/school/saveDEOresponse")
+    public ResponseEntity<?> saveDEoresponse(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,HttpServletRequest request){
+        try {
+            System.out.println("..regFormModel.getPayload().."+regFormModel );
+            DEOInfo deoInfo = new ObjectMapper().readValue(regFormModel.getPayload(), DEOInfo.class);
+            if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+                Map<String, byte[]> filesInBytes = WebUtilities
+                        .convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+                long id = schoolService.saveDEOresponse(deoInfo, filesInBytes,imgPath);
+            } else {
+                long id = schoolService.saveDEOresponse(deoInfo, null, imgPath);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+    }
 
+	@PostMapping("/school/assignSchool/{schoolId}/{userId}")
+	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") String schoolId,@PathVariable("userId") String userId) {
+		System.out.println(schoolId+"---"+userId);
+		userService.updateUserSchoolStatus(Long.valueOf(userId),Long.valueOf(schoolId));
+		schoolService.updateSchoolStatus(Long.valueOf(schoolId),"VOLUNTEER_ASSIGNED");
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+	}
 }

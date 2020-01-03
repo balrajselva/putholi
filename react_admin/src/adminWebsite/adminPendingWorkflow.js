@@ -8,7 +8,7 @@ import axios from 'axios';
 class adminPendingWorkflow extends Component {
     state={
         schools:null,
-        spinner:false
+        spinner:true
     }
     componentDidMount(){
         axios.get("http://localhost:6060/puthuyir/getAllSchools")
@@ -34,15 +34,24 @@ class adminPendingWorkflow extends Component {
                 nextPage="adminUploadDEOresponse"
                 pageLink="Upload DEO response"
             }
+            if(this.state.schools[i].schoolStatus==="DEO_APPROVED"){
+                nextPage="assignToVolunteer"
+                pageLink="Assign School to Volunteer"
+            }
+            if(this.state.schools[i].schoolStatus==="VolunteerRejected"){
+                nextPage="assignToVolunteer"
+                pageLink="Assign School to Volunteer"
+            }
+            if(this.state.schools[i].schoolStatus==="VolunteerAccepted"){
+                pageLink="Send reminder"
+            }
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
                 user:this.props.location.user,
                 ...this.props
             };
-            if(this.state.schools[i].schoolStatus!=="ApprovedSchool")
-                continue;
-            else{
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>

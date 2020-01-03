@@ -18,11 +18,6 @@ class Menu extends Component {
           user:this.props.currentUser,
           ...this.props
         }
-        const adminUploadDEOresponse={
-          pathname:"/adminUploadDEOresponse",
-          user:this.props.currentUser,
-          ...this.props
-        }
         return (
             <div>
             {/* Left side column. contains the logo and sidebar */}
@@ -65,7 +60,6 @@ class Menu extends Component {
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
                         <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
                         <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
-                        <li><a href="newly_added_schools.html"><i className="fa fa-circle-o" /> Assign Schools to Volunteer </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Users and Roles</a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Events</a></li>
                       </ul>
@@ -117,7 +111,6 @@ class Menu extends Component {
                       </a>
                       <ul className="treeview-menu">
                         <li><Link to={adminPendingWorkflow}><i className="fa fa-circle-o" />Pending Workflows</Link></li>
-                        <li><Link to={adminUploadDEOresponse}><i className="fa fa-circle-o" />Upload DEO response</Link></li>
                         <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li>
                       </ul>
                     </li>

@@ -66,9 +66,7 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 	
 	private void setUser(School school) {
-		//TODO: currently cd it is hard coded to User ID 2.
 		User beneUser = this.userRepository.findById(school.getUser().getUserid()).orElse(null);
-	
 		school.setUser(beneUser);
 		school.getRequirements().forEach(req -> {
 			req.setUser(beneUser);
@@ -141,8 +139,11 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public DEOInfo saveDEOresponse(DEOInfo deoInfo) {
-		return deoRepository.save(deoInfo);
+	public long saveDEOresponse(final DEOInfo deoInfo, Map<String, byte[]> files, String imgPath) {
+		String status="DEO_APPROVED";
+		schoolRepository.updateSchoolStatus(deoInfo.getSchool_id(), status);
+		deoRepository.save(deoInfo);
+		return deoInfo.getDeoInfoId();
 	}
 
 	public School updateSchoolStatus(long id, String status) {

@@ -19,6 +19,10 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
+import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
+import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
+import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
+import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
 import AddQuotation from '../adminWebsite/quotation'
 
@@ -57,6 +61,15 @@ class App extends Component {
         )}/>
       )
     }
+    const VolunteerLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <VolunteerLayout {...props}>
+            <Component {...props}/>
+          </VolunteerLayout>
+        )}/>
+      )
+    }
     return (
       <div>   
         <Router history={history}>
@@ -71,8 +84,11 @@ class App extends Component {
             <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
+            <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
             <Route path="/viewRequirements" history={history} component={()=><RequirementHome/>}/>}/>

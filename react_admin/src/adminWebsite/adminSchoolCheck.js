@@ -27,7 +27,7 @@ class adminSchoolCheck extends Component {
           else if(this.props.location.user.role==="Approver")
             this.state.status="ApprovedSchool";
         }
-        else{
+        else if(target.id==="Rejected"){
           if(this.props.location.user.role==="Admin")
             this.state.status="AdminRejected";
           else if(this.props.location.user.role==="Reviewer")

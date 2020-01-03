@@ -34,8 +34,8 @@ public class DEOInfo extends AuditableEntity implements java.io.Serializable {
     @Column(name="status")
     private String status;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="deo_file_id")
     @JsonIgnore
-    private DEOfile deoFile;
+    private Set<DEOfile> deoFile;
 }
