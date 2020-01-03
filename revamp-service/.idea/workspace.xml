@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminPendingWorkflow.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminPendingWorkflow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminSchoolCheck.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminUploadDEOresponse.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminUploadDEOresponse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/layouts/SponsorLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/layouts/SponsorLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/menu/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/components/menu/Menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/trustLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/trustLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/container/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/container/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/Page/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/dao/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/DEOInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/VolunteerReferenceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/VolunteerReferenceServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
