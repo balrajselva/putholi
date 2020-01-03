@@ -68,14 +68,22 @@ public class Quotation extends AuditableEntity implements Serializable {
 
 	private String warranty;
 
-	@Column(name = "address_id")
-	private long addressId;
-
 	@Column(name = "requirement_id")
 	private long requirementId;
 
 	@Column(name = "school_id")
 	private long schoolId;
 
+	private String address;
 	
+	private String city;
+	
+	private String state;
+	
+	private String pincode;
+	
+	private String quantity;
+	
+	private String details;
+
 }

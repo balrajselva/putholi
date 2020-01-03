@@ -226,31 +226,35 @@ CREATE TABLE IF NOT EXISTS revamp_db.donation(
 DROP TABLE IF EXISTS revamp_db.quotation;
 
 CREATE TABLE quotation (
-  quotation_id int NOT NULL AUTO_INCREMENT,
-  image_id int DEFAULT NULL,
-  quotated_amount int DEFAULT NULL,
-  warranty varchar(100) DEFAULT NULL,
-  trader_name varchar(100) DEFAULT NULL,
-  address_id int NOT NULL,
-  phone varchar(100) DEFAULT NULL,
-  collected_by varchar(100) DEFAULT NULL,
-  verified_by varchar(100) DEFAULT NULL,
-  reviewer varchar(100) DEFAULT NULL,
-  quotation_status varchar(100) DEFAULT NULL,
-  quotation_date datetime DEFAULT CURRENT_TIMESTAMP,
-  quotation_validity_date datetime DEFAULT CURRENT_TIMESTAMP,
-  school_id int NOT NULL,
-  requirement_id int NOT NULL,
-  is_quotation_active varchar(100) DEFAULT NULL,
-  created_date datetime DEFAULT NULL,
-  created_by varchar(45) DEFAULT NULL,
-  modified_by varchar(45) DEFAULT NULL,
+  quotation_id bigint(20) NOT NULL,
+  created_by varchar(255) DEFAULT NULL,
+  created_date datetime NOT NULL,
+  modified_by varchar(255) DEFAULT NULL,
   modified_date datetime DEFAULT NULL,
-  PRIMARY KEY (quotation_id),
-  CONSTRAINT quotation_address_id FOREIGN KEY (address_id) REFERENCES address (address_id),
+  collected_by varchar(255) DEFAULT NULL,
+  image_id bigint(20) DEFAULT NULL,
+  is_quotation_active varchar(255) DEFAULT NULL,
+  phone varchar(255) DEFAULT NULL,
+  quotated_amount bigint(20) DEFAULT NULL,
+  quotation_date datetime DEFAULT NULL,
+  quotation_status varchar(255) DEFAULT NULL,
+  quotation_validity_date datetime DEFAULT NULL,
+  requirement_id bigint(20) DEFAULT NULL,
+  reviewer varchar(255) DEFAULT NULL,
+  school_id bigint(20) DEFAULT NULL,
+  trader_name varchar(255) DEFAULT NULL,
+  verified_by varchar(255) DEFAULT NULL,
+  warranty varchar(255) DEFAULT NULL,
+  address varchar(255) DEFAULT NULL,
+  city varchar(255) DEFAULT NULL,
+  state varchar(255) DEFAULT NULL,
+  pincode varchar(255) DEFAULT NULL,
+  quantity varchar(255) DEFAULT NULL,
+  details varchar(255) DEFAULT NULL,
+  PRIMARY KEY (quotation_id)
   CONSTRAINT quotation_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id),
-  CONSTRAINT quotation_school_id FOREIGN KEY (school_id) REFERENCES school (school_id)
-);
+  CONSTRAINT quotation_school_id FOREIGN KEY (school_id) REFERENCES school (school_id)  
+); 
 
 DROP TABLE IF EXISTS revamp_db.fundallotment;
 

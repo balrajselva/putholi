@@ -1,5 +1,6 @@
 package com.revamp.core.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class ProjectServiceImpl implements ProjectService {
 
 	public Optional<Project> get(long id) {
 		return projectRepository.findById(id);
+	}
+
+	@Override
+	public List<Project> findBySchoolId(long id) {
+		return projectRepository.findBySchoolId(id);
 	}
 
 }
