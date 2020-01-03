@@ -71,7 +71,8 @@ handleChange=({target})=>{
 
 render() {
     return (
-        <div>
+        <div className="content-wrapper">
+        <section className="content">
            <div className="row">
                 <div className="form-group has-feedback col-md-6">
                     <input type="text" className="form-control" id="quotationDate" value={this.state.quotationDate} placeholder="Quotation Date" onChange={this.handleChange}/>                    
@@ -97,6 +98,7 @@ render() {
                     <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.saveClicked()}>Save</button><br/>
             </div>
             {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+        </section>
         </div>
     );
 }

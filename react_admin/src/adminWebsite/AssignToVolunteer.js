@@ -27,11 +27,13 @@ class AssignToVolunteer extends Component {
         }
     }
 
+
     saveVolunteer=()=>{
         this.setState({
             statement:"Selected '"+this.state.selectedVolunteer+"' as Volunteer for this school"
         })
     }
+    
     getUsers=(e)=>{
         e.preventDefault();
         this.setState({spinner:true})
@@ -48,6 +50,7 @@ class AssignToVolunteer extends Component {
             window.alert("Could not fetch volunteer due to "+error)
         })
     }
+
     onSubmit=(e)=>{
       e.preventDefault();
       if(this.state.selectedVolunteerId===null){

@@ -18,12 +18,41 @@ class VolunteerSchoolCheck extends Component {
             })
         })
     }
+    createTable=()=>{
+        var rows=[];
+        let rowsUpdated=false;
+            let newTo=null;
+            let pageLink=null;
+            if(this.state.school.schoolStatus==="VOLUNTEER_ASSIGNED"){
+                newTo = { 
+                    pathname: "/volunteerSchoolReview", 
+                    school:this.state.school,
+                    user:this.props.location.user
+                };
+                pageLink="More Details";
+            }
+            if(this.state.school.schoolStatus==="VolunteerAccepted"){
+                newTo = { 
+                    pathname: "/viewRequirements", 
+                    school:this.state.school,
+                    user:this.props.location.user
+                };
+                pageLink="View requirements";
+            }
+            rowsUpdated=true;
+            rows.push(<tr>
+                <td>{this.state.school.schoolId}</td>
+                <td>{this.state.school.schoolInfo.schoolRegNo}</td>
+                <td>{this.state.school.schoolInfo.schoolName}</td>
+                <td><span className="label label-warning">{this.state.school.schoolStatus}</span></td>
+                <td>{this.state.school.address.district}</td>
+                <td><a href=""><Link to={newTo}>{pageLink}</Link></a></td>
+            </tr>)			
+        if(rowsUpdated==false)
+            rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
+        return rows;
+    }
     render() {
-        const newTo = { 
-            pathname: "/volunteerSchoolReview", 
-            school:this.state.school,
-            user:this.props.location.user
-        };
         return (
             <div>
                 <div className="content-wrapper">
@@ -73,14 +102,7 @@ class VolunteerSchoolCheck extends Component {
                                         <th>District</th>
                                         <th>More Details</th>
                                     </tr>
-                                    {this.state.school!==null?<tr>
-                                        <td>{this.state.school.schoolId}</td>
-                                        <td>{this.state.school.schoolInfo.schoolRegNo}</td>
-                                        <td>{this.state.school.schoolInfo.schoolName}</td>
-                                    <td><span className="label label-warning">{this.state.school.schoolStatus}</span></td>
-                                        <td>{this.state.school.address.district}</td>
-                                        <td><a href=""><Link to={newTo}>More Details</Link></a></td>
-                                    </tr>:<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>}
+                                    {this.state.school!==null?this.createTable():<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>}
                                     </tbody></table>
                                 </div>
                             </div>

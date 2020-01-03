@@ -168,10 +168,10 @@ public class SchoolController {
     }
 
 	@PostMapping("/school/assignSchool/{schoolId}/{userId}")
-	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") String schoolId,@PathVariable("userId") String userId) {
+	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") long schoolId,@PathVariable("userId") long userId) {
 		System.out.println(schoolId+"---"+userId);
-		userService.updateUserSchoolStatus(Long.valueOf(userId),Long.valueOf(schoolId));
-		schoolService.updateSchoolStatus(Long.valueOf(schoolId),"VOLUNTEER_ASSIGNED");
+		userService.updateUserSchoolStatus(userId,schoolId);
+		schoolService.updateSchoolStatus(schoolId,"VOLUNTEER_ASSIGNED");
 		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 	}
 }

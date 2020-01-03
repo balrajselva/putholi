@@ -60,7 +60,7 @@ public class User  extends AuditableEntity{
 	private String password;
 
 	@Column(name = "school_id")
-	private long school_id;
+	private Long school_id;
 
 	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL)
@@ -69,5 +69,5 @@ public class User  extends AuditableEntity{
 	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL)
 	private IdentityProof identityProof;
-	
+
 }

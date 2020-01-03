@@ -89,10 +89,8 @@ class App extends Component {
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
-            <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
-            <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
-            <Route path="/viewRequirements" history={history} component={()=><RequirementHome/>}/>}/>
-            <Route path="/addQuotation" history={history} component={()=><AddQuotation/>}/>}/>
+            <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}
