@@ -44,33 +44,33 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
-//	@PostMapping("/user")
-//	public ResponseEntity<User> save(@RequestBody User user) {
-//		System.out.println("save method called --- "+user);
-//		long id = userService.save(user, filesInBytes, imgPath);
-//		user.setUserid(id);
-//		return ResponseEntity.ok().body(user);
-//	}
 	@PostMapping("/user")
-	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
-												  HttpServletRequest request) {
-		try {
-			System.out.println("..regFormModel.getPayload().."+regFormModel );
-			User user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
-				Map<String, byte[]> filesInBytes = WebUtilities
-						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				long id = userService.save(user, filesInBytes,imgPath);
-			} else {
-				long id = userService.save(user, null, imgPath);
-			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
-
+	public ResponseEntity<User> save(@RequestBody User user) {
+		System.out.println("save method called --- "+user);
+		long id = userService.save(user, null, imgPath);
+		user.setUserid(id);
+		return ResponseEntity.ok().body(user);
 	}
+//	@PostMapping("/user")
+//	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
+//												  HttpServletRequest request) {
+//		try {
+//			System.out.println("..regFormModel.getPayload().."+regFormModel );
+//			User user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
+//			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+//				Map<String, byte[]> filesInBytes = WebUtilities
+//						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+//				long id = userService.save(user, filesInBytes,imgPath);
+//			} else {
+//				long id = userService.save(user, null, imgPath);
+//			}
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+//
+//	}
 
 	//---Get a user by id---
 	@GetMapping("/user/{id}")
