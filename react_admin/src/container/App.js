@@ -19,6 +19,7 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
+import DEOEmailTrigger from '../adminWebsite/emailDEOTrigger';
 import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
 import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
@@ -77,6 +78,7 @@ class App extends Component {
             <Route path="/confirmation" component={()=><ConfirmatinScreen/>}/>
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin />}/>
+            <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>}/>
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
