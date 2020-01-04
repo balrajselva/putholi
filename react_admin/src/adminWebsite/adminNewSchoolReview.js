@@ -28,6 +28,7 @@ class adminNewSchoolReview extends Component {
     createTable=()=>{
         var rows=[];
         let rowsUpdated=false;
+        var statusList=["DEO_APPROVED","DEO_REJECTED","VolunteerAccepted","VolunteerRejected","VOLUNTEER_ASSIGNED"];
         for(let i=0;i<this.state.schools.length;i++){
             const newTo = { 
                 pathname: "/adminSchoolCheck", 
@@ -35,6 +36,10 @@ class adminNewSchoolReview extends Component {
                 user:this.props.location.user,
                 ...this.props
             };
+            const validateStatus = statusList.filter(status=>status.includes(this.state.schools[i].schoolStatus));
+            console.log(validateStatus);
+            if(validateStatus.length!==0)
+                continue;
             if(this.state.schools[i].schoolStatus==="AdminRejected" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
                 continue;
             else if(this.state.user.role==="Admin" && (this.state.schools[i].schoolStatus==="AdminReviewed"))
