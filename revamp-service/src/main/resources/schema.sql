@@ -242,7 +242,7 @@ CREATE TABLE quotation (
   requirement_id bigint(20) DEFAULT NULL,
   reviewer varchar(255) DEFAULT NULL,
   school_id bigint(20) DEFAULT NULL,
-  trader_name varchar(255) DEFAULT NULL,
+  company_name varchar(255) DEFAULT NULL,
   verified_by varchar(255) DEFAULT NULL,
   warranty varchar(255) DEFAULT NULL,
   address varchar(255) DEFAULT NULL,
