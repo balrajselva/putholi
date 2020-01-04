@@ -60,8 +60,8 @@ public class Quotation extends AuditableEntity implements Serializable {
 
 	private String reviewer;
 
-	@Column(name = "trader_name")
-	private String traderName;
+	@Column(name = "company_name")
+	private String companyName;
 
 	@Column(name = "verified_by")
 	private String verifiedBy;
