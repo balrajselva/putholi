@@ -132,6 +132,8 @@ public class EmailServiceImpl implements EmailService {
 		
 		model.put("requirements",user.getRequirements());
 		model.put("schoolName", user.getSchoolName());
+		model.put("schoolRegNo", user.getSchoolRegNo());
+		model.put("schoolType", user.getSchoolType());
 		
         user.setModel(model);
 		

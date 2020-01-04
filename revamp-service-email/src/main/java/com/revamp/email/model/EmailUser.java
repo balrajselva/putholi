@@ -30,6 +30,10 @@ public class EmailUser {
 	 
 	 private String schoolName;
 	 
+	 private String schoolRegNo;
+	 
+	 private String schoolType;
+	 
 	 private String yourContirbutionAmount;
 	 
 	 private String name;

@@ -36,6 +36,8 @@ class EmailDEOTrigger extends Component {
             "toEmailAddress" : dataData.get('toAddress'),
             "subject" : "Initiate to DEO Email",
             "schoolName":this.state.schoolList.schoolInfo.schoolName,
+            "schoolRegNo":this.state.schoolList.schoolInfo.schoolRegNo,
+            "schoolType":this.state.schoolList.schoolInfo.schoolType,
             "requirements" :this.state.schoolList.requirements
         }
  
