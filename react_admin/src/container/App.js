@@ -19,6 +19,10 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
+import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
+import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
+import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
+import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
 import AddQuotation from '../adminWebsite/quotation'
 
@@ -57,6 +61,15 @@ class App extends Component {
         )}/>
       )
     }
+    const VolunteerLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <VolunteerLayout {...props}>
+            <Component {...props}/>
+          </VolunteerLayout>
+        )}/>
+      )
+    }
     return (
       <div>   
         <Router history={history}>
@@ -65,16 +78,19 @@ class App extends Component {
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin />}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
-            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={()=><AdminNewSchoolReview/>}/>
-            <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={()=><AdminPendingWorkflow/>}/>
-            <AdminLayoutRoute path="/accessReview" history={history} component={()=><AdminAccessReview/>}/>
-            <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={()=><AdminSchoolCheck/>}/>
+            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>}/>
+            <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
+            <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
+            <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
-            <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={()=><TrustMemberScreen/>}/>
-            <SponsorLayoutRoute path="/referVolunteer" history={history} component={()=><ReferVolunteer/>}/>}/>
-            <Route path="/viewRequirements" history={history} component={()=><RequirementHome/>}/>}/>
-            <Route path="/addQuotation" history={history} component={()=><AddQuotation/>}/>}/>
+            <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
+            <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
+            <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}

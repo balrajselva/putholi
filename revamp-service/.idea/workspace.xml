@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8128ac38-6c4a-4e4b-a762-070a22689b7a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../react_admin/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_admin/src/container/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/container/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/Page/ConfirmationPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/Page/ConfirmationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/components/HeaderComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/HeaderComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/components/schoolRegister/addSchool.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../react_school/src/container/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_school/src/container/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" beforeDir="false" afterPath="$PROJECT_DIR$/../react_admin/src/adminWebsite/adminNewSchoolReview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/model/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +34,7 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -51,6 +42,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.revamp.core.model" />
       <recent name="com.revamp.core.dao" />
     </key>
   </component>
@@ -122,13 +114,15 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/controller/SchoolController.java</url>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/UserServiceImpl.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/service/SchoolServiceImpl.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="10" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/revamp/core/dao/UserRepository.java</url>
+          <line>25</line>
+          <properties class="com.revamp.core.dao.UserRepository" method="updateUserSchoolStatus" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

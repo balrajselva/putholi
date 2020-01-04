@@ -24,5 +24,7 @@ public interface SchoolService {
 	
 	List<School> getByUserId(long userId);
 
-    DEOInfo saveDEOresponse(DEOInfo deoInfo);
+    long saveDEOresponse(DEOInfo deoInfo, Map<String, byte[]> files, String imgPath);
+
+	School updateSchoolStatus(long id, String status);
 }

@@ -119,15 +119,15 @@ class AddSchool extends Component {
           reader.readAsDataURL(file)
       }
   }
-  currentPincode=()=>{
-      if(this.state.pincode!=null && this.state.pincode.length!=6){
+  currentPincode= () =>{
+      if(this.state.pincode !== null && this.state.pincode.length !== 6){
           this.setState({pincode:""})
       }
-      if(this.state.selectedLocality!==null && this.state.pincode.length < 6){
+      if(this.state.selectedLocality !== null && this.state.pincode.length < 6){
          this.setState({pincode:this.state.lastPincode});
       }
   }
-  addRequirement=(e)=>{
+  addRequirement= (e) =>{
       e.preventDefault();
       let hasError=null;
       this.state.reqList.map(reqList=>{

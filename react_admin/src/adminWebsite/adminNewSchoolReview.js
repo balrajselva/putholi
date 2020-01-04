@@ -2,31 +2,72 @@ import React, { Component } from 'react';
 import SmallBoxCard from './components/smallBoxCard/SmallBoxCard';
 import './components/header/Header.css';
 import './css/adminMainPage.css';
-import { Link } from 'react-router-dom';
-import Axios from 'axios';
+import { withRouter, Link } from 'react-router-dom';
+import axios from 'axios';
 
 class adminNewSchoolReview extends Component {
     state={
-        getSchools:true,
-        schools:null
+        schools:null,
+        spinner:true,
+        user:this.props.location.user
     }
-    getSchools=()=>{
-        Axios.get("http://localhost:6060/puthuyir/getAllSchools")
+    componentDidMount(){
+        axios.get("http://localhost:6060/puthuyir/getAllSchools")
         .then(res=>{
             console.log(res.data)
+            this.setState({
+                schools:res.data,
+                spinner:false
+            });
         })
-        this.setState({getSchools:false})
+        .catch(error=>{
+            this.setState({spinner:false});
+            window.alert("Unable to get school details due to "+error)
+        })
     }
+    createTable=()=>{
+        var rows=[];
+        let rowsUpdated=false;
+        var statusList=["DEO_APPROVED","DEO_REJECTED","VolunteerAccepted","VolunteerRejected","VOLUNTEER_ASSIGNED"];
+        for(let i=0;i<this.state.schools.length;i++){
+            const newTo = { 
+                pathname: "/adminSchoolCheck", 
+                school:this.state.schools[i],
+                user:this.props.location.user,
+                ...this.props
+            };
+            const validateStatus = statusList.filter(status=>status.includes(this.state.schools[i].schoolStatus));
+            console.log(validateStatus);
+            if(validateStatus.length!==0)
+                continue;
+            if(this.state.schools[i].schoolStatus==="AdminRejected" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
+                continue;
+            else if(this.state.user.role==="Admin" && (this.state.schools[i].schoolStatus==="AdminReviewed"))
+                continue;
+            else if(this.state.user.role==="Reviewer" && (this.state.schools[i].schoolStatus==="ReviewerConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
+                continue;
+            else if(this.state.user.role==="Approver" && (this.state.schools[i].schoolStatus==="AdminReviewed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
+                continue;
+            else{
+                rowsUpdated=true;
+                rows.push(<tr>
+                    <td>{this.state.schools[i].schoolId}</td>
+                    <td>{this.state.schools[i].schoolInfo.schoolRegNo}</td>
+                    <td>{this.state.schools[i].schoolInfo.schoolName}</td>
+                    <td>{this.state.schools[i].createdDate.split("T")[0]}</td>
+                    <td><span className="label label-warning">{this.state.schools[i].schoolStatus}</span></td>
+                    <td>{this.state.schools[i].address.district}</td>
+                    <td><a href=""><Link to={newTo}>More Details</Link></a></td>
+                </tr>)
+            }
+        }
+        if(rowsUpdated==false)
+            rows.push(<tr ><td align="center" colSpan="8">No new records found!</td></tr>)
+        return rows;
+    }   
     render() {
-        const newTo = { 
-            pathname: "/adminSchoolCheck", 
-            currentUser:this.props.currentUser,
-            user:this.props.currentUser,
-            ...this.props
-        };
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
-                {this.state.getSchools?this.getSchools():null}
                 {/* Content Wrapper. Contains page content */}
                 <div className="content-wrapper">
                     {/* Content Header (Page header) */}
@@ -75,59 +116,18 @@ class adminNewSchoolReview extends Component {
                             <table className="table table-hover">
                                 <tbody><tr>
                                     <th>School ID</th>
-                                    <th>School Name</th>
+                                    <th>Reg no</th>
+                                    <th>Name</th>
                                     <th>Date Added</th>
                                     <th>Status</th>
-                                    <th>District</th>
                                     <th>Town</th>
                                     <th>Details</th>
                                 </tr>
-                                <tr>
-                                    <td>111</td>
-                                    <td>Government Boys School</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="label label-warning">Initial Admin Check</span></td>
-                                    <td>Tiruppur</td>
-                                    <td>Nellikuppam</td>
-                                    <td><a href=""><Link to={newTo}>Click for Details</Link></a></td>
-                                </tr>
-                                </tbody></table>
+                                {this.state.schools!==null ? this.createTable():null}
+                                {this.state.spinner?<div class="spinner"></div>:null}
+                                </tbody>
+                            </table>
                             </div>
-                            {/* /.box-header */}
-                            {/*<div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
-                        <tr>
-                            <th>School ID</th>
-                            <th>School Name</th>
-                            <th>Date Added</th>
-                            <th>Status</th>
-                    <th>District</th>
-                    <th>Town</th>
-                            <th>Details</th>
-                        </tr>
-
-                        <tr>
-                            <td>183</td>
-                            <td>Cuddalore Boys School</td>
-                            <td>11-7-2014</td>
-                    <td><span class="label label-warning">Finalize Quotations</span></td>
-                            <td>Cuddalore</td>
-                    <td>Nellikuppam</td>
-                    <td><a href="pages/UI/trustee_approver.html">Click for Details</a></td>
-                        </tr>
-                        <tr>
-                            <td>183</td>
-                            <td>Cuddalore Boys School</td>
-                            <td>11-7-2014</td>
-                    <td><span class="label label-success">Vendor Selection Complete</span></td>
-                            <td>Cuddalore</td>
-                    <td>Nellikuppam</td>
-                    <td>Click for Details</td>
-                        </tr>
-
-                        </table>
-                    </div>*/}
-                            {/* /.box-body */}
                         </div>
                         {/* /.box */}
                         </div>
@@ -137,7 +137,6 @@ class adminNewSchoolReview extends Component {
                     {/* /.box */}
                 </div>
                 </div>
-
                 </section>
                 </div>
             </div>
@@ -145,4 +144,4 @@ class adminNewSchoolReview extends Component {
     }
 }
 
-export default adminNewSchoolReview;
+export default withRouter(adminNewSchoolReview);

@@ -1,12 +1,13 @@
 package com.revamp.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.revamp.core.model.User;
 
 public interface UserService {
 
-	long save(User user);
+	long save(User user, Map<String, byte[]> filesInBytes, String imgPath);
 
 	User get(long id);
 	
@@ -22,4 +23,7 @@ public interface UserService {
 
 	User findByEmailAddressPassword(String emailAddress, String password);
 
+    List<User> findByDistrict(String district);
+
+	User updateUserSchoolStatus(long userId, long schoolId);
 }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-// import { withRouter, Link } from 'react-router-dom';
 
 class requirementHome extends Component {
 
@@ -12,11 +11,16 @@ class requirementHome extends Component {
     }
 
     addQuotationClicked=()=>{
-        console.log('add clicked');            
+        this.props.history.push({
+            pathname:"/addQuotation",
+            user:this.props.location.user,
+            school:this.props.location.school,
+            ...this.props
+        })    
     }    
 
     requirementList=()=>{
-        axios.get("http://localhost:6060/puthuyir/1/requirements")
+        axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
         .then(res=>{
             console.log(res.data)
             this.setState({
@@ -52,7 +56,7 @@ class requirementHome extends Component {
                 </tr>)			
         }
         if(rowsUpdated==false)
-            rows.push(<tr ><td align="center" colSpan="8">No new records found!</td></tr>)
+            rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
 	

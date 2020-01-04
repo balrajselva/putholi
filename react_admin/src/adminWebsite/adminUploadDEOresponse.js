@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Link,withRouter} from 'react-router-dom';
 
-export default class adminUploadDEOresponse extends Component {
+class adminUploadDEOresponse extends Component {
     state={
         localImageUrl : null,
         status : null,
-        schoolId : "1",
-        projectId : "1",
+        schoolId : this.props.location.school.schoolId,
+        projectId : this.props.location.school.projects[0].projectId,
         lastErrorField : null,
         errorMessage : null,
+        deoFile:null,
         spinner:false
     }
     handleChange=({target})=>{
+        this.setState({errorMessage:null});
         if(target.id==="file"){
             this.setState({spinner:true});
             const reader=new FileReader();
@@ -19,7 +22,7 @@ export default class adminUploadDEOresponse extends Component {
             
             reader.onloadend=()=>{
                 this.setState({
-                    identityProof:file,
+                    deoFile:file,
                     localImageUrl:reader.result,
                     spinner:false
                 })
@@ -27,10 +30,10 @@ export default class adminUploadDEOresponse extends Component {
             reader.readAsDataURL(file)
         }
         else if(target.id==="approved"){
-            this.setState({status:"DEOapproved"});
+            this.setState({status:"DEO Approved"});
         }
         else if(target.id==="rejected"){
-            this.setState({status:"DEOrejected"});
+            this.setState({status:"DEO Rejected"});
         }
         else{
             document.getElementById(target.id).style.borderColor="#d2d6de";
@@ -43,36 +46,54 @@ export default class adminUploadDEOresponse extends Component {
     }
     onSubmit=(e)=>{
         e.preventDefault();
-        this.setState({
-            spinner:true,
-        })
-        let deoResponse={
-            school_i:this.state.schoolId,
-            project_id:this.state.projectId,
-            status:this.state.status,
-            file:this.state.localImageUrl
+        if(this.state.status===null){
+            this.setState({errorMessage:"Please select whether approve or rejected"})
         }
-        console.log(deoResponse);
-        axios.post("http://localhost:6060/puthuyir/school/saveDEOresponse",deoResponse)
+        else if(this.state.deoFile===null){
+            this.setState({errorMessage:"Please upload the DEO file"})
+        }
+        else{
+            this.setState({
+                spinner:true,
+            })
+            let deoResponse={
+                school_id:this.state.schoolId,
+                project_id:this.state.projectId,
+                status:this.state.status
+            }
+            console.log(deoResponse);
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(deoResponse));
+            regFormModel.append('files',this.state.deoFile)
+            axios.post("http://localhost:6060/puthuyir/school/saveDEOresponse",regFormModel)
             .then(res=>{
                 console.log(res);
-                if(res.status===200){
-                    window.alert("File uploaded successfully!");
-                    // this.props.history.push({
-                    //         pathname:"/adminUploadDEOresponse",
-                    //         user:this.props.currentUser,
-                    //         ...this.props
-                    // })
-                    this.setState({
+                this.setState({
                         spinner:false,
                     })
-                }
-                else{
-                    window.alert("File upload failed")
+                if(res.status===200){
+                    window.alert("File uploaded successfully!");
+                    this.props.history.push({
+                            pathname:"/adminPendingWorkflow",
+                            user:this.props.location.user,
+                            ...this.props
+                    })
                 }
             })
+            .catch(error=>{
+                this.setState({
+                    spinner:false,
+                })
+                window.alert("File upload failed due to "+error)
+            })
+        }
     }
     render() {
+        const schoolList={
+            pathname:"/adminPendingWorkflow",
+            user:this.props.location.user,
+            ...this.props
+          }
         return (
             <div className="content-wrapper">
             {/* Content Header (Page header) */}
@@ -144,9 +165,10 @@ export default class adminUploadDEOresponse extends Component {
                         {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>DEO response preview :</b></div>:null}
                         {this.state.localImageUrl?<img style={{marginLeft:"10px"}} width="80%" height="100%" src={this.state.localImageUrl} alt="Identity proof"/>:null}
                         {/* /.box-body */}
+                        {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                         <div className="box-footer">
                             <button type="submit" className="btn btn-primary" onClick={(e)=>this.onSubmit(e)}>Submit</button>&nbsp;
-                            <button type="button" className="btn btn-warning">Cancel</button>
+                            <Link to={schoolList} className="btn btn-primary">Back to User List</Link>
                         </div>
                         {this.state.spinner?<div class="spinner"></div>:null}
                         </form>
@@ -160,3 +182,4 @@ export default class adminUploadDEOresponse extends Component {
         )
     }
 }
+export default withRouter(adminUploadDEOresponse);
