@@ -6,14 +6,10 @@ import '../css/theme.css';
 import '../css/bootstrap-responsive.css';
 import '../css/skins/tango/skin.css';
 import '../css/Page_CSS/IndexPage.css';
-import HeaderComponent from '../components/HeaderComponent.js';
-import FooterComponent from '../components/FooterComponent';
 import {withRouter} from 'react-router-dom';
 import LoginModal from "react-login-modal-sm";
 import axios from 'axios';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import UserDetailsForm from '../contact_form/UserDetailsForm';
-import RegisterForm from '../components/registerForm/registerForm';
 
 
 class RegistrationPage extends Component {
@@ -44,11 +40,11 @@ class RegistrationPage extends Component {
         spinner:false
         };
     toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal });
+        this.setState({ showModal: !this.state.showModal });
     };
     
     handleLoginWithFacebook = () => {
-    console.log("Login with Facebook...");
+        console.log("Login with Facebook...");
     };
 
     handleSignupByEmail = (email, username, password) => {
@@ -84,10 +80,15 @@ class RegistrationPage extends Component {
         axios.post('http://localhost:6060/puthuyir/verify_user',user)
         .then(res=>{
             console.log(res);
-            if(res.data!=""){
+            if(res.data.status === "ApprovedUser" && res.data.role==="beneficiary"){
                 this.props.history.push({
                     pathname: '/schoolRegistration',
                     user: res.data
+                });
+            }
+            else if(res.data.status !== "ApprovedUser" && res.data.role==="beneficiary"){
+                this.props.history.push({
+                    pathname: '/confirm'
                 });
             }
             else{

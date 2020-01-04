@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import SponsorMenu from '../menu/SponsorMenu';
+import { withRouter } from 'react-router';
 
-export default class SponsorLayout extends Component {
+class SponsorLayout extends Component {
     render() {
         return (
             <div>
@@ -15,3 +16,4 @@ export default class SponsorLayout extends Component {
         )
     }
 }
+export default withRouter(SponsorLayout);

@@ -1,22 +1,29 @@
 package com.revamp.core.controller;
 
-import com.revamp.core.model.School;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revamp.core.model.SchoolRegFormModel;
 import com.revamp.core.model.User;
 import com.revamp.core.response.UserResponse;
 import com.revamp.core.service.SchoolService;
 import com.revamp.core.service.UserService;
+import com.revamp.core.web.util.WebUtilities;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost")
 @RestController
@@ -29,6 +36,8 @@ public class UserController {
 	@Autowired
 	private SchoolService schoolService;
 
+	@Value("${image.path}")
+	private String imgPath;
 	//---Register user---
 	/**
 	 * 
@@ -38,10 +47,30 @@ public class UserController {
 	@PostMapping("/user")
 	public ResponseEntity<User> save(@RequestBody User user) {
 		System.out.println("save method called --- "+user);
-		long id = userService.save(user);
+		long id = userService.save(user, null, imgPath);
 		user.setUserid(id);
 		return ResponseEntity.ok().body(user);
 	}
+//	@PostMapping("/user")
+//	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
+//												  HttpServletRequest request) {
+//		try {
+//			System.out.println("..regFormModel.getPayload().."+regFormModel );
+//			User user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
+//			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+//				Map<String, byte[]> filesInBytes = WebUtilities
+//						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+//				long id = userService.save(user, filesInBytes,imgPath);
+//			} else {
+//				long id = userService.save(user, null, imgPath);
+//			}
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+//
+//	}
 
 	//---Get a user by id---
 	@GetMapping("/user/{id}")
@@ -111,7 +140,6 @@ public class UserController {
 		userService.deleteUser(id);
 		return new ResponseEntity<>("DELETE Response", HttpStatus.OK);
 	}
-	
 
 	//---Register user---
 	/**
@@ -131,9 +159,14 @@ public class UserController {
 		System.out.println(login);
 		User user=userService.findByEmailAddressPassword(login.getEmailAddress(),login.getPassword());
 		System.out.println(user);
-//			List<School> school=schoolService.getByUserId(user.getUserid());
-//			System.out.println(school);
 		return ResponseEntity.ok().body(user);
 	}
 
+	@GetMapping("/volunteer/{district}")
+	public ResponseEntity<List<User>> findByDistrict(@PathVariable("district")  String district){
+		System.out.println(district);
+		List<User> userList=userService.findByDistrict(district);
+		System.out.println(userList);
+		return ResponseEntity.ok().body(userList);
+	}
 }

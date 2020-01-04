@@ -5,6 +5,7 @@ import com.revamp.core.model.DEOInfo;
 import com.revamp.core.model.School;
 import com.revamp.core.model.SchoolRegFormModel;
 import com.revamp.core.service.SchoolService;
+import com.revamp.core.service.UserService;
 import com.revamp.core.web.util.WebUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,14 +28,17 @@ import java.util.Map;
  *
  */
 @RestController
-@PropertySource(value= {"classpath:application.properties"})
+@PropertySource(value = { "classpath:application.properties" })
 @CrossOrigin(origins = "http://localhost")
 public class SchoolController {
-	private final static Logger logger = LoggerFactory.getLogger(SchoolController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SchoolController.class);
 
 	@Autowired
 	private SchoolService schoolService;
-	
+
+	@Autowired
+	private UserService userService;
+
 	 @Value("${image.path}")
      private String imgPath;
 
@@ -59,14 +63,13 @@ public class SchoolController {
 			} else {
 				long id = schoolService.save(school, null, imgPath);
 			}
-					} catch (IOException ex) {
-			ex.printStackTrace();
+		} catch (IOException ex) {
+			logger.debug("Error on multiUploadFileModel {}", ex);
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 
 	}
-
 
 	/**
 	 * 
@@ -79,7 +82,6 @@ public class SchoolController {
 		return ResponseEntity.ok().body(school);
 	}
 
-	
 	/**
 	 * 
 	 * @param schoolId
@@ -91,9 +93,15 @@ public class SchoolController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	
+	@PutMapping("/updateSchool/{id}/{status}")
+	public ResponseEntity<School> updateUser(@PathVariable long id, @PathVariable String status) {
+		System.out.println("Update school"+id+""+status);
+		School school = schoolService.updateSchoolStatus(id, status);
+		return ResponseEntity.ok().body(school);
+	}
+
 	/**
-	 * 
+	 *
 	 * @param school
 	 * @param request
 	 * @return
@@ -140,11 +148,30 @@ public class SchoolController {
 		return ResponseEntity.ok().body(schools);
 	}
 
-	@PostMapping("/school/saveDEOresponse")
-	public ResponseEntity<DEOInfo> saveDEoresponse(@RequestBody DEOInfo deoInfo){
-		System.out.println(deoInfo);
-		DEOInfo deoInfo1 = schoolService.saveDEOresponse(deoInfo);
-		return ResponseEntity.ok().body(deoInfo1);
-	}
+    @PostMapping("/school/saveDEOresponse")
+    public ResponseEntity<?> saveDEoresponse(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,HttpServletRequest request){
+        try {
+            System.out.println("..regFormModel.getPayload().."+regFormModel );
+            DEOInfo deoInfo = new ObjectMapper().readValue(regFormModel.getPayload(), DEOInfo.class);
+            if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+                Map<String, byte[]> filesInBytes = WebUtilities
+                        .convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+                long id = schoolService.saveDEOresponse(deoInfo, filesInBytes,imgPath);
+            } else {
+                long id = schoolService.saveDEOresponse(deoInfo, null, imgPath);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+    }
 
+	@PostMapping("/school/assignSchool/{schoolId}/{userId}")
+	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") long schoolId,@PathVariable("userId") long userId) {
+		System.out.println(schoolId+"---"+userId);
+		userService.updateUserSchoolStatus(userId,schoolId);
+		schoolService.updateSchoolStatus(schoolId,"VOLUNTEER_ASSIGNED");
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+	}
 }

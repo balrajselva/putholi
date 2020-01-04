@@ -32,7 +32,6 @@ import lombok.EqualsAndHashCode;
 @Table(name = "schoolimage")
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
-@Data
 @Getter
 @Setter
 public class SchoolImage extends AuditableEntity implements java.io.Serializable {

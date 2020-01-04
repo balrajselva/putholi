@@ -11,7 +11,7 @@ import com.revamp.core.model.User;
 import com.revamp.core.model.VolunteerReference;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class VolunteerReferenceServiceImpl implements VolunteerReferenceService{
 	
 	@Autowired VolunteerReferenceRepository volunteerReferenceRepository;

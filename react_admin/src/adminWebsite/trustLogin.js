@@ -30,7 +30,7 @@ class trustLogin extends Component {
         console.log(res.data)
           if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
             this.props.history.push({
-              pathname: '/volunteer',
+              pathname: '/volunteerSchoolCheck',
               user : res.data
             });
           }
