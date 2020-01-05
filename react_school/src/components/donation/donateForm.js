@@ -117,7 +117,11 @@ class DonationForm extends Component {
 
       if (isValid) {
 
-        axios.post('http://localhost:6060/puthuyir/donate/findByEmailId', params, { headers: { 'Accept': 'application/json' } })
+        let emailValidation = {
+          emailAddress: data.get('email'),
+        
+        }
+        axios.post('http://localhost:6060/puthuyir/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
           .then(response => {
             if (response.data === "SUCCESS") {
               this.setState({
@@ -142,9 +146,9 @@ class DonationForm extends Component {
           })
       }
 
-
-
       flagOption = "2";
+
+      
     }
 
 
@@ -170,6 +174,7 @@ class DonationForm extends Component {
             password: data.get('passwordOption')
           }
         } else {
+          console.log("Entreing into elso confidio");
           params = {
             firstName: data.get('firstName'),
             lastName: data.get('lastName'),
