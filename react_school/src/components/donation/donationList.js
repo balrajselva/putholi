@@ -15,7 +15,7 @@ class DonationList extends Component {
             function (userFilter) {
                 return userFilter.schoolId == e;
             });
-
+console.log("userSelectId",userSelectId);
 
         this.props.history.push('donationDetails', { state: userSelectId });
 
@@ -23,7 +23,7 @@ class DonationList extends Component {
     }
 
     render() {
-
+        
         const styleDonation = {
             position: "absolute",
             left: "0px",
@@ -68,7 +68,7 @@ class DonationList extends Component {
                    
 
                                 </div>
-                                <div className="descr">Click Here to  <button onClick={e => this.toDonate(donationLists.id)}>
+                                <div className="descr">Click Here to  <button onClick={e => this.toDonate(donationLists.schoolId)}>
                                     Donate
                                  </button>
                                 </div>

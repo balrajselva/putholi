@@ -16,7 +16,7 @@ import lombok.Data;
 public class DonationUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "donationuserid")
+	@Column(name = "donation_userid")
 	private long donationuserid;
 
 	@Column(name = "firstname")
