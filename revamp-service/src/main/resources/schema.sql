@@ -1,335 +1,398 @@
-DROP DATABASE IF EXISTS revamp_db;
-CREATE DATABASE revamp_db;
-USE revamp_db;
-
-/********************************************************
-    The Address table, to hold contact info for entities
-********************************************************/
 
 DROP TABLE IF EXISTS revamp_db.address;
 
 CREATE TABLE IF NOT EXISTS revamp_db.address(
 	address_id INT NOT NULL AUTO_INCREMENT,
-	address_line_1 VARCHAR(90),
-	address_line_2 VARCHAR(90),
-	district VARCHAR(45),
-	city VARCHAR(45),
-    locality VARCHAR(45),
-    pincode VARCHAR(10),
-    state VARCHAR(10),
-    country VARCHAR(10),
-	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
+	address_line_1 VARCHAR(255),
+	address_line_2 VARCHAR(255),
+	city VARCHAR(255),
+	country VARCHAR(50),
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT CURRENT_TIMESTAMP,
+	district VARCHAR(50),
+	locality VARCHAR(50),
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	pincode VARCHAR(10),
+	state VARCHAR(50),
 	PRIMARY KEY (address_id)
 );
+
+DROP TABLE IF EXISTS revamp_db.audittrail;
+--for future purpose
+CREATE TABLE IF NOT EXISTS revamp_db.audittrail(
+	comments varchar(500) DEFAULT NULL,
+	lastlogindate datetime(6) DEFAULT NULL,
+	lastupdateddate datetime(6) DEFAULT NULL,
+	roleid int DEFAULT NULL,
+	userid int NOT NULL,
+	id int NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT audittrail_user_userid FOREIGN KEY (userid) REFERENCES revamp_db.user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
 
 DROP TABLE IF EXISTS revamp_db.contacts;
 
 CREATE TABLE IF NOT EXISTS revamp_db.contacts(
 	contacts_id INT NOT NULL AUTO_INCREMENT,
-	pri_name VARCHAR(45) NOT NULL,
-    pri_num VARCHAR(45) NOT NULL,
-	pri_email VARCHAR(90) NOT NULL,
-    sec_name VARCHAR(45),
-    sec_num VARCHAR(45),
-	sec_email VARCHAR(90),
-    created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT NULL,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	pri_email VARCHAR(100) NOT NULL,
+	pri_name VARCHAR(50) NOT NULL,
+	pri_num VARCHAR(50) NOT NULL,
+	sec_email VARCHAR(100),
+	sec_name VARCHAR(50),
+	sec_num VARCHAR(50),
 	PRIMARY KEY (contacts_id)
 );
 
-DROP TABLE IF EXISTS revamp_db.schoolinfo;
 
-CREATE TABLE IF NOT EXISTS revamp_db.schoolinfo(
-	school_info_id INT NOT NULL AUTO_INCREMENT,
-    school_reg_number VARCHAR(45) NOT NULL,
-	school_name VARCHAR(45) NOT NULL,
-	school_type VARCHAR(45) NOT NULL,
-	number_of_students INT NOT NULL,
-	number_of_teachers INT NOT NULL,
-	created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-	PRIMARY KEY (school_info_id),
-    CONSTRAINT UNIQUE schoolinfo(school_reg_number)
+DROP TABLE IF EXISTS deo_file;
+CREATE TABLE deo_file (
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime NOT NULL,
+	deo_file_id INT NOT NULL AUTO_INCREMENT,
+	deo_info_id INT NOT NULL,
+	image longblob NOT NULL,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	PRIMARY KEY (deo_file_id),
+	CONSTRAINT deo_file FOREIGN KEY (deo_info_id) REFERENCES revamp_db.deo_info (deo_info_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-DROP TABLE IF EXISTS revamp_db.role;
 
-CREATE TABLE IF NOT EXISTS revamp_db.role(
-  roleid varchar(45) NOT NULL,
-  rolename varchar(45) DEFAULT NULL,
-  accesslevel varchar(45) DEFAULT NULL,
-  PRIMARY KEY (roleid)
-);
-
-DROP TABLE IF EXISTS revamp_db.user;
-
-CREATE TABLE IF NOT EXISTS revamp_db.user(
-  userid INT NOT NULL AUTO_INCREMENT ,
-  firstname varchar(45) NOT NULL,
-  lastname varchar(45) NOT NULL,
-  status varchar(45) DEFAULT 'REGISTERED',
-  /*addressid INT not null, */ 
-  role varchar(45) NOT NULL,
-  phonenumber varchar(45) DEFAULT NULL,
-  emailaddress varchar(45) DEFAULT NULL,
-  password varchar(50) DEFAULT NULL,
-  /*passwordhint varchar(500) DEFAULT NULL,*/
-  created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-  PRIMARY KEY (userid)
-/*FOREIGN KEY (addressid) REFERENCES revamp_db.address (address_id),  */
-  /*FOREIGN KEY (roleid) REFERENCES revamp_db.role (roleid)*/
-  /*ON DELETE NO ACTION
-ON UPDATE CASCADE*/
-);
-
-/********************************************************
-The School table, to collect school information
-********************************************************/
-DROP TABLE IF EXISTS revamp_db.school;
-
-CREATE TABLE IF NOT EXISTS revamp_db.school(
-	school_id INT NOT NULL AUTO_INCREMENT,
-    contacts_id INT NOT NULL,
-    address_id INT NOT NULL,
-    school_info_id INT NOT NULL,
-    school_status VARCHAR(45) NOT NULL,
-    /*user_id INT NOT NULL,*/
-	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-	created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-	PRIMARY KEY (school_id),
-	FOREIGN KEY (contacts_id) REFERENCES contacts (contacts_id),
-	FOREIGN KEY (address_id) REFERENCES address (address_id),
-	FOREIGN KEY (school_info_id) REFERENCES schoolinfo (school_info_id)
-    /*FOREIGN KEY (user_id) REFERENCES user (userid)*/
-	ON DELETE NO ACTION
-	ON UPDATE CASCADE
-);
-
-DROP TABLE IF EXISTS revamp_db.schoolimage;
-
-CREATE TABLE IF NOT EXISTS revamp_db.schoolimage(
-	image_id INT NOT NULL AUTO_INCREMENT,
-	image longblob,
+DROP TABLE IF EXISTS deo_info;
+CREATE TABLE deo_info (
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime NOT NULL,
+	deo_file_id INT NOT NULL,
+	deo_info_id INT NOT NULL AUTO_INCREMENT,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	project_id INT NOT NULL,
 	school_id INT NOT NULL,
-	filepath VARCHAR(200) NOT NULL,
-	comments varchar(500) DEFAULT NULL,
-	date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-	created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,	
-	PRIMARY KEY (image_id),
-	FOREIGN KEY (school_id) REFERENCES revamp_db.school (school_id) ON DELETE NO ACTION ON UPDATE CASCADE	
-);
-
-DROP TABLE IF EXISTS revamp_db.project;
-
-CREATE TABLE IF NOT EXISTS revamp_db.project(
-	project_id INT NOT NULL AUTO_INCREMENT,
-    school_id INT NOT NULL,
-    estimate INT,
-    collected_amount INT,
-    status VARCHAR(45) NOT NULL,
-    v_status BIT AS (CASE WHEN status = 'ProjectCreated' THEN b'1' ELSE NULL END) VIRTUAL,
-    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-    PRIMARY KEY (project_id),
-    CONSTRAINT school_id FOREIGN KEY (school_id) REFERENCES revamp_db.school (school_id),
-    CONSTRAINT UNIQUE project(project_id,school_id,v_status)
-);
-
-
-DROP TABLE IF EXISTS revamp_db.audittrail;
-
-CREATE TABLE IF NOT EXISTS revamp_db.audittrail(
-id int NOT NULL,
-  userid int NOT NULL,
-  roleid int DEFAULT NULL,
-  lastlogindate datetime(6) DEFAULT NULL,
-  lastupdateddate datetime(6) DEFAULT NULL,
-  comments varchar(500) DEFAULT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT audittrail_user_userid FOREIGN KEY (userid) REFERENCES revamp_db.user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION
-); 
-
-DROP TABLE IF EXISTS revamp_db.lookup;
- 
-CREATE TABLE IF NOT EXISTS revamp_db.lookup (
-  lookup_id int NOT NULL AUTO_INCREMENT,
-  key_field varchar(45) DEFAULT NULL,
-  key_value varchar(45) DEFAULT NULL,
-  parent_field varchar(45) DEFAULT NULL,
-  parent_key varchar(45) DEFAULT NULL,
-  PRIMARY KEY (lookup_id)
-);
-
-DROP TABLE IF EXISTS revamp_db.requirement;
-
-CREATE TABLE IF NOT EXISTS revamp_db.requirement(
-  requirement_id int NOT NULL AUTO_INCREMENT,
-  project_id int NOT NULL,
-  /*user_id int NOT NULL,*/
-  reqtype varchar(45) NOT NULL,
-  assettype varchar(45) NOT NULL,
-  assetname varchar(45) NOT NULL,
-  quantity int NOT NULL,
-  status VARCHAR(45) NOT NULL,
-  date_created datetime DEFAULT CURRENT_TIMESTAMP,
-  priority varchar(45) DEFAULT NULL,
-  created_date datetime DEFAULT NULL,
-  created_by varchar(45) DEFAULT NULL,
-  modified_by varchar(45) DEFAULT NULL,
-  modified_date datetime DEFAULT NULL,
-  PRIMARY KEY (requirement_id),
-  CONSTRAINT project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
-  /*CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user (userid)*/
+	status varchar(255) DEFAULT NULL,
+	PRIMARY KEY (deo_info_id),
+	CONSTRAINT deo_file FOREIGN KEY (deo_file_id) REFERENCES revamp_db.deo_file (deo_file_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 
 DROP TABLE IF EXISTS revamp_db.donation;
 
 CREATE TABLE IF NOT EXISTS revamp_db.donation(
-	donation_id INT NOT NULL AUTO_INCREMENT,
-	project_id INT NOT NULL,
-	tracking_id VARCHAR(45) NOT NULL,
-	payment_mode VARCHAR(45) NOT NULL,
 	amount INT NOT NULL,
+	created_by varchar(50) DEFAULT NULL,
+  	created_date datetime DEFAULT NULL,
+	donation_id INT NOT NULL AUTO_INCREMENT,
 	donor_id INT NOT NULL,
-	payment_status VARCHAR(45) NOT NULL,
-	createdate datetime(6) DEFAULT NULL,
-	created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
+	payment_mode VARCHAR(50) NOT NULL,
+	payment_status VARCHAR(50) NOT NULL,
+	project_id INT NOT NULL,
+	tracking_id VARCHAR(100) NOT NULL,
+  	modified_by varchar(50) DEFAULT NULL,
   	modified_date datetime DEFAULT NULL,
 	PRIMARY KEY (donation_id),
-	CONSTRAINT FK_donation_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE
+	CONSTRAINT FK_donation_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE,
 	CONSTRAINT FK_donation_donor_id FOREIGN KEY (donor_id) REFERENCES USER (userid) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS revamp_db.quotation;
 
-CREATE TABLE quotation (
-  quotation_id bigint(20) NOT NULL,
-  created_by varchar(255) DEFAULT NULL,
-  created_date datetime NOT NULL,
-  modified_by varchar(255) DEFAULT NULL,
-  modified_date datetime DEFAULT NULL,
-  collected_by varchar(255) DEFAULT NULL,
-  image_id bigint(20) DEFAULT NULL,
-  is_quotation_active varchar(255) DEFAULT NULL,
-  phone varchar(255) DEFAULT NULL,
-  quotated_amount bigint(20) DEFAULT NULL,
-  quotation_date datetime DEFAULT NULL,
-  quotation_status varchar(255) DEFAULT NULL,
-  quotation_validity_date datetime DEFAULT NULL,
-  requirement_id bigint(20) DEFAULT NULL,
-  reviewer varchar(255) DEFAULT NULL,
-  school_id bigint(20) DEFAULT NULL,
-  trader_name varchar(255) DEFAULT NULL,
-  verified_by varchar(255) DEFAULT NULL,
-  warranty varchar(255) DEFAULT NULL,
-  address varchar(255) DEFAULT NULL,
-  city varchar(255) DEFAULT NULL,
-  state varchar(255) DEFAULT NULL,
-  pincode varchar(255) DEFAULT NULL,
-  quantity varchar(255) DEFAULT NULL,
-  details varchar(255) DEFAULT NULL,
-  PRIMARY KEY (quotation_id)
-  CONSTRAINT quotation_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id),
-  CONSTRAINT quotation_school_id FOREIGN KEY (school_id) REFERENCES school (school_id)  
-); 
+--DROP TABLE IF EXISTS revamp_db.fundallotment;
 
-DROP TABLE IF EXISTS revamp_db.fundallotment;
+--CREATE TABLE IF NOT EXISTS revamp_db.fundallotment(
+--	allocated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+--	collected_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+--	created_by varchar(50) DEFAULT NULL,
+--	created_date datetime DEFAULT NULL,
+--	fundallotment_id INT NOT NULL AUTO_INCREMENT,
+--	interest INT,
+----	modified_by varchar(50) DEFAULT NULL,
+--	modified_date datetime DEFAULT NULL,
+--	requirement_id INT NOT NULL,
+--	totalamount INT NOT NULL,    
+--	updated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+--	userid int NOT NULL,
+--	PRIMARY KEY (fundallotment_id),
+--	CONSTRAINT FK_fundallotment_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id)
+--	/*CONSTRAINT FK_fundallotment_user_id FOREIGN KEY (userid) REFERENCES user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION*/
+--);
 
-CREATE TABLE IF NOT EXISTS revamp_db.fundallotment(
-	fundallotment_id INT NOT NULL AUTO_INCREMENT,
-    userid int NOT NULL,
-	requirement_id INT NOT NULL,
-    collected_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    totalamount INT NOT NULL,    
-    interest INT,
-    allocated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    created_date datetime DEFAULT NULL,
-  	created_by varchar(45) DEFAULT NULL,
-  	modified_by varchar(45) DEFAULT NULL,
-  	modified_date datetime DEFAULT NULL,
-	PRIMARY KEY (fundallotment_id),
-    CONSTRAINT FK_fundallotment_requirement_id FOREIGN KEY (requirement_id) REFERENCES requirement (requirement_id)
-    /*CONSTRAINT FK_fundallotment_user_id FOREIGN KEY (userid) REFERENCES user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION*/
+DROP TABLE IF EXISTS identity_proof;
+
+CREATE TABLE identity_proof (
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime NOT NULL,
+	identity_proof_id INT NOT NULL AUTO_INCREMENT,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	PRIMARY KEY (identity_proof_id)
 );
 
-DROP TABLE IF EXISTS revamp_db.invoice;
-
-CREATE TABLE revamp_db.invoice (
-  invoice_id int NOT NULL AUTO_INCREMENT,
-  project_id int DEFAULT NULL,
-  name varchar(100) DEFAULT NULL,
-  type varchar(50) DEFAULT NULL,
-  file longblob,
-  created_by varchar(255) DEFAULT NULL,
-  created_date datetime DEFAULT NULL,
-  modified_by varchar(255) DEFAULT NULL,
-  modified_date datetime DEFAULT NULL,
-  mime_type varchar(255) DEFAULT NULL,
-  invoice_details_id bigint DEFAULT NULL,
-  PRIMARY KEY (invoice_id),
-  CONSTRAINT invoice_ibfk_1 FOREIGN KEY (project_id) REFERENCES project (project_id) ON UPDATE CASCADE
-);
 
 DROP TABLE IF EXISTS revamp_db.invoice_details;
 
 CREATE TABLE revamp_db.invoice_details (
-  invoice_details_id int NOT NULL AUTO_INCREMENT,
-  from_address varchar(45) DEFAULT NULL,
-  to_address varchar(45) DEFAULT NULL,
-  invoice_number varchar(45) DEFAULT NULL,
-  invoice_date varchar(45) DEFAULT NULL,
-  invoice_duedate varchar(45) DEFAULT NULL,
-  bankname varchar(45) DEFAULT NULL,
-  emailId varchar(45) DEFAULT NULL,
-  phoneNumber varchar(45) DEFAULT NULL,
-  accountNumber varchar(45) DEFAULT NULL,
-  created_by varchar(255) DEFAULT NULL,
-  created_date datetime NOT NULL,
-  modified_by varchar(255) DEFAULT NULL,
-  modified_date datetime DEFAULT NULL,
-  account_number varchar(255) DEFAULT NULL,
-  phone_number varchar(255) DEFAULT NULL,
-  email_id varchar(255) DEFAULT NULL,
-  PRIMARY KEY (invoice_details_id)
+	account_number varchar(50) DEFAULT NULL,
+	bankname varchar(50) DEFAULT NULL,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime NOT NULL,
+	email_id varchar(50) DEFAULT NULL,
+	from_address varchar(50) DEFAULT NULL,
+	invoice_date  datetime NOT NULL,
+	invoice_details_id int NOT NULL AUTO_INCREMENT,
+	invoice_duedate datetime NULL,
+	invoice_number varchar(50) NULL,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	phone_number varchar(10) DEFAULT NULL,
+	to_address varchar(50) DEFAULT NULL,
+	PRIMARY KEY (invoice_details_id)
 );
+
 
 DROP TABLE IF EXISTS revamp_db.invoice_requirements;
 
 CREATE TABLE revamp_db.invoice_requirements (
-  requirement_id int NOT NULL AUTO_INCREMENT,
-  qty varchar(45) DEFAULT NULL,
-  descriptions varchar(45) DEFAULT NULL,
-  price varchar(45) DEFAULT NULL,
-  subTotal varchar(45) DEFAULT NULL,
-  created_by varchar(255) DEFAULT NULL,
-  created_date datetime NOT NULL,
-  modified_by varchar(255) DEFAULT NULL,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime NOT NULL,
+	descriptions varchar(100) DEFAULT NULL,
+	invoice_details_id INT NOT NULL,
+	invoice_requirements_id int NOT NULL AUTO_INCREMENT,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	price INT DEFAULT NOT NULL,
+	quantity INT DEFAULT NOT NULL,
+	sub_total INT NOT NULL,
+	PRIMARY KEY (invoice_requirements_id)
+	CONSTRAINT FK_invoice_requirements_invoice_details_id FOREIGN KEY (invoice_details_id) REFERENCES invoice_details(invoice_details_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+
+DROP TABLE IF EXISTS revamp_db.invoice;
+
+CREATE TABLE revamp_db.invoice (
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime DEFAULT NULL,
+  file longblob,
+  invoice_details_id INT NOT NULL,
+  invoice_id INT NOT NULL AUTO_INCREMENT,
+  file_type varchar(50) DEFAULT NULL,
+  modified_by varchar(50) DEFAULT NULL,
   modified_date datetime DEFAULT NULL,
-  invoice_details bigint DEFAULT NULL,
-  sub_total varchar(255) DEFAULT NULL,
-  PRIMARY KEY (requirement_id)
+  name varchar(100) DEFAULT NULL,
+  project_id int DEFAULT NULL,
+  type varchar(50) DEFAULT NULL,
+  PRIMARY KEY (invoice_id),
+  CONSTRAINT FK_INVOICE_PROJECT_ID FOREIGN KEY (project_id) REFERENCES project (project_id) ON UPDATE CASCADE,
+  CONSTRAINT FK_INVOICE_invoice_details_id FOREIGN KEY (invoice_details_id) REFERENCES invoice_details(invoice_details_id) ON UPDATE CASCADE
+);
+
+
+DROP TABLE IF EXISTS revamp_db.lookup;
+ 
+CREATE TABLE IF NOT EXISTS revamp_db.lookup (
+  lookup_id int NOT NULL AUTO_INCREMENT,
+  key_field varchar(50) DEFAULT NULL,
+  key_value varchar(50) DEFAULT NULL,
+  parent_field varchar(50) DEFAULT NULL,
+  parent_key varchar(50) DEFAULT NULL,
+  PRIMARY KEY (lookup_id)
+);
+
+
+DROP TABLE IF EXISTS revamp_db.project;
+
+CREATE TABLE IF NOT EXISTS revamp_db.project(
+	collected_amount INT,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT NULL,
+	estimated_amount INT,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	project_id INT NOT NULL AUTO_INCREMENT,
+	school_id INT NOT NULL,
+	status VARCHAR(50) NOT NULL,
+	PRIMARY KEY (project_id),
+	CONSTRAINT FK_project_school_id FOREIGN KEY (school_id) REFERENCES revamp_db.school (school_id),
+	CONSTRAINT UNIQUE project(project_id,school_id,v_status)
+);
+
+DROP TABLE IF EXISTS revamp_db.donation_user;
+
+CREATE TABLE IF NOT EXISTS donation_user (
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime DEFAULT NULL,
+  donation_userid INT NOT NULL AUTO_INCREMENT,
+  emailaddress varchar(45) DEFAULT NULL,
+  firstname varchar(50) NOT NULL,
+  lastname varchar(50) NOT NULL,
+  modified_by varchar(50) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
+  password varchar(50) DEFAULT NULL,
+  passwordhint varchar(500) DEFAULT NULL,
+  phonenumber varchar(15) DEFAULT NULL,
+  PRIMARY KEY (donation_userid)
+);
+
+
+DROP TABLE IF EXISTS revamp_db.quotation;
+
+CREATE TABLE quotation (
+  city varchar(50) DEFAULT NULL,
+  collected_by varchar(50) DEFAULT NULL,
+  company_address varchar(255) DEFAULT NULL,
+  company_name varchar(100) DEFAULT NULL,
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime NOT NULL,
+  details varchar(255) DEFAULT NULL,
+  image_id INT DEFAULT NULL,
+  is_quotation_active varchar(3) DEFAULT NULL,
+  modified_by varchar(50) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
+  phone varchar(15) DEFAULT NULL,
+  pincode varchar(10) DEFAULT NULL,
+  project_id INT NOT NULL,
+  quantity INT DEFAULT NULL,
+  quotated_amount DOUBLE DEFAULT NULL,
+  quotation_date datetime DEFAULT NULL,
+  quotation_id INT NOT NULL,
+  quotation_status varchar(50) DEFAULT NULL,
+  quotation_validity_date datetime DEFAULT NULL,
+  requirement_id INT DEFAULT NULL,
+  reviewer varchar(50) DEFAULT NULL,
+  school_id INT NOT NULL,
+  state varchar(50) DEFAULT NULL,
+  verified_by varchar(50) DEFAULT NULL,
+  warranty varchar(255) DEFAULT NULL,
+  PRIMARY KEY (quotation_id),
+  CONSTRAINT FK_quotation_school_id FOREIGN KEY (school_id) REFERENCES revamp_db.school (school_id),
+  CONSTRAINT FK_quotation_project_id FOREIGN KEY (project_id) REFERENCES revamp_db.project (project_id),
+  CONSTRAINT FK_quotation_requirement_id FOREIGN KEY (requirement_id) REFERENCES revamp_db.requirement (requirement_id)
+);
+
+
+DROP TABLE IF EXISTS revamp_db.requirement;
+
+CREATE TABLE IF NOT EXISTS revamp_db.requirement(
+  assetname varchar(50) NOT NULL,
+  assettype varchar(50) NOT NULL,
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime DEFAULT NULL,
+  modified_by varchar(50) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
+  priority varchar(50) DEFAULT NULL,
+  project_id int NOT NULL,
+  quantity int NOT NULL,
+  reqtype varchar(50) NOT NULL,
+  requirement_id int NOT NULL AUTO_INCREMENT,
+  status VARCHAR(50) NOT NULL,
+  user_id int NOT NULL,
+  PRIMARY KEY (requirement_id),
+  CONSTRAINT FK_requirement_project_id FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_requirement_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+
+DROP TABLE IF EXISTS revamp_db.school;
+
+CREATE TABLE IF NOT EXISTS revamp_db.school(
+	address_id INT NOT NULL,
+	contacts_id INT NOT NULL,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT CURRENT_TIMESTAMP,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	school_id INT NOT NULL AUTO_INCREMENT,
+	school_info_id INT NOT NULL,
+	school_status VARCHAR(50) NOT NULL,
+	user_id INT NOT NULL,
+	PRIMARY KEY (school_id),
+	CONSTRAINT FK_school_contacts_id FOREIGN KEY (contacts_id) REFERENCES contacts (contacts_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+	CONSTRAINT FK_school_address_id FOREIGN KEY (address_id) REFERENCES address (address_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+	CONSTRAINT FK_school_school_info_id FOREIGN KEY (school_info_id) REFERENCES school_info (school_info_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+	CONSTRAINT FK_school_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+
+
+DROP TABLE IF EXISTS revamp_db.schoolimage;
+
+CREATE TABLE IF NOT EXISTS revamp_db.schoolimage(
+	comments varchar(500) DEFAULT NULL,
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT CURRENT_TIMESTAMP,
+	filepath VARCHAR(200) NOT NULL,
+	image longblob NOT NULL,
+	image_id INT NOT NULL AUTO_INCREMENT,
+	school_id INT NOT NULL,
+  	modified_by varchar(50) DEFAULT NULL,
+  	modified_date datetime DEFAULT NULL,	
+	PRIMARY KEY (image_id),
+	CONSTRAINT FK_schoolimage_school_id FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS revamp_db.schoolinfo;
+
+CREATE TABLE IF NOT EXISTS revamp_db.schoolinfo(
+	created_by varchar(50) DEFAULT NULL,
+	created_date datetime DEFAULT NULL,
+	modified_by varchar(50) DEFAULT NULL,
+	modified_date datetime DEFAULT NULL,
+	number_of_students INT NOT NULL,
+	number_of_teachers INT NOT NULL,
+	school_info_id INT NOT NULL AUTO_INCREMENT,
+	school_name VARCHAR(50) NOT NULL,
+	school_reg_number VARCHAR(50) NOT NULL,
+	school_type VARCHAR(50) NOT NULL,
+	PRIMARY KEY (school_info_id),
+	CONSTRAINT UNIQUE schoolinfo(school_reg_number)
+);
+
+DROP TABLE IF EXISTS revamp_db.user;
+
+CREATE TABLE IF NOT EXISTS revamp_db.user (
+  address_id INT DEFAULT NULL,
+  comments varchar(255) DEFAULT NULL,
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime NOT NULL,
+  emailaddress varchar(100) DEFAULT NULL,
+  firstname varchar(50) DEFAULT NULL,
+  gender varchar(1) DEFAULT NULL,
+  identity_proof_id INT DEFAULT NOT NULL,
+  lastname varchar(50) DEFAULT NULL,
+  modified_by varchar(50) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
+  password varchar(25) DEFAULT NULL,
+  phonenumber varchar(15) DEFAULT NULL,
+  role varchar(255) DEFAULT NULL,
+  school_id INT DEFAULT NULL,
+  sponsormail varchar(100) DEFAULT NULL,
+  sponsorname varchar(100) DEFAULT NULL,
+  status varchar(100) DEFAULT NULL,
+  user_id INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (user_id),
+  UNIQUE KEY UK_user_emailaddress (emailaddress),
+  CONSTRAINT FK_user_address_id FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_user_school_id FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT FK_user_identity_proof_id FOREIGN KEY (identity_proof_id) REFERENCES identity_proof(identity_proof_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+
+DROP TABLE IF EXISTS revamp_db.volunteer_reference;
+
+CREATE TABLE revamp_db.volunteer_reference (
+  address_id INT DEFAULT NULL,
+  created_by varchar(50) DEFAULT NULL,
+  created_date datetime NOT NULL,
+  volunteer_reference_id INT NOT NULL AUTO_INCREMENT,
+  modified_by varchar(50) DEFAULT NULL,
+  modified_date datetime DEFAULT NULL,
+  referal_emails varchar(100) DEFAULT NULL,
+  sponsor_email varchar(100) DEFAULT NULL,
+  sponsor_name varchar(100) DEFAULT NULL,
+  PRIMARY KEY (volunteer_reference_id),
+  CONSTRAINT FK_volunteer_reference_address_id FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE NO ACTION ON UPDATE CASCADE
 );
