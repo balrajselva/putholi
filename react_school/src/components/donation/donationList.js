@@ -13,7 +13,7 @@ class DonationList extends Component {
 
         const userSelectId = this.props.donationList.filter(
             function (userFilter) {
-                return userFilter.id == e;
+                return userFilter.schoolId == e;
             });
 
 
@@ -48,17 +48,23 @@ class DonationList extends Component {
 
                         <div className="span3 element isotope-item" style={styleDonation} >
                             <div className="hover_img">
-                                <a className=""><img src={donationLists.proofOfIds.files[0]} alt="" style={styleChildren}></img></a>
-                                <span className="portfolio_zoom"><a href={donationLists.proofOfIds.files[0]} rel="prettyPhoto[portfolio1]"></a></span>
+                            {donationLists.schoolImages.map((valueImage,indexImage) => (
+                                   <a className=""><img src={valueImage.filePath} alt="" style={styleChildren}></img></a>
+                                ))}  
+                                <span className="portfolio_zoom"><a href="" rel="prettyPhoto[portfolio1]"></a></span>
                                 <span className="portfolio_link"><a href="show_one_school_details_for_donation.html">View item</a></span>
                             </div>
                             <div className="item_description">
-                                <h6><a href="show_one_school_details_for_donation.html">{donationLists.schoolInfo.schoolName}</a></h6>
+                                <h6><a href="show_one_school_details_for_donation.html">
+                              
+                                    {donationLists.schoolInfo.schoolName}</a></h6>
                                 <div className="descr">
                                     Needs 
-                                {donationLists.requirements.map((value, index) =>
-                     <div>{value.quantity} {value.assetName} </div>
-                    )}
+                                {donationLists.projects.map(projectData => (
+                                              projectData.requirements.map((value,index) =>
+                                    <div>{value.quantity} {value.assetName} </div>
+                                              )
+                                ))}  
                    
 
                                 </div>

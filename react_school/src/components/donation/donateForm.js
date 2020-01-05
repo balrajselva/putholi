@@ -74,7 +74,7 @@ class DonationForm extends Component {
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount":data.get('yourContribution'),
         "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
-        "requirements": this.props.history.location.state.state[0].requirements
+        "requirements": this.props.history.location.state.state[0].projects[0].requirements
       }
 
       if (isValid) {
@@ -111,7 +111,7 @@ class DonationForm extends Component {
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount": data.get('yourContribution'),
         "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
-        "requirements": this.props.history.location.state.state[0].requirements
+        "requirements": this.props.history.location.state.state[0].projects[0].requirements
       }
 
 
@@ -508,7 +508,7 @@ class DonationForm extends Component {
                           </div>
 
                           <div className="form-actions" id="multibn">
-                            <button type="submit" className="btn send_btn">Go to Payment Gateway</button>
+                            <button type="submit" className="btn send_btn">Login</button>
                             <button className="btn dark_btn">Cancel</button>
                           </div>
                         </div>
