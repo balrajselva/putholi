@@ -173,7 +173,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.6</version>
@@ -195,13 +195,13 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
+			</plugin> -->
+			<!-- <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
 				<dependencies>
-					<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+					https://mvnrepository.com/artifact/com.opencsv/opencsv
 					<dependency>
 						<groupId>com.opencsv</groupId>
 						<artifactId>opencsv</artifactId>
@@ -222,7 +222,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -239,7 +239,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-								<plugin>
+								<!-- <plugin>
 									<groupId>org.eclipse.m2e</groupId>
 									<artifactId>lifecycle-mapping</artifactId>
 									<version>1.0.0</version>
@@ -262,11 +262,11 @@
 											</pluginExecutions>
 										</lifecycleMappingMetadata>
 									</configuration>
-								</plugin>
+								</plugin> -->
 								
 												<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
-				<plugin>
+				<!-- <plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
 					<version>1.0.0</version>
@@ -292,7 +292,7 @@
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
-				</plugin>
+				</plugin> -->
 								
 			</plugins>
 
