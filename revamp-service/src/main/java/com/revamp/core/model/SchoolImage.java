@@ -58,6 +58,7 @@ public class SchoolImage extends AuditableEntity implements java.io.Serializable
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id", nullable = false)
+   @JsonIgnore
 	private School school;
 	
 	@Column(name = "date_created")

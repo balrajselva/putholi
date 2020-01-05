@@ -8,7 +8,8 @@ class DonationDetails extends Component {
       percentage: 0,
       currentIndex: 0,
       translateValue: 0,
-      imageList: this.props.history.location.state.state[0].proofOfIds.files
+     // imageList: this.props.history.location.state.state[0].proofOfIds.files
+      imageList: []
     }
   }
 
@@ -110,7 +111,7 @@ class DonationDetails extends Component {
       return <div className="filler" style={{ width: `${props.percentage}%` }} />
     }
 
-    const requirements = this.props.history.location.state.state[0].requirements;
+    const requirements = this.props.history.location.state.state[0].projects[0].requirements;
     return (
       <div>
         <div className="page_container">

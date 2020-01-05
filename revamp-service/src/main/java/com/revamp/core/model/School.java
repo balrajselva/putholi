@@ -41,7 +41,7 @@ public class School extends AuditableEntity {
 	private Contacts contacts;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "address_id")
 	private Address address;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "school")
@@ -64,12 +64,13 @@ public class School extends AuditableEntity {
 	@JoinColumn(name = "userid")
 	private User user;
 
-	@Transient
-	private List<Requirement> requirements;
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "school", cascade = CascadeType.ALL)
-	@JsonIgnore
+	
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "school" ,cascade = CascadeType.ALL)
 	private Set<SchoolImage> schoolImages;
+	
+	
+	@Transient
+	private Set<Requirement> requirements;
 
 	@PrePersist
 	protected void onCreate() {
