@@ -22,7 +22,7 @@ public class Address extends AuditableEntity implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "address_id")
 	private long id;
 
 	@Column(name = "address_line_1")

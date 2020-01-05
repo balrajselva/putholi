@@ -75,6 +75,14 @@ public class DonationServiceImpl implements DonationService {
 		return donationRepository.findById(id).orElse(null);
 	}
 	
+	@Transactional
+	public Donation savePaymentUser(Donation donation) {
+		return donationRepository.save(donation);
+		
+	}
+	
+	
+	
 	public Donation donate (DonationPayLoad donationPayLoad) {
 		return null;
 	}
