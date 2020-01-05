@@ -1,0 +1,60 @@
+.user-info {
+    padding: 40px;
+    width: 60%;
+    align-content: center;
+}
+
+.user-info .form-control{
+    font-display: inherit;
+    font-size: 100%;
+}
+table caption{
+    margin-top: 10px;
+    margin-bottom:20px;
+}
+input:focus, textarea:focus{
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+select:focus, textarea:focus{
+    box-shadow: 5px;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.user-info b {
+    margin-bottom: 2%;
+}
+
+.user-info table{
+    margin-left: 10%;
+    font-size: 150%;
+}
+
+.user-info td {
+    padding: 5px;
+}
+
+.card {
+    margin: 15px auto;
+    border: 2px solid #000;
+    padding: 30px;
+    background-color: white;
+}
+
+.btn-group{
+    margin-left:50%;
+}
+
+.container-fluid {
+    width: 90%;
+}
+
+.dropdown{
+    font-size: 100%;
+}
+
+.comments{
+    font-size:100%;
+}

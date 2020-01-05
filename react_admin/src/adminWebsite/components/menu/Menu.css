@@ -1,0 +1,15 @@
+.main-sidebar{
+    width:270px;
+}
+.skin-blue .sidebar-form input[type="text"],.skin-blue .sidebar-form .btn{
+    background-color: white;
+} 
+
+@media (max-width: 767px){
+.main-sidebar {
+    -webkit-transform: translate(-270px, 0);
+    -ms-transform: translate(-270px, 0);
+    -o-transform: translate(-270px, 0);
+    transform: translate(-270px, 0);
+}
+}

@@ -1,0 +1,14 @@
+.main-header .logo {
+    width:270px;
+}
+.main-header .navbar{
+    margin-left: 270px;
+}
+
+@media (max-width: 767px){
+.main-header .logo,.main-header .navbar{
+    width: 100%;
+    float: none;
+    margin: 0;
+}
+}

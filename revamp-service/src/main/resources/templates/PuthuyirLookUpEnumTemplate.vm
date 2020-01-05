@@ -1,0 +1,45 @@
+package $packageName;
+
+public enum $className {
+
+#foreach ($lookUpCode in $lookUpCodeList)
+${lookUpCode.getName()} ( "${lookUpCode.getField()}", "${lookUpCode.getKey()}", "${lookUpCode.getValue()}", "${lookUpCode.getParentField()}", "${lookUpCode.getParentKey()}")#if ($foreach.index != (${lookUpCodeList.size()} - 1)),
+#else;
+#end #end 
+
+	private String field;
+	private String key;
+	private String value;
+	private String parentField; 
+	private String parentValue;
+	
+	PuthuyirLookUp(String field, String key, String value, String parentField, String parentValue) {
+		this.field = field;
+		this.key = key;
+		this.value = value;
+		this.parentField = parentField; 
+		this.parentValue = parentValue;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public String getParentField() {
+		return parentField;
+	}
+
+	public String getParentValue() {
+		return parentValue;
+	}
+
+
+}

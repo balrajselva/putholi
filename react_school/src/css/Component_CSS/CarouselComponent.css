@@ -1,0 +1,9 @@
+.carousel {
+    max-width: 80%;
+    padding-left: 10%;
+    position: relative;
+    line-height: 0px;
+}
+.carousel .slide img {
+    height: 600px;
+}

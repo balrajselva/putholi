@@ -1,0 +1,1618 @@
+{
+	"variables": [],
+	"info": {
+		"name": "revamp",
+		"_postman_id": "ddbbd8a6-c913-31e7-ccb9-c517a5586239",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /school",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"schoolInfo\":{  \r\n      \"schoolRegNo\":\"ABC123\",\r\n      \"schoolName\":\"Gov High School\",\r\n      \"schoolType\":\"High School\",\r\n      \"numberOfTeachers\":10,\r\n      \"numberOfStudents\":50\r\n   },\r\n   \"contacts\":{  \r\n      \"priName\":\"Kumar\",\r\n      \"priNum\":\"991234567\",\r\n      \"priEmail\":\"kumar@gmail.com\",\r\n      \"secName\":\"Saravanan\",\r\n      \"secNum\":\"991234568\",\r\n      \"secEmail\":\"sara@gmail.com\"\r\n   },\r\n   \"address\":{  \r\n      \"addressLine1\":\"12 Vivekanandar Street\",\r\n      \"addressLine2\":\"Pudhu Nagar\",\r\n      \"city\":\"chennai\",\r\n      \"district\":\"kanchipuram\",\r\n      \"locality\":\"tambaram\",\r\n      \"pinCode\":\"612345\"\r\n   },\r\n   \"proofOfIdentity\":1,\r\n   \"requirements\":[  \r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Sports\",\r\n         \"assetName\":\"Bat\",\r\n         \"quantity\":3\r\n      },\r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Infrastructure\",\r\n         \"assetName\":\"Bench\",\r\n         \"quantity\":10\r\n      }\r\n   ]\r\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "6087c2da-4381-4761-9fed-101521a34c05",
+					"name": "POST /school",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n   \"schoolInfo\":{  \r\n      \"schoolRegNo\":\"ABC123\",\r\n      \"schoolName\":\"Gov High School\",\r\n      \"schoolType\":\"High School\",\r\n      \"numberOfTeachers\":10,\r\n      \"numberOfStudents\":50\r\n   },\r\n   \"contacts\":{  \r\n      \"priName\":\"Kumar\",\r\n      \"priNum\":\"991234567\",\r\n      \"priEmail\":\"kumar@gmail.com\",\r\n      \"secName\":\"Saravanan\",\r\n      \"secNum\":\"991234568\",\r\n      \"secEmail\":\"sara@gmail.com\"\r\n   },\r\n   \"address\":{  \r\n      \"addressLine1\":\"12 Vivekanandar Street\",\r\n      \"addressLine2\":\"Pudhu Nagar\",\r\n      \"city\":\"chennai\",\r\n      \"district\":\"kanchipuram\",\r\n      \"locality\":\"tambaram\",\r\n      \"pinCode\":\"612345\"\r\n   },\r\n   \"proofOfIdentity\":1,\r\n   \"requirements\":[  \r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Sports\",\r\n         \"assetName\":\"Bat\",\r\n         \"quantity\":3\r\n      },\r\n      {  \r\n         \"reqType\":\"New\",\r\n         \"assetType\":\"Infrastructure\",\r\n         \"assetName\":\"Bench\",\r\n         \"quantity\":10\r\n      }\r\n   ]\r\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "access-control-allow-credentials",
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"name": "access-control-allow-origin",
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 12 Aug 2018 02:02:18 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "vary",
+							"key": "vary",
+							"value": "Origin",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"responseTime": 88,
+					"body": "{\"schoolId\":2,\"schoolInfo\":{\"schoolInfoId\":2,\"schoolRegNo\":\"ABC123\",\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"numberOfStudents\":50,\"numberOfTeachers\":10},\"contacts\":{\"contactsId\":2,\"priName\":\"Kumar\",\"priNum\":\"991234567\",\"priEmail\":\"kumar@gmail.com\",\"secName\":\"Saravanan\",\"secNum\":\"991234568\",\"secEmail\":\"sara@gmail.com\"},\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\",\"pinCode\":\"612345\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":3,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1534039338861},{\"requirementId\":4,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1534039338865}],\"dateAdded\":1534039338848,\"status\":\"REGISTERED\"}"
+				}
+			]
+		},
+		{
+			"name": "POST /user",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"address\": {\r\n    \"addressLine1\": \"10 Vivekanandar Street\",\r\n    \"addressLine2\": \"Pudhu Nagar\",\r\n    \"city\": \"puzhal\",\r\n    \"district\": \"tiruvallur\"\r\n  },\r\n  \t \"identityProof\": 1,\r\n  \"firstName\": \"Kumar\",\r\n  \"lastName\": \"Arunachalam\",\r\n  \"emailAddress\": \"kumar@gmail.com\",\r\n\t\"phoneNumber\":\"991234566\",\r\n\t\"roleId\":\"beneficiary\",\r\n\t\"status\":\"REGISTERED\"\r\n  \r\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "a614933a-bff6-4699-b2c8-d05cefb234c9",
+					"name": "POST /user",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/user",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n  \"address\": {\r\n    \"addressLine1\": \"10 Vivekanandar Street\",\r\n    \"addressLine2\": \"Pudhu Nagar\",\r\n    \"city\": \"puzhal\",\r\n    \"district\": \"tiruvallur\"\r\n  },\r\n  \t \"identityProof\": 1,\r\n  \"firstName\": \"Kumar\",\r\n  \"lastName\": \"Arunachalam\",\r\n  \"emailAddress\": \"kumar@gmail.com\",\r\n\t\"phoneNumber\":\"991234566\",\r\n\t\"roleId\":\"beneficiary\",\r\n\t\"status\":\"REGISTERED\"\r\n  \r\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "access-control-allow-credentials",
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"name": "access-control-allow-origin",
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 06 Aug 2018 00:44:24 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "vary",
+							"key": "vary",
+							"value": "Origin",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"responseTime": 66,
+					"body": "{\"userid\":1,\"firstName\":\"Kumar\",\"lastName\":\"Arunachalam\",\"phoneNumber\":\"991234566\",\"emailAddress\":\"kumar@gmail.com\",\"address\":{\"addressId\":5,\"addressLine1\":\"10 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"identityProof\":1,\"roleId\":\"beneficiary\",\"status\":\"REGISTERED\",\"dateCreated\":1533516264236}"
+				}
+			]
+		},
+		{
+			"name": "POST /image",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/image",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fileUpload",
+							"description": "",
+							"type": "file",
+							"src": "DSC00964.JPG"
+						}
+					]
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "9efacf84-5e6a-4147-b92a-44ce2899e7eb",
+					"name": "POST /image",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/image",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileUpload",
+									"description": "",
+									"type": "file",
+									"src": {
+										"0": {}
+									}
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "access-control-allow-credentials",
+							"key": "access-control-allow-credentials",
+							"value": "true",
+							"description": "Indicates whether or not the response to the request can be exposed when the credentials flag is true. When used as part of a response to a preflight request, this indicates whether or not the actual request can be made using credentials."
+						},
+						{
+							"name": "access-control-allow-origin",
+							"key": "access-control-allow-origin",
+							"value": "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:05:55 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						},
+						{
+							"name": "vary",
+							"key": "vary",
+							"value": "Origin",
+							"description": "Tells downstream proxies how to match future request headers to decide whether the cached response can be used rather than requesting a fresh one from the origin server."
+						}
+					],
+					"cookie": [],
+					"responseTime": 105,
+					"body": "{\"imageId\":2,\"image\":null}"
+				}
+			]
+		},
+		{
+			"name": "GET /school/{id}",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "GET /school/name/{contains}",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/name/hi",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "0033e77c-4d17-436f-9b57-ab62872572e4",
+					"name": "GET /school/{id}",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/2",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:59:36 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 54,
+					"body": "{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}"
+				},
+				{
+					"id": "f8bd877f-6f5a-4388-bbe6-c0cca5e6a00e",
+					"name": "GET /school/name/{contains}",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/name/hi",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Mon, 06 Aug 2018 00:45:42 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 55,
+					"body": "[{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516175000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516175000}],\"dateAdded\":1533516175000,\"status\":\"REGISTERED\"},{\"schoolId\":3,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":3,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":3,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516177000},{\"requirementId\":4,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516177000}],\"dateAdded\":1533516177000,\"status\":\"REGISTERED\"},{\"schoolId\":4,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":4,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\",\"locality\":null},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":5,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533516185000},{\"requirementId\":6,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533516185000}],\"dateAdded\":1533516185000,\"status\":\"REGISTERED\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school/city/{cityid}",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/city/chennai",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "50592d60-230f-4486-94a7-99c73a70e535",
+					"name": "GET /school/city/{cityid}",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/city/chennai",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:59:47 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 46,
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school/district/{districtId}",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/district/kanchipuram",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "e04f0c4c-fb68-47b2-8c56-eb982f49df93",
+					"name": "GET /school/district/{districtId}",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/district/kanchipuram",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 23:00:23 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 34,
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school/locality/{localityId}",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/locality/tambaram",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "0ab82be1-3d5e-4937-a658-53ec920346ef",
+					"name": "GET /school/locality/{localityId}",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school/locality/tambaram",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 23:41:30 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 611,
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533509538000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":0,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"kanchipuram\",\"city\":\"chennai\",\"locality\":\"tambaram\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"New\",\"assetType\":\"Sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533509936000},{\"requirementId\":2,\"reqType\":\"New\",\"assetType\":\"Infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533509936000}],\"dateAdded\":1533509936000,\"status\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /school",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "b6dbe50b-9b2c-4de9-ac67-b38cc617ead9",
+					"name": "GET /school",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/school",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"schoolName\":\"Govt. High School\",\n\t\"headMasterName\":\"Kumar\",\n\t\"headMasterEmail\":\"kumar@gmail.com\",\n\t\"numberOfTechers\":10,\n\t\"numberOfStudents\":50,\n\t\"address\" : {\n\t\t\"addressLine1\":\"10, vivekanandhar street\",\n\t\t\"city\":\"Tanjore\",\n\t\t\"district\":\"Tanjore\",\n\t\t\"state\":\"Tamil Nadu\"\n\t},\n\t\n\t\"schoolType\":\"High School\",\n\t\"requirements\":\"table 10, chair 20\"\n\t\n\t\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:05 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 31,
+					"body": "[{\"schoolId\":1,\"schoolName\":\"test\",\"schoolType\":\"test\",\"headMasterName\":\"test\",\"headMasterEmail\":\"test\",\"numberOfStudents\":5,\"numberOfTeachers\":1,\"address\":{\"addressId\":1,\"addressLine1\":\"test\",\"addressLine2\":\"test\",\"district\":\"tiruvallur\",\"city\":\"puzhal\"},\"proofOfIdentity\":1,\"requirements\":[],\"dateAdded\":1533506623000,\"status\":\"REGISTERED\"},{\"schoolId\":2,\"schoolName\":\"Gov High School\",\"schoolType\":\"High School\",\"headMasterName\":\"Kumar\",\"headMasterEmail\":\"kumar@gmail.com\",\"numberOfStudents\":50,\"numberOfTeachers\":10,\"address\":{\"addressId\":2,\"addressLine1\":\"12 Vivekanandar Street\",\"addressLine2\":\"Pudhu Nagar\",\"district\":\"tiruvallur\",\"city\":\"puzhal\"},\"proofOfIdentity\":1,\"requirements\":[{\"requirementId\":1,\"reqType\":\"new\",\"assetType\":\"sports\",\"assetName\":\"Bat\",\"quantity\":3,\"dateAdded\":1533506646000},{\"requirementId\":2,\"reqType\":\"new\",\"assetType\":\"infrastructure\",\"assetName\":\"Bench\",\"quantity\":10,\"dateAdded\":1533506646000}],\"dateAdded\":1533506646000,\"status\":\"REGISTERED\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/state",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/state",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "26c795bb-e02b-4a83-acf8-e15812881f62",
+					"name": "GET /lookup/field/state",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/state",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:15 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 23,
+					"body": "[{\"field\":\"state\",\"key\":\"TN\",\"value\":\"Tamil Nadu\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/district by state",
+			"request": {
+				"url": {
+					"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/district?parentfield=state&parentkey=TN",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"district"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "state",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "parentkey",
+							"value": "TN",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "741a029f-5dd0-41b7-82dd-3b61400874a2",
+					"name": "GET /lookup/field/district by state",
+					"originalRequest": {
+						"url": {
+							"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/district?parentfield=state&parentkey=TN",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"district"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "state",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "parentkey",
+									"value": "TN",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:23 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 31,
+					"body": "[{\"field\":\"district\",\"key\":\"kanchipuram\",\"value\":\"Kanchipuram\",\"parentField\":\"state\",\"parentKey\":\"TN\"},{\"field\":\"district\",\"key\":\"tiruvallur\",\"value\":\"Tiruvallur\",\"parentField\":\"state\",\"parentKey\":\"TN\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/city",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/city",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "7474342e-b1ae-4400-80cd-d129f88dfd36",
+					"name": "GET /lookup/field/city",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/city",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:30 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 28,
+					"body": "[{\"field\":\"city\",\"key\":\"ennore\",\"value\":\"Ennore\",\"parentField\":\"district\",\"parentKey\":\"tiruvallur\"},{\"field\":\"city\",\"key\":\"padappai\",\"value\":\"Padappai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"puzhal\",\"value\":\"Puzhal\",\"parentField\":\"district\",\"parentKey\":\"tiruvallur\"},{\"field\":\"city\",\"key\":\"vallakottai\",\"value\":\"Vallakottai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/city by district",
+			"request": {
+				"url": {
+					"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/city?parentfield=district&parentkey=kanchipuram",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"city"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "district",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "parentkey",
+							"value": "kanchipuram",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "8d559bd2-82c8-4c6f-9d4c-cd0ab20af5d1",
+					"name": "GET /lookup/field/city by district",
+					"originalRequest": {
+						"url": {
+							"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/city?parentfield=district&parentkey=kanchipuram",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"city"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "district",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "parentkey",
+									"value": "kanchipuram",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:55:10 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 478,
+					"body": "[{\"field\":\"city\",\"key\":\"chennai\",\"value\":\"Chennai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"padappai\",\"value\":\"Padappai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"},{\"field\":\"city\",\"key\":\"vallakottai\",\"value\":\"Vallakottai\",\"parentField\":\"district\",\"parentKey\":\"kanchipuram\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/locality by city",
+			"request": {
+				"url": {
+					"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/locality?parentfield=city&parentkey=chennai",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"locality"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "city",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "parentkey",
+							"value": "chennai",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "ae84ea7a-4cbb-4578-9c29-c2b5007fe59f",
+					"name": "GET /lookup/field/locality by city",
+					"originalRequest": {
+						"url": {
+							"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/locality?parentfield=city&parentkey=chennai",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"locality"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "city",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "parentkey",
+									"value": "chennai",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:56:14 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 56,
+					"body": "[{\"field\":\"locality\",\"key\":\"pallavaram\",\"value\":\"Pallavaram\",\"parentField\":\"city\",\"parentKey\":\"chennai\"},{\"field\":\"locality\",\"key\":\"sholinganallur\",\"value\":\"Sholinganallur\",\"parentField\":\"city\",\"parentKey\":\"chennai\"},{\"field\":\"locality\",\"key\":\"tambaram\",\"value\":\"Tambaram\",\"parentField\":\"city\",\"parentKey\":\"chennai\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/reqtype",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/reqtype",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "e6c91189-45eb-4d7b-80cc-29656b55652f",
+					"name": "GET /lookup/field/reqtype",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/reqtype",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:48 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 22,
+					"body": "[{\"field\":\"reqtype\",\"key\":\"maintenance\",\"value\":\"Maintenance\",\"parentField\":null,\"parentKey\":null},{\"field\":\"reqtype\",\"key\":\"new\",\"value\":\"New Requirement\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/assettype",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/assettype",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "fd480a83-71c6-424a-b594-ee0ed1614d7e",
+					"name": "GET /lookup/field/assettype",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/assettype",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:07:56 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 25,
+					"body": "[{\"field\":\"assettype\",\"key\":\"infrastructure\",\"value\":\"Infrastructure\",\"parentField\":null,\"parentKey\":null},{\"field\":\"assettype\",\"key\":\"others\",\"value\":\"Others\",\"parentField\":null,\"parentKey\":null},{\"field\":\"assettype\",\"key\":\"sports\",\"value\":\"Sports\",\"parentField\":null,\"parentKey\":null}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/asset by assettype",
+			"request": {
+				"url": {
+					"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/asset?parentfield=assettype&parentkey=Sports",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revamp-service-1.0-SNAPSHOT",
+						"lookup",
+						"field",
+						"asset"
+					],
+					"query": [
+						{
+							"key": "parentfield",
+							"value": "assettype",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "parentkey",
+							"value": "Sports",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "b3ffd496-dca4-4771-9714-338115d31f6a",
+					"name": "GET /lookup/field/asset by assettype",
+					"originalRequest": {
+						"url": {
+							"raw": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/asset?parentfield=assettype&parentkey=Sports",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"revamp-service-1.0-SNAPSHOT",
+								"lookup",
+								"field",
+								"asset"
+							],
+							"query": [
+								{
+									"key": "parentfield",
+									"value": "assettype",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "parentkey",
+									"value": "Sports",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:08:02 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 27,
+					"body": "[{\"field\":\"asset\",\"key\":\"football\",\"value\":\"Football\",\"parentField\":\"assettype\",\"parentKey\":\"sports\"},{\"field\":\"asset\",\"key\":\"other_sports\",\"value\":\"Others\",\"parentField\":\"assettype\",\"parentKey\":\"sports\"}]"
+				}
+			]
+		},
+		{
+			"name": "GET /lookup/field/schooltype",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/lookup/field/schooltype",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "GET /roles",
+			"request": {
+				"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/roles",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+				},
+				"description": null
+			},
+			"response": [
+				{
+					"id": "5a97a325-06ff-4077-8b45-5835b29bd712",
+					"name": "GET /roles",
+					"originalRequest": {
+						"url": "localhost:8080/revamp-service-1.0-SNAPSHOT/roles",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n  \"schoolName\":\"Govt. High School\",\n  \"headMasterName\":\"Kumar\",\n  \"headMasterEmail\":\"kumar@gmail.com\",\n  \"numberOfTechers\":10,\n  \"numberOfStudents\":50,\n  \"address\" : {\n    \"addressLine1\":\"10, vivekanandhar street\",\n    \"city\":\"Tanjore\",\n    \"district\":\"Tanjore\",\n    \"state\":\"Tamil Nadu\"\n  },\n  \n  \"schoolType\":\"High School\",\n  \"requirements\":\"table 10, chair 20\"\n  \n  \n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json;charset=UTF-8",
+							"description": "The mime type of this content"
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 05 Aug 2018 22:08:12 GMT",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "Apache-Coyote/1.1",
+							"description": "A name for the server"
+						},
+						{
+							"name": "transfer-encoding",
+							"key": "transfer-encoding",
+							"value": "chunked",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 27,
+					"body": "[{\"roleId\":\"admin\",\"roleName\":\"Admin /Super user\",\"accessLevel\":\"\"},{\"roleId\":\"approver\",\"roleName\":\"Approver\",\"accessLevel\":\"\"},{\"roleId\":\"beneficiary\",\"roleName\":\"Beneficiary\",\"accessLevel\":\"\"},{\"roleId\":\"sponsor\",\"roleName\":\"Sponsor\",\"accessLevel\":\"\"},{\"roleId\":\"volunteer\",\"roleName\":\"Volunteer\",\"accessLevel\":\"\"}]"
+				}
+			]
+		}
+	]
+}

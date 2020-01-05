@@ -1,0 +1,21 @@
+To setup the revamp service  in SpringBoot
+##########################################
+Download Spring Tool Suite (Version 3.9.6.Release) or latest and install (Mac or Windows)
+Download Mysql ( Server) and client (Workbench) and install
+Download project from github
+Open STS and right click on Package Explorer
+Import and select Maven -> "Existing Maven Projects" option
+Once import is done, you will find [boot] enabled next to project name
+Run schema.sql and data.sql in Workbench manually
+Update src\main\resources\application.properties with mysql credentials
+Right click the project and Run as "Spring Boot App"
+Check in console to make sure tomcat server started with port 6060 with no errors.
+
+
+General Errors:
+###############
+1) In case of "lombok" errors follow directions from below link:
+https://stackoverflow.com/questions/11803948/lombok-is-not-generating-getter-and-setter
+
+2) In case of file path issues, check application.properties file
+and update "image.path" location according to your need/setup
