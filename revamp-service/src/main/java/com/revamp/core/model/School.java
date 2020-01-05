@@ -70,6 +70,7 @@ public class School extends AuditableEntity {
 	
 	
 	@Transient
+	@JsonIgnore
 	private Set<Requirement> requirements;
 
 	@PrePersist
