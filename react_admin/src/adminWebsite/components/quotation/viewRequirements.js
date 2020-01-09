@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
-class requirementHome extends Component {
+class viewRequirements extends Component {
 
     state={
         requirements:"",
@@ -105,4 +105,4 @@ class requirementHome extends Component {
     }	
 }
 
-export default withRouter(requirementHome);
+export default withRouter(viewRequirements);
