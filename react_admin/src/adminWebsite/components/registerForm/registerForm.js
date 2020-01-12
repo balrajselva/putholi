@@ -161,14 +161,20 @@ class registerForm extends Component {
                 role:this.state.role,
                 emailAddress:this.state.email,
                 phoneNumber:this.state.phoneNumber,
-                identityProof:this.state.identityProof,
                 comments:this.state.comments,
                 password:this.state.password,
                 sponsorName:null,
-                sponsorEmail:null
+                sponsorEmail:null,
+                identityProof:{
+                    image:this.state.identityProof,
+                    comments:"",
+                 },
             }
-            console.log(user);
-            this.props.saveUser(user);
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(user));
+            regFormModel.append('files',this.state.identityProof);
+            console.log(regFormModel);
+            this.props.saveUser(regFormModel);
         }
     }
 

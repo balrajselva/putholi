@@ -22,7 +22,7 @@ public class User  extends AuditableEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userid", nullable = false)
+	@Column(name = "user_id", nullable = false)
 	private long userid;
 
 	@Column(name = "firstname")
@@ -63,10 +63,12 @@ public class User  extends AuditableEntity{
 	private Long school_id;
 
 	@JsonManagedReference
+	@JoinColumn(name = "address_id")
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
 	@JsonManagedReference
+	@JoinColumn(name="identity_proof_id")
 	@OneToOne(cascade = CascadeType.ALL)
 	private IdentityProof identityProof;
 

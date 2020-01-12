@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -59,18 +60,9 @@ public class SchoolImage extends AuditableEntity implements java.io.Serializable
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id", nullable = false)
 	private School school;
-	
-	@Column(name = "date_created")
-	@Basic
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
-
-	@PrePersist
-	protected void onCreate() {
-		dateCreated = new Date();
-	}
 
 	@Column(name = "comments")
+	@ColumnDefault("")
 	String comments;
 	
 	@Column(name = "filepath")
