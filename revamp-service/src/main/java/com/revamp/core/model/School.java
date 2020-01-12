@@ -60,16 +60,11 @@ public class School extends AuditableEntity {
 	private User user;
 
 	@Transient
-<<<<<<< Updated upstream
 	private List<Requirement> requirements;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "school", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<SchoolImage> schoolImages;
-=======
-	private Set<Requirement> requirements;
->>>>>>> Stashed changes
-
 
 	@Override
 	public String toString() {

@@ -100,13 +100,13 @@ class UserDetailsForm extends Component {
             });
             document.getElementById('pincode').style.borderColor="red";
         }
-        // else if(this.state.selectedLocality===null){
-        //     this.setState({
-        //         lastErrorField:"selectedLocality",
-        //         errorMessage:"Please select locality"
-        //     });
-        //     document.getElementById('selectedLocality').style.borderColor="red";
-        // }
+        else if(this.state.selectedLocality===null){
+            this.setState({
+                lastErrorField:"selectedLocality",
+                errorMessage:"Please select locality"
+            });
+            document.getElementById('selectedLocality').style.borderColor="red";
+        }
         else if(this.state.state===null){
             this.setState({lastErrorField:"state"});
             document.getElementById('state').style.borderColor="red";

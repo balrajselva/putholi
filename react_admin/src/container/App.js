@@ -32,11 +32,6 @@ class App extends Component {
     spinner:false
   }
 
-<<<<<<< Updated upstream
-  saveUser=(updatedUser)=>{
-    this.setState({user:updatedUser,spinner:true});
-    axios.post('http://localhost:6060/puthuyir/user',updatedUser)
-=======
   constructor(props){
     super(props);
     this.state={config:"http://localhost:6060"}
@@ -48,7 +43,6 @@ class App extends Component {
     axios.post(this.state.config+'/puthuyir/user',regFormModel,{
       headers:{'Content-Type':'multipart/form-data'}
     })
->>>>>>> Stashed changes
     .then(res=>{
         console.log(res);
         this.setState({spinner:false});
