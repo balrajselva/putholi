@@ -47,11 +47,6 @@ public class School extends AuditableEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "school")
 	private Set<Project> projects;
 
-	@Column(name = "date_created")
-	@Basic
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
-
 	@Column(name = "school_status")
 	@JsonProperty("schoolStatus")
 	private String schoolStatus;
@@ -61,7 +56,7 @@ public class School extends AuditableEntity {
 	private ProofOfId proofOfId;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	
@@ -73,15 +68,10 @@ public class School extends AuditableEntity {
 	@JsonIgnore
 	private Set<Requirement> requirements;
 
-	@PrePersist
-	protected void onCreate() {
-		dateCreated = new Date();
-	}
-
 	@Override
 	public String toString() {
 		return "School[schoolId="+schoolId+",schoolInfo="+schoolInfo+",contacts="+contacts+",address="+address+",projects="+projects
-				+",dateCreated="+dateCreated+",schoolStatus="+schoolStatus+",proofOfId="+proofOfId+",user="+user+",requirements="
+				+",schoolStatus="+schoolStatus+",proofOfId="+proofOfId+",user="+user+",requirements="
 				+requirements+",schoolImages="+schoolImages;
 	}
 }

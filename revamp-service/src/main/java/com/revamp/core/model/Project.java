@@ -56,7 +56,7 @@ public class Project extends AuditableEntity implements java.io.Serializable {
 	@JsonIgnore
 	private School school;
 
-	@Column(name = "estimate")
+	@Column(name = "estimated_amount")
 	private int estimate;
 
 	@Column(name = "collected_amount")
@@ -69,10 +69,4 @@ public class Project extends AuditableEntity implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
 	private Set<Requirement> requirements;
 
-	@Column(name = "date_created")
-	@Basic
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateAdded;
-
-	
 }

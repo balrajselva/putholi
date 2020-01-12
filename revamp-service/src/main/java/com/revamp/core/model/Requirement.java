@@ -38,7 +38,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Requirement implements java.io.Serializable {
+public class Requirement extends AuditableEntity implements java.io.Serializable {
 
 	private static final long serialVersionUID = -7230483495700936141L;
 
@@ -67,11 +67,6 @@ public class Requirement implements java.io.Serializable {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private PuthuyirLookUp status;
-
-	@Column(name = "date_created")
-	@Basic
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateAdded;
 	
 	@Column(name = "priority")
 	private String priority;

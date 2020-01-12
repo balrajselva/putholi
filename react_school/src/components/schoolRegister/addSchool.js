@@ -16,9 +16,9 @@ class AddSchool extends Component {
       schoolType:null,
       numOfStudents:null,
       numOfTeachers:null,
-      primaryConName:null,
-      primaryConMail:null,
-      primaryConNum:null,
+      primaryConName:this.props.location.user.firstName,
+      primaryConMail:this.props.location.user.emailAddress,
+      primaryConNum:this.props.location.user.phoneNumber,
       secondaryConName:null,
       secondaryConNum:null,
       secondaryConMail:null,
@@ -89,6 +89,12 @@ class AddSchool extends Component {
                       spinner:false
                   });
               }
+          })
+          .catch(error=>{
+            this.setState({
+               spinner:false
+           })
+           window.alert("Please enter the address manually")
           })
       }
       else if(target.id==="assetType" && target.value!=="Others"){
@@ -320,7 +326,7 @@ class AddSchool extends Component {
       var regFormModel=new FormData();
       regFormModel.set('payload',JSON.stringify(schoolDetails));
       regFormModel.append('files',this.state.fileInput)
-      axios.post('http://localhost:6060/puthuyir/school',regFormModel,{
+      axios.post(this.props.config+'/puthuyir/school',regFormModel,{
          headers:{'Content-Type':'multipart/form-data'}
       })
       .then(res=>{
@@ -338,7 +344,6 @@ class AddSchool extends Component {
 
    }
     render() {
-       console.log(this.props.location.user);
          return (
 <div className="container">
    <section>
