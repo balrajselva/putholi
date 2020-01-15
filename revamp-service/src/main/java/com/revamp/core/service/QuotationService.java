@@ -19,4 +19,8 @@ public interface QuotationService {
 	
 	List<Quotation> findBySchoolId(long schoolId);
 
+	List<Quotation> findByRequirementId(long requirementId);
+
+	List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId);
+
 }

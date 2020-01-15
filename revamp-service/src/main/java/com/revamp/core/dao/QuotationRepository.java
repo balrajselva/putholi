@@ -14,4 +14,8 @@ public interface QuotationRepository extends CrudRepository<Quotation, Long> {
 
 	List<Quotation> findBySchoolId(@Param("schoolId") long schoolId);
 
+	List<Quotation> findByRequirementId(@Param("requirementId") long requirementId);
+
+	List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId);
+
 }
