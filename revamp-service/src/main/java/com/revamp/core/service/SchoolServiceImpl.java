@@ -141,7 +141,18 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public long saveDEOresponse(final DEOInfo deoInfo, Map<String, byte[]> files, String imgPath) {
 		String status="DEO_APPROVED";
+		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		schoolRepository.updateSchoolStatus(deoInfo.getSchool_id(), status);
+		if (files != null && files.size() > 0) {
+			files.forEach((k,v) -> {
+				Set<DEOfile> siSet = new HashSet<DEOfile>();
+				String filePath = fileSubPath+ deoInfo.getDeoInfoId()+"_";
+				DEOfile si = new DEOfile(v);
+				si.setDeoInfo(deoInfo);
+				siSet.add(si);
+				deoInfo.setDeoFile(siSet);
+			});
+		}
 		deoRepository.save(deoInfo);
 		return deoInfo.getDeoInfoId();
 	}

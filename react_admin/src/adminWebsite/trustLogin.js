@@ -25,7 +25,7 @@ class trustLogin extends Component {
         emailAddress:this.state.email,
         password:this.state.password
       }
-      axios.post("http://localhost:6060/puthuyir/verify_user",user)
+      axios.post(this.props.config+"/puthuyir/verify_user",user)
       .then(res=>{
         console.log(res.data)
           if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){

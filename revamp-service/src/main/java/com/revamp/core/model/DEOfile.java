@@ -32,13 +32,8 @@ public class DEOfile extends AuditableEntity implements java.io.Serializable{
     @JsonIgnore
     private byte[] image;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="deo_info_id", nullable=false)
     private DEOInfo deoInfo;
-
-    @Column(name = "date_created")
-    @Basic
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreated;
 
 }

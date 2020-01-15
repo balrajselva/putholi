@@ -53,4 +53,5 @@ public class Address extends AuditableEntity implements java.io.Serializable {
 	@PrimaryKeyJoinColumn
 	@JsonBackReference
 	private User user;
+
 }
