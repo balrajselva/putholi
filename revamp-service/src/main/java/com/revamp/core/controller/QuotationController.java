@@ -56,4 +56,15 @@ public class QuotationController {
 		return quotationService.findBySchoolId(schoolId);
 	}
 
+	@GetMapping("/{requirementId}/quotations")
+	public List<Quotation> findByRequirementId(@PathVariable("requirementId") long requirementId) {
+		return quotationService.findByRequirementId(requirementId);
+	}
+
+	@GetMapping("/{schoolId}/{requirementId}/quotations")
+	public List<Quotation> findBySchoolIdAndRequirementId(@PathVariable("schoolId") long schoolId,
+			@PathVariable("requirementId") long requirementId) {
+		return quotationService.findBySchoolIdAndRequirementId(schoolId, requirementId);
+	}
+
 }

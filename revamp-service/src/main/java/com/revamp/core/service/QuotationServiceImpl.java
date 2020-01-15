@@ -52,4 +52,14 @@ public class QuotationServiceImpl implements QuotationService {
 		return quotationRepository.findBySchoolId(schoolId);
 	}
 
+	@Override
+	public List<Quotation> findByRequirementId(long requirementId) {
+		return quotationRepository.findByRequirementId(requirementId);
+	}
+
+	@Override
+	public List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId) {
+		return quotationRepository.findBySchoolIdAndRequirementId(schoolId, requirementId);
+	}
+
 }
