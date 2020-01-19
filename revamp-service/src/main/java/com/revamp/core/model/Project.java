@@ -42,7 +42,7 @@ import lombok.ToString;
 @Proxy(lazy = false)
 @Getter
 @Setter
-public class Project extends AuditableEntity implements java.io.Serializable {
+public class Project extends AuditableEntity {
 
 	private static final long serialVersionUID = -5416628745442805358L;
 

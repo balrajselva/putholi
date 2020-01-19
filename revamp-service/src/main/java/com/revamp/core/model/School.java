@@ -23,6 +23,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@ToString
 public class School extends AuditableEntity {
 
 	private static final long serialVersionUID = 8607633702511344481L;
@@ -45,6 +46,7 @@ public class School extends AuditableEntity {
 	private Address address;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "school")
+	@JsonManagedReference
 	private Set<Project> projects;
 
 	@Column(name = "school_status")
@@ -67,11 +69,4 @@ public class School extends AuditableEntity {
 	@Transient
 	private Set<Requirement> requirements;
 
-
-	@Override
-	public String toString() {
-		return "School[schoolId="+schoolId+",schoolInfo="+schoolInfo+",contacts="+contacts+",address="+address+",projects="+projects
-				+",schoolStatus="+schoolStatus+",proofOfId="+proofOfId+",user="+user+",requirements="
-				+requirements+",schoolImages="+schoolImages;
-	}
 }

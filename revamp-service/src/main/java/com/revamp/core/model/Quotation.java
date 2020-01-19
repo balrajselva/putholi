@@ -42,8 +42,6 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Column(name = "is_quotation_active")
 	private String isQuotationActive;
 
-	private String phone;
-
 	@Column(name = "quotated_amount")
 	private long quotatedAmount;
 
@@ -57,6 +55,9 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "quotation_validity_date")
 	private Date quotationValidityDate;
+
+	@Column(name = "quotation_prepared_by")
+	private String quotationPreparedBy;
 
 	private String reviewer;
 
@@ -74,16 +75,33 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Column(name = "school_id")
 	private long schoolId;
 
-	private String address;
-	
+	private String address_line_1;
+
+	private String phoneNumber;
+
+	private String comment;
+
 	private String city;
 	
-	private String state;
+	private String street;
 	
 	private String pincode;
 	
 	private String quantity;
 	
-	private String details;
+	private String discountDetails;
+
+	@Column(name="item_description")
+	private String itemDescription;
+
+	@Column(name="unit_price")
+	private String unitPrice;
+
+	private String tax;
+
+	@Column(name = "shipping_cost")
+	private String shippingCost;
+
+	private String totalAmount;
 
 }

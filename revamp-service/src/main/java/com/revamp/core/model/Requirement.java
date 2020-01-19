@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,8 +38,7 @@ import lombok.ToString;
 @Proxy(lazy = false)
 @Getter
 @Setter
-@ToString
-public class Requirement extends AuditableEntity implements java.io.Serializable {
+public class Requirement extends AuditableEntity {
 
 	private static final long serialVersionUID = -7230483495700936141L;
 
@@ -49,7 +49,7 @@ public class Requirement extends AuditableEntity implements java.io.Serializable
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id", nullable = false)
-	@JsonIgnore
+	@JsonBackReference
 	private Project project;
 
 	@Column(name = "reqtype")

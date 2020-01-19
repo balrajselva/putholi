@@ -2,6 +2,7 @@ package com.revamp.core.model;
 
 import javax.persistence.*;
 
+import lombok.ToString;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,7 +14,8 @@ import lombok.EqualsAndHashCode;
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class SchoolInfo extends AuditableEntity implements java.io.Serializable {
+@ToString
+public class SchoolInfo extends AuditableEntity{
 
 	private static final long serialVersionUID = 6787703655405276366L;
 

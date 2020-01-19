@@ -39,6 +39,9 @@ class VolunteerSchoolCheck extends Component {
                 };
                 pageLink="View requirements";
             }
+            if(this.state.school.schoolStatus==="QuotationAdded"){
+                pageLink="Sent for quotation approval";
+            }
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{this.state.school.schoolId}</td>
@@ -47,7 +50,7 @@ class VolunteerSchoolCheck extends Component {
                 <td><span className="label label-warning">{this.state.school.schoolStatus}</span></td>
                 <td>{this.state.school.address.district}</td>
                 <td><a href=""><Link to={newTo}>{pageLink}</Link></a></td>
-            </tr>)			
+            </tr>)	
         if(rowsUpdated==false)
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;

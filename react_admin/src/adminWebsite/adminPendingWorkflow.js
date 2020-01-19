@@ -45,13 +45,17 @@ class adminPendingWorkflow extends Component {
             if(this.state.schools[i].schoolStatus==="VolunteerAccepted"){
                 pageLink="Send reminder"
             }
+            if(this.state.schools[i].schoolStatus==="QuotationAdded"){
+                nextPage="reviewQuotation"
+                pageLink="Review quotation";
+            }
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
                 user:this.props.location.user,
                 ...this.props
             };
-            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected"){
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || this.state.schools[i].schoolStatus==="QuotationAdded"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>
