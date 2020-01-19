@@ -26,6 +26,7 @@ import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
 import AddQuotation from '../adminWebsite/quotation'
+import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
 
 class App extends Component {
   state = {
@@ -105,6 +106,7 @@ class App extends Component {
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
+            <AdminLayoutRoute path="/reviewQuotation" component={()=><ReviewQuotation/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}

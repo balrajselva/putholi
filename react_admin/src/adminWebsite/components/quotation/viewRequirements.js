@@ -1,32 +1,38 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-
+import './reviewQuotation.css'
 class viewRequirements extends Component {
 
     state={
         requirements:"",
         getRequirementList:true,
         spinner:true,
+        companyName:null,
+        address_line_1:null,
+        street:null,
+        city:null,
+        pincode:null,
+        phoneNumber:null,
+        comment:null,
         quotationDate:null,
         quotationValidDate:null,
         quotationPreparedBy:null,
+        discountDetails:null,
         quantity:null,
-        description:null,
-        cost:null,
+        itemDescription:null,
+        unitPrice:null,
+        tax:null,
+        shippingCost:null,
+        totalAmount:null,
+        warranty:null,
         lastErrorField:null,
+        errorMessage:null,
         currentReqId:null,
-        quotaionList:[]
+        quotationRefNum:null,
+        quotaionList:[],
+        quotationId:null
     }
-
-    addQuotationClicked=()=>{
-        this.props.history.push({
-            pathname:"/addQuotation",
-            user:this.props.location.user,
-            school:this.props.location.school,
-            ...this.props
-        })    
-    } 
 
 
     handleChange=({target})=>{
@@ -54,58 +60,87 @@ class viewRequirements extends Component {
     }
     }    
 
+    submitQuotation=()=>{
+        axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
+        .then(res=>{
+            window.alert("Quotations submitted successfully!")
+            this.props.history.push({
+                pathname: '/volunteerSchoolCheck',
+                user:this.props.location.user,
+                school:this.props.location.school,
+                ...this.props            
+            });
+        })
+        .catch(error=>{
+            window.alert("Failed due to "+ error);
+        })
+    }
+
     requirementList=()=>{
         axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
         .then(res=>{
-            console.log(res.data)
             let resp=res.data;
             for(let i=0;i<resp.length;i++){
                 resp[i].quotaionList=[]
             };
-            console.log(resp);
             this.setState({
                 requirements:resp,
                 getRequirementList:false,
                 spinner:false
             })
         })
-        console.log(this.state.requirements);
-
     }    
     updateCurrentReqId=(e)=>{
+        console.log(e.target.ref)
         this.setState({
-            currentReqId:e.target.id
+            currentReqId:e.target.id.split("/")[0],
+            quotationRefNum:e.target.id.split("/")[1]
         })
     }
     deleteQuotation=(e)=>{
         e.preventDefault();
-        var array=[...this.state.requirements[e.target.id].quotaionList];
-        array.splice(e.target.id,1);
+        var quotationId=e.target.id.split("/")[0];
+        var reqIndex=e.target.id.split("/")[1];
+        var quoIndex=e.target.id.split("/")[2];
+        axios.delete("http://localhost:6060/puthuyir/quotation/"+quotationId)
+        .then(res=>{
+
+        })
+        .catch(error=>{
+            window.alert("Deletion failed due to "+error)
+        })
+        var array=[...this.state.requirements[reqIndex].quotaionList];
+        array.splice(quoIndex,1);
+        if(this.state.requirements[reqIndex].quotaionList.length===1){
+            array[0]=[];
+        }
+        let ql={
+            ...this.state.requirements[this.state.quotationRefNum],
+            quotaionList:array
+        };
+        console.log("---------------------",ql);
         this.setState({
-            requirements:[array]
-        });
+            requirements:[ql],
+        })
      }
     createTable=()=>{
+        console.log(this.state.requirements[0].requirementId);
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.requirements.length;i++){
-            const newTo = { 
-                quotation:this.state.requirements[i]
-            };
-			
-                rowsUpdated=true;
-                rows.push(<tr>
-                    <td>{i+1}</td>
-                    <td>{this.state.requirements[i].assetName}</td>
-                    <td>{this.state.requirements[i].quantity}</td>                                        
-                    <td>
-                    <button id={i} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onClick={(e)=>this.updateCurrentReqId(e)} >
-                            Add Quotation
-                    </button>
-                    </td>                    
-        <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
-                    </td>
-                </tr>)			
+            rowsUpdated=true;
+            rows.push(<tr>
+                <td>{i+1}</td>
+                <td>{this.state.requirements[i].assetName}</td>
+                <td>{this.state.requirements[i].quantity}</td>                                        
+                <td>
+                <button id={this.state.requirements[i].requirementId+"/"+i} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onClick={(e)=>this.updateCurrentReqId(e)} >
+                    Add Quotation
+                </button>
+                </td>                    
+                <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.quotationId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
+                </td>
+            </tr>)			
         }
         if(rowsUpdated==false)
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
@@ -114,17 +149,45 @@ class viewRequirements extends Component {
 	saveClicked=()=>{
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
-        if(this.state.quotationDate===null){
+        if(this.state.companyName===null){
             this.setState({
-                lastErrorField:"quotationDate",
-                errorMessage:"Please enter Quotation Date"
-        });
-            document.getElementById('quotationDate').style.borderColor="red";
+                lastErrorField:"companyName",
+                errorMessage:"Please enter company name"
+            })
+            document.getElementById('companyName').style.borderColor="red";
         }
-        else if(this.state.requirements[this.state.currentReqId].quotaionList.length===4){
+        if(this.state.requirements[this.state.quotationRefNum].quotaionList.length===4){
             this.setState({
                 errorMessage:"Only four requirements can be added per requirement"
             })
+        }
+        else if(this.state.address_line_1===null){
+            this.setState({
+                lastErrorField:"address_line_1",
+                errorMessage:"Please enter address line 1"
+            });
+            document.getElementById('address_line_1').style.borderColor="red";
+        }
+        else if(this.state.street===null){
+            this.setState({
+                lastErrorField:"street",
+                errorMessage:"Please enter street"
+            })
+            document.getElementById('street').style.borderColor="red";
+        }
+        else if(this.state.city===null){
+            this.setState({
+                lastErrorField:"city",
+                errorMessage:"Please enter city"
+            })
+            document.getElementById('city').style.borderColor="red";
+        }
+        else if(this.state.pincode===null){
+            this.setState({
+                lastErrorField:"pincode",
+                errorMessage:"Please enter pincode"
+            })
+            document.getElementById('pincode').style.borderColor="red";
         }
         else if(this.state.quotationValidDate===null){
             this.setState({
@@ -133,12 +196,54 @@ class viewRequirements extends Component {
             });
             document.getElementById('quotationValidDate').style.borderColor="red";
         }
+        if(this.state.quotationDate===null){
+            this.setState({
+                lastErrorField:"quotationDate",
+                errorMessage:"Please enter Quotation Date"
+            });
+            document.getElementById('quotationDate').style.borderColor="red";
+        }
         else if(this.state.quotationPreparedBy===null){
             this.setState({
                 lastErrorField:"quotationPreparedBy",
                 errorMessage:"Please select quotationPreparedBy"
             });
             document.getElementById('quotationPreparedBy').style.borderColor="red";
+        }
+        else if(this.state.discountDetails===null){
+            this.setState({
+                lastErrorField:"discountDetails",
+                errorMessage:"Please enter discount details"
+            })
+            document.getElementById('discountDetails').style.borderColor="red";
+        }
+        else if(this.state.itemDescription===null){
+            this.setState({
+                lastErrorField:"itemDescription",
+                errorMessage:"Please enter item description"
+            })
+            document.getElementById('itemDescription').style.borderColor="red";
+        }
+        else if(this.state.unitPrice===null){
+            this.setState({
+                lastErrorField:"unitPrice",
+                errorMessage:"Please enter unit price"
+            })
+            document.getElementById('unitPrice').style.borderColor="red";
+        }
+        else if(this.state.shippingCost===null){
+            this.setState({
+                lastErrorField:"shippingCost",
+                errorMessage:"Please enter shipping cost"
+            })
+            document.getElementById('shippingCost').style.borderColor="red";
+        }
+        else if(this.state.totalAmount===null){
+            this.setState({
+                lastErrorField:"totalAmount",
+                errorMessage:"Please enter total amount"
+            })
+            document.getElementById('totalAmount').style.borderColor="red";
         }
         else if(this.state.fileInput===null){
             this.setState({
@@ -147,41 +252,97 @@ class viewRequirements extends Component {
             })
         }
         else{
+            document.getElementById('companyName').style.borderColor="#d2d6de";
+            document.getElementById('address_line_1').style.borderColor="#d2d6de";
+            document.getElementById('city').style.borderColor="#d2d6de";
+            document.getElementById('street').style.borderColor="#d2d6de";
+            document.getElementById('pincode').style.borderColor="#d2d6de";
+            document.getElementById('phoneNumber').style.borderColor="#d2d6de";
+            document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";        
             document.getElementById('quotationDate').style.borderColor="#d2d6de";
             document.getElementById('quotationValidDate').style.borderColor="#d2d6de";
-            document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";
             document.getElementById('quantity').style.borderColor="#d2d6de";
-            document.getElementById('description').style.borderColor="#d2d6de";
-            document.getElementById('cost').style.borderColor="#d2d6de";
+            document.getElementById('unitPrice').style.borderColor="#d2d6de";
+            document.getElementById('itemDescription').style.borderColor="#d2d6de";
+            document.getElementById('tax').style.borderColor="#d2d6de";
+            document.getElementById('shippingCost').style.borderColor="#d2d6de";
             const quotation={
+                requirementId:this.state.currentReqId,
+                projectId:this.props.location.school.projects[0].projectId,
+                companyName:this.state.companyName,
+                address_line_1:this.state.address_line_1,
+                city:this.state.city,
+                street:this.state.street,
+                pincode:this.state.pincode,
+                phoneNumber:this.state.phoneNumber,
+                comment:this.state.comment,
+                quotationPreparedBy:this.state.quotationPreparedBy,
                 quotationDate:this.state.quotationDate,
                 quotationValidDate:this.state.quotationValidDate,
-                quotationPreparedBy:this.state.quotationPreparedBy,
                 quantity:this.state.quantity,
-                description:this.state.description,
-                cost:this.state.cost,
+                discountDetails:this.state.discountDetails,
+                itemDescription:this.state.itemDescription,
+                unitPrice:this.state.unitPrice,
+                tax:this.state.tax,
+                shippingCost:this.state.shippingCost,
+                warranty:this.state.warranty,
+                totalAmount:this.state.totalAmount,
                 fileInput:this.state.fileInput,
                 localImageUrl:this.state.localImageUrl
             }
             console.log(quotation);
-            console.log(this.state.currentReqId);
-            let ql={
-                ...this.state.requirements[this.state.currentReqId],
-                quotaionList:[...this.state.requirements[this.state.currentReqId].quotaionList,{
-                quotationDate:this.state.quotationDate,
-                quotationValidDate:this.state.quotationValidDate,
-                quotationPreparedBy:this.state.quotationPreparedBy,
-                quantity:this.state.quantity,
-                description:this.state.description,
-                cost:this.state.cost,
-                fileInput:this.state.fileInput,
-                localImageUrl:this.state.localImageUrl
-                }]
-            };
-            console.log(ql);
             this.setState({
-                requirements:[ql]
+                spinner:true
             });
+            axios.post('http://localhost:6060/puthuyir/quotation',quotation)
+            .then(res=>{
+                console.log(res);
+                this.setState({
+                    spinner:false,
+                    quotationId:res.data.quotationId
+                })
+                updateList(res.data);
+            })
+            .catch(error=>{
+                window.alert("Failed to save quotation due to "+error);
+            })
+            let updateList=(res)=>{
+                let ql={
+                    ...this.state.requirements[this.state.quotationRefNum],
+                    quotaionList:[
+                        ...this.state.requirements[this.state.quotationRefNum].quotaionList,
+                        {
+                            quotationId:res.quotationId,
+                            requirementId:this.state.currentReqId,
+                            companyName:this.state.companyName,
+                            address_line_1:this.state.address_line_1,
+                            city:this.state.city,
+                            street:this.state.street,
+                            pincode:this.state.pincode,
+                            phoneNumber:this.state.phoneNumber,
+                            comment:this.state.comment,
+                            quotationPreparedBy:this.state.quotationPreparedBy,
+                            quotationDate:this.state.quotationDate,
+                            quotationValidDate:this.state.quotationValidDate,
+                            quantity:this.state.quantity,
+                            discountDetails:this.state.discountDetails,
+                            itemDescription:this.state.itemDescription,
+                            quantity:this.state.quantity,
+                            unitPrice:this.state.unitPrice,
+                            tax:this.state.tax,
+                            shippingCost:this.state.shippingCost,
+                            totalAmount:this.state.totalAmount,
+                            warranty:this.state.warranty,
+                            fileInput:this.state.fileInput,
+                            localImageUrl:this.state.localImageUrl
+                        }
+                    ]
+                };
+                console.log("---------------------",ql);
+                this.setState({
+                    requirements:[ql],
+                })
+            }
         }
     }
     
@@ -232,6 +393,7 @@ class viewRequirements extends Component {
                                 </table>
                             </div>
                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+                            
                             <div className="modal fade" id="modal-default">
                                 <div className="modal-dialog">
                                 <div className="modal-content">
@@ -275,6 +437,9 @@ class viewRequirements extends Component {
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="quotationPreparedBy" placeholder="Quotation Prepared by" onChange={this.handleChange}/>
                                                     </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="warranty" placeholder="Warranty" onChange={this.handleChange}/>
+                                                    </div>
                                                 </form>
                                             </div>
                                             </div>
@@ -282,10 +447,10 @@ class viewRequirements extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="quotationDate" placeholder="Enter Quotation Date" onChange={this.handleChange}/>
+                                                    <input type="date" className="form-control" id="quotationDate" placeholder="Quotation Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="quotationValidDate" placeholder="Enter Quotation Valid Date" onChange={this.handleChange}/>
+                                                    <input type="date" className="form-control" id="quotationValidDate" placeholder="Quotation Valid Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="discountDetails" placeholder="Discount Details" onChange={this.handleChange}/>
@@ -305,24 +470,17 @@ class viewRequirements extends Component {
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="shippingCost" placeholder="Shipping Cost" onChange={this.handleChange}/>
                                                     </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="totalAmount" placeholder="Total amount" onChange={this.handleChange}/>
+                                                    </div>
                                                 </form>
                                             </div>
-                                            </div>
-                                            <div className="row">
-                                            <div className="col-md-12">
-                                            <div className="box box-primary">
-                                            <form role="form">
-                                                <div className="form-group">
-                                                    <input type="text" className="form-control" id="totalAmount" placeholder="Total Amount" onChange={this.handleChange}/>
-                                                 </div>
-                                                </form>
-                                                </div>
-                                                </div>
                                             </div>
                                             <div className="row">
                                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
-                                            <div className="col-md-12">
-                                                    <button type="submit" id="saveQuotation" className="btn btn-primary btn-block center-block btn-flat" data-dismiss="modal" onClick={()=>this.saveClicked()}>Save</button><br/>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                                    <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={()=>this.saveClicked()}>Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -335,7 +493,11 @@ class viewRequirements extends Component {
                   </div>
                 </div>
           </div>
+          <div class="timeline-footer">
+                                <a class="btn btn-warning btn-flat btn" onClick={()=>this.submitQuotation()}>Submit Quotation</a>
+                            </div>
               </section>
+              
                   </div>
                   </div>
             </div>

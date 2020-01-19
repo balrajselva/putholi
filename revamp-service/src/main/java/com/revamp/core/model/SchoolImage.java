@@ -35,7 +35,7 @@ import lombok.EqualsAndHashCode;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class SchoolImage extends AuditableEntity implements java.io.Serializable {
+public class SchoolImage extends AuditableEntity {
 
 	private static final long serialVersionUID = -2136842348977561820L;
 	

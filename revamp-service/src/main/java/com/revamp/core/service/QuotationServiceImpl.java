@@ -33,8 +33,7 @@ public class QuotationServiceImpl implements QuotationService {
 
 	@Override
 	public long save(Quotation quotation) {
-		quotation = quotationRepository.save(quotation);
-		return quotation.getQuotationId();
+		return quotationRepository.save(quotation).getQuotationId();
 	}
 
 	@Override
