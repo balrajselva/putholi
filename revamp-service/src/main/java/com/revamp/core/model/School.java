@@ -46,7 +46,6 @@ public class School extends AuditableEntity {
 	private Address address;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "school")
-	@JsonManagedReference
 	private Set<Project> projects;
 
 	@Column(name = "school_status")
@@ -67,6 +66,6 @@ public class School extends AuditableEntity {
 	
 	
 	@Transient
-	private Set<Requirement> requirements;
+	private List<Requirement> requirements;
 
 }

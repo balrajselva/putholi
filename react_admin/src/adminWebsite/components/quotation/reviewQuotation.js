@@ -1,145 +1,107 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import './reviewQuotation.css'
-import Axios from 'axios'
+import axios from 'axios'
 
 class reviewQuotation extends Component {
     state={
-        spinner:false,
-        getRequirementList:false,
-        requirements:[
-            {
-                companyName:"ABC",
-                city:"Tiruppurasd gagsadgasgasdgsgsd gaggadsgsgaasg dafagadgad gagasdgfgdsgass",
-                contact:"9876543210",
-                quotationPreparedBy:"Arun",
-                quotationDate:"23/2/19",
-                quotationValidDate:"23/2//19",
-                itemDescription:"table",
-                quantity:"10",
-                unitPrice:"1000",
-                tax:"10",
-                shippingCost:"200",
-                totalAmount:"1000",
-                warranty:"2 yrs"
-            },
-            {
-                companyName:"ABC",
-                city:"Tiruppur",
-                contact:"8765433219",
-                quotationPreparedBy:"Arun",
-                quotationDate:"23/2/19",
-                quotationValidDate:"23/2//19",
-                itemDescription:"table",
-                quantity:"10",
-                unitPrice:"1000",
-                tax:"10",
-                shippingCost:"32",
-                totalAmount:"325",
-                warranty:"2 yrs"
-            },
-            {
-                companyName:"ads",
-                city:"Tiruppua dfasfs afdasdfasf asdfasdr",
-                contact:"8765432312",
-                quotationPreparedBy:"AK",
-                quotationDate:"23/2/19",
-                quotationValidDate:"23/2//19",
-                itemDescription:"table",
-                quantity:"10",
-                unitPrice:"123",
-                tax:"10",
-                shippingCost:"200",
-                totalAmount:"1000",
-                warranty:"2 yrs"
-            },
-            {
-                companyName:"ABzcbC",
-                city:"Covaiadsf asdfasfasdfaf adsfasfasd",
-                contact:"9876543210",
-                quotationPreparedBy:"Arun",
-                quotationDate:"23/2/19",
-                quotationValidDate:"23/2//19",
-                itemDescription:"table",
-                quantity:"10",
-                unitPrice:"1000",
-                tax:"10",
-                shippingCost:"200",
-                totalAmount:"1000",
-                warranty:"2 yrs"
-            }
-        ]
+        spinner:true,
+        getRequirementList:true,
+        totalAmount:0,
+        reqList:null,
+        comment:null,
+        temp1:null
+    }
+    approveQuotation=()=>{
+
     }
     componentDidMount(){
         console.log(this.props);
-        Axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/"+this.props.location.school.projects[0].requirements[0].requirementId+"/quotations")
+        axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
-            console.log(res)
+            console.log(res.data)
             this.setState({
-                requirements:res.data
+                reqList:res.data,
+                spinner:false,
+                getRequirementList:false
             })
         })
     }
-    createTable=()=>{
-        var rows=[];
-        let rowsUpdated=false;
-        for(let i=-1;i<this.state.requirements.length;i++){
-            if(i==-1){
-                rowsUpdated=true;
-                rows.push(
-                   
-                )
+
+    selectQuotation=(e)=>{
+        console.log(e.target.id);
+        let reqId=e.target.id.split("/")[0];
+        let quoId=e.target.id.split("/")[1];
+        let quotationList=this.state.reqList[reqId];
+        let temp=null;
+        for(let i=0;i<quotationList.length;i++){
+            console.log(quotationList[i])
+            let quotation=quotationList[i];
+            if(quotation.quotationId+""==quoId+""){
+                temp=quotation.totalAmount
             }
-            else{
+        }
+        console.log(temp);
+        if(temp!==null){
+            let newAmount=this.state.totalAmount+parseInt(temp);
+            console.log(newAmount)
+            this.setState({totalAmount:newAmount});
+        }
+        else{
+            this.setState({temp1:null})
+        }
+    }
+
+    createTable=(iter)=>{
+        var rows=[];
+        let rowsUpdated=false;;
+        let quotationList=this.state.reqList[iter];
+        for(let i=0;i<quotationList.length;i++){
+            let quotation=quotationList[i];
+            rowsUpdated=true;
             rows.push(
-                rows.push(
-                    <tr>                        
-                    <td>{this.state.requirements[i].companyName}</td>
-                    <td>{this.state.requirements[i].city}</td>
-                    <td>{this.state.requirements[i].contact}</td>
-                    <td>{this.state.requirements[i].quotationPreparedBy}</td>
-                    <td>{this.state.requirements[i].quotationDate}</td>
-                    <td>{this.state.requirements[i].quotationValidDate}</td>
-                    <td>{this.state.requirements[i].itemDescription}</td>
-                    <td>{this.state.requirements[i].quantity}</td>
-                    <td>{this.state.requirements[i].unitPrice}</td>
-                    <td>{this.state.requirements[i].tax}</td>
-                    <td>{this.state.requirements[i].shippingCost}</td>
-                    <td>{this.state.requirements[i].totalAmount}</td>
-                    <td>{this.state.requirements[i].warranty}</td>
+                <tr>   
                     <td><input type="button" value="Show quotation"/></td>
-                </tr>
-                )
-            )		
-            }	
+                    <td><input type="checkbox" id={iter+"/"+quotation.quotationId} onChange={(e)=>this.selectQuotation(e)}></input></td>       
+                    <td>{quotation.companyName}</td>
+                    <td>{quotation.city}</td>
+                    <td>{quotation.contact}</td>
+                    <td>{quotation.quotationPreparedBy}</td>
+                    <td>{quotation.quotationDate.split("T")[0]}</td>
+                    <td>{quotation.quotationValidityDate.split("T")[0]}</td>
+                    <td>{quotation.itemDescription}</td>
+                    <td>{quotation.quantity}</td>
+                    <td>{quotation.unitPrice}</td>
+                    <td>{quotation.tax}</td>
+                    <td>{quotation.shippingCost}</td>
+                    <td>{quotation.totalAmount}</td>
+                    <td>{quotation.warranty}</td>
+                    </tr>
+            )
         }
         if(rowsUpdated==false)
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
-    render() {
-        return (
-            <div>
-            <div style={{fontSize:"large"}}>
-                <div className="content-wrapper">
-                    <section className="content-header">
-                        <h1>
-                        {this.props.location.school.schoolInfo.schoolName}
-                        </h1>
-                        <h4>
-                        {this.props.location.school.projects[0].requirements[0].assetName}
-                        </h4>
-                        <ol className="breadcrumb">
-                        <li><a href="../../index.html"><i className="fa fa-dashboard" /> Home</a></li>
-                        <li><a href="#">UI</a></li>
-                        </ol>
+    getContent=()=>{
+        var content=[];
+        let updated=false;
+        for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
+            updated=true;
+            let iter=this.props.location.school.projects[0].requirements[i].requirementId;
+            content.push(
+                <div>
+                <section className="content-header">
+                    <h4>
+                    {this.props.location.school.projects[0].requirements[i].assetName}
+                    </h4>
                     </section>
                     <section className="content">
                         <div className="row">
                         <div className="col-xs-12">
                             <div className="box">
                             <div className="box-header">
-                                <h3 className="box-title">Upload appropriate documents</h3>
+                            <h2 className="box-title">Select appropriate quotation</h2>
                                 <div className="box-tools">
                                 <div className="input-group input-group-sm" style={{width: 150}}>
                                     <input type="text" name="table_search" className="form-control pull-right" placeholder="Search" />
@@ -153,6 +115,7 @@ class reviewQuotation extends Component {
                                 <table class="table table-hover">
                                     <tbody>
                                 <tr>
+                                    <th colSpan="2"></th>
                                     <th><b>Company name</b></th>
                                     <th><b>City</b></th>
                                     <th><b>Contact</b></th>
@@ -167,17 +130,57 @@ class reviewQuotation extends Component {
                                     <th><b>Total amount</b></th>
                                     <th><b>Warranty</b></th>
                                     </tr>
-                                    {this.state.getRequirementList?null:this.createTable()}
+                                    {this.props.location.school.projects[0].requirements[i].requirementId!==null?this.createTable(iter):null}
                                     </tbody>
                                 </table>
                             </div>                            
                         </div>
                     </div>
                 </div>
-                {/* <div class="timeline-footer">
-                    <a class="btn btn-warning btn-flat btn">Submit Quotation</a>
-                </div> */}
               </section>
+              </div>
+            )
+        }
+        if(updated==false)
+            content.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
+        return content;
+    }
+    render() {
+        return (
+            <div>
+            <div style={{fontSize:"large"}}>
+                <div className="content-wrapper">
+                    <h4>
+                        {this.props.location.school.schoolInfo.schoolName}
+                    </h4>
+                {this.state.getRequirementList?null:this.getContent()}
+                <section className="content">
+                <div className="row">
+                    <div className="form-group has-feedback col-md-3">
+                        <h4>  Total Amount : </h4>
+                    </div>
+                    <div className="form-group has-feedback col-md-6">
+                        <input type="input" className="form-control" id="country" value={this.state.totalAmount} placeholder="Country" disabled/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-group has-feedback col-md-3">
+                    <h4>  Comment : </h4>
+                    </div>
+                    <div className="form-group has-feedback col-md-6">
+                        <input type="text-area" className="form-control" id="comment" value={this.state.comment} onChange={this.handleChange}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-group-btn form-group has-feedback">
+                        &nbsp;<button type="submit" className="btn btn-warning form-control" onClick={()=>this.approveQuotation()}>Approve</button>
+                    </div> 
+                    <div className="input-group-btn">
+                        <button type="submit" className="btn btn-danger form-control">Cancel</button>
+                    </div>
+                </div>
+                {this.state.spinner?<div class="spinner"></div>:null}
+                </section>
                 </div>
             </div>
         </div>

@@ -1,27 +1,14 @@
 package com.revamp.core.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -52,12 +39,15 @@ public class Project extends AuditableEntity {
 	private long projectId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "school_id")
+	@JoinColumn(name = "school_id", nullable = false)
 	@JsonIgnore
 	private School school;
 
 	@Column(name = "estimated_amount")
 	private int estimate;
+
+	@ElementCollection
+	private List<String> comments = new ArrayList<String>();
 
 	@Column(name = "collected_amount")
 	private int collectedAmount;
@@ -67,6 +57,6 @@ public class Project extends AuditableEntity {
 	private PuthuyirLookUp status;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
-	private Set<Requirement> requirements;
+	private List<Requirement> requirements;
 
 }
