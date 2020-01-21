@@ -16,7 +16,7 @@ class viewRequirements extends Component {
         phoneNumber:null,
         comment:null,
         quotationDate:null,
-        quotationValidDate:null,
+        quotationValidityDate:null,
         quotationPreparedBy:null,
         discountDetails:null,
         quantity:null,
@@ -112,19 +112,15 @@ class viewRequirements extends Component {
         var array=[...this.state.requirements[reqIndex].quotaionList];
         array.splice(quoIndex,1);
         if(this.state.requirements[reqIndex].quotaionList.length===1){
-            array[0]=[];
+            array=[];
         }
-        let ql={
-            ...this.state.requirements[this.state.quotationRefNum],
-            quotaionList:array
-        };
-        console.log("---------------------",ql);
+        let i=[...this.state.requirements];
+        i[reqIndex].quotaionList=array;
         this.setState({
-            requirements:[ql],
+            requirements:i,
         })
      }
     createTable=()=>{
-        console.log(this.state.requirements[0].requirementId);
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.requirements.length;i++){
@@ -189,12 +185,12 @@ class viewRequirements extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationValidDate===null){
+        else if(this.state.quotationValidityDate===null){
             this.setState({
-                lastErrorField:"quotationValidDate",
-                errorMessage:"Please select quotationValidDate"
+                lastErrorField:"quotationValidityDate",
+                errorMessage:"Please select quotationValidityDate"
             });
-            document.getElementById('quotationValidDate').style.borderColor="red";
+            document.getElementById('quotationValidityDate').style.borderColor="red";
         }
         if(this.state.quotationDate===null){
             this.setState({
@@ -260,13 +256,14 @@ class viewRequirements extends Component {
             document.getElementById('phoneNumber').style.borderColor="#d2d6de";
             document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";        
             document.getElementById('quotationDate').style.borderColor="#d2d6de";
-            document.getElementById('quotationValidDate').style.borderColor="#d2d6de";
+            document.getElementById('quotationValidityDate').style.borderColor="#d2d6de";
             document.getElementById('quantity').style.borderColor="#d2d6de";
             document.getElementById('unitPrice').style.borderColor="#d2d6de";
             document.getElementById('itemDescription').style.borderColor="#d2d6de";
             document.getElementById('tax').style.borderColor="#d2d6de";
             document.getElementById('shippingCost').style.borderColor="#d2d6de";
             const quotation={
+                schoolId:this.props.location.school.schoolId,
                 requirementId:this.state.currentReqId,
                 projectId:this.props.location.school.projects[0].projectId,
                 companyName:this.state.companyName,
@@ -278,7 +275,7 @@ class viewRequirements extends Component {
                 comment:this.state.comment,
                 quotationPreparedBy:this.state.quotationPreparedBy,
                 quotationDate:this.state.quotationDate,
-                quotationValidDate:this.state.quotationValidDate,
+                quotationValidityDate:this.state.quotationValidityDate,
                 quantity:this.state.quantity,
                 discountDetails:this.state.discountDetails,
                 itemDescription:this.state.itemDescription,
@@ -308,39 +305,36 @@ class viewRequirements extends Component {
             })
             let updateList=(res)=>{
                 let ql={
-                    ...this.state.requirements[this.state.quotationRefNum],
-                    quotaionList:[
-                        ...this.state.requirements[this.state.quotationRefNum].quotaionList,
-                        {
-                            quotationId:res.quotationId,
-                            requirementId:this.state.currentReqId,
-                            companyName:this.state.companyName,
-                            address_line_1:this.state.address_line_1,
-                            city:this.state.city,
-                            street:this.state.street,
-                            pincode:this.state.pincode,
-                            phoneNumber:this.state.phoneNumber,
-                            comment:this.state.comment,
-                            quotationPreparedBy:this.state.quotationPreparedBy,
-                            quotationDate:this.state.quotationDate,
-                            quotationValidDate:this.state.quotationValidDate,
-                            quantity:this.state.quantity,
-                            discountDetails:this.state.discountDetails,
-                            itemDescription:this.state.itemDescription,
-                            quantity:this.state.quantity,
-                            unitPrice:this.state.unitPrice,
-                            tax:this.state.tax,
-                            shippingCost:this.state.shippingCost,
-                            totalAmount:this.state.totalAmount,
-                            warranty:this.state.warranty,
-                            fileInput:this.state.fileInput,
-                            localImageUrl:this.state.localImageUrl
-                        }
-                    ]
+                    quotationId:res.quotationId,
+                    requirementId:this.state.currentReqId,
+                    companyName:this.state.companyName,
+                    address_line_1:this.state.address_line_1,
+                    city:this.state.city,
+                    street:this.state.street,
+                    pincode:this.state.pincode,
+                    phoneNumber:this.state.phoneNumber,
+                    comment:this.state.comment,
+                    quotationPreparedBy:this.state.quotationPreparedBy,
+                    quotationDate:this.state.quotationDate,
+                    quotationValidityDate:this.state.quotationValidityDate,
+                    quantity:this.state.quantity,
+                    discountDetails:this.state.discountDetails,
+                    itemDescription:this.state.itemDescription,
+                    quantity:this.state.quantity,
+                    unitPrice:this.state.unitPrice,
+                    tax:this.state.tax,
+                    shippingCost:this.state.shippingCost,
+                    totalAmount:this.state.totalAmount,
+                    warranty:this.state.warranty,
+                    fileInput:this.state.fileInput,
+                    localImageUrl:this.state.localImageUrl
                 };
-                console.log("---------------------",ql);
+                let a=this.state.requirements[this.state.quotationRefNum].quotaionList;
+                a.push(ql);
+                let i=[...this.state.requirements];
+                i[this.state.quotationRefNum].quotaionList=a;
                 this.setState({
-                    requirements:[ql],
+                    requirements:i,
                 })
             }
         }
@@ -450,7 +444,7 @@ class viewRequirements extends Component {
                                                     <input type="date" className="form-control" id="quotationDate" placeholder="Quotation Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="date" className="form-control" id="quotationValidDate" placeholder="Quotation Valid Date" onChange={this.handleChange}/>
+                                                    <input type="date" className="form-control" id="quotationValidityDate" placeholder="Quotation Valid Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="discountDetails" placeholder="Discount Details" onChange={this.handleChange}/>

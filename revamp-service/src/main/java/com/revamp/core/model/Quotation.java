@@ -33,17 +33,11 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Column(name = "quotation_id")
 	private long quotationId;
 
-	@Column(name = "collected_by")
-	private String collectedBy;
-
 	@Column(name = "image_id")
 	private long imageId;
 
 	@Column(name = "is_quotation_active")
 	private String isQuotationActive;
-
-	@Column(name = "quotated_amount")
-	private long quotatedAmount;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "quotation_date")
@@ -59,13 +53,14 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Column(name = "quotation_prepared_by")
 	private String quotationPreparedBy;
 
+	private String admin;
+
+	private String approver;
+
 	private String reviewer;
 
 	@Column(name = "company_name")
 	private String companyName;
-
-	@Column(name = "verified_by")
-	private String verifiedBy;
 
 	private String warranty;
 

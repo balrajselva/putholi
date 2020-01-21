@@ -15,10 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -40,7 +37,6 @@ public class SchoolServiceImpl implements SchoolService {
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		school.setSchoolStatus("SCHOOL_REGISTERED");
 		if (files != null && files.size() > 0) {
-
 			files.forEach((k,v) -> {
 				Set<SchoolImage> siSet = new HashSet<SchoolImage>();
 				String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
@@ -79,7 +75,7 @@ public class SchoolServiceImpl implements SchoolService {
 		project.setEstimate(10000);
 		project.setStatus(PuthuyirLookUp.PROJECT_CREATED);
 		school.getRequirements().forEach(req -> req.setProject(project));
-		project.setRequirements(new HashSet<Requirement>(school.getRequirements()));
+		project.setRequirements(new ArrayList<Requirement>(school.getRequirements()));
 		project.setSchool(school);
 		return project;
 	}

@@ -1,8 +1,9 @@
 package com.revamp.core.controller;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import com.revamp.core.model.Requirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,14 @@ public class QuotationController {
 		return quotationService.findByQuotationStatus(quotationStatus);
 	}
 
-	@GetMapping("/{schoolId}/quotations")
+	@PostMapping("/getQuotations/{id}")
+	public Map<Long, List<Quotation>> findBySchoolIdAndReq(@PathVariable("id") String schoolId) {
+		List<Quotation> quotations=quotationService.findBySchoolId(Long.valueOf(schoolId));
+		Map<Long,List<Quotation>> quotationList=quotations.stream().collect(Collectors.groupingBy(Quotation::getRequirementId));
+		return quotationList;
+	}
+
+	@GetMapping("/quotations/{schoolId}")
 	public List<Quotation> findBySchoolId(@PathVariable("schoolId") long schoolId) {
 		return quotationService.findBySchoolId(schoolId);
 	}
