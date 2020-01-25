@@ -10,41 +10,72 @@ class reviewQuotation extends Component {
         totalAmount:0,
         reqList:null,
         comment:null,
-        temp1:null
-    }
+        temp1:null,
+        selectedQuotations:[]
+    } 
     approveQuotation=()=>{
-
+        let updateQuotation={
+            totalAmount:this.state.totalAmount,
+            quotations:this.state.selectedQuotations,
+            comment:this.state.comment
+        };
+        this.setState({spinner:true});
+        axios.post("http://localhost:6060/puthuyir/updateQuotation",updateQuotation)
+        .then(res=>{
+            window.alert("Quotations updated successfully")
+            this.setState({spinner:false});
+            this.props.history.push({
+                pathname:"/adminPendingWorkflow",
+                user:this.props.location.user,
+                ...this.props
+            })
+        })
+        .catch(error=>{
+            this.setState({spinner:false});
+            window.alert("Unable to update due to"+error);
+        })
     }
     componentDidMount(){
-        console.log(this.props);
         axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
-            console.log(res.data)
             this.setState({
                 reqList:res.data,
                 spinner:false,
                 getRequirementList:false
             })
         })
+        .catch(error=>{
+            window.alert("Unable to get quotations due to "+error)
+        })
     }
 
+    handleChange=({target})=>{
+        this.setState({ 
+            [target.id]: target.value , 
+            lastErrorField:null,
+            errorMessage:""
+        });
+    }
     selectQuotation=(e)=>{
-        console.log(e.target.id);
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
         let quotationList=this.state.reqList[reqId];
         let temp=null;
         for(let i=0;i<quotationList.length;i++){
-            console.log(quotationList[i])
             let quotation=quotationList[i];
             if(quotation.quotationId+""==quoId+""){
-                temp=quotation.totalAmount
+                temp=quotation.totalAmount;
+                let quotations=[
+                    ...this.state.selectedQuotations,
+                    quotation
+                ];
+                this.setState({
+                    selectedQuotations:quotations
+                })
             }
         }
-        console.log(temp);
         if(temp!==null){
             let newAmount=this.state.totalAmount+parseInt(temp);
-            console.log(newAmount)
             this.setState({totalAmount:newAmount});
         }
         else{
@@ -160,7 +191,7 @@ class reviewQuotation extends Component {
                         <h4>  Total Amount : </h4>
                     </div>
                     <div className="form-group has-feedback col-md-6">
-                        <input type="input" className="form-control" id="country" value={this.state.totalAmount} placeholder="Country" disabled/>
+                        <input type="input" className="form-control" id="country" value={this.state.totalAmount} onChange={this.handleChange} disabled/>
                     </div>
                 </div>
                 <div className="row">

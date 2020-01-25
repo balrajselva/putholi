@@ -89,17 +89,20 @@ CREATE TABLE IF NOT EXISTS revamp_db.fundallotment(
 	CONSTRAINT FK_fundallotment_user_id FOREIGN KEY (userid) REFERENCES user (userid) ON DELETE NO ACTION ON UPDATE NO ACTION
 )
 */
-DROP TABLE IF EXISTS identity_proof;
+DROP TABLE IF EXISTS `identity_proof`;
 
-CREATE TABLE identity_proof (
-	created_by varchar(50) DEFAULT NULL,
-	created_date datetime NOT NULL,
-	identity_proof_id INT NOT NULL AUTO_INCREMENT,
-	modified_by varchar(50) DEFAULT NULL,
-	modified_date datetime DEFAULT NULL,
-	PRIMARY KEY (identity_proof_id)
-);
-
+CREATE TABLE `identity_proof` (
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `identity_proof_id` int(11) NOT NULL AUTO_INCREMENT,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `modified_date` datetime DEFAULT NULL,
+  `image` longblob,
+  `filepath` varchar(200) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `comments` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`identity_proof_id`)
+)
 
 DROP TABLE IF EXISTS revamp_db.invoice_details;
 

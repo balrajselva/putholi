@@ -20,7 +20,7 @@ public class VolunteerReferenceServiceImpl implements VolunteerReferenceService{
 
 	@Transactional
 	public long save(VolunteerReference vReference) {
-		return volunteerReferenceRepository.save(vReference).getId();
+		return volunteerReferenceRepository.save(vReference).getVolunterReferenceId();
 	}
 
 	@Transactional
