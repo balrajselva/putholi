@@ -36,7 +36,9 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
  REQ_VIEWED ( "projectstatus", "reqViewed", "ReqViewed", "null", "null"),
  REQ_MODIFIED ( "projectstatus", "reqModified", "ReqModified", "null", "null"),
  REQ_CONFIRMED ( "projectstatus", "reqConfirmed", "ReqConfirmed", "null", "null"),
- REQ_FULFILLED ( "projectstatus", "reqFulfilled", "ReqFullFilled", "null", "null");
+ REQ_FULFILLED ( "projectstatus", "reqFulfilled", "ReqFullFilled", "null", "null"),
+    ADMIN_APPROVED_QUOTATION("status","adminAcceptedQuotation","adminAcceptedQuotation"),
+QUOTATION_ACCEPTED("quotationStatus","quotationAccepted","quotationAccepted");
  
 	private String field;
 	private String key;
@@ -51,6 +53,11 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
 		this.parentField = parentField; 
 		this.parentValue = parentValue;
 	}
+    PuthuyirLookUp(String field, String key, String value) {
+        this.field = field;
+        this.key = key;
+        this.value = value;
+    }
 
 	public String getField() {
 		return field;

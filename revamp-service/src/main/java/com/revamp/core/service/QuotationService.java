@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revamp.core.model.Quotation;
+import com.revamp.core.model.UpdateQuotation;
 
 public interface QuotationService {
 
@@ -23,4 +24,5 @@ public interface QuotationService {
 
 	List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId);
 
+    Boolean updateQuotation(UpdateQuotation updateQuotation);
 }

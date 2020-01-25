@@ -1,26 +1,15 @@
 package com.revamp.core.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Proxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revamp.core.lookup.PuthuyirLookUp;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Proxy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -46,8 +35,7 @@ public class Project extends AuditableEntity {
 	@Column(name = "estimated_amount")
 	private int estimate;
 
-	@ElementCollection
-	private List<String> comments = new ArrayList<String>();
+	private String commentList;
 
 	@Column(name = "collected_amount")
 	private int collectedAmount;

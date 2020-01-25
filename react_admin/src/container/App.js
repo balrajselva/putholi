@@ -106,7 +106,7 @@ class App extends Component {
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
-            <AdminLayoutRoute path="/reviewQuotation" component={()=><ReviewQuotation/>}/>
+            <AdminLayoutRoute path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}

@@ -1,8 +1,16 @@
 package com.revamp.core.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.revamp.core.dao.ProjectRepository;
+import com.revamp.core.dao.RequirementRepository;
+import com.revamp.core.dao.SchoolRepository;
+import com.revamp.core.lookup.PuthuyirLookUp;
+import com.revamp.core.model.School;
+import com.revamp.core.model.UpdateQuotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +24,15 @@ public class QuotationServiceImpl implements QuotationService {
 
 	@Autowired
 	private QuotationRepository quotationRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
+
+	@Autowired
+	private SchoolRepository schoolRepository;
+
+	@Autowired
+	private RequirementRepository requirementRepository;
 
 	QuotationServiceImpl(QuotationRepository quotationRepository) {
 		this.quotationRepository = quotationRepository;
@@ -59,6 +76,21 @@ public class QuotationServiceImpl implements QuotationService {
 	@Override
 	public List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId) {
 		return quotationRepository.findBySchoolIdAndRequirementId(schoolId, requirementId);
+	}
+
+	@Override
+	public Boolean updateQuotation(UpdateQuotation updateQuotation) {
+		Boolean isUpdated=true;
+		for(Quotation quotation:updateQuotation.getQuotations()) {
+			int i=quotationRepository.updateQuotationStatus(quotation.getQuotationId(),PuthuyirLookUp.QUOTATION_ACCEPTED.name());
+		}
+		if(isUpdated==true){
+			schoolRepository.updateSchoolStatus(updateQuotation.getQuotations().get(0).getSchoolId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());
+			School school=schoolRepository.findBySchoolId(updateQuotation.getQuotations().get(0).getSchoolId());
+			projectRepository.updateProjectStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION,Integer.valueOf(updateQuotation.getTotalAmount()),updateQuotation.getComment());
+			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION);
+		}
+		return isUpdated;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.revamp.core.model.Requirement;
+import com.revamp.core.model.UpdateQuotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,12 @@ public class QuotationController {
 		long id = quotationService.save(quotation);
 		quotation.setQuotationId(id);
 		return ResponseEntity.ok().body(quotation);
+	}
+
+	@PostMapping("/updateQuotation")
+	public ResponseEntity<Boolean> upsateQuotation(@RequestBody UpdateQuotation updateQuotation) {
+		Boolean isUpdated=quotationService.updateQuotation(updateQuotation);
+		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
 	}
 
 	@DeleteMapping("/quotation/{id}")

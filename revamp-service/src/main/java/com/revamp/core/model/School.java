@@ -9,6 +9,7 @@ import com.revamp.core.web.util.SchoolSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -51,6 +52,11 @@ public class School extends AuditableEntity {
 	@Column(name = "school_status")
 	@JsonProperty("schoolStatus")
 	private String schoolStatus;
+
+	@Column(name = "enable_donation")
+	@ColumnDefault("N")
+	@JsonProperty("enable_donation")
+	private String enableDonation;
 
 	@JsonProperty("proofOfId")
 	@Transient
