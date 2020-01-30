@@ -17,7 +17,6 @@ import javax.persistence.*;
 @Proxy(lazy = false)
 @Getter
 @Setter
-@ToString
 public class IdentityProof extends AuditableEntity{
 	public IdentityProof() {}
 

@@ -54,7 +54,6 @@ public class School extends AuditableEntity {
 	private String schoolStatus;
 
 	@Column(name = "enable_donation")
-	@ColumnDefault("N")
 	@JsonProperty("enable_donation")
 	private String enableDonation;
 
