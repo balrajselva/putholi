@@ -93,4 +93,19 @@ public class QuotationServiceImpl implements QuotationService {
 		return isUpdated;
 	}
 
+	@Override
+	public Boolean updateSelectedQuotation(long schoolId,PuthuyirLookUp status) {
+		Boolean isUpdated=true;
+		if(isUpdated==true){
+			schoolRepository.updateSchoolStatus(schoolId,status.name());
+			if(status.name().equals(PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name())){
+				schoolRepository.updateDonationFlag(schoolId,"Y");
+			}
+			School school=schoolRepository.findBySchoolId(schoolId);
+			projectRepository.updateStatus(school.getProjects().iterator().next().getProjectId(),status,"ABCD");
+			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),status);
+		}
+		return isUpdated;
+	}
+
 }

@@ -3,6 +3,7 @@ package com.revamp.core.controller;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.Requirement;
 import com.revamp.core.model.UpdateQuotation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,27 @@ public class QuotationController {
 	}
 
 	@PostMapping("/updateQuotation")
-	public ResponseEntity<Boolean> upsateQuotation(@RequestBody UpdateQuotation updateQuotation) {
+	public ResponseEntity<Boolean> updateQuotation(@RequestBody UpdateQuotation updateQuotation) {
 		Boolean isUpdated=quotationService.updateQuotation(updateQuotation);
+		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
+	}
+
+	@PostMapping("/updateSelectedQuotation/{id}/{status}")
+	public ResponseEntity<Boolean> updateSelectedQuotation(@PathVariable("id") long schoolId,@PathVariable("status") String status) {
+		PuthuyirLookUp status1=null;
+		if(status.equals("ReviewerConfirmed")){
+			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION;
+		}
+		else if(status.equals("ApproverConfirmed")){
+			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION;
+		}
+		else if(status.equals("ReviewerRejected")){
+			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION;
+		}
+		else if(status.equals("ApproverRejected")){
+			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION;
+		}
+		Boolean isUpdated=quotationService.updateSelectedQuotation(schoolId,status1);
 		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
 	}
 

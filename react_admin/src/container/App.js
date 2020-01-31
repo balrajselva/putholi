@@ -22,11 +22,16 @@ import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
 import DEOEmailTrigger from '../adminWebsite/emailDEOTrigger';
 import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
 import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
+import ReviewerLayout from '../adminWebsite/components/layouts/ReviewerLayout';
+import ApproverLayout from '../adminWebsite/components/layouts/ApproverLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
 import AddQuotation from '../adminWebsite/quotation'
 import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
+import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
+import ApproverPendingWorkflow from '../adminWebsite/approverPendingWorkflow';
+import ViewSelectedQuotation from '../adminWebsite/ViewSelectedQuotation';
 
 class App extends Component {
   state = {
@@ -63,6 +68,24 @@ class App extends Component {
           <AdminLayout {...props}>
             <Component {...props}/>
           </AdminLayout>
+        )}/>
+      )
+    }
+    const ReviewerLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <ReviewerLayout {...props}>
+            <Component {...props}/>
+          </ReviewerLayout>
+        )}/>
+      )
+    }
+    const ApproverLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <ApproverLayout {...props}>
+            <Component {...props}/>
+          </ApproverLayout>
         )}/>
       )
     }
@@ -106,7 +129,11 @@ class App extends Component {
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
-            <AdminLayoutRoute path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
+            <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
+            <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
+            <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
+            <ApproverLayoutRoute path="/approverReviewQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}
