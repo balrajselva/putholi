@@ -34,9 +34,21 @@ class trustLogin extends Component {
               user : res.data
             });
           }
-          else if(res.data!=="" && (res.data.role==="Admin" ||res.data.role==="Approver" ||res.data.role==="Reviewer" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
+          else if(res.data!=="" && (res.data.role==="Admin" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/accessReview',
+              user: res.data 
+            });
+          }
+          else if(res.data!=="" && res.data.role==="Approver" && res.data.status==="SuperAdminApproved"){
+            this.props.history.push({
+              pathname: '/approver',
+              user: res.data 
+            });
+          }
+          else if(res.data!=="" && res.data.role==="Reviewer" && res.data.status==="SuperAdminApproved"){
+            this.props.history.push({
+              pathname: '/reviewer',
               user: res.data 
             });
           }

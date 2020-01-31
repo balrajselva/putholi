@@ -22,4 +22,8 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	@Query("UPDATE Project s set s.status = :status,s.estimate= :estimate,s.commentList= :commentList, modifiedDate = now() where s.projectId = :id")
 	void updateProjectStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("estimate")Integer estimate,@Param("commentList") String commentList);
 
+	@Modifying
+	@Query("UPDATE Project s set s.status = :status,s.commentList= :commentList, modifiedDate = now() where s.projectId = :id")
+	void updateStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("commentList") String commentList);
+
 }
