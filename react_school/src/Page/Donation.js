@@ -29,10 +29,8 @@ class Donation extends Component {
        }else{
         filteredDonationList = this.state.donationList;
        }
-
        
        return (
-          
                 <div className="page_container">
         <div className="breadcrumb">
         <div className="wrap">

@@ -35,7 +35,7 @@ public class DonationServiceImpl implements DonationService {
 	@Transactional
 	@Override
 	public Donation donate(Donation donation) {
-		donation.setTracking_id(this.getTrackingId()+"-"+donation.getDonor().getUserid());
+//		donation.setTracking_id(this.getTrackingId()+"-"+donation.getDonor().getUserid());
 		this.donationRepository.save(donation);
 		Optional<Project> project = this.projectRepository.findById(donation.getProject().getProjectId());
 		if(project.isPresent()) {

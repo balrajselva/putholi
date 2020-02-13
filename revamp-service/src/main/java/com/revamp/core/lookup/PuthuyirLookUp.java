@@ -28,12 +28,14 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
  REQ_CONFIRMED ( "projectstatus", "reqConfirmed", "ReqConfirmed", "null", "null"),
  REQ_FULFILLED ( "projectstatus", "reqFulfilled", "ReqFullFilled", "null", "null"),
     ADMIN_APPROVED_QUOTATION("status","adminAcceptedQuotation","adminAcceptedQuotation"),
+    PROJECT_INCOMPLETED ( "projectstatus", "projectInCompleted", "ProjectInCompleted", "null", "null"),
     REVIEWER_APPROVED_QUOTATION("status","reviewerAcceptedQuotation","reviewerAcceptedQuotation"),
     APPROVER_APPROVED_QUOTATION("status","approverAcceptedQuotation","approverAcceptedQuotation"),
     ADMIN_REJECTED_QUOTATION("status","adminRejectedQuotation","adminRejectedQuotation"),
     REVIEWER_REJECTED_QUOTATION("status","reviewerRejectedQuotation","reviewerRejectedQuotation"),
     APPROVER_REJECTED_QUOTATION("status","approverRejectedQuotation","approverRejectedQuotation"),
-    QUOTATION_ACCEPTED("quotationStatus","quotationAccepted","quotationAccepted");
+    QUOTATION_ACCEPTED("quotationStatus","quotationAccepted","quotationAccepted"),
+    READY_FOR_ALLOTMENT("status","ReadyForAllotment","ReadyForAllotment");
  
 	private String field;
 	private String key;

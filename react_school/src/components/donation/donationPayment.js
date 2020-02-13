@@ -26,6 +26,10 @@ class DonationPayment extends Component {
       paymentStatus: 'PENDING',
       paymentMode: 'CASH'
     };
+    let paymentPayload = {
+      order_id:'12344567645',
+      amount:this.props.history.location.user.contribution,
+    }
     
 let projectUpdatePayload = {}
 var finalCollectedAmount = Number(this.props.history.location.user.contribution)+ Number(this.props.history.location.user.ContributionAmount);
@@ -53,39 +57,46 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
    let tracking_id = null;
    let projectResponse =null;
     var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload);
-    axios.post('http://localhost:6060/puthuyir/donate/paymentDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
-      .then(response => {
-        tracking_id = response.data.tracking_id
-        projectResponse = response.data
-        axios.post('http://localhost:6060/puthuyir/project', projectUpdatePayload, { headers: { 'Accept': 'application/json' } })
-      .then(response => {
-       
-        let emailPayload ={
-          from:'PuthyirAdminTeam@putholi.com',
-          toEmailAddress:this.props.history.location.user.emailAddress,
-          name:this.props.history.location.user.firstName + this.props.history.location.user.lastName,
-          yourContirbutionAmount: this.props.history.location.user.contribution,
-          subject:'Thanks !!! Your Tracking Id:'+tracking_id,
-          trackId:tracking_id,
-          schoolName :this.props.history.location.user.schoolName
-       }
-       const headersPassing = {
-        'Content-Type': 'application/json',
-        }
-      axios.post('http://localhost:5050/email/sendmail', emailPayload, { headers: headersPassing})
-      .then(response => {
-        this.props.history.push({
-          pathname: '/donationPaymentConfirmation',
-           user: projectResponse,
-         });
+    console.log("PaymanePayload",paymentPayload);
+    axios.post('http://localhost:7070/payment/orders', paymentPayload)
+    .then(response => {
+      console.log(response)
+       axios.post(response.data.webLink)
+      .then(response=>{
+        console.log(response)
+        axios.post('http://localhost:6060/puthuyir/donate/paymentDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
+        .then(response => {
+          console.log(response)
+          tracking_id = response.data.tracking_id
+          projectResponse = response.data
+          axios.post('http://localhost:6060/puthuyir/project', projectUpdatePayload, { headers: { 'Accept': 'application/json' } })
+          .then(response => {
+            console.log(response)
+            let emailPayload ={
+              from:'puthyiradminteam@putholi.com',
+              toEmailAddress:this.props.history.location.user.emailAddress,
+              name:this.props.history.location.user.firstName + this.props.history.location.user.lastName,
+              yourContirbutionAmount: this.props.history.location.user.contribution,
+              subject:'Thanks !!! Your Tracking Id:'+tracking_id,
+              trackId:tracking_id,
+              schoolName :this.props.history.location.user.schoolName
+            }
+            const headersPassing = {
+              'Content-Type': 'application/json',
+            }
+            axios.post('http://localhost:5050/email/sendmail', emailPayload, { headers: headersPassing})
+            .then(response => {
+              console.log(response)
+              this.props.history.push({
+                pathname: '/donationPaymentConfirmation',
+                user: projectResponse,
+            });
+          });
         });
       });
-      }).catch((error) => {
-        
-      })
-      
-    
-    }
+    })
+    });
+  }
   
   render() {
     const requirements = this.props.history.location.user.requirements;

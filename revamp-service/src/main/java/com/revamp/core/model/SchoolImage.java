@@ -59,11 +59,10 @@ public class SchoolImage extends AuditableEntity {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id", nullable = false)
-   @JsonIgnore
+    @JsonIgnore
 	private School school;
 
 	@Column(name = "comments")
-	@ColumnDefault("")
 	String comments;
 	
 	@Column(name = "filepath")
