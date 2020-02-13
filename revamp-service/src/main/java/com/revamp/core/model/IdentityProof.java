@@ -38,7 +38,6 @@ public class IdentityProof extends AuditableEntity{
 	private String filePath;
 
 	@Column(name = "comments")
-	@ColumnDefault("No comments")
 	String comments;
 
 	@OneToOne

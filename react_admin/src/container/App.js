@@ -32,6 +32,7 @@ import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotatio
 import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
 import ApproverPendingWorkflow from '../adminWebsite/approverPendingWorkflow';
 import ViewSelectedQuotation from '../adminWebsite/ViewSelectedQuotation';
+import FundAllotment from '../adminWebsite/FundAllotment';
 
 class App extends Component {
   state = {
@@ -110,12 +111,12 @@ class App extends Component {
     return (
       <div>   
         <Router history={history}>
-          <Switch>
+          <Switch config={this.state.config}>
             <Route path="/confirmation" component={()=><ConfirmatinScreen/>}/>
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
-            <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
+            <Route path="/volunteerRegister" history={history} render={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
@@ -123,13 +124,14 @@ class App extends Component {
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
             <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
+            <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
+            <AdminLayoutRoute exact path="/fundAllotment" component={(props)=><FundAllotment {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
-            <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
             <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>

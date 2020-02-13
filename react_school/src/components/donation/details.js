@@ -151,7 +151,7 @@ class DonationDetails extends Component {
 
 
                 </div>
-                <div className="span4">
+                <div className="span11">
                   <p>This School requires following items Request your valuable contribution for the development of the same. </p>
                   <ul className="links">
                     {requirements.map((value, index) =>

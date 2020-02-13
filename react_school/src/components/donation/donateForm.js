@@ -415,10 +415,9 @@ class DonationForm extends Component {
                       </div>
 
                       <h3>Already Registered Donor??</h3>
-                      <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
+                          <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
                           <input type="radio" class="bn3" name="bn" value="2" checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
-
-              <div style={{ display: this.state.isAlreadyRegistered }}>
+                        <div style={{ display: this.state.isAlreadyRegistered }}>
 
                         <div id="onebn">
                           <div style={{ fontSize: 12, color: "red" }}  >
@@ -426,15 +425,18 @@ class DonationForm extends Component {
                             {this.state.userNameError}
                             {this.state.passwordError}
                           </div>
+                          </div>
+                          <div className="control-group">
                           <label className="control-label" for="inputSuccess">User id / Email </label>
                           <div className="controls">
                             <input type="text" id="username" name="username" value={this.state.username}></input>
                           </div>
-                        </div>
-                        <div id="onebn">
+                          </div>
+                          <div className="control-group">
                           <label className="control-label" for="inputSuccess">Password</label>
                           <div className="controls">
                             <input type="text" id="password" name="password" value={this.state.password}></input>
+                          </div>
                           </div>
                         </div>
 
@@ -442,7 +444,6 @@ class DonationForm extends Component {
                           <button tye="submit" className="btn send_btn">Login</button>
                           <button className="btn dark_btn">Cancel</button>
                         </div>
-                      </div>
                       <div style={{ display: this.state.isRegisteredUser }}>
                         <div class="control-group success" id="multibn">
 
@@ -488,15 +489,14 @@ class DonationForm extends Component {
                             </div>
                           </div>
 
-
                           <div className="control-group" id="multibn">
-                            <label className="control-label">Select if you wish to be a Registered Donor</label>
+                            <h5>Select if you wish to be a Registered Donor</h5>
                             <div className="controls">
-                              <label className="radio">
-                                <input type="radio" class="bn2" name="resgiteredYES" value="1" checked={this.state.isRegisteredClicked === "1"} onClick={e => this.registeredDonorEvent(e.target.value)} /> Yes
+                              <label >
+                                <input type="radio"  name="resgiteredYES" value="1" checked={this.state.isRegisteredClicked === "1"} onClick={e => this.registeredDonorEvent(e.target.value)} /> Yes
                               </label>
-                              <label class="radio">
-                                <input type="radio" class="bn3" name="resgiteredNO" value="2" checked={this.state.isRegisteredClicked === "2"} onClick={e => this.registeredDonorEvent(e.target.value)} /> No
+                              <label >
+                                <input type="radio"  name="resgiteredNO" value="2" checked={this.state.isRegisteredClicked === "2"} onClick={e => this.registeredDonorEvent(e.target.value)} /> No
                               </label>
                             </div>
                           </div>

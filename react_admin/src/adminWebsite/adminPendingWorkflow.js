@@ -49,13 +49,17 @@ class adminPendingWorkflow extends Component {
                 nextPage="reviewQuotation"
                 pageLink="Review quotation";
             }
+            if(this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
+                nextPage="fundAllotment"
+                pageLink="Click for details";
+            }
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
                 user:this.props.location.user,
                 ...this.props
             };
-            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || this.state.schools[i].schoolStatus==="QuotationAdded"){
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>
