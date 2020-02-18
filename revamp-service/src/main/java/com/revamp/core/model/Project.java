@@ -20,12 +20,10 @@ import java.util.List;
 @Setter
 public class Project extends AuditableEntity {
 
-	private static final long serialVersionUID = -5416628745442805358L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_id", nullable = false)
-	private long projectId;
+	private Long projectId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id", nullable = false)
@@ -33,12 +31,12 @@ public class Project extends AuditableEntity {
 	private School school;
 
 	@Column(name = "estimated_amount")
-	private int estimate;
+	private Integer estimate;
 
 	private String commentList;
 
 	@Column(name = "collected_amount")
-	private int collectedAmount;
+	private Integer collectedAmount;
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
