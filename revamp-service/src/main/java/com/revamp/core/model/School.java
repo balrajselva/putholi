@@ -1,22 +1,30 @@
 package com.revamp.core.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.web.util.SchoolSerializer;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "school")
@@ -26,8 +34,6 @@ import java.util.Set;
 @Setter
 @ToString
 public class School extends AuditableEntity {
-
-	private static final long serialVersionUID = 8607633702511344481L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
