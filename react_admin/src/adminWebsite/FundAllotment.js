@@ -1,7 +1,68 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
+import axios from 'axios'
 
 class FundAllotment extends Component {
+  state={
+    quoList:null,
+    spinner:false,
+    requirements:null,
+    getRequirementList:true
+  }
+  componentDidMount(){
+    console.log(this.props.location.school)
+    axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+        .then(res=>{
+            let resp=res.data;
+            console.log(resp);
+            this.setState({
+                requirements:resp,
+                spinner:false
+            })
+      
+    axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+    .then(res=>{
+        console.log(res.data);
+        this.setState({
+            quoList:res.data,
+            spinner:false,
+            getRequirementList:false
+        })
+    })
+    .catch(error=>{
+        window.alert("Unable to get quotations due to "+error)
+    })
+  })
+
+}
+createTable=()=>{
+  var rows=[];
+  let rowsUpdated=false;
+  console.log(this.state.requirements)
+  console.log(this.state.quoList)
+  for(let i=0;i<this.state.requirements.length;i++){
+    var reqId=this.state.requirements[i].requirementId;
+    var quotation=null;
+    for(let j=0;j<this.state.quoList[reqId].length;j++){
+      var tempQuo=this.state.quoList[reqId][j];
+      if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+        quotation = tempQuo;
+        break;
+      }
+    }
+      rowsUpdated=true;
+      rows.push(<tr>
+          <td>{this.state.requirements[i].assetName}</td>
+          <td>{this.state.requirements[i].quantity}</td>                                        
+          <td>{quotation.totalAmount}</td>
+          <td></td>
+          <td>More details</td>
+      </tr>)			
+  }
+  if(rowsUpdated==false)
+      rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
+  return rows;
+}
     render() {
         console.log(this.props);
         return (
@@ -84,7 +145,7 @@ class FundAllotment extends Component {
       <div className="col-xs-12">
         <div className="box">
           <div className="box-header">
-            <h3 className="box-title">New Requirement details for Cuddalore High School, Nellikuppam, Cuddalore.</h3>
+        <h3 className="box-title">New Requirement details for {this.props.location.school.schoolInfo.schoolName}</h3>
             <div className="box-tools">
               <div className="input-group input-group-sm" style={{width: 150}}>
                 {/* <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
@@ -106,27 +167,8 @@ class FundAllotment extends Component {
                     <th>Fund Required</th>
                     <th>Fund Collected</th>
                     <th>More Details</th>
-                  </tr><tr>
-                    <td>Tables</td>
-                    <td>10</td>
-                    <td>Rs. 75,000</td>
-                    <td>Rs. 75,000</td>
-                    <td><a href>Click Here</a></td>
                   </tr>
-                  <tr>
-                    <td>Chair</td>
-                    <td>44</td>
-                    <td>Rs. 1,00,000</td>
-                    <td>Rs. 1,00,000</td>
-                    <td><a href>Click Here</a></td>
-                  </tr>
-                  <tr>
-                    <td>Digital Board</td>
-                    <td>1</td>
-                    <td>Rs. 1,00,000</td>
-                    <td>Rs. 1,00,000</td>
-                    <td><a href>Click Here</a></td>
-                  </tr>
+                  {this.state.getRequirementList?null:this.createTable()}
                 </tbody></table>
               {/* /.box */}
             </div>

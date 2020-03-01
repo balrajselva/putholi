@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import com.revamp.core.model.Project;
+import com.revamp.core.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,9 @@ public class DonationController {
 	
 	@Autowired
 	private DonationUserService donationUserService;
+
+	@Autowired
+	private ProjectService projectService;
 
 	/**
 	 * 
@@ -119,13 +124,16 @@ public class DonationController {
 	 */
 	@PostMapping("/donate/paymentDonation")
 	public ResponseEntity<Donation> savePaymentUser(@RequestBody Donation donation) {
-		
 		String trackIdGenerator =  "PTHL"+ generateTrackNumber();
-		
 		donation.setTracking_id(trackIdGenerator);
-		
-		Donation user = donationService.savePaymentUser(donation);
-		return ResponseEntity.ok().body(user);
+		Donation responseDonation = donationService.savePaymentUser(donation);
+		return ResponseEntity.ok().body(responseDonation);
+	}
+
+	@GetMapping("/donate/paymentDonation/{order_id}")
+	public ResponseEntity<Donation> getPaymentUser(@PathVariable("order_id") String orderId) {
+		Donation responseDonation = donationService.getByOrderId(orderId);
+		return ResponseEntity.ok().body(responseDonation);
 	}
 	
 	

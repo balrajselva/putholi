@@ -80,9 +80,13 @@ public class DonationServiceImpl implements DonationService {
 		return donationRepository.save(donation);
 		
 	}
-	
-	
-	
+
+	@Override
+	public Donation getByOrderId(String orderId) {
+		return donationRepository.findByOrderId(orderId);
+	}
+
+
 	public Donation donate (DonationPayLoad donationPayLoad) {
 		return null;
 	}

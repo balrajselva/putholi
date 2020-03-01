@@ -22,6 +22,7 @@ import in.juspay.exception.InvalidRequestException;
 import in.juspay.model.JuspayEnvironment;
 import in.juspay.model.Order;
 import in.juspay.model.RequestOptions;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @CrossOrigin(origins = "http://localhost")
@@ -45,7 +46,7 @@ public class PaymentController {
 			AuthenticationException, InvalidRequestException {
 
 		JuspayEnvironment.withBaseUrl(JuspayEnvironment.PRODUCTION_BASE_URL);
-		JuspayEnvironment.withApiKey("E351982FF2D407D823FB87C7913CEC").withMerchantId("PUTR_TEST");
+		JuspayEnvironment.withApiKey("7DB806EF81748BD83BFB59A07AEA03").withMerchantId("PUTR_TEST");
 
 		Map<String, Object> params = new LinkedHashMap<String, Object>();
 		params.put("order_id", paymentModel.getOrder_id());

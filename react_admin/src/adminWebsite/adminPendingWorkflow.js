@@ -53,6 +53,10 @@ class adminPendingWorkflow extends Component {
                 nextPage="fundAllotment"
                 pageLink="Click for details";
             }
+            if(this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
+                nextPage="workOrder"
+                pageLink="Initiate Work Order";
+            }
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
@@ -79,9 +83,7 @@ class adminPendingWorkflow extends Component {
     render() {
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
-                {/* Content Wrapper. Contains page content */}
                 <div className="content-wrapper">
-                    {/* Content Header (Page header) */}
                     <section className="content-header">
                         <h1>
                         Dashboard

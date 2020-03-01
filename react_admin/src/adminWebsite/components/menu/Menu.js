@@ -18,6 +18,11 @@ class Menu extends Component {
           user:this.props.currentUser,
           ...this.props
         }
+        const adminInitiateWorkOrder={
+          pathname:"/workOrder",
+          user:this.props.currentUser,
+          ...this.props
+        }
         return (
             <div>
             {/* Left side column. contains the logo and sidebar */}

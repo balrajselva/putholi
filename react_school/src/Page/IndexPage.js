@@ -50,7 +50,7 @@ class indexPage extends Component{
             icon3:{
                 img:'icon3',
                 title:'Track your Donation',
-                pageLink:'schoolTracking',
+                pageLink:'trackDonation',
                 content:'Click here and provide your tracking number to view the status of your contribution and the school progress'
             },
             icon4:{

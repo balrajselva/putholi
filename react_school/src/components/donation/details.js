@@ -66,10 +66,7 @@ class DonationDetails extends Component {
     this.setState({ percentage: calculatePercentage })
   }
 
-
   render() {
-
-
     const Slide = ({ image }) => {
       const styles = {
         backgroundImage: `url(${image})`,
@@ -80,7 +77,6 @@ class DonationDetails extends Component {
       return <div className="slide" style={styles}></div>
     }
 
-
     const LeftArrow = (props) => {
       return (
         <div className="backArrow arrow" onClick={props.goToPrevSlide} >
@@ -89,7 +85,6 @@ class DonationDetails extends Component {
       );
     }
 
-
     const RightArrow = (props) => {
       return (
         <div className="nextArrow arrow" onClick={props.goToNextSlide}>
@@ -97,7 +92,6 @@ class DonationDetails extends Component {
         </div>
       );
     }
-
 
     const ProgressBar = (props) => {
       return (
@@ -149,7 +143,6 @@ class DonationDetails extends Component {
 
                   <div className="span11"><h4 className="title">Total Amount required for the project Rs. {this.props.history.location.state.state[0].projects[0].estimate}  </h4> </div>
 
-
                 </div>
                 <div className="span11">
                   <p>This School requires following items Request your valuable contribution for the development of the same. </p>
@@ -181,12 +174,8 @@ class DonationDetails extends Component {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
-
-
     )
   }
 }

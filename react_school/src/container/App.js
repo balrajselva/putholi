@@ -19,6 +19,7 @@ import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
 import SchoolLayout from '../components/layouts/schoolLayout';
+import TransactionResponse from '../components/donation/transactionResponse';
 
 class App extends Component {
   render(){
@@ -46,9 +47,9 @@ class App extends Component {
           <SchoolLayoutRoute path="/donation" component={()=><Donation/>}/>
           <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails/>}/>
           <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm/>}/> 
-          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment/>}/>         
+          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment paymentFlow={(paymentPayload,donationUserPayload,projectUpdatePayload,user)=>this.paymentFlow(paymentPayload,donationUserPayload,projectUpdatePayload,user)}/>}/>         
           <SchoolLayoutRoute path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage/>}/>  
-           
+          <Route path="/transactionResponse" component={()=><TransactionResponse/>}/>  
           <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation/>}/>             
         </Switch>
       </Router>

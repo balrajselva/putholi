@@ -142,6 +142,13 @@ class viewRequirements extends Component {
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
+    isFutureDate=(idate)=>{
+        var today = new Date().getTime(),
+            idate = idate.split("/");
+    
+        idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
+        return (today - idate) < 0;
+    }
 	saveClicked=()=>{
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
@@ -185,14 +192,14 @@ class viewRequirements extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationValidityDate===null){
+        else if(this.state.quotationValidityDate===null || !this.isFutureDate(this.state.quotationValidityDate)){
             this.setState({
                 lastErrorField:"quotationValidityDate",
                 errorMessage:"Please select quotationValidityDate"
             });
             document.getElementById('quotationValidityDate').style.borderColor="red";
         }
-        if(this.state.quotationDate===null){
+        if(this.state.quotationDate===null || !this.isFutureDate(this.state.quotationDate)){
             this.setState({
                 lastErrorField:"quotationDate",
                 errorMessage:"Please enter Quotation Date"
@@ -220,24 +227,24 @@ class viewRequirements extends Component {
             })
             document.getElementById('itemDescription').style.borderColor="red";
         }
-        else if(this.state.unitPrice===null){
+        else if(this.state.unitPrice===null || this.state.unitPrice<0 || !Number.isFinite(this.state.unitPrice)){
             this.setState({
                 lastErrorField:"unitPrice",
-                errorMessage:"Please enter unit price"
+                errorMessage:"Please enter valid unit price"
             })
             document.getElementById('unitPrice').style.borderColor="red";
         }
-        else if(this.state.shippingCost===null){
+        else if(this.state.shippingCost===null || this.state.shippingCost<0 || !Number.isFinite(this.state.shippingCost)){
             this.setState({
                 lastErrorField:"shippingCost",
-                errorMessage:"Please enter shipping cost"
+                errorMessage:"Please enter valid shipping cost"
             })
             document.getElementById('shippingCost').style.borderColor="red";
         }
-        else if(this.state.totalAmount===null){
+        else if(this.state.totalAmount===null || this.state.totalAmount<=0 || !Number.isFinite(this.state.totalAmount)){
             this.setState({
                 lastErrorField:"totalAmount",
-                errorMessage:"Please enter total amount"
+                errorMessage:"Please enter valid total amount"
             })
             document.getElementById('totalAmount').style.borderColor="red";
         }

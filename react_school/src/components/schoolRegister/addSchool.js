@@ -50,6 +50,7 @@ class AddSchool extends Component {
       lastPincode:null,
       assetTypeList:null,
       assetNameList:null,
+      priority:null,
       reqError:null
     }
     componentDidMount(){
@@ -136,9 +137,15 @@ class AddSchool extends Component {
   addRequirement= (e) =>{
       e.preventDefault();
       let hasError=null;
+      this.setState({reqError:null})
       this.state.reqList.map(reqList=>{
          if(reqList.assetName===this.state.assetName){
             this.setState({reqError:"*Can not have duplicate requirements*"})
+            hasError=true;
+            return
+         }
+         if(reqList.priority===this.state.priority){
+            this.setState({reqError:"*Select different priority*"})
             hasError=true;
             return
          }
@@ -183,11 +190,16 @@ class AddSchool extends Component {
             reqType:this.state.reqType,
             assetType:this.state.assetType,
             assetName:this.state.assetName,
-            quantity:this.state.quantity
+            quantity:this.state.quantity,
+            priority:this.state.priority
          }],
          addReq:true
       })
    }
+   }
+   updatePriority=(e)=>{
+      e.preventDefault();
+      this.setState({priority:e.target.id});
    }
    deleteRequirement=(e)=>{
       e.preventDefault();
@@ -541,6 +553,14 @@ class AddSchool extends Component {
                                     </div>
                                  </div>
                                  <div className="control-group">
+                                    <label className="control-label" for="input01">Priority (1-3)</label>
+                                    <div className="controls radio-container">
+                                       <input type="radio" name="myGroupName" id="1" onChange={(e)=>this.updatePriority(e)}></input>1&nbsp;&nbsp;
+                                       <input type="radio" name="myGroupName" id="2" onChange={(e)=>this.updatePriority(e)}></input>2&nbsp;&nbsp;
+                                       <input type="radio" name="myGroupName" id="3" onChange={(e)=>this.updatePriority(e)}></input>3
+                                    </div>
+                                 </div>
+                                 <div className="control-group">
                                     <button className="input-large" id="req" onClick={(e)=>this.addRequirement(e)}>Add requirement</button>
                                     <div style={{color:"red",fontSize:"15px",marginTop:"5px"}}>
                                        {this.state.reqError}
@@ -554,6 +574,7 @@ class AddSchool extends Component {
                                              <th>Asset Type</th>
                                              <th>Asset Name</th>
                                              <th>Quantity</th>
+                                             <th>Priority</th>
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -563,6 +584,7 @@ class AddSchool extends Component {
                                           <th>{req.assetType}</th>
                                           <th>{req.assetName}</th>
                                           <th>{req.quantity}</th>
+                                          <th>{req.priority}</th>
                                           <th><button className="input-small" id={i} onClick={(e)=>this.deleteRequirement(e)}>Delete</button></th>
                                        </tr>):null}
                                        </tbody>

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -52,11 +53,22 @@ public class Donation extends AuditableEntity implements java.io.Serializable {
 	private Project project;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "donation_userid")
+	private DonationUser donationUser;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "school_id", nullable = false)
+	private School school;
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Column(name = "payment_mode")
 	private String paymentMode;
+
+	@Column(name = "order_id")
+	private String orderId;
 
 	@Column(name = "amount")
 	private int amount;
