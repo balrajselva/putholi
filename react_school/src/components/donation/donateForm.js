@@ -69,7 +69,7 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].id,
+        "schoolId" :this.props.history.location.state.state[0].schoolId,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount":data.get('yourContribution'),
@@ -106,7 +106,7 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].id,
+        "schoolId" :this.props.history.location.state.state[0].schoolId,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount": data.get('yourContribution'),
@@ -352,7 +352,7 @@ class DonationForm extends Component {
 
 
   render() {
-
+    console.log(this.props)
     return (
       <div>
         <div className="page_container">
@@ -435,14 +435,9 @@ class DonationForm extends Component {
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Password</label>
                           <div className="controls">
-                            <input type="text" id="password" name="password" value={this.state.password}></input>
+                            <input type="password" id="password" name="password" value={this.state.password}></input>
                           </div>
                           </div>
-                        </div>
-
-                        <div className="form-actions" id="onebn">
-                          <button tye="submit" className="btn send_btn">Login</button>
-                          <button className="btn dark_btn">Cancel</button>
                         </div>
                       <div style={{ display: this.state.isRegisteredUser }}>
                         <div class="control-group success" id="multibn">
@@ -504,22 +499,19 @@ class DonationForm extends Component {
                             <div className="control-group success" id="multibn">
                               <label className="control-label" for="inputSuccess">Password</label>
                               <div className="controls">
-                                <input type="text" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
+                                <input type="password" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
                                 <div style={{ fontSize: 12, color: "red" }}  >
                                   {this.state.passwordError}
                                 </div>
                               </div>
                             </div>
                           </div>
-
-                          <div className="form-actions" id="multibn">
-                            <button type="submit" className="btn send_btn">Login</button>
-                            <button className="btn dark_btn">Cancel</button>
                           </div>
+                          </div>
+                          <div className="form-actions" id="onebn">
+                          <button tye="submit" className="btn send_btn">Login</button>
+                          <button className="btn dark_btn">Cancel</button>
                         </div>
-                      </div>
-
-
                     </fieldset>
                   </form>
                 </div>
@@ -528,13 +520,6 @@ class DonationForm extends Component {
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
     );
   }
 

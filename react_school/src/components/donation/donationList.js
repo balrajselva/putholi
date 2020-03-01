@@ -15,7 +15,7 @@ class DonationList extends Component {
             function (userFilter) {
                 return userFilter.schoolId == e;
             });
-console.log("userSelectId",userSelectId);
+        console.log("userSelectId",userSelectId);
 
         this.props.history.push('donationDetails', { state: userSelectId });
 
@@ -24,7 +24,7 @@ console.log("userSelectId",userSelectId);
 
     render() {
         
-    
+    console.log(this.props)
         return (
 
             <div className="row">

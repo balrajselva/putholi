@@ -33,6 +33,8 @@ import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
 import ApproverPendingWorkflow from '../adminWebsite/approverPendingWorkflow';
 import ViewSelectedQuotation from '../adminWebsite/ViewSelectedQuotation';
 import FundAllotment from '../adminWebsite/FundAllotment';
+import AdminInitiateWorkOrder from '../adminWebsite/AdminInitiateWorkOrder';
+import DonationPayment from '../adminWebsite/DonationPayment';
 
 class App extends Component {
   state = {
@@ -117,6 +119,7 @@ class App extends Component {
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
             <Route path="/volunteerRegister" history={history} render={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
+            <Route exact path="/donationPayment" history={history} component={(props)=><DonationPayment saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
@@ -126,6 +129,7 @@ class App extends Component {
             <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
             <AdminLayoutRoute exact path="/fundAllotment" component={(props)=><FundAllotment {...props}/>}/>
+            <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>

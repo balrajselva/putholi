@@ -15,4 +15,5 @@ public interface DonationService {
 	TrackDonationResponsePayLoad findMyDonation(String trackingId);
 	Donation savePaymentUser(Donation donation);
 
+	Donation getByOrderId(String orderId);
 }

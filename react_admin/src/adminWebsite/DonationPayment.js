@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter, Router, MemoryRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from "axios";
+
 class DonationPayment extends Component {
   constructor(props) {
     super(props);
@@ -9,79 +10,21 @@ class DonationPayment extends Component {
 
   submitClick = (e) => {
     let orderId = new Date().getTime();
-    let projectPayload = {
-      project: {
-        projectId: this.props.history.location.user.projectId
-      }
-    };
-     
-    let donationUserIdPL = {
-      donationUser: {
-        donationuserid: this.props.history.location.user.donationuserid
-      }
-    }
-
-    let paymentUserPayload = {
-      amount: this.props.history.location.user.contribution,
-      paymentStatus: 'PENDING',
-      paymentMode: 'CASH'
-    };
     let paymentPayload = {
       order_id:orderId,
       amount:this.props.history.location.user.contribution,
     }
-
-    let schoolPayload={
-      school:{
-        schoolId: this.props.history.location.user.schoolId
-      }
-    }
-    
-let projectUpdatePayload = {}
-var finalCollectedAmount = Number(this.props.history.location.user.contribution)+ Number(this.props.history.location.user.ContributionAmount);
-    
-    if ((Number(this.props.history.location.user.contribution < Number(this.props.history.location.user.collectedAmount)))) {
-      projectUpdatePayload={
-          projectId: this.props.history.location.user.projectId,
-          estimate: this.props.history.location.user.estimate,
-          collectedAmount: finalCollectedAmount,
-                status:'PROJECT_INCOMPLETED'
-       
-      }
-    }
-    else{
-      projectUpdatePayload={
-          projectId: this.props.history.location.user.projectId,
-          estimate: this.props.history.location.user.estimate,
-          collectedAmount: finalCollectedAmount,
-          status:'PROJECT_COMPLETED'
-        
-      }
-    }
-    let orderIdPayload={
-      orderId:orderId
-    }
-  
-    var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload,orderIdPayload,schoolPayload);
-
-    axios.post('http://localhost:6060/puthuyir/donate/paymentDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
+    axios.post('http://localhost:7070/payment/orders', paymentPayload)
     .then(response => {
-      console.log(response) 
-      axios.post('http://localhost:6060/puthuyir/project', projectUpdatePayload, { headers: { 'Accept': 'application/json' } })
-      .then(response => {
         console.log(response)
-        axios.post('http://localhost:7070/payment/orders', paymentPayload)
-        .then(response => {
-          console.log(response)
-          window.open(response.data.webLink,"width=200,height=200")         
-          this.props.history.push("/index");
-        });
-      });
-    })
+        window.open(response.data.webLink,"width=200,height=200")         
+        this.props.history.push("/index");
+    });
+    this.props.saveUser(this.pr);
   }
   
   render() {
-    console.log(this.props);
+      console.log(this.props);
     const requirements = this.props.history.location.user.requirements;
     return (
       <div className="page_container">
