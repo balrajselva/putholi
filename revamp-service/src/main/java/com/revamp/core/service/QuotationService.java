@@ -28,4 +28,6 @@ public interface QuotationService {
     Boolean updateQuotation(UpdateQuotation updateQuotation);
 
 	Boolean updateSelectedQuotation(long schoolId, PuthuyirLookUp updateQuotation);
+
+	List<Quotation> findBySchoolIdAndStatus(long schoolId);
 }

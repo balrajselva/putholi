@@ -65,5 +65,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return (List<Invoice>) repository.findAll();
 	}
 
+	@Override
+	public long save(Invoice invoice) {
+		return repository.save(invoice).getId();
+	}
+
+	@Override
+	public void deleteQuotation(long invoiceId) {
+		repository.deleteById(invoiceId);
+	}
 
 }

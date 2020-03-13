@@ -102,4 +102,12 @@ public class QuotationController {
 		return quotationService.findBySchoolIdAndRequirementId(schoolId, requirementId);
 	}
 
+	@GetMapping("/{school_id}/selectedQuotations")
+	public List<Quotation> findBySchoolIdAndSelectedQuotation(@PathVariable("school_id") long schoolId){
+		List<Quotation> quotations = quotationService.findBySchoolIdAndStatus(schoolId);
+		System.out.println(schoolId);
+		System.out.println(quotations);
+		return quotations;
+	}
+
 }

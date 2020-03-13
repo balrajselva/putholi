@@ -108,4 +108,9 @@ public class QuotationServiceImpl implements QuotationService {
 		return isUpdated;
 	}
 
+	@Override
+	public List<Quotation> findBySchoolIdAndStatus(long schoolId) {
+		return quotationRepository.findBySchoolIdAndStatus(schoolId);
+	}
+
 }

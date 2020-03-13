@@ -2,6 +2,7 @@ package com.revamp.core.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,8 +31,7 @@ public class IdentityProof extends AuditableEntity{
 	@Column(name = "identity_proof_id", nullable = false)
 	private long identity_proof_id;
 	
-	@Column(name="image")
-	@JsonIgnore
+	@Column(name="image",length = 10000,nullable = false)
 	private byte[] image;
 
 	@Column(name = "filepath")
@@ -40,8 +40,8 @@ public class IdentityProof extends AuditableEntity{
 	@Column(name = "comments")
 	String comments;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnore
 	private User user;
 }

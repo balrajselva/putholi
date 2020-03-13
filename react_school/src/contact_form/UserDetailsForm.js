@@ -156,10 +156,10 @@ class UserDetailsForm extends Component {
                 status:"New User",
                 emailAddress:this.props.user.emailAddress,
                 phoneNumber:this.state.phoneNumber,
-                identityProof:{
-                    image:this.state.identityProof,
-                    comments:this.state.comments
-                },
+                proofOfId:{
+                    image:this.state.fileInput,
+                    comments:this.state.comments,
+                 },
                 comments:this.state.comments,
                 password:this.state.password
             }

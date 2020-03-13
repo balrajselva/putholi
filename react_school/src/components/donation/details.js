@@ -8,8 +8,8 @@ class DonationDetails extends Component {
       percentage: 0,
       currentIndex: 0,
       translateValue: 0,
-     // imageList: this.props.history.location.state.state[0].proofOfIds.files
-      imageList: []
+     imageList: this.props.history.location.state.state[0].schoolImages
+      // imageList: []
     }
   }
 
@@ -67,6 +67,7 @@ class DonationDetails extends Component {
   }
 
   render() {
+    console.log(this.props)
     const Slide = ({ image }) => {
       const styles = {
         backgroundImage: `url(${image})`,
@@ -129,7 +130,7 @@ class DonationDetails extends Component {
                         transition: 'transform ease-out 0.45s'
                       }}>
                       {this.state.imageList.map((value, index) =>
-                        <Slide key={index} image={value} />
+                        <Slide key={index} image={'data:image/png;base64,'+value.image} />
                       )}
                     </div>
                     <LeftArrow

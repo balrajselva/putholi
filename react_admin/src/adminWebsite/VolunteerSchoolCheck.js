@@ -39,6 +39,14 @@ class VolunteerSchoolCheck extends Component {
                 };
                 pageLink="View requirements";
             }
+            if(this.state.school.schoolStatus==="null"){
+                newTo = { 
+                    pathname: "/addInvoice", 
+                    school:this.state.school,
+                    user:this.props.location.user
+                };
+                pageLink="Add Invoice";
+            }
             if(this.state.school.schoolStatus==="QuotationAdded"){
                 pageLink="Sent for quotation approval";
             }

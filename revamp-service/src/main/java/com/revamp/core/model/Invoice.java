@@ -33,7 +33,7 @@ public class Invoice extends AuditableEntity {
 	private String name;
 	@Column(name = "mimeType")
 	private String mimeType;
-	@Column(name = "file")
+	@Column(name = "file",length = 10000)
 	private byte[] file;
 	@Column(name="project_id")
 	private Long projectId;

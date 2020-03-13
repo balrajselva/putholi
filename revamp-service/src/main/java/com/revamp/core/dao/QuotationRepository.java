@@ -25,4 +25,7 @@ public interface QuotationRepository extends CrudRepository<Quotation, Long> {
 	@Modifying
 	@Query("UPDATE Quotation s set s.quotationStatus = :quotationStatus, modifiedDate = now() where s.quotationId = :quotationId")
 	Integer updateQuotationStatus(@Param("quotationId")Long id,@Param("quotationStatus")String status);
+
+	@Query("FROM Quotation s where s.schoolId = :schoolId and s.quotationStatus = 'QUOTATION_ACCEPTED'")
+	List<Quotation> findBySchoolIdAndStatus(long schoolId);
 }

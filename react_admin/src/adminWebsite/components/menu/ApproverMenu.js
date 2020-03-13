@@ -4,8 +4,13 @@ import {Link,withRouter} from 'react-router-dom'
 class ApproverMenu extends Component {
     render() {
         const accessReview={
-            pathname:"/approver",
+            pathname:"/reviewerAccessReview",
             user:this.props.currentUser
+          }
+          const adminNewSchoolReview={
+            pathname:"/adminNewSchoolReview",
+            user:this.props.currentUser,
+            ...this.props
           }
         return (
             <div>
@@ -34,6 +39,8 @@ class ApproverMenu extends Component {
                     <li className="header">Approver Previlleges</li>
                     <li className="active treeview">
                         <ul className="treeview-menu">
+                        <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
+                        <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
                         <li><Link to={accessReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
                         </ul>
                     </li>

@@ -33,8 +33,9 @@ class DonationList extends Component {
 
                         <div className="span3 element isotope-item" >
                             <div className="hover_img">
-                            {donationLists.schoolImages.map((valueImage,indexImage) => (
-                                   <a className=""><img src={valueImage.filePath} alt="" ></img></a>
+                            {donationLists.schoolImages.map(images => (
+                                
+                                   <a className=""><img src={'data:image/png;base64,'+ images.image} alt="" ></img></a>
                                 ))}  
                                 <span className="portfolio_zoom"><a href="" rel="prettyPhoto[portfolio1]"></a></span>
                                 <span className="portfolio_link"><a href="show_one_school_details_for_donation.html">View item</a></span>

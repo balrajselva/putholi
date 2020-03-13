@@ -14,5 +14,10 @@ public interface InvoiceService {
 	Invoice uploadInvoice(MultipartFile[] files, Invoice invoice);
 	
 	Invoice getFile(long fileId);
+
 	List<Invoice> getAllInvoice();
+
+	long save(Invoice invoice);
+
+	void deleteQuotation(long invoiceId);
 }
