@@ -93,7 +93,7 @@ class VolunteerSchoolReview extends Component {
                             </div>
                         </div>
                         <div className="timeline-footer">
-                            <a className="btn btn-default">Click to view School Pictures</a>&nbsp;
+                        <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                             <a id="Accepted" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Accept</a>&nbsp;
                             <a id="Rejected" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</a>&nbsp;
                             <Link to={{pathname:"/volunteerSchoolCheck", user:this.props.location.user}} className="btn btn-primary btn-xs">Back to List</Link>
@@ -134,8 +134,24 @@ class VolunteerSchoolReview extends Component {
                 </div>
                 {/* /.col */}
                 </div>
-                {/* /.row */}
-                {/* /.row */}
+                <div className="modal fade" id="modal-default">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 className="modal-title">Add Quotations</h4>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <a className=""><img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} alt="" ></img></a>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                    </div>
             </section>
             {/* /.content */}
             {this.state.spinner?<div class="spinner"></div>:null}

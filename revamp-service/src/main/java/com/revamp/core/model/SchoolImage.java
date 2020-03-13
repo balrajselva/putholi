@@ -52,9 +52,7 @@ public class SchoolImage extends AuditableEntity {
 	@Column(name = "image_id")
 	private long imageId;
 
-	@Column(name = "image",nullable = false)
-	@Lob
-	@JsonIgnore
+	@Column(name = "image",length = 10000,nullable = false)
 	private byte[] image;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

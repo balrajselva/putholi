@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
 			files.forEach((k,v) -> {
 				Set<IdentityProof> siSet = new HashSet<IdentityProof>();
 				String filePath = fileSubPath+ user.getFirstName()+"_";
-				IdentityProof id = new IdentityProof(filePath+k,v,user.getIdentityProof().getComments());
+				IdentityProof id = new IdentityProof(filePath+k,v,user.getProofOfId().getComments());
 				id.setUser(user);
 				siSet.add(id);
-				user.setIdentityProof(id);
+				user.setIdentityProof(siSet);
 			});
 		}
 		if (files != null && files.size() > 0) {
@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
 		}
 		return userRepository.save(user).getUserid();
 	}
-	private void saveImgToFS(String dirPath, String fileSubPath, IdentityProof list) {
-//		list.forEach(schoolImg -> {
+	private void saveImgToFS(String dirPath, String fileSubPath, Set<IdentityProof> list) {
+		list.forEach(schoolImg -> {
 			String tmpDirPath = dirPath+"\\"+fileSubPath;
 			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
 				try {
@@ -59,15 +59,15 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 
-			Path path = Paths.get(dirPath+"\\"+list.getFilePath());
+			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
 
 
 			try {
-				Files.write(path, list.getImage());
+				Files.write(path, schoolImg.getImage());
 			} catch (IOException e) {
 				e.printStackTrace();
-//			}
 			}
+		});
 	}
 
 	@Transactional

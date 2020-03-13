@@ -31,7 +31,7 @@ class registerForm extends Component {
     }
 
     submitClicked=()=>{
-        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z0-9]+$/;
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
@@ -165,7 +165,7 @@ class registerForm extends Component {
                 password:this.state.password,
                 sponsorName:null,
                 sponsorEmail:null,
-                identityProof:{
+                proofOfId:{
                     image:this.state.identityProof,
                     comments:"",
                  },

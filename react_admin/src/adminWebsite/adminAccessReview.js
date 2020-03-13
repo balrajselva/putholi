@@ -28,11 +28,28 @@ class adminAccessReview extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.users.length;i++){
-            const newTo = { 
-                pathname: "/adminRoleCheck", 
-                user:this.state.users[i],
-                currentUser:this.state.currentUser
-            };
+            let newTo = null;
+            if(this.state.currentUser.role==="Admin"){
+                newTo = { 
+                    pathname: "/adminRoleCheck", 
+                    user:this.state.users[i],
+                    currentUser:this.state.currentUser
+                };
+            }
+            else if(this.state.currentUser.role==="Reviewer"){
+                newTo = { 
+                    pathname: "/reviewerRoleCheck", 
+                    user:this.state.users[i],
+                    currentUser:this.state.currentUser
+                };
+            }
+            else if(this.state.currentUser.role==="Approver"){
+                newTo = { 
+                    pathname: "/approverRoleCheck", 
+                    user:this.state.users[i],
+                    currentUser:this.state.currentUser
+                };
+            }
             if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved")
                 continue;
             else if(this.state.currentUser.role==="Admin" && (this.state.users[i].role==="Admin" ||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver"|| this.state.users[i].status==="AdminReviewed" || this.state.users[i].status==="ReviewerConfirmed"))

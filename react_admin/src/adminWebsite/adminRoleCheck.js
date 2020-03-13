@@ -48,10 +48,25 @@ class adminRoleCheck extends Component {
           this.setState({user:res.data});
           this.setState({spinner:false});
           window.alert("Status updated successfully");
-          this.props.history.push({ 
-            pathname:"/accessReview", 
-            user:this.state.currentUser
-          });
+         
+          if(this.state.currentUser.role==="Admin"){
+            this.props.history.push({ 
+              pathname:"/accessReview", 
+              user:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Reviewer"){
+            this.props.history.push({ 
+              pathname:"/reviewerAccessReview", 
+              user:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Approver"){
+            this.props.history.push({ 
+              pathname:"/approverAccessReview", 
+              user:this.state.currentUser
+            });
+          }
         }
         else{
           this.setState({spinner:false});

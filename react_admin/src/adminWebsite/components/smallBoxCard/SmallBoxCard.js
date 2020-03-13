@@ -10,7 +10,7 @@ class SmallBoxCard extends Component {
     render() {
         return (
             <div>
-                <div className="col-lg-3 col-xs-6">
+                <div className="col-lg-3 col-md-6">
                     {/* small box */}
                     <div className={"small-box "+this.props.colour}>
                     <div className="inner">
