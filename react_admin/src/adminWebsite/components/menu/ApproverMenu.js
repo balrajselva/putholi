@@ -4,7 +4,7 @@ import {Link,withRouter} from 'react-router-dom'
 class ApproverMenu extends Component {
     render() {
         const accessReview={
-            pathname:"/reviewerAccessReview",
+            pathname:"/approverAccessReview",
             user:this.props.currentUser
           }
           const approverSchoolReview={

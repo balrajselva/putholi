@@ -12,8 +12,6 @@ class TrustMemberScreen extends Component {
                     <div className="row">
                     <SmallBoxCard content="Trust Member" linkTo="/trustMemberScreen" colour="bg-green"/>
                     {/* ./col */}
-                    <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
-                    {/* ./col */}
                     <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                     </div>
                     <h1>
