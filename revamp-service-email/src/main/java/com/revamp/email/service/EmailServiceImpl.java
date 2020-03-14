@@ -116,6 +116,45 @@ public class EmailServiceImpl implements EmailService {
 		return EmailConstants.EMAIL_SUCCESS;
 	}
 
+	@Override
+	public String sendEmailForVolunteer(EmailUser user) throws SendMailException, MessagingException {
+		logger.info("EmailServiceImpl:Send Email Method entry");
+
+		MimeMessage message = javaMailSender.createMimeMessage();
+		MimeMessageHelper mail = new MimeMessageHelper(message);
+
+		Map model = new HashMap();
+		model.put("name", user.getName());
+		user.setModel(model);
+
+
+		/*
+		 * This send() contains an Object of MIME Message as an Parameter
+		 */
+		try {
+			Template t = freemarkerConfig.getTemplate("donar-email.ftl");
+			mail.setTo(user.getToEmailAddress());
+			mail.setFrom(user.getFrom());
+			mail.setSubject(user.getSubject());
+			String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
+
+			mail.setText(html,true);
+			if (user.getCc() != null && user.getCc().size() > 0) {
+				mail.setCc(user.getCc().toArray(new String[user.getCc().size()]));
+			}
+			logger.info("Hitting JavaMailSender to send mail to user Mailbox ");
+
+			javaMailSender.send(message);
+			logger.info("Sent JavaMailSender to send mail to user Mailbox ");
+
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new SendMailException("Exception in sending email to customer " + e.getMessage());
+		}
+		logger.info("EmailServiceImpl:Send Email Method Exit");
+		return EmailConstants.EMAIL_SUCCESS;
+	}
+
 	/**
 	 * sendEmailWithAttachment
 	 * 

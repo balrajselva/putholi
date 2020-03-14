@@ -26,6 +26,10 @@ class VolunteerRegister extends Component {
         else
           window.alert("Please use mail ID refered by Sponsor");
       })
+      .catch(error=>{
+        window.alert("Could verify referals details due to "+error)
+        this.setState({spinner:false})
+      })
     }
     render() {
         return (
