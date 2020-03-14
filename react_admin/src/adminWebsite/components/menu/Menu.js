@@ -32,6 +32,7 @@ class Menu extends Component {
                   {/* Sidebar user panel */}
                   <div className="user-panel">
                     <div className="pull-left image">
+                    {/* <img src={'data:image/png;base64,'+this.props.currentUser.identityProof[0].image} className="img-circle" alt="User Image" /> */}
                       <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
                     </div>
                     <div className="pull-left info">
@@ -64,12 +65,12 @@ class Menu extends Component {
                       <ul className="treeview-menu ">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
                         <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
-                        <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
+                        {/* <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Users and Roles</a></li>
-                        <li><a href="#"><i className="fa fa-circle-o" /> Manage Events</a></li>
+                        <li><a href="#"><i className="fa fa-circle-o" /> Manage Events</a></li> */}
                       </ul>
                     </li>
-                    <li className="treeview">
+                    {/* <li className="treeview">
                       <a href="">
                         <i className="fa fa-edit" /> <span>Reports</span>
                         <span className="pull-right-container">
@@ -81,7 +82,7 @@ class Menu extends Component {
                         <li><a href="#"><i className="fa fa-circle-o" />Retailer Contributions </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Sponsor Contributions</a></li>
                       </ul>
-                    </li>
+                    </li> */}
                     <li className="treeview">
                       <a href="">
                         <i className="fa fa-folder" /> <span>Vendor Management</span>

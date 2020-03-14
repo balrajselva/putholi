@@ -210,18 +210,32 @@ class registerForm extends Component {
             })
         }
         else if(target.id==="identityProof"){
-            this.setState({spinner:true});
-            const reader=new FileReader();
-            const file=target.files[0];
-            
-            reader.onloadend=()=>{
-                this.setState({
-                    identityProof:file,
-                    localImageUrl:reader.result,
-                    spinner:false
-                })
+            if(parseFloat(target.files[0].size/1024).toFixed(2) > 5000 || parseFloat(target.files[0].size/1024).toFixed(2) < 100){
+                window.alert("Image size should be within 100KB - 5MB");
+                return
             }
-            reader.readAsDataURL(file)
+            else{
+                this.setState({spinner:true});
+                const reader=new FileReader();
+                const file=target.files[0]; 
+                if (file && file.type.match('image.*')) {
+                    reader.readAsDataURL(file);
+                }
+                else{
+                    this.setState({
+                        identityProof:null,
+                        localImageUrl:null,
+                        spinner:false
+                    })
+                }
+                reader.onloadend=()=>{
+                    this.setState({
+                        identityProof:file,
+                        localImageUrl:reader.result,
+                        spinner:false
+                    })
+                }            
+            }
         }
     }
     currentPincode=()=>{

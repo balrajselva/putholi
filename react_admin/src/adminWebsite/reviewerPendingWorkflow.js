@@ -87,8 +87,6 @@ class reviewerPendingWorkflow extends Component {
                         <div className="row" >
                         <SmallBoxCard content="Reviewer"  linkTo="/reviewer" colour="bg-green"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
-                        {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>

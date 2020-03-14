@@ -42,7 +42,7 @@ class adminNewSchoolReview extends Component {
                 continue;
             if(this.state.schools[i].schoolStatus==="AdminRejected" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
                 continue;
-            else if(this.state.user.role==="Admin" && (this.state.schools[i].schoolStatus==="AdminReviewed"))
+            else if(this.state.user.role==="Admin" && this.state.schools[i].schoolStatus!== "SCHOOL_REGISTERED")
                 continue;
             else if(this.state.user.role==="Reviewer" && (this.state.schools[i].schoolStatus==="ReviewerConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
                 continue;
@@ -86,8 +86,6 @@ class adminNewSchoolReview extends Component {
                         {/* Small boxes (Stat box) */}
                         <div className="row" >
                         <SmallBoxCard content="Admin"  linkTo="/admin" colour="bg-green"/>
-                        {/* ./col */}
-                        <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
                         {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}

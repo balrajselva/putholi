@@ -79,8 +79,6 @@ class pendingWorkflow extends Component {
                         <div className="row" >
                         <SmallBoxCard content="Admin"  linkTo="/admin" colour="bg-green"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
-                        {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>

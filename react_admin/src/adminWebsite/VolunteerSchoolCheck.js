@@ -6,21 +6,36 @@ import axios from 'axios'
 class VolunteerSchoolCheck extends Component {
     state={
         spinner:true,
-        school:null
+        school:null,
+        getSchools:true
     }
     componentDidMount(){
-        axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.user.school_id)
-        .then(res=>{
-            console.log(res.data)
-            this.setState({
-                school:res.data,
-                spinner:false
+        if(this.props.location.user.school_id!==null){
+            axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.user.school_id)
+            .then(res=>{
+                console.log(res.data)
+                this.setState({
+                    school:res.data,
+                    getSchools:false,
+                    spinner:false
+                })
             })
-        })
-        .catch(error=>{
-            window.alert("Could not fetch school details due to +",error)
+            .catch(error=>{
+                window.alert("Could not fetch school details due to "+error)
+                this.setState({
+                    spinner:false,
+                    getSchools:false
+                })
+            })
+        }
+        else{
             this.setState({spinner:false})
-        })
+        }
+    }
+    dontCreateTable=()=>{
+        var rows=[];
+        rows.push(<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>)
+        return rows;
     }
     createTable=()=>{
         var rows=[];
@@ -76,8 +91,6 @@ class VolunteerSchoolCheck extends Component {
                     <div className="row">
                     <SmallBoxCard content={this.props.location.user.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
                     {/* ./col */}
-                    <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
-                    {/* ./col */}
                     <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                     </div>
                     <h1>
@@ -117,8 +130,7 @@ class VolunteerSchoolCheck extends Component {
                                         <th>District</th>
                                         <th>More Details</th>
                                     </tr>
-                                    {this.state.school!==null?this.createTable():<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>}
-                                    {this.state.school!==null?null:this.setState({spinner:false})}
+                                    {this.state.school!==null && this.state.getSchools===false?this.createTable():this.dontCreateTable()}
                                     </tbody></table>
                                 </div>
                             </div>

@@ -105,8 +105,6 @@ class adminAccessReview extends Component {
                         {/* ./col */}
                         <SmallBoxCard content={this.state.currentUser.role} linkTo="/admin" colour="bg-green"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
-                        {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>

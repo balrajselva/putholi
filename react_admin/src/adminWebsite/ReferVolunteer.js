@@ -173,8 +173,6 @@ class ReferVolunteer extends Component {
                         <div className="row">
                             <SmallBoxCard content={this.props.location.user.role} linkTo="/trustMemberScreen" colour="bg-green"/>
                             {/* ./col */}
-                            <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
-                            {/* ./col */}
                             <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                         </div>
                         <h1>

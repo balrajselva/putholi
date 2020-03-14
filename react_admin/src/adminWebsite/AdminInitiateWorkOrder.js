@@ -108,20 +108,7 @@ class AdminInitiateWorkOrder extends Component {
           <a href="admin_main_Screen.html" className="small-box-footer"> <i className="fa fa-arrow-circle-right" /></a>
         </div>
       </div>
-      {/* ./col */}
-      <div className="col-lg-3 col-xs-6">
-        {/* small box */}
-        <div className="small-box bg-yellow">
-          <div className="inner">
-            <h3>Inbox</h3>
-            <p />
-          </div>
-          <div className="icon">
-            <i className="ion ion-person-add" />
-          </div>
-          <a href="#" className="small-box-footer"> <i className="fa fa-arrow-circle-right" /></a>
-        </div>
-      </div>
+  
       {/* ./col */}
       <div className="col-lg-3 col-xs-6">
         {/* small box */}
