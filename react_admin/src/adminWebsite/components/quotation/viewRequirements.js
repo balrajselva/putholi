@@ -27,6 +27,7 @@ class viewRequirements extends Component {
         totalAmount:null,
         warranty:null,
         lastErrorField:null,
+        fileInput:null,
         errorMessage:null,
         currentReqId:null,
         quotationRefNum:null,
@@ -61,19 +62,24 @@ class viewRequirements extends Component {
     }    
 
     submitQuotation=()=>{
-        axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
-        .then(res=>{
-            window.alert("Quotations submitted successfully!")
-            this.props.history.push({
-                pathname: '/volunteerSchoolCheck',
-                user:this.props.location.user,
-                school:this.props.location.school,
-                ...this.props            
-            });
-        })
-        .catch(error=>{
-            window.alert("Failed due to "+ error);
-        })
+        if(this.state.quotationId !== null){
+            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
+            .then(res=>{
+                window.alert("Quotations submitted successfully!")
+                this.props.history.push({
+                    pathname: '/volunteerSchoolCheck',
+                    user:this.props.location.user,
+                    school:this.props.location.school,
+                    ...this.props            
+                });
+            })
+            .catch(error=>{
+                window.alert("Failed due to "+ error);
+            })
+        }
+        else{
+            this.setState({errorMessage:"Please add atleast one quotation"})
+        }
     }
 
     requirementList=()=>{
@@ -143,13 +149,13 @@ class viewRequirements extends Component {
         return rows;
     }
     isFutureDate=(idate)=>{
-        var today = new Date().getTime(),
-            idate = idate.split("/");
-    
-        idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
-        return (today - idate) < 0;
+        var today = new Date().getTime();
+        var given = idate.split("-");
+        var inputDate = 0 - new Date(given[2], given[1] - 1, given[0]).getTime();
+        return (today - inputDate) < 0;
     }
 	saveClicked=()=>{
+        var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
         if(this.state.companyName===null){
@@ -192,17 +198,17 @@ class viewRequirements extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationValidityDate===null || !this.isFutureDate(this.state.quotationValidityDate)){
+        else if(this.state.quotationValidityDate===null || this.isFutureDate(this.state.quotationValidityDate) === true){
             this.setState({
                 lastErrorField:"quotationValidityDate",
-                errorMessage:"Please select quotationValidityDate"
+                errorMessage:"Please select valid quotationValidityDate"
             });
             document.getElementById('quotationValidityDate').style.borderColor="red";
         }
-        if(this.state.quotationDate===null || !this.isFutureDate(this.state.quotationDate)){
+        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate) === false){
             this.setState({
                 lastErrorField:"quotationDate",
-                errorMessage:"Please enter Quotation Date"
+                errorMessage:"Please enter valid Quotation Date"
             });
             document.getElementById('quotationDate').style.borderColor="red";
         }
@@ -220,6 +226,13 @@ class viewRequirements extends Component {
             })
             document.getElementById('discountDetails').style.borderColor="red";
         }
+        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
+            this.setState({
+                lastErrorField:"phoneNumber",
+                errorMessage:"Please enter valid mobile number"
+            });
+            document.getElementById('phoneNumber').style.borderColor="red";
+        }
         else if(this.state.itemDescription===null){
             this.setState({
                 lastErrorField:"itemDescription",
@@ -227,21 +240,35 @@ class viewRequirements extends Component {
             })
             document.getElementById('itemDescription').style.borderColor="red";
         }
-        else if(this.state.unitPrice===null || this.state.unitPrice<0 || !Number.isFinite(this.state.unitPrice)){
+        else if(this.state.quantity===null || isNaN(this.state.quantity)){
+            this.setState({
+                lastErrorField:"quantity",
+                errorMessage:"Please enter valid quantity"
+            })
+            document.getElementById('quantity').style.borderColor="red";
+        }
+        else if(this.state.tax===null){
+            this.setState({
+                lastErrorField:"tax",
+                errorMessage:"Please enter valid tax"
+            })
+            document.getElementById('quantity').style.borderColor="red";
+        }
+        else if(this.state.unitPrice===null || isNaN(this.state.unitPrice)){
             this.setState({
                 lastErrorField:"unitPrice",
                 errorMessage:"Please enter valid unit price"
             })
             document.getElementById('unitPrice').style.borderColor="red";
         }
-        else if(this.state.shippingCost===null || this.state.shippingCost<0 || !Number.isFinite(this.state.shippingCost)){
+        else if(this.state.shippingCost===null || isNaN(this.state.shippingCost)){
             this.setState({
                 lastErrorField:"shippingCost",
                 errorMessage:"Please enter valid shipping cost"
             })
             document.getElementById('shippingCost').style.borderColor="red";
         }
-        else if(this.state.totalAmount===null || this.state.totalAmount<=0 || !Number.isFinite(this.state.totalAmount)){
+        else if(this.state.totalAmount===null || isNaN(this.state.totalAmount)){
             this.setState({
                 lastErrorField:"totalAmount",
                 errorMessage:"Please enter valid total amount"
@@ -251,7 +278,7 @@ class viewRequirements extends Component {
         else if(this.state.fileInput===null){
             this.setState({
                 lastErrorField:"fileInput",
-                errorMessage:"Please upload quotation"
+                errorMessage:"Please upload quotation file"
             })
         }
         else{
@@ -460,19 +487,19 @@ class viewRequirements extends Component {
                                                     <input type="text" className="form-control" id="itemDescription" placeholder="Item Description" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="quantity" placeholder="Quantity" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="quantity" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Quantity" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="unitPrice" placeholder="Unit Price" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="unitPrice" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Unit Price" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="tax" placeholder="Tax" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="tax" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Tax" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="shippingCost" placeholder="Shipping Cost" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="shippingCost" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Shipping Cost" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="totalAmount" placeholder="Total amount" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="totalAmount" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Total amount" onChange={this.handleChange}/>
                                                     </div>
                                                 </form>
                                             </div>

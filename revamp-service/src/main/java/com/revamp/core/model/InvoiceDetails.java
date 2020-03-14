@@ -42,11 +42,10 @@ public class InvoiceDetails extends AuditableEntity implements java.io.Serializa
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "invoice_details_id")
 	private long invoice_details_id;
-	
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "invoice_details")
-   private Set<InvoiceRequirements> requirements;
+    private Set<InvoiceRequirements> requirements;
 
 	@Column(name = "from_address")
 	private String fromAddress;
@@ -56,7 +55,6 @@ public class InvoiceDetails extends AuditableEntity implements java.io.Serializa
 
 	@Column(name = "invoice_number")
 	private String invoice_Number;
-	
 	
 	@Column(name = "accountNumber")
 	private String accountNumber;
@@ -75,5 +73,4 @@ public class InvoiceDetails extends AuditableEntity implements java.io.Serializa
 	
 	@Column(name = "email_Id")
 	private String emailId;
-
-	}
+}

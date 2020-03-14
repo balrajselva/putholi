@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import imageCss from '../adminWebsite/css/imageCss.css';
 
 class adminSchoolCheck extends Component {
     state={
@@ -150,7 +151,7 @@ class adminSchoolCheck extends Component {
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <a className=""><img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} alt="" ></img></a>
+                                <img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} id ="image1" alt="" ></img>
                                 </section>
                             </div>
                         </div>

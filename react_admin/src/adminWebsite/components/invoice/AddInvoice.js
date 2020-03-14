@@ -147,18 +147,13 @@ class AddInvoice extends Component {
         return rows;
     }
     isFutureDate=(idate)=>{
-        var today = new Date().getTime(),
-            idate = idate.split("/");
-    
-        idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
-        return (today - idate) < 0;
+        var today = new Date().getTime();
+        var given = idate.split("-");
+        var inputDate = 0 - new Date(given[2], given[1] - 1, given[0]).getTime();
+        return (today - inputDate) < 0;
     }
 	saveClicked=()=>{
-        document.body.classList.remove("modal-backdrop.fade.in");
-        document.getElementById("modal-default").style.display="none";
-        document.getElementById("modal-default").class="modal fade";
-        document.getElementById("mainContent").class="skin-blue sidebar-mini";
-     
+        var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
         if(this.state.companyName===null){
@@ -168,9 +163,9 @@ class AddInvoice extends Component {
             })
             document.getElementById('companyName').style.borderColor="red";
         }
-        if(this.state.requirements[this.state.quotationRefNum].quotaionList.length===4){
+        if(this.state.requirements[this.state.quotationRefNum].quotaionList.length===1){
             this.setState({
-                errorMessage:"Only four requirements can be added per requirement"
+                errorMessage:"Only one invoice can be added per requirement"
             })
         }
         else if(this.state.address_line_1===null){
@@ -201,17 +196,10 @@ class AddInvoice extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationValidityDate===null || this.isFutureDate(this.state.quotationValidityDate)){
-            this.setState({
-                lastErrorField:"quotationValidityDate",
-                errorMessage:"Please select quotationValidityDate"
-            });
-            document.getElementById('quotationValidityDate').style.borderColor="red";
-        }
-        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate)){
+        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate) === true){
             this.setState({
                 lastErrorField:"quotationDate",
-                errorMessage:"Please enter Invoice Date"
+                errorMessage:"Please enter valid Invoice Date"
             });
             document.getElementById('quotationDate').style.borderColor="red";
         }
@@ -236,26 +224,47 @@ class AddInvoice extends Component {
             })
             document.getElementById('itemDescription').style.borderColor="red";
         }
-        else if(this.state.unitPrice===null){
+        else if(this.state.quantity===null || isNaN(this.state.quantity)){
+            this.setState({
+                lastErrorField:"quantity",
+                errorMessage:"Please enter valid quantity"
+            })
+            document.getElementById('quantity').style.borderColor="red";
+        }
+        else if(this.state.tax===null){
+            this.setState({
+                lastErrorField:"tax",
+                errorMessage:"Please enter valid tax"
+            })
+            document.getElementById('quantity').style.borderColor="red";
+        }
+        else if(this.state.unitPrice===null || isNaN(this.state.unitPrice)){
             this.setState({
                 lastErrorField:"unitPrice",
                 errorMessage:"Please enter valid unit price"
             })
             document.getElementById('unitPrice').style.borderColor="red";
         }
-        else if(this.state.shippingCost===null){
+        else if(this.state.shippingCost===null || isNaN(this.state.shippingCost)){
             this.setState({
                 lastErrorField:"shippingCost",
                 errorMessage:"Please enter valid shipping cost"
             })
             document.getElementById('shippingCost').style.borderColor="red";
         }
-        else if(this.state.totalAmount===null ){
+        else if(this.state.totalAmount===null || isNaN(this.state.totalAmount)){
             this.setState({
                 lastErrorField:"totalAmount",
                 errorMessage:"Please enter valid total amount"
             })
             document.getElementById('totalAmount').style.borderColor="red";
+        }
+        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
+            this.setState({
+                lastErrorField:"phoneNumber",
+                errorMessage:"Please enter valid mobile number"
+            });
+            document.getElementById('phoneNumber').style.borderColor="red";
         }
         else if(this.state.fileInput===null){
             this.setState({
@@ -276,7 +285,6 @@ class AddInvoice extends Component {
             document.getElementById('phoneNumber').style.borderColor="#d2d6de";
             document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";        
             document.getElementById('quotationDate').style.borderColor="#d2d6de";
-            document.getElementById('quotationValidityDate').style.borderColor="#d2d6de";
             document.getElementById('quantity').style.borderColor="#d2d6de";
             document.getElementById('unitPrice').style.borderColor="#d2d6de";
             document.getElementById('itemDescription').style.borderColor="#d2d6de";
@@ -295,7 +303,6 @@ class AddInvoice extends Component {
                 comment:this.state.comment,
                 quotationPreparedBy:this.state.quotationPreparedBy,
                 quotationDate:this.state.quotationDate,
-                quotationValidityDate:this.state.quotationValidityDate,
                 quantity:this.state.quantity,
                 discountDetails:this.state.discountDetails,
                 itemDescription:this.state.itemDescription,
@@ -336,7 +343,6 @@ class AddInvoice extends Component {
                     comment:this.state.comment,
                     quotationPreparedBy:this.state.quotationPreparedBy,
                     quotationDate:this.state.quotationDate,
-                    quotationValidityDate:this.state.quotationValidityDate,
                     quantity:this.state.quantity,
                     discountDetails:this.state.discountDetails,
                     itemDescription:this.state.itemDescription,

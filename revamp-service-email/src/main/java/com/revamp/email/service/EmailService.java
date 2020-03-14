@@ -22,6 +22,9 @@ public interface EmailService {
 	 * @throws MessagingException
 	 */
 	String sendEmail(EmailUser user) throws SendMailException, MessagingException;
+
+	String sendEmailForVolunteer(EmailUser user) throws SendMailException, MessagingException;
+
 	/**
 	 * 
 	 * @param user

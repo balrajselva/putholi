@@ -7,8 +7,8 @@ class ReviewerMenu extends Component {
             pathname:"/approverAccessReview",
             user:this.props.currentUser
           }
-          const adminNewSchoolReview={
-            pathname:"/adminNewSchoolReview",
+          const reviewerSchoolReview={
+            pathname:"/reviewer",
             user:this.props.currentUser,
             ...this.props
           }
@@ -40,8 +40,7 @@ class ReviewerMenu extends Component {
                     <li className="active treeview">
                         <ul className="treeview-menu">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
-                        <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
-                        <li><Link to={accessReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
+                        <li><Link to={reviewerSchoolReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
                         </ul>
                     </li>
                     </ul>
