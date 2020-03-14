@@ -10,7 +10,7 @@ class TrustMemberScreen extends Component {
                 <section className="content-header">
                     {/* Small boxes (Stat box) */}
                     <div className="row">
-                    <SmallBoxCard content={this.props.location.user.role} linkTo="/trustMemberScreen" colour="bg-green"/>
+                    <SmallBoxCard content="Trust Member" linkTo="/trustMemberScreen" colour="bg-green"/>
                     {/* ./col */}
                     <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
                     {/* ./col */}

@@ -11,7 +11,8 @@ class reviewQuotation extends Component {
         reqList:null,
         comment:null,
         temp1:null,
-        selectedQuotations:[]
+        selectedQuotations:[],
+        showImage:null
     } 
     approveQuotation=()=>{
         let updateQuotation={
@@ -38,6 +39,7 @@ class reviewQuotation extends Component {
     componentDidMount(){
         axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
+            console.log(res.data);
             this.setState({
                 reqList:res.data,
                 spinner:false,
@@ -82,6 +84,32 @@ class reviewQuotation extends Component {
             this.setState({temp1:null})
         }
     }
+    // selectQuotationImage=(e)=>{
+    //     let reqId=e.target.id.split("/")[0];
+    //     let quoId=e.target.id.split("/")[1];
+    //     // let quotationList=this.state.reqList[reqId].quotationList[quoId].;
+        
+    //     for(let i=0;i<quotationList.length;i++){
+    //         let quotation=quotationList[i];
+    //         if(quotation.quotationId+""==quoId+""){
+    //             temp=quotation.totalAmount;
+    //             let quotations=[
+    //                 ...this.state.selectedQuotations,
+    //                 quotation
+    //             ];
+    //             this.setState({
+    //                 selectedQuotations:quotations
+    //             })
+    //         }
+    //     }
+    //     if(temp!==null){
+    //         let newAmount=this.state.totalAmount+parseInt(temp);
+    //         this.setState({totalAmount:newAmount});
+    //     }
+    //     else{
+    //         this.setState({temp1:null})
+    //     }
+    // }
 
     createTable=(iter)=>{
         var rows=[];
@@ -91,8 +119,8 @@ class reviewQuotation extends Component {
             let quotation=quotationList[i];
             rowsUpdated=true;
             rows.push(
-                <tr>   
-                    <td><input type="button" value="Show quotation"/></td>
+                <tr>                               
+                    <td><input type="button"  id={iter+"/"+i} data-toggle="modal" data-target="#modal-default" value="Show quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
                     <td><input type="checkbox" id={iter+"/"+quotation.quotationId} onChange={(e)=>this.selectQuotation(e)}></input></td>       
                     <td>{quotation.companyName}</td>
                     <td>{quotation.city}</td>
@@ -212,6 +240,23 @@ class reviewQuotation extends Component {
                 </div>
                 {this.state.spinner?<div class="spinner"></div>:null}
                 </section>
+                <div className="modal fade" id="modal-default">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} id ="image1" alt="" ></img>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

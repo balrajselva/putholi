@@ -61,57 +61,12 @@ class AddSchool extends Component {
       })
     }
     handleChange=({target})=>{
-
-      this.setState({ 
-          [target.id]: target.value , 
-          lastErrorField:null,
-          reqError:null,
-          errorMessage:null
-      });
-      if(target.id==="pincode" && target.value.length===6){
-          this.setState({spinner:true,lastPincode:target.value});
-          axios.get("https://api.postalpincode.in/pincode/"+target.value)
-          .then(res=>{
-              console.log(res);
-              if(res.data[0].Message==="No records found"){
-                  this.setState({
-                      spinner:false,
-                      errorMessage:"Please enter valid Pincode or enter address manually."
-                  })
-              }
-              else{                    
-                  this.setState({
-                      locality:res.data[0].PostOffice,
-                      city:res.data[0].PostOffice[0].Division,
-                      district:res.data[0].PostOffice[0].District,
-                      state:res.data[0].PostOffice[0].State,
-                      country:res.data[0].PostOffice[0].Country,
-                      createLocalityDropDown:true,
-                      spinner:false
-                  });
-              }
-          })
-          .catch(error=>{
-            this.setState({
-               spinner:false
-           })
-           window.alert("Please enter the address manually")
-          })
-      }
-      else if(target.id==="assetType" && target.value!=="Others"){
-         this.setState({spinner:true});
-         axios.get("http://localhost:6060/puthuyir/lookup/field/"+target.value)
-         .then(res=>{
-            this.setState({
-               assetNameList:res.data,
-               spinner:false
-            })
-         })
-      }
-      else if(target.id==="assetType" && target.value==="Others"){
-         this.setState({assetNameList:[{key_value:"Others"}]});
-      }
-      else if(target.id==="fileInput"){
+      if(target.id==="fileInput"){
+         if(parseFloat(target.files[0].size/1024).toFixed(2) > 5000 || parseFloat(target.files[0].size/1024).toFixed(2) < 100){
+            window.alert("Image size should be within 100KB - 5MB");
+            return
+         }
+         else{
           this.setState({spinner:true});
           const reader=new FileReader();
           const file=target.files[0];
@@ -124,6 +79,58 @@ class AddSchool extends Component {
               })
           }
           reader.readAsDataURL(file)
+         }
+      }
+      else{
+         this.setState({ 
+            [target.id]: target.value , 
+            lastErrorField:null,
+            reqError:null,
+            errorMessage:null
+         });
+         if(target.id==="pincode" && target.value.length===6){
+            this.setState({spinner:true,lastPincode:target.value});
+            axios.get("https://api.postalpincode.in/pincode/"+target.value)
+            .then(res=>{
+               console.log(res);
+               if(res.data[0].Message==="No records found"){
+                     this.setState({
+                        spinner:false,
+                        errorMessage:"Please enter valid Pincode or enter address manually."
+                     })
+               }
+               else{                    
+                     this.setState({
+                        locality:res.data[0].PostOffice,
+                        city:res.data[0].PostOffice[0].Division,
+                        district:res.data[0].PostOffice[0].District,
+                        state:res.data[0].PostOffice[0].State,
+                        country:res.data[0].PostOffice[0].Country,
+                        createLocalityDropDown:true,
+                        spinner:false
+                     });
+               }
+            })
+            .catch(error=>{
+               this.setState({
+                  spinner:false
+            })
+            window.alert("Please enter the address manually")
+            })
+         }
+         else if(target.id==="assetType" && target.value!=="Others"){
+            this.setState({spinner:true});
+            axios.get("http://localhost:6060/puthuyir/lookup/field/"+target.value)
+            .then(res=>{
+               this.setState({
+                  assetNameList:res.data,
+                  spinner:false
+               })
+            })
+         }
+         else if(target.id==="assetType" && target.value==="Others"){
+            this.setState({assetNameList:[{key_value:"Others"}]});
+         }
       }
   }
   currentPincode= () =>{
@@ -150,8 +157,9 @@ class AddSchool extends Component {
             return
          }
       })
-      if(this.state.reqType===null || this.state.assetType===null ||this.state.assetName===null || this.state.quantity===null){
+      if(this.state.reqType===null || this.state.assetType===null ||this.state.assetName===null || this.state.quantity===null || this.state.priority===null){
          this.setState({reqError:"*Please provide all the above details*"})
+         hasError=true;
          return
       }
       if(this.state.reqList.length==3){
@@ -164,15 +172,18 @@ class AddSchool extends Component {
             aType=this.state.assetType
          else
             aType=this.state.otherAssetType
-         this.setState({
-            reqList:[...this.state.reqList,{
-               reqType:this.state.reqType,
-               assetType:aType,
-               assetName:this.state.otherAssetName,
-               quantity:this.state.quantity
-            }],
-            addReq:true
-         })
+         if(hasError===null){
+            this.setState({
+               reqList:[...this.state.reqList,{
+                  reqType:this.state.reqType,
+                  assetType:aType,
+                  assetName:this.state.otherAssetName,
+                  quantity:this.state.quantity,
+                  priority:this.state.priority
+               }],
+               addReq:true
+            })
+         }
          let lookup={
             key_field:"asset",
             key_value:this.state.otherAssetName,
@@ -199,7 +210,9 @@ class AddSchool extends Component {
    }
    updatePriority=(e)=>{
       e.preventDefault();
-      this.setState({priority:e.target.id});
+      this.setState({
+         hasError:null,
+         priority:e.target.id});
    }
    deleteRequirement=(e)=>{
       e.preventDefault();
@@ -597,9 +610,9 @@ class AddSchool extends Component {
                            <div className="row">
                               <div className="span10">
                                  <div className="control-group">
-                                    <label className="control-label" for="fileInput">Upload proof of identity of the school </label>
+                                    <label className="control-label" style="border:1px solid;" for="fileInput">Upload proof of identity of the school </label>
                                     <div className="controls">
-                                       <input className="input-file" id="fileInput" type="file" onChange={this.handleChange}></input>
+                                       <input className="hidden"  id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">

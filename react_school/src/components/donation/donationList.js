@@ -29,9 +29,9 @@ class DonationList extends Component {
 
             <div className="row">
                 <div className="projects isotope" >
-                    {this.props.donationList.map(donationLists => (
-
-                        <div className="span3 element isotope-item" >
+                    {this.props.donationList.map(donationLists => {
+                    if(donationLists.enable_donation === "Y"){
+                    return(<div className="span3 element isotope-item" >
                             <div className="hover_img">
                             {donationLists.schoolImages.map(images => (
                                 
@@ -62,7 +62,8 @@ class DonationList extends Component {
 
                         </div>
 
-                    ))}
+                    )}})}
+                            
                 </div>
                 <div className="clear"></div>
             </div>

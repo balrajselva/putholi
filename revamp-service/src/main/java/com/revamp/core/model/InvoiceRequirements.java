@@ -36,4 +36,4 @@ public class InvoiceRequirements extends AuditableEntity implements java.io.Seri
 	private String price;
 	@Column(name = "descriptions")
 	private String descriptions;
-	}
+}

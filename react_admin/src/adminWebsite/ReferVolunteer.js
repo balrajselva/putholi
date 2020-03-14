@@ -109,6 +109,18 @@ class ReferVolunteer extends Component {
                         errorMessage:null,
                         referalEmails:""
                     })
+                    let dataData = new FormData();
+                    let userPayload = {
+                        "toEmailAddress" : dataData.get('toAddress'),
+                        "subject" : "Referred as trust volunteer"
+                    }
+            
+                    dataData.append("user",JSON.stringify(userPayload));
+                    axios.post('http://localhost:5050/email/sendattachment', dataData
+                    )
+                        .then((response) => {
+                            console.log(response.data);
+                    })
                 }
             })
         }

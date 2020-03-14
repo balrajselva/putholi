@@ -27,7 +27,6 @@ public class EmailUser {
 	 
 	 private String trackId;
 	 
-	 
 	 private String schoolName;
 	 
 	 private String schoolRegNo;
@@ -43,7 +42,7 @@ public class EmailUser {
 	 private String fromEmailAddress;
 	 
 	 private String toEmailAddress;
+
 	 private Map<String, Object> model;
 
-	
 }

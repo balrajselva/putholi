@@ -17,6 +17,10 @@ class VolunteerSchoolCheck extends Component {
                 spinner:false
             })
         })
+        .catch(error=>{
+            window.alert("Could not fetch school details due to +",error)
+            this.setState({spinner:false})
+        })
     }
     createTable=()=>{
         var rows=[];
@@ -114,6 +118,7 @@ class VolunteerSchoolCheck extends Component {
                                         <th>More Details</th>
                                     </tr>
                                     {this.state.school!==null?this.createTable():<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>}
+                                    {this.state.school!==null?null:this.setState({spinner:false})}
                                     </tbody></table>
                                 </div>
                             </div>
