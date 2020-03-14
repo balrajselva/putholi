@@ -44,10 +44,7 @@ class SponsorMenu extends Component {
                             </span>
                             </a>
                             <ul className="treeview-menu">
-                            <li><a href="#"><i className="fa fa-circle-o" />Contribute for claims </a></li>
-                            <li><a href="#"><i className="fa fa-circle-o" />Events Schedule </a></li>
                             <li><Link to={referVolunteer} ><i className="fa fa-circle-o"/>Refer Volunteer</Link></li>
-                            <li><a href="#"><i className="fa fa-circle-o" />View Your Volunteer</a></li>
                             </ul>
                         </li>
                     </ul>

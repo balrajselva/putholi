@@ -87,8 +87,6 @@ import axios from 'axios';
                         <div className="row" >
                         <SmallBoxCard content="Approver"  linkTo="/approver" colour="bg-green"/>
                         {/* ./col */}
-                        <SmallBoxCard content="Inbox" linkTo="/inbox" colour="bg-yellow"/>
-                        {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         {/* ./col */}
                         </div>

@@ -70,7 +70,16 @@ class AddSchool extends Component {
           this.setState({spinner:true});
           const reader=new FileReader();
           const file=target.files[0];
-
+          if (file && file.type.match('image.*')) {
+              reader.readAsDataURL(file);
+          }
+          else{
+              this.setState({
+                  identityProof:null,
+                  localImageUrl:null,
+                  spinner:false
+              })
+          }
           reader.onloadend=()=>{
               this.setState({
                   fileInput:target.files[0],
@@ -78,7 +87,6 @@ class AddSchool extends Component {
                   spinner:false
               })
           }
-          reader.readAsDataURL(file)
          }
       }
       else{
