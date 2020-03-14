@@ -70,7 +70,7 @@ class AddSchool extends Component {
           this.setState({spinner:true});
           const reader=new FileReader();
           const file=target.files[0];
-          
+
           reader.onloadend=()=>{
               this.setState({
                   fileInput:target.files[0],
@@ -82,8 +82,8 @@ class AddSchool extends Component {
          }
       }
       else{
-         this.setState({ 
-            [target.id]: target.value , 
+         this.setState({
+            [target.id]: target.value ,
             lastErrorField:null,
             reqError:null,
             errorMessage:null
@@ -99,7 +99,7 @@ class AddSchool extends Component {
                         errorMessage:"Please enter valid Pincode or enter address manually."
                      })
                }
-               else{                    
+               else{
                      this.setState({
                         locality:res.data[0].PostOffice,
                         city:res.data[0].PostOffice[0].Division,
@@ -209,7 +209,6 @@ class AddSchool extends Component {
    }
    }
    updatePriority=(e)=>{
-      e.preventDefault();
       this.setState({
          hasError:null,
          priority:e.target.id});
@@ -566,7 +565,7 @@ class AddSchool extends Component {
                                     </div>
                                  </div>
                                  <div className="control-group">
-                                    <label className="control-label" for="input01">Priority (1-3)</label>
+                                    <label className="control-label">Priority (1-3)</label>
                                     <div className="controls radio-container">
                                        <input type="radio" name="myGroupName" id="1" onChange={(e)=>this.updatePriority(e)}></input>1&nbsp;&nbsp;
                                        <input type="radio" name="myGroupName" id="2" onChange={(e)=>this.updatePriority(e)}></input>2&nbsp;&nbsp;
@@ -609,8 +608,8 @@ class AddSchool extends Component {
                         <div label="Upload Pictures">
                            <div className="row">
                               <div className="span10">
-                                 <div className="control-group">
-                                    <label className="control-label" style="border:1px solid;" for="fileInput">Upload proof of identity of the school </label>
+                                 <div className="control-group" >
+                                    <label className="control-label" for="fileInput" id="file" >Click here to upload school's proof of identity</label>
                                     <div className="controls">
                                        <input className="hidden"  id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
                                     </div>

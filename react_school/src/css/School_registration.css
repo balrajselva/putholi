@@ -12,3 +12,10 @@ select{
     padding-top: 10px;
     position: relative;
 }
+#file{
+    cursor: pointer;
+    border: 1px solid black;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    margin-left: 100px;
+}
