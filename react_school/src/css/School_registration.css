@@ -11,7 +11,6 @@ select{
     outline: 0;
     padding-top: 10px;
     position: relative;
-}
 #file{
     cursor: pointer;
     border: 1px solid black;
