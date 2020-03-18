@@ -62,8 +62,8 @@ class AddSchool extends Component {
     }
     handleChange=({target})=>{
       if(target.id==="fileInput"){
-         if(parseFloat(target.files[0].size/1024).toFixed(2) > 5000 || parseFloat(target.files[0].size/1024).toFixed(2) < 100){
-            window.alert("Image size should be within 100KB - 5MB");
+         if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+            window.alert("Image size should be within 5MB");
             return
          }
          else{
@@ -617,7 +617,7 @@ class AddSchool extends Component {
                            <div className="row">
                               <div className="span10">
                                  <div className="control-group" >
-                                    <label className="control-label" for="fileInput" id="file" >Click here to upload school's proof of identity</label>
+                                    <label className="control-label" for="fileInput" id="file" >Click here to upload proof of identity</label>
                                     <div className="controls">
                                        <input className="hidden"  id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
                                     </div>
