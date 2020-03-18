@@ -210,8 +210,8 @@ class registerForm extends Component {
             })
         }
         else if(target.id==="identityProof"){
-            if(parseFloat(target.files[0].size/1024).toFixed(2) > 5000 || parseFloat(target.files[0].size/1024).toFixed(2) < 100){
-                window.alert("Image size should be within 100KB - 5MB");
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
                 return
             }
             else{

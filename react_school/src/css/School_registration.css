@@ -15,7 +15,9 @@ select{
 #file{
     cursor: pointer;
     border: 1px solid black;
+    padding-left: inherit;
     padding-right: 15px;
     padding-bottom: 5px;
-    margin-left: 100px;
+    margin-left: 180px;
+    width: 250px;
 }
