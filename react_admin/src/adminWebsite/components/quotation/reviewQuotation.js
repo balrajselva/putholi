@@ -63,25 +63,41 @@ class reviewQuotation extends Component {
         let quoId=e.target.id.split("/")[1];
         let quotationList=this.state.reqList[reqId];
         let temp=null;
-        for(let i=0;i<quotationList.length;i++){
-            let quotation=quotationList[i];
-            if(quotation.quotationId+""==quoId+""){
-                temp=quotation.totalAmount;
-                let quotations=[
-                    ...this.state.selectedQuotations,
-                    quotation
-                ];
-                this.setState({
-                    selectedQuotations:quotations
-                })
-            }
+        let newList = this.state.selectedQuotations.filter(list=>parseInt(list.quotationId) !== parseInt(quoId));
+        let isDelete = false;
+        if(newList.length !== this.state.selectedQuotations.length){
+            isDelete = true;
         }
-        if(temp!==null){
-            let newAmount=this.state.totalAmount+parseInt(temp);
-            this.setState({totalAmount:newAmount});
+        console.log(this.state.selectedQuotations,newList,isDelete)
+        if(isDelete){
+            let newAmount= this.state.totalAmount - parseInt(this.state.selectedQuotations.filter(list=>parseInt(list.quotationId)===parseInt(quoId))[0].totalAmount)
+            this.setState({
+                selectedQuotations:newList,
+                totalAmount:newAmount
+            });
+            return
         }
         else{
-            this.setState({temp1:null})
+            for(let i=0;i<quotationList.length;i++){
+                let quotation=quotationList[i];
+                if(quotation.quotationId+""==quoId+""){
+                    temp=quotation.totalAmount;
+                    let quotations=[
+                        ...this.state.selectedQuotations,
+                        quotation
+                    ];
+                    this.setState({
+                        selectedQuotations:quotations
+                    })
+                }
+            }
+            if(temp!==null){
+                let newAmount=this.state.totalAmount+parseInt(temp);
+                this.setState({totalAmount:newAmount});
+            }
+            else{
+                this.setState({temp1:null})
+            }
         }
     }
     // selectQuotationImage=(e)=>{

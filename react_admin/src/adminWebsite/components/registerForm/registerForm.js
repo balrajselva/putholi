@@ -339,8 +339,8 @@ class registerForm extends Component {
                 {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="row">
                     <div className="form-group">
-                    <div className="col-md-3"><b>Upload Identity Proof :</b></div>
-                    <div className="col-md-6"><input type="file" id="identityProof" onChange={this.handleChange}/></div>
+                        <label for="fileInput" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
+                        <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                     </div>
                 </div>
                 {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}

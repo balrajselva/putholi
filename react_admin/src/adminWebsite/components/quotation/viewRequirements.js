@@ -39,18 +39,32 @@ class viewRequirements extends Component {
     handleChange=({target})=>{
         document.getElementById(target.id).style.borderColor="#d2d6de";
         if(target.id==="fileInput"){
-            this.setState({spinner:true});
-            const reader=new FileReader();
-            const file=target.files[0];
-            
-            reader.onloadend=()=>{
-                this.setState({
-                    fileInput:target.files[0],
-                    localImageUrl:reader.result,
-                    spinner:false
-                })
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
+                return
+             }
+             else{
+              this.setState({spinner:true});
+              const reader=new FileReader();
+              const file=target.files[0]; 
+              if (file && file.type.match('image.*')) {
+                  reader.readAsDataURL(file);
+              }
+              else{
+                  this.setState({
+                      identityProof:null,
+                      localImageUrl:null,
+                      spinner:false
+                  })
+              }
+              reader.onloadend=()=>{
+                  this.setState({
+                      fileInput:target.files[0],
+                      localImageUrl:reader.result,
+                      spinner:false
+                  })
+              }
             }
-            reader.readAsDataURL(file)
         }
         else{
         this.setState({ 
@@ -434,8 +448,8 @@ class viewRequirements extends Component {
                                     <div className="row">
                                         <section className="content">
                                         <div className="form-group">
-                                            <label htmlFor="exampleInputFile">Upload Quotation</label>
-                                            <input type="file" id="fileInput" onChange={this.handleChange}/>
+                                            <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Click to upload Quotation</label>
+                                            <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                         </div>
                                         <div className="row">
                                         <div className="col-md-6">
