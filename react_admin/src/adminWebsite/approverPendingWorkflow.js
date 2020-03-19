@@ -33,7 +33,7 @@ import axios from 'axios';
             if(this.state.schools[i].schoolStatus==="ReviewerConfirmed"){
                 pageLink="Review School"
                 newTo = { 
-                    pathname: "/adminSchoolCheck", 
+                    pathname: "/approverSchoolCheck", 
                     school:this.state.schools[i],
                     user:this.props.location.user,
                     ...this.props

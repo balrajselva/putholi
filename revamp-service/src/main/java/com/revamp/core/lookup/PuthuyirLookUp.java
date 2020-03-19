@@ -35,6 +35,7 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
     REVIEWER_REJECTED_QUOTATION("status","reviewerRejectedQuotation","reviewerRejectedQuotation"),
     APPROVER_REJECTED_QUOTATION("status","approverRejectedQuotation","approverRejectedQuotation"),
     QUOTATION_ACCEPTED("quotationStatus","quotationAccepted","quotationAccepted"),
+    QUOTATION_ADDED("quotationStatus","quotationAdded","quotationAdded"),
     READY_FOR_ALLOTMENT("status","ReadyForAllotment","ReadyForAllotment");
  
 	private String field;

@@ -76,13 +76,30 @@ class adminRoleCheck extends Component {
     }
   
     render() {
+      if(this.props.location.user.role==="Admin"){
+      }
+      else if(this.props.location.user.role==="Approver"){
+        returnLink = "approverAccessReview"
+      }
+      else if(this.props.location.user.role==="Reviewer"){
+        returnLink = "reviewerAccessReview"
+      }
         let reviewButtonContent="";
-        if(this.state.currentUser.role==="Admin")
+        let returnLink=null;
+        if(this.state.currentUser.role==="Admin"){
           reviewButtonContent="Send for Review";
+          returnLink = "adminAccessReview"
+        }
         else if(this.state.currentUser.role==="Reviewer" || this.state.currentUser.role==="Super User")
           reviewButtonContent="Recommend to Approve";
         else if(this.state.currentUser.role==="Approver" || this.state.currentUser.role==="Super Admin")
           reviewButtonContent="Approve";
+          if(this.props.location.user.role==="Approver"){
+            returnLink = "approverAccessReview"
+          }
+          else if(this.props.location.user.role==="Reviewer"){
+            returnLink = "reviewerAccessReview"
+          }
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
                 {this.state.getUserList?this.userList():null}
@@ -132,7 +149,7 @@ class adminRoleCheck extends Component {
                               <div className="timeline-footer">
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
-                                <Link to={{pathname:"/accessReview", users:this.state.users, user:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
+                                <Link to={{pathname:returnLink, users:this.state.users, user:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
                           </li>

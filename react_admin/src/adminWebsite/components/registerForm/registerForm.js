@@ -179,37 +179,7 @@ class registerForm extends Component {
     }
 
     handleChange=({target})=>{
-        document.getElementById(target.id).style.borderColor="#d2d6de";
-        this.setState({ 
-            [target.id]: target.value , 
-            lastErrorField:null,
-            errorMessage:""
-        });
-        if(target.id==="pincode" && target.value.length===6){
-            this.setState({spinner:true});
-            axios.get("https://api.postalpincode.in/pincode/"+target.value)
-            .then(res=>{
-                console.log(res);
-                if(res.data[0].Message==="No records found"){
-                    this.setState({
-                        spinner:false,
-                        errorMessage:"Please enter valid Pincode or enter address manually."
-                    })
-                }
-                else{                    
-                    this.setState({
-                        locality:res.data[0].PostOffice,
-                        city:res.data[0].PostOffice[0].Division,
-                        district:res.data[0].PostOffice[0].District,
-                        state:res.data[0].PostOffice[0].State,
-                        country:res.data[0].PostOffice[0].Country,
-                        createLocalityDropDown:true,
-                        spinner:false
-                    });
-                }
-            })
-        }
-        else if(target.id==="identityProof"){
+        if(target.id==="identityProof"){
             if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
                 window.alert("Image size should be within 5MB");
                 return
@@ -230,11 +200,43 @@ class registerForm extends Component {
                 }
                 reader.onloadend=()=>{
                     this.setState({
-                        identityProof:file,
+                        identityProof:target.files[0],
                         localImageUrl:reader.result,
                         spinner:false
                     })
                 }            
+            }
+        }
+        else{
+            document.getElementById(target.id).style.borderColor="#d2d6de";
+            this.setState({ 
+                [target.id]: target.value , 
+                lastErrorField:null,
+                errorMessage:""
+            });
+            if(target.id==="pincode" && target.value.length===6){
+                this.setState({spinner:true});
+                axios.get("https://api.postalpincode.in/pincode/"+target.value)
+                .then(res=>{
+                    console.log(res);
+                    if(res.data[0].Message==="No records found"){
+                        this.setState({
+                            spinner:false,
+                            errorMessage:"Please enter valid Pincode or enter address manually."
+                        })
+                    }
+                    else{                    
+                        this.setState({
+                            locality:res.data[0].PostOffice,
+                            city:res.data[0].PostOffice[0].Division,
+                            district:res.data[0].PostOffice[0].District,
+                            state:res.data[0].PostOffice[0].State,
+                            country:res.data[0].PostOffice[0].Country,
+                            createLocalityDropDown:true,
+                            spinner:false
+                        });
+                    }
+                })
             }
         }
     }
@@ -339,8 +341,8 @@ class registerForm extends Component {
                 {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="row">
                     <div className="form-group">
-                        <label for="fileInput" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
-                        <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
+                        <label for="identityProof" id="file" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
+                        <input class="hidden" type="file" id="identityProof" onChange={this.handleChange}/>
                     </div>
                 </div>
                 {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}

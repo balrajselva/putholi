@@ -142,6 +142,8 @@ class App extends Component {
             <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
             <ApproverLayoutRoute path="/approverAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
             <ApproverLayoutRoute path="/approverReviewQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
+            <ApproverLayoutRoute path="/approverSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <ApproverLayoutRoute path="/approverRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
           </Switch>
