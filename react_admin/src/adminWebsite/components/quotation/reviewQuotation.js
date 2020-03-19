@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import './reviewQuotation.css'
 import axios from 'axios'
+import imageCss from '../../css/imageCss.css';
 
 class reviewQuotation extends Component {
     state={
@@ -12,7 +13,9 @@ class reviewQuotation extends Component {
         comment:null,
         temp1:null,
         selectedQuotations:[],
-        showImage:null
+        showImage:false,
+        errorMessage:null,
+        quotationImage:null
     } 
     approveQuotation=()=>{
         let updateQuotation={
@@ -47,7 +50,11 @@ class reviewQuotation extends Component {
             })
         })
         .catch(error=>{
-            window.alert("Unable to get quotations due to "+error)
+            window.alert("Unable to get quotations due to "+error);
+            this.setState({
+                spinner:false,
+                getRequirementList:false
+            })
         })
     }
 
@@ -59,11 +66,18 @@ class reviewQuotation extends Component {
         });
     }
     selectQuotation=(e)=>{
+        this.setState({errorMessage:null});
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
         let quotationList=this.state.reqList[reqId];
         let temp=null;
         let newList = this.state.selectedQuotations.filter(list=>parseInt(list.quotationId) !== parseInt(quoId));
+        let reqRefQuo = this.state.selectedQuotations.filter(list=>parseInt(list.requirementId) === parseInt(reqId));
+        if(reqRefQuo.length > 0){
+            this.setState({errorMessage:"Cannot select multiple quotation for same requirement"})
+            document.getElementById(e.target.id).checked = false;
+            return
+        }
         let isDelete = false;
         if(newList.length !== this.state.selectedQuotations.length){
             isDelete = true;
@@ -100,32 +114,27 @@ class reviewQuotation extends Component {
             }
         }
     }
-    // selectQuotationImage=(e)=>{
-    //     let reqId=e.target.id.split("/")[0];
-    //     let quoId=e.target.id.split("/")[1];
-    //     // let quotationList=this.state.reqList[reqId].quotationList[quoId].;
-        
-    //     for(let i=0;i<quotationList.length;i++){
-    //         let quotation=quotationList[i];
-    //         if(quotation.quotationId+""==quoId+""){
-    //             temp=quotation.totalAmount;
-    //             let quotations=[
-    //                 ...this.state.selectedQuotations,
-    //                 quotation
-    //             ];
-    //             this.setState({
-    //                 selectedQuotations:quotations
-    //             })
-    //         }
-    //     }
-    //     if(temp!==null){
-    //         let newAmount=this.state.totalAmount+parseInt(temp);
-    //         this.setState({totalAmount:newAmount});
-    //     }
-    //     else{
-    //         this.setState({temp1:null})
-    //     }
-    // }
+    closeModel=()=>{
+        document.getElementById('modal-default').style.display='none';
+    }
+    selectQuotationImage=(e)=>{
+        this.setState({spinner:true});
+        let reqId=e.target.id.split("/")[0];
+        let quoId=e.target.id.split("/")[1];
+        console.log(this.state.reqList[reqId],quoId)
+        let quotationList=this.state.reqList[reqId];
+        for(let i=0;i<quotationList.length;i++){
+            let quotation=quotationList[i];
+            if(quotation.quotationId+""==quoId+""){
+                this.setState({
+                    quotationImage:quotation.quotationImages[0].image,
+                    showImage:true,
+                    spinner:false
+                })
+                document.getElementById('modal-default').style.display='block';
+            }
+        }
+    }
 
     createTable=(iter)=>{
         var rows=[];
@@ -136,7 +145,7 @@ class reviewQuotation extends Component {
             rowsUpdated=true;
             rows.push(
                 <tr>                               
-                    <td><input type="button"  id={iter+"/"+i} data-toggle="modal" data-target="#modal-default" value="Show quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
+                    <td><input type="button"  id={iter+"/"+quotation.quotationId} value="Show quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
                     <td><input type="checkbox" id={iter+"/"+quotation.quotationId} onChange={(e)=>this.selectQuotation(e)}></input></td>       
                     <td>{quotation.companyName}</td>
                     <td>{quotation.city}</td>
@@ -230,6 +239,7 @@ class reviewQuotation extends Component {
                     </h4>
                 {this.state.getRequirementList?null:this.getContent()}
                 <section className="content">
+                {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="row">
                     <div className="form-group has-feedback col-md-3">
                         <h4>  Total Amount : </h4>
@@ -256,17 +266,17 @@ class reviewQuotation extends Component {
                 </div>
                 {this.state.spinner?<div class="spinner"></div>:null}
                 </section>
-                <div className="modal fade" id="modal-default">
+                <div className="modal" id="modal-default">
                       <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
                                 <span aria-hidden="true">×</span></button>
                             </div>
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} id ="image1" alt="" ></img>
+                                <img src={'data:image/png;base64,'+this.state.quotationImage} id ="image1" alt="" ></img>
                                 </section>
                             </div>
                         </div>
