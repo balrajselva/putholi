@@ -2,17 +2,11 @@ package com.revamp.core.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
@@ -32,9 +26,6 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "quotation_id")
 	private long quotationId;
-
-	@Column(name = "image_id")
-	private long imageId;
 
 	@Column(name = "is_quotation_active")
 	private String isQuotationActive;
@@ -66,6 +57,9 @@ public class Quotation extends AuditableEntity implements Serializable {
 
 	@Column(name = "requirement_id")
 	private long requirementId;
+
+	@Column(name = "project_id")
+	private Long projectId;
 
 	@Column(name = "school_id")
 	private long schoolId;
@@ -99,4 +93,10 @@ public class Quotation extends AuditableEntity implements Serializable {
 
 	private String totalAmount;
 
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "quotation" ,cascade = CascadeType.ALL)
+	private Set<QuotationImage> quotationImages;
+
+	@JsonProperty("proofOfId")
+	@Transient
+	private ProofOfId proofOfId;
 }

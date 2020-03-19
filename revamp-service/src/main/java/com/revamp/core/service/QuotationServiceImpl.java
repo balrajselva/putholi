@@ -1,22 +1,23 @@
 package com.revamp.core.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import com.revamp.core.dao.ProjectRepository;
 import com.revamp.core.dao.RequirementRepository;
 import com.revamp.core.dao.SchoolRepository;
 import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.model.School;
-import com.revamp.core.model.UpdateQuotation;
+import com.revamp.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revamp.core.dao.QuotationRepository;
-import com.revamp.core.model.Quotation;
 
 @Service
 @Transactional
@@ -112,5 +113,53 @@ public class QuotationServiceImpl implements QuotationService {
 	public List<Quotation> findBySchoolIdAndStatus(long schoolId) {
 		return quotationRepository.findBySchoolIdAndStatus(schoolId);
 	}
+
+	@Override
+	@Transactional
+	public long save(Quotation quotation, Map<String, byte[]> files, String imgPath) {
+		System.out.println("..SchoolServiceImpl.."+imgPath);
+		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
+		System.out.println("..SchoolServiceImpl.."+fileSubPath);
+		quotation.setQuotationStatus(PuthuyirLookUp.QUOTATION_ADDED.name());
+		if (files != null && files.size() > 0) {
+			files.forEach((k,v) -> {
+				Set<QuotationImage> siSet = new HashSet<QuotationImage>();
+				String filePath = fileSubPath+ quotation.getQuotationId()+"_";
+				QuotationImage si = new QuotationImage(filePath+k,v,quotation.getProofOfId().getComments());
+				si.setQuotation(quotation);
+				siSet.add(si);
+				quotation.setQuotationImages(siSet);
+			});
+		}
+
+		quotationRepository.save(quotation);
+		if (files != null && files.size() > 0) {
+			this.saveImgToFS(imgPath,fileSubPath,quotation.getQuotationImages());
+		}
+		return quotation.getQuotationId();
+	}
+
+	private void saveImgToFS(String dirPath, String fileSubPath, Set<QuotationImage> list) {
+		list.forEach(schoolImg -> {
+			String tmpDirPath = dirPath+"\\"+fileSubPath;
+			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
+				try {
+					Files.createDirectories(Paths.get(tmpDirPath));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
+
+
+			try {
+				Files.write(path, schoolImg.getImage());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
 
 }

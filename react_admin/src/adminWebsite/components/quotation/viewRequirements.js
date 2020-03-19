@@ -52,8 +52,9 @@ class viewRequirements extends Component {
               }
               else{
                   this.setState({
-                      identityProof:null,
+                    fileInput:null,
                       localImageUrl:null,
+                      errorMessage:"",
                       spinner:false
                   })
               }
@@ -61,6 +62,7 @@ class viewRequirements extends Component {
                   this.setState({
                       fileInput:target.files[0],
                       localImageUrl:reader.result,
+                      errorMessage:"",
                       spinner:false
                   })
               }
@@ -332,14 +334,19 @@ class viewRequirements extends Component {
                 shippingCost:this.state.shippingCost,
                 warranty:this.state.warranty,
                 totalAmount:this.state.totalAmount,
-                fileInput:this.state.fileInput,
-                localImageUrl:this.state.localImageUrl
+                proofOfId:{
+                    image:this.state.fileInput,
+                    comments:"",
+                },
             }
             console.log(quotation);
             this.setState({
                 spinner:true
             });
-            axios.post('http://localhost:6060/puthuyir/quotation',quotation)
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(quotation));
+            regFormModel.append('files',this.state.fileInput);
+            axios.post('http://localhost:6060/puthuyir/quotation',regFormModel)
             .then(res=>{
                 console.log(res);
                 this.setState({

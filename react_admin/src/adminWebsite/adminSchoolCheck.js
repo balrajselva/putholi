@@ -54,7 +54,16 @@ class adminSchoolCheck extends Component {
         })
       }
     render() {
-      console.log(this.props)  
+      let returnLink=null;
+      if(this.props.location.user.role==="Admin"){
+        returnLink = "adminAccessReview"
+      }
+      else if(this.props.location.user.role==="Approver"){
+        returnLink = "approverAccessReview"
+      }
+      else if(this.props.location.user.role==="Reviewer"){
+        returnLink = "reviewerAccessReview"
+      }
         return (
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
@@ -109,7 +118,7 @@ class adminSchoolCheck extends Component {
                                 <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                                 <a id="Returned" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Return to Beneficiary</a>&nbsp;
                                 <a id="Accepted" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm Requirements</a>&nbsp;
-                                <Link to={{pathname:"/adminNewSchoolReview", user:this.props.location.user}} className="btn btn-primary btn-xs">Back to List</Link>
+                                <Link to={{pathname:returnLink, user:this.props.location.user}} className="btn btn-primary btn-xs">Back to List</Link>
                             </div>
                             </div>
                         </li>

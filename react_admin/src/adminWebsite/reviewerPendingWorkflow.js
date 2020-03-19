@@ -33,7 +33,7 @@ class reviewerPendingWorkflow extends Component {
             if(this.state.schools[i].schoolStatus==="AdminReviewed"){
                 pageLink="Review School"
                 newTo = { 
-                    pathname: "/adminSchoolCheck", 
+                    pathname: "/reviewerSchoolCheck", 
                     school:this.state.schools[i],
                     user:this.props.location.user,
                     ...this.props
