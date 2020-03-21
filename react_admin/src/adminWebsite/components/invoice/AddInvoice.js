@@ -16,9 +16,8 @@ class AddInvoice extends Component {
         pincode:null,
         phoneNumber:null,
         comment:null,
-        quotationDate:null,
-        quotationValidityDate:null,
-        quotationPreparedBy:null,
+        invoiceDate:null,
+        invoicePreparedBy:null,
         discountDetails:null,
         quantity:null,
         itemDescription:null,
@@ -26,31 +25,46 @@ class AddInvoice extends Component {
         tax:null,
         shippingCost:null,
         totalAmount:null,
-        warranty:null,
         lastErrorField:null,
         errorMessage:null,
         currentReqId:null,
-        quotationRefNum:null,
-        quotaionList:[],
-        quotationId:null
+        invoiceRefNum:null,
+        invoiceList:[],
+        invoiceId:null
     }
 
 
     handleChange=({target})=>{
         document.getElementById(target.id).style.borderColor="#d2d6de";
         if(target.id==="fileInput"){
-            this.setState({spinner:true});
-            const reader=new FileReader();
-            const file=target.files[0];
-            
-            reader.onloadend=()=>{
-                this.setState({
-                    fileInput:target.files[0],
-                    localImageUrl:reader.result,
-                    spinner:false
-                })
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
+                return
+             }
+             else{
+              this.setState({spinner:true});
+              const reader=new FileReader();
+              const file=target.files[0]; 
+              if (file && file.type.match('image.*')) {
+                  reader.readAsDataURL(file);
+              }
+              else{
+                  this.setState({
+                    fileInput:null,
+                      localImageUrl:null,
+                      errorMessage:"",
+                      spinner:false
+                  })
+              }
+              reader.onloadend=()=>{
+                  this.setState({
+                      fileInput:target.files[0],
+                      localImageUrl:reader.result,
+                      errorMessage:"",
+                      spinner:false
+                  })
+              }
             }
-            reader.readAsDataURL(file)
         }
         else{
         this.setState({ 
@@ -61,7 +75,7 @@ class AddInvoice extends Component {
     }
     }    
 
-    submitQuotation=()=>{
+    submitInvoice=()=>{
         axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"InvoiceAdded")
         .then(res=>{
             window.alert("Invoices submitted successfully!")
@@ -83,7 +97,7 @@ class AddInvoice extends Component {
             let resp=res.data;
             console.log(res.data)
             for(let i=0;i<resp.length;i++){
-                resp[i].quotaionList=[]
+                resp[i].invoiceList=[]
             };
             this.setState({
                 requirements:resp,
@@ -96,28 +110,28 @@ class AddInvoice extends Component {
         console.log(e.target.ref)
         this.setState({
             currentReqId:e.target.id.split("/")[0],
-            quotationRefNum:e.target.id.split("/")[1]
+            invoiceRefNum:e.target.id.split("/")[1]
         })
     }
     deleteQuotation=(e)=>{
         e.preventDefault();
-        var quotationId=e.target.id.split("/")[0];
+        var invoiceId=e.target.id.split("/")[0];
         var reqIndex=e.target.id.split("/")[1];
-        var quoIndex=e.target.id.split("/")[2];
-        axios.delete("http://localhost:6060/puthuyir/invoice/"+quotationId)
+        var invIndex=e.target.id.split("/")[2];
+        axios.delete("http://localhost:6060/puthuyir/invoice/"+invoiceId)
         .then(res=>{
 
         })
         .catch(error=>{
             window.alert("Deletion failed due to "+error)
         })
-        var array=[...this.state.requirements[reqIndex].quotaionList];
-        array.splice(quoIndex,1);
-        if(this.state.requirements[reqIndex].quotaionList.length===1){
+        var array=[...this.state.requirements[reqIndex].invoiceList];
+        array.splice(invIndex,1);
+        if(this.state.requirements[reqIndex].invoiceList.length===1){
             array=[];
         }
         let i=[...this.state.requirements];
-        i[reqIndex].quotaionList=array;
+        i[reqIndex].invoiceList=array;
         this.setState({
             requirements:i,
         })
@@ -138,7 +152,7 @@ class AddInvoice extends Component {
                     Add Invoice
                 </button>
                 </td>                    
-                <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.quotationId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
+                <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
                 </td>
             </tr>)			
         }
@@ -163,7 +177,7 @@ class AddInvoice extends Component {
             })
             document.getElementById('companyName').style.borderColor="red";
         }
-        if(this.state.requirements[this.state.quotationRefNum].quotaionList.length===1){
+        if(this.state.requirements[this.state.invoiceRefNum].invoiceList.length===1){
             this.setState({
                 errorMessage:"Only one invoice can be added per requirement"
             })
@@ -196,19 +210,19 @@ class AddInvoice extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate) === true){
+        else if(this.state.invoiceDate===null || this.isFutureDate(this.state.invoiceDate) === true){
             this.setState({
-                lastErrorField:"quotationDate",
+                lastErrorField:"invoiceDate",
                 errorMessage:"Please enter valid Invoice Date"
             });
-            document.getElementById('quotationDate').style.borderColor="red";
+            document.getElementById('invoiceDate').style.borderColor="red";
         }
-        else if(this.state.quotationPreparedBy===null){
+        else if(this.state.invoicePreparedBy===null){
             this.setState({
-                lastErrorField:"quotationPreparedBy",
-                errorMessage:"Please select quotationPreparedBy"
+                lastErrorField:"invoicePreparedBy",
+                errorMessage:"Please select invoicePreparedBy"
             });
-            document.getElementById('quotationPreparedBy').style.borderColor="red";
+            document.getElementById('invoicePreparedBy').style.borderColor="red";
         }
         else if(this.state.discountDetails===null){
             this.setState({
@@ -269,28 +283,26 @@ class AddInvoice extends Component {
         else if(this.state.fileInput===null){
             this.setState({
                 lastErrorField:"fileInput",
-                errorMessage:"Please upload quotation"
+                errorMessage:"Please upload invoice"
             })
         }
         else{
             document.getElementById("modal-default").style.display="none";
             document.getElementById("modal-default").class="modal fade";
             document.getElementById("mainContent").class="skin-blue sidebar-mini";
-            document.querySelector("#mainContent").removeChild(document.getElementsByClassName('modal-backdrop fade in'));
             document.getElementById('companyName').style.borderColor="#d2d6de";
             document.getElementById('address_line_1').style.borderColor="#d2d6de";
             document.getElementById('city').style.borderColor="#d2d6de";
             document.getElementById('street').style.borderColor="#d2d6de";
             document.getElementById('pincode').style.borderColor="#d2d6de";
             document.getElementById('phoneNumber').style.borderColor="#d2d6de";
-            document.getElementById('quotationPreparedBy').style.borderColor="#d2d6de";        
-            document.getElementById('quotationDate').style.borderColor="#d2d6de";
+            document.getElementById('invoiceDate').style.borderColor="#d2d6de";
             document.getElementById('quantity').style.borderColor="#d2d6de";
             document.getElementById('unitPrice').style.borderColor="#d2d6de";
             document.getElementById('itemDescription').style.borderColor="#d2d6de";
             document.getElementById('tax').style.borderColor="#d2d6de";
             document.getElementById('shippingCost').style.borderColor="#d2d6de";
-            const quotation={
+            const invoice={
                 schoolId:this.props.location.school.schoolId,
                 requirementId:this.state.currentReqId,
                 projectId:this.props.location.school.projects[0].projectId,
@@ -301,38 +313,41 @@ class AddInvoice extends Component {
                 pincode:this.state.pincode,
                 phoneNumber:this.state.phoneNumber,
                 comment:this.state.comment,
-                quotationPreparedBy:this.state.quotationPreparedBy,
-                quotationDate:this.state.quotationDate,
+                invoiceDate:this.state.invoiceDate,
                 quantity:this.state.quantity,
                 discountDetails:this.state.discountDetails,
                 itemDescription:this.state.itemDescription,
                 unitPrice:this.state.unitPrice,
                 tax:this.state.tax,
                 shippingCost:this.state.shippingCost,
-                warranty:this.state.warranty,
                 totalAmount:this.state.totalAmount,
-                fileInput:this.state.fileInput,
-                localImageUrl:this.state.localImageUrl
+                proofOfId:{
+                    image:this.state.fileInput,
+                    comments:"",
+                },
             }
-            console.log(quotation);
+            console.log(invoice);
             this.setState({
                 spinner:true
             });
-            axios.post('http://localhost:6060/puthuyir/invoice',quotation)
-            .then(res=>{
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(invoice));
+            regFormModel.append('files',this.state.fileInput);
+            axios.post('http://localhost:6060/puthuyir/invoiceUpload',regFormModel)
+            .then(res=>{ 
                 console.log(res);
                 this.setState({
                     spinner:false,
-                    quotationId:res.data.quotationId
+                    invoiceId:res.data.invoiceId
                 })
                 updateList(res.data);
             })
             .catch(error=>{
-                window.alert("Failed to save quotation due to "+error);
+                window.alert("Failed to save invoice due to "+error);
             })
             let updateList=(res)=>{
                 let ql={
-                    quotationId:res.quotationId,
+                    invoiceId:res.invoiceId,
                     requirementId:this.state.currentReqId,
                     companyName:this.state.companyName,
                     address_line_1:this.state.address_line_1,
@@ -341,8 +356,8 @@ class AddInvoice extends Component {
                     pincode:this.state.pincode,
                     phoneNumber:this.state.phoneNumber,
                     comment:this.state.comment,
-                    quotationPreparedBy:this.state.quotationPreparedBy,
-                    quotationDate:this.state.quotationDate,
+                    invoicePreparedBy:this.state.invoicePreparedBy,
+                    invoiceDate:this.state.invoiceDate,
                     quantity:this.state.quantity,
                     discountDetails:this.state.discountDetails,
                     itemDescription:this.state.itemDescription,
@@ -351,14 +366,13 @@ class AddInvoice extends Component {
                     tax:this.state.tax,
                     shippingCost:this.state.shippingCost,
                     totalAmount:this.state.totalAmount,
-                    warranty:this.state.warranty,
                     fileInput:this.state.fileInput,
                     localImageUrl:this.state.localImageUrl
                 };
-                let a=this.state.requirements[this.state.quotationRefNum].quotaionList;
+                let a=this.state.requirements[this.state.invoiceRefNum].invoiceList;
                 a.push(ql);
                 let i=[...this.state.requirements];
-                i[this.state.quotationRefNum].quotaionList=a;
+                i[this.state.invoiceRefNum].invoiceList=a;
                 this.setState({
                     requirements:i,
                 })
@@ -428,8 +442,8 @@ class AddInvoice extends Component {
                                     <div className="row">
                                         <section className="content">
                                         <div className="form-group">
-                                            <label htmlFor="exampleInputFile">Upload Invoice</label>
-                                            <input type="file" id="fileInput" onChange={this.handleChange}/>
+                                            <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Click to upload Invoice</label>
+                                            <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                         </div>
                                         <div className="row">
                                         <div className="col-md-6">
@@ -457,7 +471,7 @@ class AddInvoice extends Component {
                                                     <input type="text" className="form-control" id="comment"placeholder="Comment / Special instructions" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="quotationPreparedBy" placeholder="Invoice Prepared by" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="invoicePreparedBy" placeholder="Invoice Prepared by" onChange={this.handleChange}/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -466,7 +480,7 @@ class AddInvoice extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
-                                                    <input type="date" className="form-control" id="quotationDate" placeholder="Invoice Date" onChange={this.handleChange}/>
+                                                    <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="discountDetails" placeholder="Discount Details" onChange={this.handleChange}/>
@@ -510,7 +524,7 @@ class AddInvoice extends Component {
                 </div>
           </div>
           <div class="timeline-footer">
-                                <a class="btn btn-warning btn-flat btn" onClick={()=>this.submitQuotation()}>Submit Invoice</a>
+                                <a class="btn btn-warning btn-flat btn" onClick={()=>this.submitInvoice()}>Submit Invoice</a>
                             </div>
               </section>
               

@@ -113,11 +113,14 @@ class viewRequirements extends Component {
         })
     }    
     updateCurrentReqId=(e)=>{
-        console.log(e.target.ref)
         this.setState({
             currentReqId:e.target.id.split("/")[0],
             quotationRefNum:e.target.id.split("/")[1]
         })
+        document.getElementById('modal-default').style.display='block';
+    }
+    closeModel=()=>{
+        document.getElementById('modal-default').style.display='none';
     }
     deleteQuotation=(e)=>{
         e.preventDefault();
@@ -298,6 +301,7 @@ class viewRequirements extends Component {
             })
         }
         else{
+            document.getElementById('modal-default').style.display='none';
             document.getElementById('companyName').style.borderColor="#d2d6de";
             document.getElementById('address_line_1').style.borderColor="#d2d6de";
             document.getElementById('city').style.borderColor="#d2d6de";

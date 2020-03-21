@@ -1,17 +1,18 @@
 package com.revamp.core.service;
 
 import com.revamp.core.model.Invoice;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * 
  * @author Puthuyir Dev Team
  *
  */
 public interface InvoiceService {
-	
-	Invoice uploadInvoice(MultipartFile[] files, Invoice invoice);
+
+	long save(Invoice invoice, Map<String,byte[]> filesInBytes, String imgPath);
 	
 	Invoice getFile(long fileId);
 
