@@ -1,56 +1,53 @@
 package com.revamp.core.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
+import com.revamp.core.lookup.PuthuyirLookUp;
+import com.revamp.core.model.InvoiceImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.revamp.core.dao.InvoiceRepository;
 import com.revamp.core.model.Invoice;
 import com.revamp.exception.InvoiceFileNotFoundException;
-import com.revamp.exception.InvoiceUploadException;
 @Service
 @Transactional(readOnly = true)
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
 	public InvoiceRepository repository;
-    
+
+	@Override
 	@Transactional
-	public Invoice uploadInvoice(MultipartFile[] files ,Invoice invoice) {
-		List<String> fileNames = new ArrayList<String>();
-		try {
-
-			List<Invoice> storedFile = new ArrayList<Invoice>();
-
-		for (MultipartFile multiFile : files) {
-				Invoice pinvoice = repository.findByName(multiFile.getOriginalFilename());
-
-				if (pinvoice != null) {
-					pinvoice.setFile(multiFile.getBytes());
-				} else {
-					pinvoice = new Invoice(multiFile.getOriginalFilename(), multiFile.getContentType(),
-							multiFile.getBytes());
-
-				}
-				fileNames.add(multiFile.getOriginalFilename());
-				storedFile.add(pinvoice);
-		
-			}
-		    
-			// Save to database
-
-			repository.save(invoice);
-
-		} catch (Exception ex) {
-		    throw new InvoiceUploadException("File Upload Exception" + ex.getMessage());
-
+	public long save(Invoice invoice, Map<String, byte[]> files, String imgPath) {
+		System.out.println("..SchoolServiceImpl.."+imgPath);
+		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
+		System.out.println("..SchoolServiceImpl.."+fileSubPath);
+		if (files != null && files.size() > 0) {
+			files.forEach((k,v) -> {
+				Set<InvoiceImage> siSet = new HashSet<InvoiceImage>();
+				String filePath = fileSubPath+ invoice.getId()+"_";
+				InvoiceImage si = new InvoiceImage(filePath+k,v,invoice.getProofOfId().getComments());
+				si.setInvoice(invoice);
+				siSet.add(si);
+				invoice.setInvoiceImages(siSet);
+			});
 		}
-		return null;
+
+		repository.save(invoice);
+		if (files != null && files.size() > 0) {
+			this.saveImgToFS(imgPath,fileSubPath,invoice.getInvoiceImages());
+		}
+		return invoice.getId();
 	}
+
 
 	@Override
 	public Invoice getFile(long id) {
@@ -74,5 +71,28 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public void deleteQuotation(long invoiceId) {
 		repository.deleteById(invoiceId);
 	}
+
+	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
+		list.forEach(schoolImg -> {
+			String tmpDirPath = dirPath+"\\"+fileSubPath;
+			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
+				try {
+					Files.createDirectories(Paths.get(tmpDirPath));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
+
+
+			try {
+				Files.write(path, schoolImg.getImage());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
 
 }
