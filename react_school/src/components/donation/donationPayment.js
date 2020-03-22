@@ -180,3 +180,4 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
 }
 
 export default withRouter(DonationPayment); 
+
