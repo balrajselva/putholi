@@ -56,7 +56,7 @@ class adminSchoolCheck extends Component {
     render() {
       let returnLink=null;
       if(this.props.location.user.role==="Admin"){
-        returnLink = "adminAccessReview"
+        returnLink = "accessReview"
       }
       else if(this.props.location.user.role==="Approver"){
         returnLink = "approverAccessReview"
