@@ -294,7 +294,6 @@ class registerForm extends Component {
                     <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange}/>
                     <span className="glyphicon glyphicon-log-in form-control-feedback" />
                 </div>
-                {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>*{this.state.errorMessage}</div>:null}
                 <div className="row">
                     <div className="form-group">
                     <div className="col-md-3"><b>Upload Identity Proof :</b></div>
@@ -306,6 +305,7 @@ class registerForm extends Component {
                 <div className="checkbox icheck" style={{marginLeft:'4%'}}>
                     <input type="checkbox" /> I agree to the <a href="#">terms and conditions</a>
                 </div>
+                {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>*{this.state.errorMessage}</div>:null}
                 <div className="col-md-12">
                     <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.submitClicked()}>Register</button><br/>
                     </div>

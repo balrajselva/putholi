@@ -41,8 +41,8 @@ public class VolunteerReference extends AuditableEntity{
 	@Column(name="referalmails")
 	private String referalEmails;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
-	private Address address;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "address_id")
+//	private Address address;
 
 }

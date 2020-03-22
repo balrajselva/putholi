@@ -54,7 +54,6 @@ class VolunteerRegister extends Component {
                     <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Volunteer"]}/>
                    </div>
                    </div>
-                {/* /.form-box */}
               </div>
           </body>
 

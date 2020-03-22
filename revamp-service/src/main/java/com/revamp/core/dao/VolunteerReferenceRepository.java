@@ -10,7 +10,7 @@ import com.revamp.core.model.VolunteerReference;
 
 public interface VolunteerReferenceRepository extends CrudRepository<VolunteerReference, Long> {
 
-	@Query(value="SELECT * FROM volunteer_reference WHERE sponsor_email=?1",nativeQuery = true)
-	List<VolunteerReference> findBySponsorEmail(String sponsorEmail);
+	@Query("SELECT v FROM VolunteerReference v WHERE v.sponsorEmail=:sponsorEmail")
+	List<VolunteerReference> findBySponsorEmail(@Param("sponsorEmail") String sponsorEmail);
 
 }

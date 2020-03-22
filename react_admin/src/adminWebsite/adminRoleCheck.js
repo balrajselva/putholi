@@ -76,30 +76,25 @@ class adminRoleCheck extends Component {
     }
   
     render() {
-      if(this.props.location.user.role==="Admin"){
-      }
-      else if(this.props.location.user.role==="Approver"){
-        returnLink = "approverAccessReview"
-      }
-      else if(this.props.location.user.role==="Reviewer"){
-        returnLink = "reviewerAccessReview"
-      }
-        let reviewButtonContent="";
         let returnLink=null;
         if(this.state.currentUser.role==="Admin"){
+          returnLink = "accessReview"
+        }
+        else if(this.state.currentUser.role==="Approver"){
+          returnLink = "approverAccessReview"
+        }
+        else if(this.state.currentUser.role==="Reviewer"){
+          returnLink = "reviewerAccessReview"
+        }
+        let reviewButtonContent="";
+        if(this.state.currentUser.role==="Admin"){
           reviewButtonContent="Send for Review";
-          returnLink = "adminAccessReview"
+          returnLink = "accessReview"
         }
         else if(this.state.currentUser.role==="Reviewer" || this.state.currentUser.role==="Super User")
           reviewButtonContent="Recommend to Approve";
         else if(this.state.currentUser.role==="Approver" || this.state.currentUser.role==="Super Admin")
           reviewButtonContent="Approve";
-          if(this.props.location.user.role==="Approver"){
-            returnLink = "approverAccessReview"
-          }
-          else if(this.props.location.user.role==="Reviewer"){
-            returnLink = "reviewerAccessReview"
-          }
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
                 {this.state.getUserList?this.userList():null}

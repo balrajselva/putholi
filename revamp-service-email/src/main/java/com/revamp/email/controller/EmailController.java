@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import com.revamp.email.model.Volunteer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,32 @@ public class EmailController {
 		} catch (MailException mailException) {
 			logger.error("Error in Send mail "+mailException.getMessage());
            throw new SendMailException(mailException.getMessage());
+		}
+		logger.info("EmailController:Send Email Method exit");
+		return EmailConstants.EMAIL_SUCCESS_MESSAGE;
+
+	}
+
+	@PostMapping("/sendmailForVolunteer")
+	public String sendForVolunteer(@RequestBody Volunteer volunteers) throws SendMailException, MessagingException {
+		logger.info("EmailController:Send Email Method entry");
+		List<String> emailList = new ArrayList<String>();
+
+		/*
+		 * Creating a User with the help of User class that we have declared and setting
+		 * Email address of the sender.
+		 */
+
+		/*
+		 * Here we will call sendEmail() for Sending mail to the sender.
+		 */
+		try {
+			logger.info("Hitting EmailService to send mail with User information " +user.toString());
+			notificationService.sendEmailForVolunteer(volunteers);
+			logger.info("Succesfully exited EmailService - sendMail ");
+		} catch (MailException mailException) {
+			logger.error("Error in Send mail "+mailException.getMessage());
+			throw new SendMailException(mailException.getMessage());
 		}
 		logger.info("EmailController:Send Email Method exit");
 		return EmailConstants.EMAIL_SUCCESS_MESSAGE;

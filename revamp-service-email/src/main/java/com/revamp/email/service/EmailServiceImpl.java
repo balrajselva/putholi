@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import com.revamp.email.model.Volunteer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,40 +118,41 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public String sendEmailForVolunteer(EmailUser user) throws SendMailException, MessagingException {
+	public String sendEmailForVolunteer(Volunteer volunteer) throws SendMailException, MessagingException {
 		logger.info("EmailServiceImpl:Send Email Method entry");
 
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper mail = new MimeMessageHelper(message);
-
-		Map model = new HashMap();
-		model.put("name", user.getName());
-		user.setModel(model);
-
-
 		/*
 		 * This send() contains an Object of MIME Message as an Parameter
 		 */
-		try {
-			Template t = freemarkerConfig.getTemplate("donar-email.ftl");
-			mail.setTo(user.getToEmailAddress());
-			mail.setFrom(user.getFrom());
-			mail.setSubject(user.getSubject());
-			String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
+		List<String> volList = volunteer.getTo();
+		for(String v:volList){
+				try {
+					Map model = new HashMap();
+					model.put("name", v);
+					model.put("message",volunteer.getMessage());
+					model.put("registrationLink",volunteer.getRegistrationLink());
+					volunteer.setModel(model);
+					Template t = freemarkerConfig.getTemplate("volunteer-email.ftl");
+					mail.setTo(v);
+					mail.setFrom(volunteer.getFrom());
+					mail.setSubject(volunteer.getSubject());
+					String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, volunteer.getModel());
 
-			mail.setText(html,true);
-			if (user.getCc() != null && user.getCc().size() > 0) {
-				mail.setCc(user.getCc().toArray(new String[user.getCc().size()]));
+					mail.setText(html,true);
+					if (volunteer.getCc() != null && volunteer.getCc().size() > 0) {
+						mail.setCc(volunteer.getCc().toArray(new String[volunteer.getCc().size()]));
+					}
+					logger.info("Hitting JavaMailSender to send mail to user Mailbox ");
+
+					javaMailSender.send(message);
+					logger.info("Sent JavaMailSender to send mail to user Mailbox ");
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+					throw new SendMailException("Exception in sending email to customer " + e.getMessage());
+				}
 			}
-			logger.info("Hitting JavaMailSender to send mail to user Mailbox ");
-
-			javaMailSender.send(message);
-			logger.info("Sent JavaMailSender to send mail to user Mailbox ");
-
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new SendMailException("Exception in sending email to customer " + e.getMessage());
-		}
 		logger.info("EmailServiceImpl:Send Email Method Exit");
 		return EmailConstants.EMAIL_SUCCESS;
 	}
@@ -158,7 +160,7 @@ public class EmailServiceImpl implements EmailService {
 	/**
 	 * sendEmailWithAttachment
 	 * 
-	 * @param User details to send the attachement and email infos.
+	 * @param EmailUser details to send the attachement and email infos.
 	 */
 	public String sendEmailWithAttachment(EmailUser user, MultipartFile[] files) throws MessagingException {
 		logger.info("EmailServiceImpl:sendEmailWithAttachment Method entry");
