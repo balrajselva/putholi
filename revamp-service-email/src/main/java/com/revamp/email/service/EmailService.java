@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import com.revamp.email.model.School;
 import com.revamp.email.exception.SendMailException;
 import com.revamp.email.model.EmailUser;
+import com.revamp.email.model.Volunteer;
 import org.springframework.web.multipart.MultipartFile;
 /**
  * 
@@ -23,7 +24,7 @@ public interface EmailService {
 	 */
 	String sendEmail(EmailUser user) throws SendMailException, MessagingException;
 
-	String sendEmailForVolunteer(EmailUser user) throws SendMailException, MessagingException;
+	String sendEmailForVolunteer(Volunteer volunteer) throws SendMailException, MessagingException;
 
 	/**
 	 * 

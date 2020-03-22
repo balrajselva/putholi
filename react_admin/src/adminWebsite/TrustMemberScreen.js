@@ -6,41 +6,25 @@ class TrustMemberScreen extends Component {
     render() {
         return (
             <div className="content-wrapper">
-                {/* Content Header (Page header) */}
                 <section className="content-header">
-                    {/* Small boxes (Stat box) */}
                     <div className="row">
-                    <SmallBoxCard content="Trust Member" linkTo="/trustMemberScreen" colour="bg-green"/>
-                    {/* ./col */}
-                    <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
+                        <SmallBoxCard content="Trust Member" linkTo="/trustMemberScreen" colour="bg-green"/>
+                        <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                     </div>
-                    <h1>
-                    Sponsor
-                    <small>screen</small>
-                    </h1>
                 </section>
-                {/* Main content */}
                 <section className="content">
-                    {/* Small boxes (Stat box) */}
-                    {/* /.row */}
-                    {/* Main row */}
                     <div className="row">
-                    <div className="col-xs-12">
-                        <div className="box">
-                        <div className="box-header">
-                            <h4 className="box-title">Welcome Screen for Sponsor</h4>
-                            <div className="box-tools">
+                        <div className="col-xs-12">
+                            <div className="box">
+                                <div className="box-header">
+                                    <h4 className="box-title">Welcome Screen for Trust Member</h4>
+                                    <div className="box-tools">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        {/* /.box-header */}
-                        {/* /.box-body */}
-                        </div>
-                        {/* /.box */}
                     </div>
-                    </div>
-                    {/* /.row (main row) */}
                 </section>
-                {/* /.content */}
             </div>
         )
     }
