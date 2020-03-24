@@ -3,6 +3,7 @@ package com.revamp.core.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.revamp.core.lookup.PuthuyirLookUp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,19 @@ public class ProjectServiceImpl implements ProjectService {
 				projectBeforeUpdate.get().setCollectedAmount(project.getCollectedAmount());
 				project = projectBeforeUpdate.get();
 			}
+		}
+		return projectRepository.save(project).getProjectId();
+	}
+
+	@Transactional
+	public long saveOrUpdate(Long projectId,Integer estimate, PuthuyirLookUp status, Integer collectedAmount) {
+		Optional<Project> projectBeforeUpdate =  projectRepository.findById(projectId);
+		Project project = new Project();
+		if (projectBeforeUpdate.isPresent()) {
+			projectBeforeUpdate.get().setEstimate(estimate);
+			projectBeforeUpdate.get().setStatus(status);
+			projectBeforeUpdate.get().setCollectedAmount(collectedAmount);
+			project = projectBeforeUpdate.get();
 		}
 		return projectRepository.save(project).getProjectId();
 	}

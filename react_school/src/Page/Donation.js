@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DonationList from '../components/donation/donationList';
 import '../components/donation/donation_style.css'
+
 class Donation extends Component {
 
 constructor(){
@@ -37,7 +38,7 @@ constructor(){
             <div className="breadcrumb">
                 <div className="wrap">
                     <div className="container">
-                        Welcome Message. Register your school here
+                    The value of a man resides in what he gives and not in what he is capable of receiving. And so does the knowledge.
                     </div>
                 </div>
             </div>
