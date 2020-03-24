@@ -62,21 +62,17 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
       orderId:orderId
     }
 
-    var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload,orderIdPayload,schoolPayload);
+    var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload,orderIdPayload,schoolPayload,projectUpdatePayload);
 
     axios.post('http://localhost:6060/puthuyir/donate/paymentDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
     .then(response => {
       console.log(response) 
-      axios.post('http://localhost:6060/puthuyir/project', projectUpdatePayload, { headers: { 'Accept': 'application/json' } })
-      .then(response => {
-        console.log(response)
         axios.post('http://localhost:7070/payment/orders', paymentPayload)
         .then(response => {
           console.log(response)
           window.open(response.data.webLink,"width=200,height=200")         
           this.props.history.push("/index");
         });
-      });
     })
   }
 

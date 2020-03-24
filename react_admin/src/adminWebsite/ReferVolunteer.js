@@ -73,7 +73,7 @@ class ReferVolunteer extends Component {
             const cryptr = new Cryptr('myTotalySecretKey');
             const encryptedName = cryptr.encrypt(this.state.sponsor.firstName);
             const encryptedEmail =cryptr.encrypt(this.state.sponsor.emailAddress);
-            const url1 = "http://localhost:3000/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
+            const url1 = "http://localhost:3001/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
             this.setState({
                 url:url1,
                 spinner:true
