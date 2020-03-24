@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.Project;
 import com.revamp.core.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,10 +131,19 @@ public class DonationController {
 		return ResponseEntity.ok().body(responseDonation);
 	}
 
-	@GetMapping("/donate/paymentDonation/{order_id}")
-	public ResponseEntity<Donation> getPaymentUser(@PathVariable("order_id") String orderId) {
-		Donation responseDonation = donationService.getByOrderId(orderId);
-		return ResponseEntity.ok().body(responseDonation);
+	@GetMapping("/donate/paymentDonation/{order_id}/{status}")
+	public ResponseEntity<Donation> getPaymentUser(@PathVariable("order_id") String orderId,@PathVariable("status") String status) {
+		if(status.equals("SUCCESS")) {
+			Donation donation = donationService.getByOrderId(orderId);
+			long id = projectService.saveOrUpdate(donation.getProject().getProjectId(),donation.getEstimate(),donation.getStatus(),donation.getCollectedAmount());
+			donation.setPaymentStatus(status);
+			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
+		}
+		else{
+			Donation donation = donationService.getByOrderId(orderId);
+			donation.setPaymentStatus(status);
+			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
+		}
 	}
 	
 	
