@@ -326,7 +326,7 @@ class registerForm extends Component {
                         <span className="glyphicon glyphicon-envelope form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
-                        <input type="phone" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
+                        <input type="number" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
                         <span className="glyphicon glyphicon-phone form-control-feedback" />
                     </div>
                 </div>

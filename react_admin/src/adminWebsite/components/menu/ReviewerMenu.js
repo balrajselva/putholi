@@ -22,18 +22,19 @@ class ReviewerMenu extends Component {
                     </div>
                     <div className="pull-left info">
                         <p>{this.props.currentUser.firstName}</p>
-                        <a href="#"><i className="fa fa-circle text-success" /> Online</a>
+                        <i className="fa fa-circle text-success" /> Online
                     </div>
                     </div>
                     {/* search form */}
                     <form action="#" method="get" className="sidebar-form">
-                    <div className="input-group">
+                    {/* <div className="input-group">
                         <input type="text" name="q" className="form-control" placeholder="Search..." />
                         <span className="input-group-btn">
                         <button type="submit" name="search" id="search-btn" className="btn btn-flat"><i className="fa fa-search" />
                         </button>
                         </span>
-                    </div>
+                    </div> */}
+                    
                     </form>
                     <ul className="sidebar-menu" data-widget="tree">
                     <li className="header">Reviewer Previlleges</li>

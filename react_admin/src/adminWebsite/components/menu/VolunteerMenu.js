@@ -35,14 +35,15 @@ class VolunteerMenu extends Component {
                     <ul className="sidebar-menu" data-widget="tree">
                     <li className="header">Volunteer Previlleges</li>
                     <li className="active treeview">
-                        <a href="#">
+                     {/*   <a href="#">
                         <i className="fa fa-dashboard" /> <span>Volunteer Management</span>
                         <span className="pull-right-container">
                             <i className="fa fa-angle-left pull-right" />
                         </span>
-                        </a>
+        </a> */}
                         <ul className="treeview-menu">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> View Assigned Schools</Link></li>
+                        <li><Link to={accessReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
                         {/* <li><a href="#"><i className="fa fa-circle-o" />Calendar </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" />Claim Expenses </a></li> */}
                         </ul>
