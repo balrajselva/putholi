@@ -27,7 +27,8 @@ import ApproverLayout from '../adminWebsite/components/layouts/ApproverLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
-import AddQuotation from '../adminWebsite/quotation'
+import AddQuotation from '../adminWebsite/quotation';
+import Payment from '../adminWebsite/payment';
 import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
 import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
 import ApproverPendingWorkflow from '../adminWebsite/approverPendingWorkflow';
@@ -56,7 +57,13 @@ class App extends Component {
     .then(res=>{
         console.log(res);
         this.setState({spinner:false});
-        history.push("/confirmation");
+        // history.push("/confirmation");
+        if(res.data.role!=="Volunteer"){
+          history.push({
+            pathname: '/payment',
+            user: res.data,
+          });
+        }
     })
     .catch(error=>{
       window.alert("Registration failed due to "+error);
@@ -119,6 +126,7 @@ class App extends Component {
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
             <Route path="/volunteerRegister" history={history} render={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
+            <Route path="/payment" history={history} render={(props)=><Payment {...props}{...this.props}/>}/>
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>

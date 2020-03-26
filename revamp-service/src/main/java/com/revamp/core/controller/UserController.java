@@ -38,6 +38,9 @@ public class UserController {
 
 	@Value("${image.path}")
 	private String imgPath;
+
+	@Value("${trust.member.fee}")
+	private String regFee;
 	//---Register user---
 	/**
 	 *
@@ -52,11 +55,12 @@ public class UserController {
 //		return ResponseEntity.ok().body(user);
 //	}
 	@PostMapping("/user")
-	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
+	public ResponseEntity<User> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 												  HttpServletRequest request) {
+		User user = new User();
 		try {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
-			User user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
+			user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
@@ -66,9 +70,9 @@ public class UserController {
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.badRequest().body(user);
 		}
-		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+		return ResponseEntity.ok().body(user);
 
 	}
 
@@ -168,5 +172,10 @@ public class UserController {
 		List<User> userList=userService.findByDistrict(district);
 		System.out.println(userList);
 		return ResponseEntity.ok().body(userList);
+	}
+
+	@GetMapping("/trustMemberRegistration")
+	public ResponseEntity<String> trustMemberRegistraton(){
+		return ResponseEntity.ok().body(regFee);
 	}
 }
