@@ -8,7 +8,7 @@ class DonationPayment extends Component {
   }
 
   submitClick = (e) => {
-    let orderId = new Date().getTime();
+    let orderId = "SCHL"+new Date().getTime();
     let projectPayload = {
       project: {
         projectId: this.props.history.location.user.projectId

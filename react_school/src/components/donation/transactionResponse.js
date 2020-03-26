@@ -10,7 +10,7 @@ class transactionResponse extends Component {
         let orderId=window.location.href.split("?")[1].split("&")[0].split("=")[1];
         let status=window.location.href.split("?")[1].split("&")[1].split("=")[1];
         let statusId=window.location.href.split("?")[1].split("&")[2].split("=")[1];
-        if(status==='CHARGED'){
+        if(orderId.startsWith("SCHL") && status==='CHARGED'){
             axios.get('http://localhost:6060/puthuyir/donate/paymentDonation/'+orderId+"/SUCCESS")
             .then(res=>{
                 console.log(res.data)
