@@ -18,6 +18,10 @@ class reviewQuotation extends Component {
         quotationImage:null
     } 
     approveQuotation=()=>{
+        if(this.state.selectedQuotations.length != this.state.reqList.length){
+            this.setState({errorMessage:"Please select atleast one quotation for each requirement"})
+            return
+        }
         let updateQuotation={
             totalAmount:this.state.totalAmount,
             quotations:this.state.selectedQuotations,
@@ -66,20 +70,12 @@ class reviewQuotation extends Component {
         });
     }
     selectQuotation=(e)=>{
-        e.preventDefault();
-        document.getElementById(e.target.id).setAttribute('checked','checked')
         this.setState({errorMessage:null});
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
         let quotationList=this.state.reqList[reqId];
         let temp=null;
         let newList = this.state.selectedQuotations.filter(list=>parseInt(list.quotationId) !== parseInt(quoId));
-        let reqRefQuo = this.state.selectedQuotations.filter(list=>parseInt(list.requirementId) === parseInt(reqId));
-        if(reqRefQuo.length > 0){
-            this.setState({errorMessage:"Cannot select multiple quotation for same requirement"})
-            document.getElementById(e.target.id).removeAttribute('checked');
-            return
-        }
         let isDelete = false;
         if(newList.length !== this.state.selectedQuotations.length){
             isDelete = true;
@@ -94,6 +90,12 @@ class reviewQuotation extends Component {
             return
         }
         else{
+            let reqRefQuo = this.state.selectedQuotations.filter(list=>parseInt(list.requirementId) === parseInt(reqId));
+            if(reqRefQuo.length > 0){
+                e.target.checked=false;
+                this.setState({errorMessage:"Cannot select multiple quotation for same requirement"})
+                return
+            }
             for(let i=0;i<quotationList.length;i++){
                 let quotation=quotationList[i];
                 if(quotation.quotationId+""==quoId+""){
