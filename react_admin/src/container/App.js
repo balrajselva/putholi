@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   saveUser=(regFormModel)=>{
-    this.setState({user:regFormModel.user,spinner:true});
+    this.setState({user:regFormModel.get("user"),spinner:true});
     console.log(regFormModel);
     axios.post(this.state.config+'/puthuyir/user',regFormModel,{
       headers:{'Content-Type':'multipart/form-data'}

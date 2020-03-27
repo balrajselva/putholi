@@ -25,18 +25,27 @@ class payment extends Component {
 
     payment=(e)=>{
         e.preventDefault();
+        this.setState({spinner:true})
         let orderId = "TRST"+new Date().getTime();
         let paymentPayload = {
             order_id:orderId,
             amount:this.state.registrationFee
         }
         console.log(paymentPayload)
-        axios.post('http://localhost:7070/payment/orders', paymentPayload)
-        .then(response => {
-            console.log(response)
-          window.open(response.data.webLink,"width=200,height=200")         
-          this.props.history.push("/login");
-        });
+        let donationUserPayload={
+          orderId: orderId,
+          user:this.props.location.user,
+          amount:this.state.registrationFee
+        }
+        axios.post('http://localhost:6060/puthuyir/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
+        .then(response=>{
+          axios.post('http://localhost:7070/payment/orders', paymentPayload)
+          .then(response => {
+              console.log(response)
+            window.open(response.data.webLink,"width=200,height=200")         
+            this.props.history.push("/login");
+          });
+       });
     }
 
     render() {

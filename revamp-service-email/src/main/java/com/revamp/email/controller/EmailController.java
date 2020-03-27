@@ -50,22 +50,16 @@ public class EmailController {
 	 * @throws SendMailException
 	 */
 	
-	@PostMapping("/sendmail")
-	public String send(@RequestBody EmailUser puser) throws SendMailException, MessagingException {
+	@PostMapping("/sendmail/school")
+	public String sendForSchool(@RequestBody EmailUser puser) throws SendMailException, MessagingException {
 		logger.info("EmailController:Send Email Method entry");
-		List<String> emailList = new ArrayList<String>();
 
-		/*
-		 * Creating a User with the help of User class that we have declared and setting
-		 * Email address of the sender.
-		 */
-	
 		/*
 		 * Here we will call sendEmail() for Sending mail to the sender.
 		 */
 		try {
 			logger.info("Hitting EmailService to send mail with User information " +user.toString());
-			notificationService.sendEmail(puser);
+			notificationService.sendEmailForSchool(puser);
 			logger.info("Succesfully exited EmailService - sendMail ");
 		} catch (MailException mailException) {
 			logger.error("Error in Send mail "+mailException.getMessage());
@@ -75,6 +69,25 @@ public class EmailController {
 		return EmailConstants.EMAIL_SUCCESS_MESSAGE;
 
 	}
+
+    @PostMapping("/sendmail/trust")
+    public String sendForTrust(@RequestBody EmailUser puser) throws SendMailException, MessagingException {
+        logger.info("EmailController:Send Email Method entry");
+        /*
+         * Here we will call sendEmail() for Sending mail to the sender.
+         */
+        try {
+            logger.info("Hitting EmailService to send mail with User information " +user.toString());
+            notificationService.sendEmailForTrust(puser);
+            logger.info("Succesfully exited EmailService - sendMail ");
+        } catch (MailException mailException) {
+            logger.error("Error in Send mail "+mailException.getMessage());
+            throw new SendMailException(mailException.getMessage());
+        }
+        logger.info("EmailController:Send Email Method exit");
+        return EmailConstants.EMAIL_SUCCESS_MESSAGE;
+
+    }
 
 	@PostMapping("/sendmailForVolunteer")
 	public String sendForVolunteer(@RequestBody Volunteer volunteers) throws SendMailException, MessagingException {

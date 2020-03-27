@@ -28,6 +28,13 @@ class trustLogin extends Component {
       axios.post(this.props.config+"/puthuyir/verify_user",user)
       .then(res=>{
         console.log(res.data)
+          // if(res.data.status!=="PaymentPending"){
+          //   history.push({
+          //     pathname: '/payment',
+          //     user: res.data,
+          //   });
+          // }
+          // else
           if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
             this.props.history.push({
               pathname: '/volunteerSchoolCheck',
@@ -80,7 +87,6 @@ class trustLogin extends Component {
                 <div className="login-logo">
                   <a href=""><b>Putholi</b></a>
                 </div>
-                {/* /.login-logo */}
                 <div className="login-box-body">
                   <p className="login-box-msg">Sign in to start your session</p>
                   <form>
@@ -94,18 +100,14 @@ class trustLogin extends Component {
                     </div>
                     {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                     <div className="row">
-                      {/* /.col */}
                       <div className=" col-md-12">
                         <button ref="submit_btn" className="btn btn-primary btn-block btn-flat" onClick={(e)=>this.signIn(e)}>Login</button>
                       </div>
-                      {/* /.col */}
                     </div>
                   </form>
-                  {/* /.social-auth-links */}
                   <a href="#">I forgot my password</a><br />
                   <Link to="/trustRegister" className="text-center">Register a new membership</Link>
                 </div>
-                {/* /.login-box-body */}
               </div>
               {this.state.spinner?<div class="spinner"></div>:null}
             </body>

@@ -1,7 +1,5 @@
 package com.revamp.email.service;
 
-import java.util.List;
-
 import javax.mail.MessagingException;
 
 import com.revamp.email.model.School;
@@ -22,7 +20,7 @@ public interface EmailService {
 	 * @throws SendMailException
 	 * @throws MessagingException
 	 */
-	String sendEmail(EmailUser user) throws SendMailException, MessagingException;
+	String sendEmailForSchool(EmailUser user) throws SendMailException, MessagingException;
 
 	String sendEmailForVolunteer(Volunteer volunteer) throws SendMailException, MessagingException;
 
@@ -36,7 +34,7 @@ public interface EmailService {
 	
 	
 	School get(long id);
-	
-	
 
+
+    String sendEmailForTrust(EmailUser puser);
 }

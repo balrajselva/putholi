@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { withRouter, Router, MemoryRouter } from 'react-router-dom';
 import axios from "axios";
 class DonationPayment extends Component {
+  state={
+    spinner:false
+  }
   constructor(props) {
     super(props);
     this.submitClick = this.submitClick.bind(this);
   }
 
   submitClick = (e) => {
+    this.setState({spinner:true})
     let orderId = "SCHL"+new Date().getTime();
     let projectPayload = {
       project: {
@@ -163,6 +167,7 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
                       </table>
                     </div>
                   </div>
+                  {this.state.spinner?<div class="spinner"></div>:null}
                   <h3><button onClick={this.submitClick}>Link to Payment Gateway</button></h3>
                 </div>
               </div>
