@@ -60,7 +60,7 @@ class payment extends Component {
                   <form>
                     <div className="form-group has-feedback">
                       <label for="name">Name</label>
-                      <input type="text" className="form-control" placeholder="Name" id="name" value={this.props.location.user.firstName} disabled/>
+                      <input type="text" className="form-control" placeholder="Name" id="name" value={this.props.location.currentUser.firstName} disabled/>
                       <span className="glyphicon glyphicon-envelope form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback">
