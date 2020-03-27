@@ -9,7 +9,7 @@ import { thisExpression } from '@babel/types';
 
 class ReferVolunteer extends Component {
     state={
-        sponsor:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         pincode:null,
         locality:null,
         selectedLocality:null,
@@ -71,8 +71,8 @@ class ReferVolunteer extends Component {
             document.getElementById('referalEmails').style.borderColor="#d2d6de";
             const Cryptr = require('cryptr');
             const cryptr = new Cryptr('myTotalySecretKey');
-            const encryptedName = cryptr.encrypt(this.state.sponsor.firstName);
-            const encryptedEmail =cryptr.encrypt(this.state.sponsor.emailAddress);
+            const encryptedName = cryptr.encrypt(this.state.currentUser.firstName);
+            const encryptedEmail =cryptr.encrypt(this.state.currentUser.emailAddress);
             const url1 = "http://localhost:3001/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
             this.setState({
                 url:url1,
@@ -90,8 +90,8 @@ class ReferVolunteer extends Component {
                 //     country:this.state.country,
                 // },
                 referalEmails:this.state.referalEmails,
-                sponsorName:this.state.sponsor.firstName,
-                sponsorEmail:this.state.sponsor.emailAddress
+                sponsorName:this.state.currentUser.firstName,
+                sponsorEmail:this.state.currentUser.emailAddress
             }
             axios.post("http://localhost:6060/puthuyir/admin/volunteerReferals",volunteers)
             .then(res=>{
@@ -162,7 +162,7 @@ class ReferVolunteer extends Component {
                 <div className="content-wrapper">
                     <section className="content-header">
                         <div className="row">
-                            <SmallBoxCard content={this.props.location.user.role} linkTo="" colour="bg-green"/>
+                            <SmallBoxCard content="Trust Member" linkTo="" colour="bg-green"/>
                             <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         </div>
                     </section>
