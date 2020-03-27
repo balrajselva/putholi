@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "trust_donation")
 @Data
-public class appTrustDonation {
+public class TrustDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trust_donation_id", nullable = false)
