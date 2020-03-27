@@ -1,11 +1,8 @@
 package com.revamp.email.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -14,13 +11,11 @@ import com.revamp.email.model.Volunteer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revamp.email.dao.EmailRepository;
@@ -66,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
 	 * @throws MessagingException
 	 */
 	@Override
-	public String sendEmail(EmailUser user) throws SendMailException, MessagingException {
+	public String sendEmailForSchool(EmailUser user) throws SendMailException, MessagingException {
 		logger.info("EmailServiceImpl:Send Email Method entry");
 
 		MimeMessage message = javaMailSender.createMimeMessage();
@@ -78,29 +73,22 @@ public class EmailServiceImpl implements EmailService {
         model.put("trackId", user.getTrackId());
         model.put("DonatedAmount", user.getYourContirbutionAmount());
         user.setModel(model);
-		
-	    
+
 		/*
 		 * This send() contains an Object of MIME Message as an Parameter
 		 */
 		try {
-			 Template t = freemarkerConfig.getTemplate("donar-email.ftl");
-			 
-			// TODO
-			
-				mail.setTo(user.getToEmailAddress());
-			
-			mail.setFrom(user.getFrom());
-			mail.setSubject(user.getSubject());
-			   String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
-
-			   
+		    Template t = freemarkerConfig.getTemplate("donar-email.ftl");
+            mail.setTo(user.getToEmailAddress());
+            mail.setFrom(user.getFrom());
+            mail.setSubject(user.getSubject());
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
 //			School schoolInfo = this.get(1);
 //			if(schoolInfo !=null) {
 //			mail.setText(schoolInfo.getSchoolInfo().getSchoolName());
 //			}
 			
-			   mail.setText(html,true);
+            mail.setText(html,true);
 			if (user.getCc() != null && user.getCc().size() > 0) {
 				mail.setCc(user.getCc().toArray(new String[user.getCc().size()]));
 			}
@@ -166,36 +154,17 @@ public class EmailServiceImpl implements EmailService {
 		logger.info("EmailServiceImpl:sendEmailWithAttachment Method entry");
 
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		
 		Map model = new HashMap();
-		
 		model.put("requirements",user.getRequirements());
 		model.put("schoolName", user.getSchoolName());
 		model.put("schoolRegNo", user.getSchoolRegNo());
 		model.put("schoolType", user.getSchoolType());
-		
         user.setModel(model);
-		
-	    
+
         try {
-		
-		
-
-		
-      
-       
-
-        
-           
-	
-       
-		
-		
 		//helper.addAttachment();
-		
-			
 			logger.info("Hitting JavaMailSender to send attachment to user Mailbox ");
 			Template t = freemarkerConfig.getTemplate("emailInitiateDEO.ftl");
 			   String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
@@ -206,10 +175,7 @@ public class EmailServiceImpl implements EmailService {
 				  for (MultipartFile multipartFile : files) {
 		            	 String fileName = multipartFile.getOriginalFilename();
 		            		helper.addAttachment(fileName,multipartFile);
-		            	
 		            }
-		        
-
 			javaMailSender.send(mimeMessage);
 			logger.info("Successfully JavaMailSender send the attachment to user Mailbox ");
 
@@ -226,9 +192,43 @@ public class EmailServiceImpl implements EmailService {
 		return emailRepo.findById(id).orElse(null);
 	}
 
+    @Override
+    public String sendEmailForTrust(EmailUser user) {
+        logger.info("EmailServiceImpl:Send Email Method entry");
 
-	
-	
-	
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper mail = new MimeMessageHelper(message);
+
+        Map model = new HashMap();
+        model.put("name", user.getName());
+        model.put("DonatedAmount", user.getYourContirbutionAmount());
+        user.setModel(model);
+
+        /*
+         * This send() contains an Object of MIME Message as an Parameter
+         */
+        try {
+            Template t = freemarkerConfig.getTemplate("trust-email.ftl");
+            mail.setTo(user.getToEmailAddress());
+            mail.setFrom(user.getFrom());
+            mail.setSubject(user.getSubject());
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, user.getModel());
+            mail.setText(html,true);
+            if (user.getCc() != null && user.getCc().size() > 0) {
+                mail.setCc(user.getCc().toArray(new String[user.getCc().size()]));
+            }
+            logger.info("Hitting JavaMailSender to send mail to user Mailbox ");
+
+            javaMailSender.send(message);
+            logger.info("Sent JavaMailSender to send mail to user Mailbox ");
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new SendMailException("Exception in sending email to customer " + e.getMessage());
+        }
+        logger.info("EmailServiceImpl:Send Email Method Exit");
+        return EmailConstants.EMAIL_SUCCESS;
+    }
+
 
 }

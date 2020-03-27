@@ -5,8 +5,9 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.model.Project;
+import com.revamp.core.model.*;
 import com.revamp.core.service.ProjectService;
+import com.revamp.core.service.TrustDonationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revamp.core.model.Donation;
-import com.revamp.core.model.DonationUser;
-import com.revamp.core.model.User;
 import com.revamp.core.service.DonationService;
 import com.revamp.core.service.DonationUserService;
 
@@ -40,6 +38,8 @@ public class DonationController {
 	@Autowired
 	private ProjectService projectService;
 
+	@Autowired
+	private TrustDonationService trustDonationService;
 	/**
 	 * 
 	 * @param donation
@@ -145,7 +145,26 @@ public class DonationController {
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
 		}
 	}
-	
+
+	@GetMapping("/donate/trustDonation/trust/{order_id}/{status}")
+	public ResponseEntity<TrustDonation> getPaymentTrust(@PathVariable("order_id") String orderId,@PathVariable("status") String status) {
+		if(status.equals("SUCCESS")) {
+			TrustDonation donation = trustDonationService.getByOrderId(orderId);
+			donation.setPaymentStatus(status);
+			return ResponseEntity.ok().body(trustDonationService.saveTrustUser(donation));
+		}
+		else{
+			TrustDonation donation = trustDonationService.getByOrderId(orderId);
+			donation.setPaymentStatus(status);
+			return ResponseEntity.ok().body(trustDonationService.saveTrustUser(donation));
+		}
+	}
+
+	@PostMapping("/donate/trustDonation")
+	public ResponseEntity<TrustDonation> saveTrustUser(@RequestBody TrustDonation donation) {
+		TrustDonation responseDonation = trustDonationService.saveTrustUser(donation);
+		return ResponseEntity.ok().body(responseDonation);
+	}
 	
 	
 	private  String generateTrackNumber() {

@@ -9,11 +9,9 @@ class transactionResponse extends Component {
         console.log(window.location.href)
         let orderId=window.location.href.split("?")[1].split("&")[0].split("=")[1];
         let status=window.location.href.split("?")[1].split("&")[1].split("=")[1];
-        let statusId=window.location.href.split("?")[1].split("&")[2].split("=")[1];
         if(orderId.startsWith("SCHL") && status==='CHARGED'){
             axios.get('http://localhost:6060/puthuyir/donate/paymentDonation/'+orderId+"/SUCCESS")
             .then(res=>{
-                console.log(res.data)
                 let emailPayload ={
                     from:'puthyiradminteam@putholi.com',
                     toEmailAddress:res.data.donationUser.emailAddress,
@@ -27,9 +25,8 @@ class transactionResponse extends Component {
                     'Content-Type': 'application/json',
                 }
                 console.log(emailPayload);
-                axios.post('http://localhost:5050/email/sendmail', emailPayload, { headers: headersPassing})
+                axios.post('http://localhost:5050/email/sendmail/school', emailPayload, { headers: headersPassing})
                 .then(response => {
-                    console.log(response)
                     this.props.history.push({
                     pathname: '/donationPaymentConfirmation',
                     user: res.data,
@@ -37,43 +34,54 @@ class transactionResponse extends Component {
                 });
             })
         }   
-        else{
+        else if(orderId.startsWith("TRST") && status==='CHARGED'){
+            axios.get('http://localhost:6060/puthuyir/donate/trustDonation/trust/'+orderId+"/SUCCESS")
+            .then(res=>{
+                console.log(res.data)
+                let emailPayload ={
+                    from:'puthyiradminteam@putholi.com',
+                    toEmailAddress:res.data.user.emailAddress,
+                    name:res.data.user.firstName + res.data.user.lastName,
+                    yourContirbutionAmount: res.data.amount,
+                    subject:'Your registration is success'
+                }
+                const headersPassing = {
+                    'Content-Type': 'application/json',
+                }
+                console.log(emailPayload);
+                axios.post('http://localhost:5050/email/sendmail/trust', emailPayload, { headers: headersPassing})
+                .then(response => {
+                    this.props.history.push({
+                        pathname: '/confirmation'
+                    });
+                });
+            })
+        }   
+        else if(orderId.startsWith("SCHL")){
             axios.get('http://localhost:6060/puthuyir/donate/paymentDonation/'+orderId+"/FAILURE")
             .then(res=>{
                 console.log(res.data)
-                window.alert("Payment is unsuccessful due to "+status)
+                window.alert("Payment failed due to "+status)
                 this.props.history.push({
                     pathname: '/index'
                 })
-                // let emailPayload ={
-                //     from:'puthyiradminteam@putholi.com',
-                //     toEmailAddress:res.data.donationUser.emailAddress,
-                //     name:res.data.donationUser.firstName + res.data.donationUser.lastName,
-                //     yourContirbutionAmount: res.data.amount,
-                //     subject:'Thanks !!! Your Tracking Id:'+ res.data.tracking_id,
-                //     trackId:res.data.tracking_id,
-                //     schoolName :res.data.school.schoolInfo.schoolName
-                // }
-                // const headersPassing = {
-                //     'Content-Type': 'application/json',
-                // }
-                // console.log(emailPayload);
-                // axios.post('http://localhost:5050/email/sendmail', emailPayload, { headers: headersPassing})
-                // .then(response => {
-                //     console.log(response)
-                //     this.props.history.push({
-                //     pathname: '/donationPaymentConfirmation',
-                //     user: res.data,
-                // });
-                // });
+            })
+        }
+        else if(orderId.startsWith("TRST")){
+            axios.get('http://localhost:6060/puthuyir/donate/trustDonation/trust/'+orderId+"/FAILURE")
+            .then(res=>{
+                console.log(res.data)
+                window.alert("Payment failed due to "+status)
+                this.props.history.push({
+                    pathname: '/index'
+                })
             })
         }
     }
     render() {
         return (
             <div>
-                 <HeaderComponent {...this.props}/>
-                 <div className="page_container">
+                 <div className="page_container" style={{textAlign:"center"}}>
                     <div className="breadcrumb">
                     <div className="wrap">
                         <div className="container">
@@ -81,8 +89,8 @@ class transactionResponse extends Component {
                         </div>
                     </div>
                     </div>
+                    <div class="spinner"></div>
                 </div>
-                <FooterComponent {...this.props}/>
             </div>
         )
     }
