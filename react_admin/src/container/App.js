@@ -60,7 +60,7 @@ class App extends Component {
         if(res.data.role!=="Volunteer"){
           history.push({
             pathname: '/payment',
-            user: res.data,
+            currentUser: res.data,
           });
         }
     })

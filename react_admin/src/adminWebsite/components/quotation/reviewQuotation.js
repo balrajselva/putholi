@@ -66,6 +66,8 @@ class reviewQuotation extends Component {
         });
     }
     selectQuotation=(e)=>{
+        e.preventDefault();
+        document.getElementById(e.target.id).setAttribute('checked','checked')
         this.setState({errorMessage:null});
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
@@ -75,7 +77,7 @@ class reviewQuotation extends Component {
         let reqRefQuo = this.state.selectedQuotations.filter(list=>parseInt(list.requirementId) === parseInt(reqId));
         if(reqRefQuo.length > 0){
             this.setState({errorMessage:"Cannot select multiple quotation for same requirement"})
-            document.getElementById(e.target.id).checked = false;
+            document.getElementById(e.target.id).removeAttribute('checked');
             return
         }
         let isDelete = false;
