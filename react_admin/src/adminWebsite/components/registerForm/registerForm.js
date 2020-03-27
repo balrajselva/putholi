@@ -143,6 +143,10 @@ class registerForm extends Component {
             document.getElementById('identityProof').style.borderColor="#d2d6de";
             document.getElementById('email').style.borderColor="#d2d6de";
             document.getElementById('phoneNumber').style.borderColor="#d2d6de";
+            let status="PaymentPending";
+            if(this.state.role==="Volunteer"){
+                status="NewUser"
+            }
             const user={
                 firstName:this.state.firstName,
                 lastName:this.state.lastName,
@@ -157,7 +161,7 @@ class registerForm extends Component {
                     state:this.state.state,
                     country:this.state.country,
                 },
-                status:"New User",
+                status:status,
                 role:this.state.role,
                 emailAddress:this.state.email,
                 phoneNumber:this.state.phoneNumber,

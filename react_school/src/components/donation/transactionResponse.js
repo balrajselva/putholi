@@ -49,6 +49,7 @@ class transactionResponse extends Component {
                     'Content-Type': 'application/json',
                 }
                 console.log(emailPayload);
+                axios.put('http://localhost:6060/puthuyir/updateUser/'+res.data.user.userid+"/NewUser")
                 axios.post('http://localhost:5050/email/sendmail/trust', emailPayload, { headers: headersPassing})
                 .then(response => {
                     this.props.history.push({

@@ -153,7 +153,7 @@ class UserDetailsForm extends Component {
                     country:this.state.country,
                 },
                 role:this.state.role,
-                status:"New User",
+                status:"NewUser",
                 emailAddress:this.props.user.emailAddress,
                 phoneNumber:this.state.phoneNumber,
                 proofOfId:{
