@@ -84,7 +84,7 @@ class viewRequirements extends Component {
                 window.alert("Quotations submitted successfully!")
                 this.props.history.push({
                     pathname: '/volunteerSchoolCheck',
-                    user:this.props.location.user,
+                    currentUser:this.props.location.currentUser,
                     school:this.props.location.school,
                     ...this.props            
                 });

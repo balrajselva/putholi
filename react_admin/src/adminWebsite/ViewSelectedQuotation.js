@@ -37,14 +37,14 @@ class ViewSelectedQuotation extends Component {
             if(this.state.currentUser.role==="Reviewer"){
                 this.props.history.push({
                     pathname:"/reviewer",
-                    user:this.props.location.user,
+                    currentUser:this.props.location.currentUser,
                     ...this.props
                 })
             }
             else if(this.state.currentUser.role==="Approver"){
                 this.props.history.push({
                     pathname:"/approver",
-                    user:this.props.location.user,
+                    currentUser:this.props.location.currentUser,
                     ...this.props
                 })
             }

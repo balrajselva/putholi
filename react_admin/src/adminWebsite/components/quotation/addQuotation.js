@@ -81,7 +81,7 @@ saveClicked=()=>{
 cancelClicked=()=>{
     this.props.history.push({
         pathname:"/viewRequirements",
-        user:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         school:this.props.location.school,
         ...this.props
     })    
@@ -94,7 +94,7 @@ saveQuotation=(quotation)=>{
         this.props.history.push({
             pathname: '/viewRequirements',
             quotation: res.data,
-            user:this.props.location.user,
+            currentUser:this.props.location.currentUser,
             school:this.props.location.school,
             ...this.props            
         });

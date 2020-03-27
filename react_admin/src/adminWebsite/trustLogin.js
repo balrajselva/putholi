@@ -28,41 +28,40 @@ class trustLogin extends Component {
       axios.post(this.props.config+"/puthuyir/verify_user",user)
       .then(res=>{
         console.log(res.data)
-          // if(res.data.status!=="PaymentPending"){
-          //   history.push({
-          //     pathname: '/payment',
-          //     user: res.data,
-          //   });
-          // }
-          // else
-          if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
+          if(res.data.status==="PaymentPending"){
+            this.props.history.push({
+              pathname: '/payment',
+              currentUser: res.data,
+            });
+          }
+          else if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
             this.props.history.push({
               pathname: '/volunteerSchoolCheck',
-              user : res.data
+              currentUser : res.data
             });
           }
           else if(res.data!=="" && (res.data.role==="Admin" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/accessReview',
-              user: res.data 
+              currentUser: res.data 
             });
           }
           else if(res.data!=="" && res.data.role==="Approver" && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/approver',
-              user: res.data 
+              currentUser: res.data 
             });
           }
           else if(res.data!=="" && res.data.role==="Reviewer" && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/reviewer',
-              user: res.data 
+              currentUser: res.data 
             });
           }
           else if(res.data!=="" && (res.data.role==="Trust Member" ||res.data.role==="Co-ordinator" ||res.data.role==="Fund Raiser" ) && res.data.status==="ApprovedUser"){
             this.props.history.push({
               pathname: '/trustMemberScreen',
-              user: res.data
+              currentUser: res.data
             });
           }
           else{

@@ -5,11 +5,11 @@ class ApproverMenu extends Component {
     render() {
         const accessReview={
             pathname:"/approverAccessReview",
-            user:this.props.currentUser
+            currentUser:this.props.currentUser
           }
           const approverSchoolReview={
             pathname:"/approver",
-            user:this.props.currentUser,
+            currentUser:this.props.currentUser,
             ...this.props
           }
         return (

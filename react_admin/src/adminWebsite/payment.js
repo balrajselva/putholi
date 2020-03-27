@@ -34,7 +34,7 @@ class payment extends Component {
         console.log(paymentPayload)
         let donationUserPayload={
           orderId: orderId,
-          user:this.props.location.user,
+          user:this.props.location.currentUser,
           amount:this.state.registrationFee
         }
         axios.post('http://localhost:6060/puthuyir/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
@@ -60,7 +60,7 @@ class payment extends Component {
                   <form>
                     <div className="form-group has-feedback">
                       <label for="name">Name</label>
-                      <input type="email" className="form-control" placeholder="Name" id="name" value={this.props.location.user.firstName} disabled/>
+                      <input type="text" className="form-control" placeholder="Name" id="name" value={this.props.location.user.firstName} disabled/>
                       <span className="glyphicon glyphicon-envelope form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback">

@@ -5,8 +5,8 @@ class VolunteerMenu extends Component {
     render() {
         const accessReview={
             pathname:"/volunteerSchoolCheck",
-            user:this.props.currentUser
-          }
+            currentUser:this.props.currentUser
+        }
         return (
             <div>
                 <aside className="main-sidebar">

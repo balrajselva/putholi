@@ -6,33 +6,29 @@ class Menu extends Component {
     render() {
         const accessReview={
           pathname:"/accessReview",
-          user:this.props.currentUser
+          currentUser:this.props.currentUser
         }
         const adminNewSchoolReview={
           pathname:"/adminNewSchoolReview",
-          user:this.props.currentUser,
+          currentUser:this.props.currentUser,
           ...this.props
         }
         const adminPendingWorkflow={
           pathname:"/adminPendingWorkflow",
-          user:this.props.currentUser,
+          currentUser:this.props.currentUser,
           ...this.props
         }
         const adminInitiateWorkOrder={
           pathname:"/workOrder",
-          user:this.props.currentUser,
+          currentUser:this.props.currentUser,
           ...this.props
         }
         return (
             <div>
-            {/* Left side column. contains the logo and sidebar */}
               <aside className="main-sidebar">
-                {/* sidebar: style can be found in sidebar.less */}
                 <section className="sidebar">
-                  {/* Sidebar user panel */}
                   <div className="user-panel">
                     <div className="pull-left image">
-                    {/* <img src={'data:image/png;base64,'+this.props.currentUser.identityProof[0].image} className="img-circle" alt="User Image" /> */}
                       <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
                     </div>
                     <div className="pull-left info">

@@ -46,7 +46,7 @@ class VolunteerSchoolCheck extends Component {
                 newTo = { 
                     pathname: "/volunteerSchoolReview", 
                     school:this.state.school,
-                    user:this.props.location.user
+                    currentUser:this.props.location.currentUser
                 };
                 pageLink="More Details";
             }
@@ -54,7 +54,7 @@ class VolunteerSchoolCheck extends Component {
                 newTo = { 
                     pathname: "/viewRequirements", 
                     school:this.state.school,
-                    user:this.props.location.user
+                    currentUser:this.props.location.currentUser
                 };
                 pageLink="View requirements";
             }
@@ -62,7 +62,7 @@ class VolunteerSchoolCheck extends Component {
                 newTo = { 
                     pathname: "/addInvoice", 
                     school:this.state.school,
-                    user:this.props.location.user
+                    currentUser:this.props.location.currentUser
                 };
                 pageLink="Add Invoice";
             }

@@ -35,7 +35,7 @@ import axios from 'axios';
                 newTo = { 
                     pathname: "/approverSchoolCheck", 
                     school:this.state.schools[i],
-                    user:this.props.location.user,
+                    currentUser:this.props.location.currentUser,
                     ...this.props
                 };
             }
@@ -44,7 +44,7 @@ import axios from 'axios';
                 newTo = { 
                     pathname: "/approverReviewQuotation", 
                     school:this.state.schools[i],
-                    user:this.props.location.user,
+                    currentUser:this.props.location.currentUser,
                     ...this.props
                 };
             }

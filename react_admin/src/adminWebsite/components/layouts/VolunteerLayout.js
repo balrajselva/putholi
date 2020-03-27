@@ -8,8 +8,8 @@ class VolunteerLayout extends Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.props.location.user}/>
-                <VolunteerMenu currentUser={this.props.location.user}/>
+                <Header currentUser={this.props.location.currentUser}/>
+                <VolunteerMenu currentUser={this.props.location.currentUser}/>
                 {this.props.children}
                 <Footer/>
             </div>
