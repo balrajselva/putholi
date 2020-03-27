@@ -8,8 +8,8 @@ export default class ReviewerLayout extends Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.props.location.user}/>
-                <ReviewerMenu currentUser={this.props.location.user}/>
+                <Header currentUser={this.props.location.currentUser}/>
+                <ReviewerMenu currentUser={this.props.location.currentUser}/>
                 {this.props.children}
                 <Footer/>
             </div>

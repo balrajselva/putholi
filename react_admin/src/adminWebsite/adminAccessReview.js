@@ -7,7 +7,7 @@ import {withRouter} from 'react-router-dom';
 
 class adminAccessReview extends Component {
     state={
-        currentUser:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         users:"",
         getUserList:true,
         spinner:true
@@ -81,6 +81,7 @@ class adminAccessReview extends Component {
         return rows;
     }   
     render() {
+        console.log(this.props)
         return (
             <div>
             <div class="adminContainer" style={{fontSize:"large"}}>

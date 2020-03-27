@@ -75,7 +75,7 @@ class AssignToVolunteer extends Component {
                 window.alert("Status updated successfully!");
                 this.props.history.push({
                         pathname:"/adminPendingWorkflow",
-                        user:this.props.location.user,
+                        currentUser:this.props.location.currentUser,
                         ...this.props
                 })
             }
@@ -91,7 +91,7 @@ class AssignToVolunteer extends Component {
     render() {
       const schoolList={
         pathname:"/adminPendingWorkflow",
-        user:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         ...this.props
       }
         return (

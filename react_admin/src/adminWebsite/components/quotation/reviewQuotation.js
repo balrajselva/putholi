@@ -30,7 +30,7 @@ class reviewQuotation extends Component {
             this.setState({spinner:false});
             this.props.history.push({
                 pathname:"/adminPendingWorkflow",
-                user:this.props.location.user,
+                currentUser:this.props.location.currentUser,
                 ...this.props
             })
         })

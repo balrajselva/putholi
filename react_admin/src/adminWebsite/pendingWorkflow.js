@@ -37,7 +37,7 @@ class pendingWorkflow extends Component {
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
-                user:this.props.location.user,
+                currentUser:this.props.location.currentUser,
                 ...this.props
             };
             if(this.state.schools[i].schoolStatus==="ADMIN_APPROVED_QUOTATION" || this.state.schools[i].schoolStatus==="REVIEWER_APPROVED_QUOTATION"){

@@ -6,7 +6,7 @@ class SponsorMenu extends Component {
     render() {
         const referVolunteer={
             pathname:"/referVolunteer",
-            user:this.props.currentUser
+            currentUser:this.props.currentUser
         }
         return (
             <aside className="main-sidebar">

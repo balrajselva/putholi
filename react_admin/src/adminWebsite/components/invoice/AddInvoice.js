@@ -81,7 +81,7 @@ class AddInvoice extends Component {
             window.alert("Invoices submitted successfully!")
             this.props.history.push({
                 pathname: '/volunteerSchoolCheck',
-                user:this.props.location.user,
+                currentUser:this.props.location.currentUser,
                 school:this.props.location.school,
                 ...this.props            
             });

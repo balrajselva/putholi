@@ -52,19 +52,19 @@ class adminRoleCheck extends Component {
           if(this.state.currentUser.role==="Admin"){
             this.props.history.push({ 
               pathname:"/accessReview", 
-              user:this.state.currentUser
+              currentUser:this.state.currentUser
             });
           }
           else if(this.state.currentUser.role==="Reviewer"){
             this.props.history.push({ 
               pathname:"/reviewerAccessReview", 
-              user:this.state.currentUser
+              currentUser:this.state.currentUser
             });
           }
           else if(this.state.currentUser.role==="Approver"){
             this.props.history.push({ 
               pathname:"/approverAccessReview", 
-              user:this.state.currentUser
+              currentUser:this.state.currentUser
             });
           }
         }
@@ -144,7 +144,7 @@ class adminRoleCheck extends Component {
                               <div className="timeline-footer">
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
-                                <Link to={{pathname:returnLink, users:this.state.users, user:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
+                                <Link to={{pathname:returnLink, users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
                           </li>

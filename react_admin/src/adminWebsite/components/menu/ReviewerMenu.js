@@ -5,11 +5,11 @@ class ReviewerMenu extends Component {
     render() {
         const accessReview={
             pathname:"/reviewerAccessReview",
-            user:this.props.currentUser
+            currentUser:this.props.currentUser
           }
           const reviewerSchoolReview={
             pathname:"/reviewer",
-            user:this.props.currentUser,
+            currentUser:this.props.currentUser,
             ...this.props
           }
         return (

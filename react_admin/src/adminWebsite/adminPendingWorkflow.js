@@ -60,7 +60,7 @@ class adminPendingWorkflow extends Component {
             const newTo = { 
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
-                user:this.props.location.user,
+                currentUser:this.props.location.currentUser,
                 ...this.props
             };
             if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
