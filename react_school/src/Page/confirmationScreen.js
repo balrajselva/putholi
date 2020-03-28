@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
-class confirmationScreen extends Component {
+class ConfirmationScreen extends Component {
     render() {
         return (
             <div className="page_container" style={{textAlign:"center",lineHeight:"2"}}>
@@ -17,4 +18,4 @@ class confirmationScreen extends Component {
     }
 }
 
-export default confirmationScreen;
+export default withRouter(ConfirmationScreen);

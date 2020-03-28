@@ -5,27 +5,29 @@ import axios from 'axios'
 class ViewSelectedQuotation extends Component {
     state={
         spinner:true,
-        currentUser:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         getRequirementList:true,
         totalAmount:0,
         reqList:null,
         comment:null,
         temp1:null,
-        status:null
+        status:null,
+        quotationImage:null,
+        showImage:false
     } 
     approveQuotation=(e)=>{
         let status=null;
         console.log(e.target.id);
         if(e.target.id==="Accepted"){
-            if(this.props.location.user.role==="Reviewer")
+            if(this.props.location.currentUser.role==="Reviewer")
                 status="ReviewerConfirmed";
-            else if(this.props.location.user.role==="Approver")
+            else if(this.props.location.currentUser.role==="Approver")
                 status="ApproverConfirmed";
         }
         else{
-            if(this.props.location.user.role==="Reviewer")
+            if(this.props.location.currentUser.role==="Reviewer")
                 status="ReviewerRejected";
-            else if(this.props.location.user.role==="Approver")
+            else if(this.props.location.currentUser.role==="Approver")
                 status="ApproverRejected";
         }
         this.setState({spinner:true});
@@ -71,6 +73,29 @@ class ViewSelectedQuotation extends Component {
         })
     }
 
+    selectQuotationImage=(e)=>{
+        this.setState({spinner:true});
+        let reqId=e.target.id.split("/")[0];
+        let quoId=e.target.id.split("/")[1];
+        console.log(this.state.reqList[reqId],quoId)
+        let quotationList=this.state.reqList[reqId];
+        for(let i=0;i<quotationList.length;i++){
+            let quotation=quotationList[i];
+            if(quotation.quotationId+""==quoId+""){
+                this.setState({
+                    quotationImage:quotation.quotationImages[0].image,
+                    showImage:true,
+                    spinner:false
+                })
+                document.getElementById('modal-default').style.display='block';
+            }
+        }
+    }
+
+    closeModel=()=>{
+        document.getElementById('modal-default').style.display='none';
+    }
+
     createTable=(iter)=>{
         console.log(iter);
         var rows=[];
@@ -82,7 +107,7 @@ class ViewSelectedQuotation extends Component {
             rowsUpdated=true;
             rows.push(
                 <tr>   
-                    <td><input type="button" value="Show quotation"/></td>
+                    <td><input type="button"  id={iter+"/"+quotation.quotationId} value="Show quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
                     <td>{quotation.companyName}</td>
                     <td>{quotation.city}</td>
                     <td>{quotation.contact}</td>
@@ -202,6 +227,23 @@ class ViewSelectedQuotation extends Component {
                 </div>
                 {this.state.spinner?<div class="spinner"></div>:null}
                 </section>
+                <div className="modal" id="modal-default">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.state.quotationImage} id ="image1" alt="" ></img>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                </div>    
                 </div>
             </div>
         </div>

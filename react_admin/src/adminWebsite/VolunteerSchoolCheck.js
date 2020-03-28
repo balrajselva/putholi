@@ -10,8 +10,8 @@ class VolunteerSchoolCheck extends Component {
         getSchools:true
     }
     componentDidMount(){
-        if(this.props.location.user.school_id!==null){
-            axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.user.school_id)
+        if(this.props.location.currentUser.school_id!==null){
+            axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.currentUser.school_id)
             .then(res=>{
                 console.log(res.data)
                 this.setState({
@@ -89,7 +89,7 @@ class VolunteerSchoolCheck extends Component {
                 <section className="content-header">
                     {/* Small boxes (Stat box) */}
                     <div className="row">
-                    <SmallBoxCard content={this.props.location.user.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
+                    <SmallBoxCard content={this.props.location.currentUser.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
                     {/* ./col */}
                     <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                     </div>

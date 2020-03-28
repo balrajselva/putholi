@@ -55,7 +55,7 @@ createTable=()=>{
           <td>{this.state.requirements[i].assetName}</td>
           <td>{this.state.requirements[i].quantity}</td>                                        
           <td>{quotation.totalAmount}</td>
-          <td></td>
+          <td>{this.state.requirements[i].collectedAmount}</td>
           <td>More details</td>
       </tr>)			
   }
@@ -166,7 +166,6 @@ createTable=()=>{
                     <th>Unit</th>
                     <th>Fund Required</th>
                     <th>Fund Collected</th>
-                    <th>More Details</th>
                   </tr>
                   {this.state.getRequirementList?null:this.createTable()}
                 </tbody></table>
@@ -176,7 +175,6 @@ createTable=()=>{
           {/* /.box-body */}
           <div className="timeline-footer">
             <a href="Confirm_new_requirement_fund_allotment.html" className="btn btn-primary btn-xs">Confirm</a>
-            <a className="btn btn-danger btn-xs">Reject</a>
             <a href="fund_allotment.html" className="btn btn-primary btn-xs">Back</a>
           </div>
         </div>

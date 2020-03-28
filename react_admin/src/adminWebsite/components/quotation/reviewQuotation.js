@@ -13,12 +13,11 @@ class reviewQuotation extends Component {
         comment:null,
         temp1:null,
         selectedQuotations:[],
-        showImage:false,
         errorMessage:null,
         quotationImage:null
     } 
     approveQuotation=()=>{
-        if(this.state.selectedQuotations.length != this.state.reqList.length){
+        if(this.state.selectedQuotations.length != Object.getOwnPropertyNames(this.state.reqList).length){
             this.setState({errorMessage:"Please select atleast one quotation for each requirement"})
             return
         }
@@ -118,9 +117,11 @@ class reviewQuotation extends Component {
             }
         }
     }
+
     closeModel=()=>{
         document.getElementById('modal-default').style.display='none';
     }
+    
     selectQuotationImage=(e)=>{
         this.setState({spinner:true});
         let reqId=e.target.id.split("/")[0];
@@ -132,7 +133,6 @@ class reviewQuotation extends Component {
             if(quotation.quotationId+""==quoId+""){
                 this.setState({
                     quotationImage:quotation.quotationImages[0].image,
-                    showImage:true,
                     spinner:false
                 })
                 document.getElementById('modal-default').style.display='block';
