@@ -6,8 +6,7 @@ import java.util.stream.Collectors;
 
 import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.*;
-import com.revamp.core.service.ProjectService;
-import com.revamp.core.service.TrustDonationService;
+import com.revamp.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.revamp.core.service.DonationService;
-import com.revamp.core.service.DonationUserService;
 
 /**
  * 
@@ -37,6 +33,9 @@ public class DonationController {
 
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private RequirementService requirementService;
 
 	@Autowired
 	private TrustDonationService trustDonationService;
@@ -137,6 +136,7 @@ public class DonationController {
 			Donation donation = donationService.getByOrderId(orderId);
 			long id = projectService.saveOrUpdate(donation.getProject().getProjectId(),donation.getEstimate(),donation.getStatus(),donation.getCollectedAmount());
 			donation.setPaymentStatus(status);
+			requirementService.updateRequirements(donation);
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
 		}
 		else{

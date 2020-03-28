@@ -49,6 +49,12 @@ public class Requirement extends AuditableEntity {
 
 	@Column(name = "quantity")
 	private int quantity;
+
+	@Column(name = "estimate")
+	private Integer estimate;
+
+	@Column(name = "collected_amount")
+	private Integer collectedAmount = 0;
 	
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
