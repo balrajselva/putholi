@@ -72,6 +72,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 		repository.deleteById(invoiceId);
 	}
 
+	@Override
+	public List<Invoice> getInvoiceBySchoolId(long schoolId) {
+		return repository.findBySchoolId(schoolId);
+	}
+
 	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
 		list.forEach(schoolImg -> {
 			String tmpDirPath = dirPath+"\\"+fileSubPath;

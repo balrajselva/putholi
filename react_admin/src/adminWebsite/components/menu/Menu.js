@@ -33,31 +33,31 @@ class Menu extends Component {
                     </div>
                     <div className="pull-left info">
                       <p>{this.props.currentUser.firstName}</p>
-                      <a href="#"><i className="fa fa-circle text-success" /> Online</a>
+                      <i className="fa fa-circle text-success" /> Online
                     </div>
                   </div>
                   {/* search form */}
                   <form action="#" method="get" className="sidebar-form">
-                    <div className="input-group">
+                    { /* <div className="input-group">
                       <input type="text" name="q" className="form-control" placeholder="Search..." />
                       <span className="input-group-btn">
                         <button type="submit" name="search" id="search-btn" className="btn btn-flat"><i className="fa fa-search" />
                         </button>
                       </span>
-                    </div>
+        </div> */ }
                   </form>
                   {/* /.search form */}
                   {/* sidebar menu: : style can be found in sidebar.less */}
                   <ul className="sidebar-menu" data-widget="tree">
-                    <li className="header">Admin Previlleges</li>
+                   <li className="header">Admin Previlleges</li> 
                     <li className="active treeview">
-                      <a href="">
+                     { /* <a href="accessReview">
                         <i className="fa fa-pie-chart" />
                         <span>Assignments</span>
                         <span className="pull-right-container">
                           <i className="fa fa-angle-left pull-right" />
                         </span>
-                      </a>
+        </a> */ }
                       <ul className="treeview-menu ">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
                         <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
@@ -79,7 +79,7 @@ class Menu extends Component {
                         <li><a href="#"><i className="fa fa-circle-o" /> Sponsor Contributions</a></li>
                       </ul>
                     </li> */}
-                    <li className="treeview">
+                    {/* <li className="treeview">
                       <a href="">
                         <i className="fa fa-folder" /> <span>Vendor Management</span>
                         <span className="pull-right-container">
@@ -103,17 +103,17 @@ class Menu extends Component {
                         <li><a href="admin_receipt_upload.html"><i className="fa fa-circle-o" />Upload Receipt</a></li>
                         <li><a href="admin_initiate_workorder.html"><i className="fa fa-circle-o" />Initiate Workorder</a></li>
                       </ul>
-                    </li>
+                    </li> */}
                     <li className="active treeview">
-                      <a href="admin_initiate_workorder.html">
+                  { /*    <a href="admin_initiate_workorder.html">
                         <i className="fa fa-folder" /> <span>Workflow Management</span>
                         <span className="pull-right-container">
                           <i className="fa fa-angle-left pull-right" />
                         </span>
-                      </a>
+                  </a> */ }
                       <ul className="treeview-menu">
                         <li><Link to={adminPendingWorkflow}><i className="fa fa-circle-o" />Pending Workflows</Link></li>
-                        <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li>
+                       { /* <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li> */}
                       </ul>
                     </li>
                   </ul>

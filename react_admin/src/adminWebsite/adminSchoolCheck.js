@@ -45,19 +45,22 @@ class adminSchoolCheck extends Component {
             if(this.props.location.currentUser.role==="Admin"){
               this.props.history.push({ 
                 pathname:"/adminNewSchoolReview", 
-                currentUser:this.props.location.currentUser
+                currentUser:this.props.location.currentUser,
+                school:this.props.location.school
               });
             }
             else if(this.props.location.currentUser.role==="Reviewer"){
               this.props.history.push({ 
                 pathname:"/reviewerSchoolCheck", 
-                currentUser:this.props.location.currentUser
+                currentUser:this.props.location.currentUser,
+                school:this.props.location.school
               });
             }
           else if(this.props.location.currentUser.role==="Approver"){
             this.props.history.push({ 
               pathname:"/approverSchoolReview", 
-              currentUser:this.props.location.currentUser
+              currentUser:this.props.location.currentUser,
+              school:this.props.location.school
             });
           }
           }

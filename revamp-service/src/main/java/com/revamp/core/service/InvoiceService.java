@@ -21,4 +21,6 @@ public interface InvoiceService {
 	long save(Invoice invoice);
 
 	void deleteQuotation(long invoiceId);
+
+	List<Invoice> getInvoiceBySchoolId(long schoolId);
 }

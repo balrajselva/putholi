@@ -100,6 +100,11 @@ public class InvoiceController {
 		return ResponseEntity.ok().body(invoice);
 	}
 
+	@GetMapping("/invoice/{school_id}")
+	public ResponseEntity<List<Invoice>> getAllInvoice(@PathVariable("school_id") long schoolId) {
+		return ResponseEntity.ok().body(invoiceService.getInvoiceBySchoolId(schoolId));
+	}
+
 	@DeleteMapping("/invoice/{id}")
 	public ResponseEntity<String> deleteInvoice(@PathVariable("id") long invoiceId) {
 		invoiceService.deleteQuotation(invoiceId);

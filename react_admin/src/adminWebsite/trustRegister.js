@@ -46,7 +46,8 @@ class trustRegister extends Component {
                     <span className="glyphicon glyphicon-euro form-control-feedback" />
                 </div>
               </div>
-            <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/>
+            {/* <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/> */}
+            <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Reviewer","Volunteer","Trust Member"]}/>
           </div>
         </div>
       </body>

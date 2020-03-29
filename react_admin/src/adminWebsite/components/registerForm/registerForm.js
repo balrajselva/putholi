@@ -293,7 +293,7 @@ class registerForm extends Component {
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
-                        <input type="text" className="form-control" id="pincode" placeholder="Pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
+                        <input type="number" className="form-control" id="pincode" placeholder="Pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
                         <span className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
@@ -330,7 +330,7 @@ class registerForm extends Component {
                         <span className="glyphicon glyphicon-envelope form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
-                        <input type="phone" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
+                        <input type="number" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
                         <span className="glyphicon glyphicon-phone form-control-feedback" />
                     </div>
                 </div>

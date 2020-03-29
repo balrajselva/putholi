@@ -56,7 +56,7 @@ class VolunteerSchoolCheck extends Component {
                     school:this.state.school,
                     currentUser:this.props.location.currentUser
                 };
-                pageLink="View requirements";
+                pageLink="Upload Quotation";
             }
             if(this.state.school.schoolStatus==="null"){
                 newTo = { 
@@ -67,7 +67,7 @@ class VolunteerSchoolCheck extends Component {
                 pageLink="Add Invoice";
             }
             if(this.state.school.schoolStatus==="QuotationAdded"){
-                pageLink="Sent for quotation approval";
+                pageLink="Wait for quotation approval";
             }
             rowsUpdated=true;
             rows.push(<tr>
