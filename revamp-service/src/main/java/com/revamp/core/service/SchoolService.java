@@ -27,4 +27,7 @@ public interface SchoolService {
     long saveDEOresponse(DEOInfo deoInfo, Map<String, byte[]> files, String imgPath);
 
 	School updateSchoolStatus(long id, String status);
+
+	School updateSchoolStatusAndVolunteerId(long id,Long volunteerId, String status);
+
 }

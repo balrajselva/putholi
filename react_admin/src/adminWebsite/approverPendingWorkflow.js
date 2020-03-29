@@ -81,18 +81,11 @@ import axios from 'axios';
                         <li className="active"><medium>Dashboard</medium></li>
                         </ol>
                     </section>
-                    {/* Main content */}
                     <section className="content">
-                        {/* Small boxes (Stat box) */}
                         <div className="row" >
                         <SmallBoxCard content="Approver"  linkTo="/approver" colour="bg-green"/>
-                        {/* ./col */}
                         <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
-                        {/* ./col */}
                         </div>
-                        {/* /.row */}
-                        {/* Main row */}
-            
             <div className="row">
             <div className="col-xs-12">
                 <div className="box">
@@ -107,7 +100,6 @@ import axios from 'axios';
                     </div>
                     </div>
                 </div>
-                {/* /.box-header */}
                 <div className="box-body table-responsive no-padding">
                 <table className="table table-hover">
                                 <tbody><tr>

@@ -28,4 +28,6 @@ public interface UserService {
 	User updateUserSchoolStatus(long userId, long schoolId);
 
 	List<User> findAllVolunteers();
+
+	void removeSchoolId(Long oldVolunteerId);
 }
