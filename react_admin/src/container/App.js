@@ -36,6 +36,7 @@ import ViewSelectedQuotation from '../adminWebsite/ViewSelectedQuotation';
 import FundAllotment from '../adminWebsite/FundAllotment';
 import AdminInitiateWorkOrder from '../adminWebsite/AdminInitiateWorkOrder';
 import AddInvoice from '../adminWebsite/components/invoice/AddInvoice';
+import ReassignVolunteer from '../adminWebsite/ReassignVolunteer';
 
 class App extends Component {
   state = {
@@ -124,8 +125,9 @@ class App extends Component {
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
-            <Route path="/volunteerRegister" history={history} render={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
-            <Route path="/payment" history={history} render={(props)=><Payment {...props}{...this.props}/>}/>
+            <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
+            <Route path="/payment" history={history} component={(props)=><Payment {...props}{...this.props}/>}/>
+            <AdminLayoutRoute path="/reassignVolunteer" history={history} component={(props)=><ReassignVolunteer {...props}{...this.props}/>}/>            
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>

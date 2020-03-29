@@ -174,6 +174,13 @@ public class UserController {
 		return ResponseEntity.ok().body(userList);
 	}
 
+	@GetMapping("/volunteer/getAll")
+	public ResponseEntity<List<User>> findAll(){
+		List<User> userList=userService.findAllVolunteers();
+		System.out.println(userList);
+		return ResponseEntity.ok().body(userList);
+	}
+
 	@GetMapping("/trustMemberRegistration")
 	public ResponseEntity<String> trustMemberRegistraton(){
 		return ResponseEntity.ok().body(regFee);

@@ -83,6 +83,16 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public List<User> findAllVolunteers() {
+		return userRepository.findAllVolunteers();
+	}
+
+	@Override
+	public void removeSchoolId(Long oldVolunteerId) {
+		userRepository.removeSchoolId(oldVolunteerId);
+	}
+
 	public User get(long id) {
 		return userRepository.findById(id).orElse(null);
 	}

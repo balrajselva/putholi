@@ -18,7 +18,7 @@ import DonationConfirmationPage from '../components/donation/paymentConfirmation
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
-import ConfirmatinScreen from '../Page/confirmationScreen';
+import ConfirmatinScreen from '../Page/ConfirmationScreen';
 import SchoolLayout from '../components/layouts/schoolLayout';
 import TransactionResponse from '../components/donation/transactionResponse';
 

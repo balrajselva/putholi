@@ -19,4 +19,12 @@ public interface RequirementRepository extends CrudRepository<Requirement, Long>
 	@Modifying
 	@Query("UPDATE Requirement s set s.status = :status, modifiedDate = now() where s.requirementId = :id")
     void updateRequirementStatus(long id, PuthuyirLookUp status);
+
+	@Modifying
+	@Query("UPDATE Requirement s set s.estimate = :estimate, modifiedDate = now() where s.requirementId = :id")
+	void updateRequirementEstimate(long id, Integer estimate);
+
+	@Modifying
+	@Query("UPDATE Requirement s set s.collectedAmount = :collectedAmount, modifiedDate = now() where s.requirementId = :id")
+	void updateRequirementCollectedAmount(long id, Integer collectedAmount);
 }

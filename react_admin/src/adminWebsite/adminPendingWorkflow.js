@@ -53,9 +53,13 @@ class adminPendingWorkflow extends Component {
                 nextPage="fundAllotment"
                 pageLink="Click for details";
             }
-            if(this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
+            if(this.state.schools[i].schoolStatus==="FUND_ALLOTED"){
                 nextPage="workOrder"
                 pageLink="Initiate Work Order";
+            }
+            if(this.state.schools[i].schoolStatus==="INVOICE_APPROVED"){
+                nextPage="fundDisbursement"
+                pageLink="Initiate Fund Disbursement";
             }
             const newTo = { 
                 pathname: "/"+nextPage, 
@@ -63,7 +67,10 @@ class adminPendingWorkflow extends Component {
                 currentUser:this.props.location.currentUser,
                 ...this.props
             };
-            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT"){
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || 
+                this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || 
+                    this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT" || 
+                    this.state.schools[i].schoolStatus==="FUND_ALLOTED"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>

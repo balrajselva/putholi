@@ -153,8 +153,15 @@ public class SchoolServiceImpl implements SchoolService {
 		return deoInfo.getDeoInfoId();
 	}
 
+	@Override
 	public School updateSchoolStatus(long id, String status) {
 		schoolRepository.updateSchoolStatus(id, status);
+		return schoolRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public School updateSchoolStatusAndVolunteerId(long id, Long volunteerId, String status) {
+		schoolRepository.updateSchoolStatusAndVolunteerId(id, status,volunteerId);
 		return schoolRepository.findById(id).orElse(null);
 	}
 
