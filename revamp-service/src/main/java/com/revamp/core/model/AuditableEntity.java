@@ -31,7 +31,4 @@ import lombok.Data;
 	@Column(name = "modified_by")
 	@LastModifiedBy
 	private String modifiedBy;
-	
-	
-	
 }

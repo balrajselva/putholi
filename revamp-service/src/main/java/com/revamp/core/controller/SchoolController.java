@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,10 +170,20 @@ public class SchoolController {
     }
 
 	@PostMapping("/school/assignSchool/{schoolId}/{userId}")
+	@Transactional
 	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") long schoolId,@PathVariable("userId") long userId) {
 		System.out.println(schoolId+"---"+userId);
 		userService.updateUserSchoolStatus(userId,schoolId);
-		schoolService.updateSchoolStatus(schoolId,"VOLUNTEER_ASSIGNED");
+		schoolService.updateSchoolStatusAndVolunteerId(schoolId,userId,"VOLUNTEER_ASSIGNED");
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+	}
+
+	@PostMapping("/school/changeVolunteer/{schoolId}/{oldVolunteerId}/{newVolunteerId}")
+	@Transactional
+	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") long schoolId,@PathVariable("oldVolunteerId") Long oldVolunteerId,@PathVariable("newVolunteerId") Long newVolunteerId) {
+		userService.updateUserSchoolStatus(newVolunteerId,schoolId);
+		userService.removeSchoolId(oldVolunteerId);
+		schoolService.updateSchoolStatusAndVolunteerId(schoolId,newVolunteerId,"VOLUNTEER_REASSIGNED");
 		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 	}
 }

@@ -33,4 +33,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 	@Query("SELECT u FROM User u where u.role='Volunteer' and u.school_id=NULL and u.status='ApprovedUser'")
 	List<User> findAllVolunteers();
+
+	@Modifying
+	@Query("UPDATE User u set u.school_id = NULL, modifiedDate = now() where u.userid = :oldVolunteerId")
+	void removeSchoolId(@Param("oldVolunteerId")Long oldVolunteerId);
 }

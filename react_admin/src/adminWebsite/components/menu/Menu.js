@@ -18,8 +18,8 @@ class Menu extends Component {
           currentUser:this.props.currentUser,
           ...this.props
         }
-        const adminInitiateWorkOrder={
-          pathname:"/workOrder",
+        const reassignVolunteer={
+          pathname:"/reassignVolunteer",
           currentUser:this.props.currentUser,
           ...this.props
         }
@@ -113,6 +113,7 @@ class Menu extends Component {
                   </a> */ }
                       <ul className="treeview-menu">
                         <li><Link to={adminPendingWorkflow}><i className="fa fa-circle-o" />Pending Workflows</Link></li>
+                        <li><Link to={reassignVolunteer}><i className="fa fa-circle-o" />Re-assign Volunteer</Link></li>
                        { /* <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li> */}
                       </ul>
                     </li>

@@ -183,9 +183,7 @@ class AssignToVolunteer extends Component {
               </div>
               {this.state.spinner?<div class="spinner"></div>:null}
             </section>
-            {/* /.content */}
           </div>
-
         )
     }
 }

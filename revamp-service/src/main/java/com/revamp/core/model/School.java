@@ -71,6 +71,8 @@ public class School extends AuditableEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column(name ="volunteer_id", nullable = true)
+	private Long volunteerId;
 	
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "school" ,cascade = CascadeType.ALL)
 	private Set<SchoolImage> schoolImages;
