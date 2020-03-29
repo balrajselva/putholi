@@ -26,4 +26,6 @@ public interface UserService {
     List<User> findByDistrict(String district);
 
 	User updateUserSchoolStatus(long userId, long schoolId);
+
+	List<User> findAllVolunteers();
 }

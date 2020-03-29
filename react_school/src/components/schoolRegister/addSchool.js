@@ -414,13 +414,13 @@ class AddSchool extends Component {
                            <div className="control-group">
                               <label className="control-label" for="input01">Number of Students</label>
                               <div className="controls">
-                                 <input type="text" className="input-xlarge" value={this.state.numOfStudents} id="numOfStudents" onChange={this.handleChange}></input>
+                                 <input type="number" className="input-xlarge" value={this.state.numOfStudents} id="numOfStudents" onChange={this.handleChange}></input>
                               </div>
                            </div>
                            <div className="control-group">
                               <label className="control-label" for="input01">Number of Teachers</label>
                               <div className="controls">
-                                 <input type="text" className="input-xlarge" value={this.state.numOfTeachers} id="numOfTeachers" onChange={this.handleChange}></input>
+                                 <input type="number" className="input-xlarge" value={this.state.numOfTeachers} id="numOfTeachers" onChange={this.handleChange}></input>
                               </div> 
                               </div>
                               </div>
@@ -454,7 +454,7 @@ class AddSchool extends Component {
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Secondary Contact Number </label>
                                     <div className="controls">
-                                       <input type="text" className="input-xlarge" id="secondaryConNum" value={this.state.secondaryConNum} onChange={this.handleChange}></input>
+                                       <input type="number" className="input-xlarge" id="secondaryConNum" value={this.state.secondaryConNum} onChange={this.handleChange}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -484,7 +484,7 @@ class AddSchool extends Component {
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Pincode</label>
                                     <div className="controls">
-                                       <input type="text" className="input-xlarge" id="pincode" value={this.state.pincode} onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}></input>
+                                       <input type="number" className="input-xlarge" id="pincode" value={this.state.pincode} onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -569,7 +569,7 @@ class AddSchool extends Component {
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Quantity</label>
                                     <div className="controls">
-                                       <input type="text" className="input-xlarge" id="quantity" value={this.state.quantity} onChange={this.handleChange}></input>
+                                       <input type="number" className="input-xlarge" id="quantity" value={this.state.quantity} onChange={this.handleChange}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">

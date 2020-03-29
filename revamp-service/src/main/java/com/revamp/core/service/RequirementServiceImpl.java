@@ -52,7 +52,7 @@ public class RequirementServiceImpl implements RequirementService {
 				}
                 requirementRepository.updateRequirementCollectedAmount(requirement.getRequirementId(), requirement.getCollectedAmount());
 			}
-			else if(requirement.getCollectedAmount() == 0 && remainingAmount < requirement.getEstimate()) {
+			else if(requirement.getCollectedAmount() == 0 && remainingAmount <= requirement.getEstimate()) {
 				requirement.setCollectedAmount(remainingAmount);
 				remainingAmount -= requirement.getCollectedAmount();
 				requirementRepository.updateRequirementCollectedAmount(requirement.getRequirementId(), requirement.getCollectedAmount());

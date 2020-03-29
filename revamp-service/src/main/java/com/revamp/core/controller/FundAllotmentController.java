@@ -3,6 +3,8 @@ package com.revamp.core.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.revamp.core.model.FundMaster;
+import com.revamp.core.service.FundMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class FundAllotmentController {
 
 	@Autowired
 	FundAllotmentService fundAllotService;
+
+	@Autowired
+	FundMasterService fundMasterService;
     /**
      * 
      * @return List
@@ -62,6 +67,13 @@ public class FundAllotmentController {
 	@DeleteMapping("/fundallocation/{id}")
 	public ResponseEntity<String> deleteFundAllocation(@PathVariable("id") long fundAllocationId) {
 		fundAllotService.deleteFundAllocation(fundAllocationId);
+		return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
+	}
+
+	@PostMapping("/fundAllotment")
+	public ResponseEntity<String> saveFundAllotment(@RequestBody List<FundMaster> fundMaster) {
+		System.out.println(fundMaster);
+		fundMasterService.saveFund(fundMaster);
 		return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
 	}
 }
