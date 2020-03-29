@@ -153,15 +153,21 @@ class UserDetailsForm extends Component {
                     country:this.state.country,
                 },
                 role:this.state.role,
-                status:"New User",
+                status:"NewUser",
                 emailAddress:this.props.user.emailAddress,
                 phoneNumber:this.state.phoneNumber,
-                identityProof:this.state.identityProof,
+                proofOfId:{
+                    image:this.state.fileInput,
+                    comments:this.state.comments,
+                 },
                 comments:this.state.comments,
                 password:this.state.password
             }
-        console.log(user);
-        this.props.saveUser(user);
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(user));
+            regFormModel.append('files',this.state.identityProof);
+            console.log(regFormModel);
+            this.props.saveUser(regFormModel);
         }
     }
     handleChange=({target})=>{

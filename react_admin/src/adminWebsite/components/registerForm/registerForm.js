@@ -31,7 +31,7 @@ class registerForm extends Component {
     }
 
     submitClicked=()=>{
-        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z0-9]+$/;
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
@@ -143,6 +143,10 @@ class registerForm extends Component {
             document.getElementById('identityProof').style.borderColor="#d2d6de";
             document.getElementById('email').style.borderColor="#d2d6de";
             document.getElementById('phoneNumber').style.borderColor="#d2d6de";
+            let status="PaymentPending";
+            if(this.state.role==="Volunteer"){
+                status="NewUser"
+            }
             const user={
                 firstName:this.state.firstName,
                 lastName:this.state.lastName,
@@ -157,65 +161,87 @@ class registerForm extends Component {
                     state:this.state.state,
                     country:this.state.country,
                 },
-                status:"New User",
+                status:status,
                 role:this.state.role,
                 emailAddress:this.state.email,
                 phoneNumber:this.state.phoneNumber,
-                identityProof:this.state.identityProof,
                 comments:this.state.comments,
                 password:this.state.password,
                 sponsorName:null,
-                sponsorEmail:null
+                sponsorEmail:null,
+                proofOfId:{
+                    image:this.state.identityProof,
+                    comments:"",
+                 },
             }
-            console.log(user);
-            this.props.saveUser(user);
+            var regFormModel=new FormData();
+            regFormModel.set('payload',JSON.stringify(user));
+            regFormModel.append('files',this.state.identityProof);
+            console.log(regFormModel);
+            this.props.saveUser(regFormModel);
         }
     }
 
     handleChange=({target})=>{
-        document.getElementById(target.id).style.borderColor="#d2d6de";
-        this.setState({ 
-            [target.id]: target.value , 
-            lastErrorField:null,
-            errorMessage:""
-        });
-        if(target.id==="pincode" && target.value.length===6){
-            this.setState({spinner:true});
-            axios.get("https://api.postalpincode.in/pincode/"+target.value)
-            .then(res=>{
-                console.log(res);
-                if(res.data[0].Message==="No records found"){
+        if(target.id==="identityProof"){
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
+                return
+            }
+            else{
+                this.setState({spinner:true});
+                const reader=new FileReader();
+                const file=target.files[0]; 
+                if (file && file.type.match('image.*')) {
+                    reader.readAsDataURL(file);
+                }
+                else{
                     this.setState({
-                        spinner:false,
-                        errorMessage:"Please enter valid Pincode or enter address manually."
+                        identityProof:null,
+                        localImageUrl:null,
+                        spinner:false
                     })
                 }
-                else{                    
+                reader.onloadend=()=>{
                     this.setState({
-                        locality:res.data[0].PostOffice,
-                        city:res.data[0].PostOffice[0].Division,
-                        district:res.data[0].PostOffice[0].District,
-                        state:res.data[0].PostOffice[0].State,
-                        country:res.data[0].PostOffice[0].Country,
-                        createLocalityDropDown:true,
+                        identityProof:target.files[0],
+                        localImageUrl:reader.result,
                         spinner:false
-                    });
-                }
-            })
+                    })
+                }            
+            }
         }
-        else if(target.id==="identityProof"){
-            this.setState({spinner:true});
-            const reader=new FileReader();
-            const file=target.files[0];
-            
-            reader.onloadend=()=>{
-                this.setState({
-                    identityProof:file,
-                    localImageUrl:reader.result,
-                    spinner:false
+        else{
+            document.getElementById(target.id).style.borderColor="#d2d6de";
+            this.setState({ 
+                [target.id]: target.value , 
+                lastErrorField:null,
+                errorMessage:""
+            });
+            if(target.id==="pincode" && target.value.length===6){
+                this.setState({spinner:true});
+                axios.get("https://api.postalpincode.in/pincode/"+target.value)
+                .then(res=>{
+                    console.log(res);
+                    if(res.data[0].Message==="No records found"){
+                        this.setState({
+                            spinner:false,
+                            errorMessage:"Please enter valid Pincode or enter address manually."
+                        })
+                    }
+                    else{                    
+                        this.setState({
+                            locality:res.data[0].PostOffice,
+                            city:res.data[0].PostOffice[0].Division,
+                            district:res.data[0].PostOffice[0].District,
+                            state:res.data[0].PostOffice[0].State,
+                            country:res.data[0].PostOffice[0].Country,
+                            createLocalityDropDown:true,
+                            spinner:false
+                        });
+                    }
                 })
             }
-            reader.readAsDataURL(file)
         }
     }
     currentPincode=()=>{
@@ -316,11 +342,10 @@ class registerForm extends Component {
                     <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange}/>
                     <span className="glyphicon glyphicon-log-in form-control-feedback" />
                 </div>
-                {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="row">
                     <div className="form-group">
-                    <div className="col-md-3"><b>Upload Identity Proof :</b></div>
-                    <div className="col-md-6"><input type="file" id="identityProof" onChange={this.handleChange}/></div>
+                        <label for="identityProof" id="file" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
+                        <input class="hidden" type="file" id="identityProof" onChange={this.handleChange}/>
                     </div>
                 </div>
                 {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
@@ -328,6 +353,7 @@ class registerForm extends Component {
                 <div className="checkbox icheck" style={{marginLeft:'4%'}}>
                     <input type="checkbox" id="checkBox"/> I agree to the <a href="#">terms and conditions</a>
                 </div>
+                {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="col-md-12">
                     <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.submitClicked()}>Register</button><br/>
                     </div>

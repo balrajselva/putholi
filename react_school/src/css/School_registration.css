@@ -5,3 +5,19 @@ select{
 .tabbable{
     margin-bottom: 9px;
 }
+.radio-container input {
+    box-sizing: border-box;
+    margin: 0;
+    outline: 0;
+    padding-top: 10px;
+    position: relative;
+}
+#file{
+    cursor: pointer;
+    border: 1px solid black;
+    padding-left: inherit;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    margin-left: 180px;
+    width: 250px;
+}

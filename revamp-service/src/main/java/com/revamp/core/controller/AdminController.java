@@ -33,7 +33,7 @@ public class AdminController {
 	public ResponseEntity<VolunteerReference> saveVolunteerReferals(@RequestBody VolunteerReference vReference) {
 		System.out.println("save vol--"+vReference);
 		long Id=volunteerReferenceService.save(vReference);
-		vReference.setId(Id);
+		vReference.setVolunterReferenceId(Id);
 		return ResponseEntity.ok().body(vReference);
 	}
 	

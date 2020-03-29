@@ -25,25 +25,43 @@ class trustLogin extends Component {
         emailAddress:this.state.email,
         password:this.state.password
       }
-      axios.post("http://localhost:6060/puthuyir/verify_user",user)
+      axios.post(this.props.config+"/puthuyir/verify_user",user)
       .then(res=>{
         console.log(res.data)
-          if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
+          if(res.data.status==="PaymentPending"){
             this.props.history.push({
-              pathname: '/volunteerSchoolCheck',
-              user : res.data
+              pathname: '/payment',
+              currentUser: res.data,
             });
           }
-          else if(res.data!=="" && (res.data.role==="Admin" ||res.data.role==="Approver" ||res.data.role==="Reviewer" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
+          else if(res.data!==""&&res.data.role==="Volunteer" && res.data.status==="ApprovedUser"){
+            this.props.history.push({
+              pathname: '/volunteerSchoolCheck',
+              currentUser : res.data
+            });
+          }
+          else if(res.data!=="" && (res.data.role==="Admin" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/accessReview',
-              user: res.data 
+              currentUser: res.data 
+            });
+          }
+          else if(res.data!=="" && res.data.role==="Approver" && res.data.status==="SuperAdminApproved"){
+            this.props.history.push({
+              pathname: '/approver',
+              currentUser: res.data 
+            });
+          }
+          else if(res.data!=="" && res.data.role==="Reviewer" && res.data.status==="SuperAdminApproved"){
+            this.props.history.push({
+              pathname: '/reviewer',
+              currentUser: res.data 
             });
           }
           else if(res.data!=="" && (res.data.role==="Trust Member" ||res.data.role==="Co-ordinator" ||res.data.role==="Fund Raiser" ) && res.data.status==="ApprovedUser"){
             this.props.history.push({
               pathname: '/trustMemberScreen',
-              user: res.data
+              currentUser: res.data
             });
           }
           else{
@@ -68,7 +86,6 @@ class trustLogin extends Component {
                 <div className="login-logo">
                   <a href=""><b>Putholi</b></a>
                 </div>
-                {/* /.login-logo */}
                 <div className="login-box-body">
                   <p className="login-box-msg">Sign in to start your session</p>
                   <form>
@@ -82,18 +99,14 @@ class trustLogin extends Component {
                     </div>
                     {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                     <div className="row">
-                      {/* /.col */}
                       <div className=" col-md-12">
                         <button ref="submit_btn" className="btn btn-primary btn-block btn-flat" onClick={(e)=>this.signIn(e)}>Login</button>
                       </div>
-                      {/* /.col */}
                     </div>
                   </form>
-                  {/* /.social-auth-links */}
                   <a href="#">I forgot my password</a><br />
                   <Link to="/trustRegister" className="text-center">Register a new membership</Link>
                 </div>
-                {/* /.login-box-body */}
               </div>
               {this.state.spinner?<div class="spinner"></div>:null}
             </body>

@@ -15,7 +15,7 @@ class DonationList extends Component {
             function (userFilter) {
                 return userFilter.schoolId == e;
             });
-console.log("userSelectId",userSelectId);
+        console.log("userSelectId",userSelectId);
 
         this.props.history.push('donationDetails', { state: userSelectId });
 
@@ -24,32 +24,18 @@ console.log("userSelectId",userSelectId);
 
     render() {
         
-        const styleDonation = {
-            position: "absolute",
-            left: "0px",
-            top: "0px",
-            transform: "translate3d(0px,0px,0px)"
-        };
-        const styleDonationP = {
-            overflow: "hidden",
-            position: "relative",
-            height: "1000px"
-
-        };
-        const styleChildren = {
-            visibility: "visible;",
-            opacity: "1;"
-        };
+    console.log(this.props)
         return (
 
             <div className="row">
-                <div className="projects isotope" style={styleDonationP}>
-                    {this.props.donationList.map(donationLists => (
-
-                        <div className="span3 element isotope-item" style={styleDonation} >
+                <div className="projects isotope" >
+                    {this.props.donationList.map(donationLists => {
+                    if(donationLists.enable_donation === "Y"){
+                    return(<div className="span3 element isotope-item" >
                             <div className="hover_img">
-                            {donationLists.schoolImages.map((valueImage,indexImage) => (
-                                   <a className=""><img src={valueImage.filePath} alt="" style={styleChildren}></img></a>
+                            {donationLists.schoolImages.map(images => (
+                                
+                                   <a className=""><img src={'data:image/png;base64,'+ images.image} alt="" ></img></a>
                                 ))}  
                                 <span className="portfolio_zoom"><a href="" rel="prettyPhoto[portfolio1]"></a></span>
                                 <span className="portfolio_link"><a href="show_one_school_details_for_donation.html">View item</a></span>
@@ -76,7 +62,8 @@ console.log("userSelectId",userSelectId);
 
                         </div>
 
-                    ))}
+                    )}})}
+                            
                 </div>
                 <div className="clear"></div>
             </div>

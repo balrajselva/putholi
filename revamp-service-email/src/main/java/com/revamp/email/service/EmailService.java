@@ -1,12 +1,11 @@
 package com.revamp.email.service;
 
-import java.util.List;
-
 import javax.mail.MessagingException;
 
 import com.revamp.email.model.School;
 import com.revamp.email.exception.SendMailException;
 import com.revamp.email.model.EmailUser;
+import com.revamp.email.model.Volunteer;
 import org.springframework.web.multipart.MultipartFile;
 /**
  * 
@@ -21,7 +20,10 @@ public interface EmailService {
 	 * @throws SendMailException
 	 * @throws MessagingException
 	 */
-	String sendEmail(EmailUser user) throws SendMailException, MessagingException;
+	String sendEmailForSchool(EmailUser user) throws SendMailException, MessagingException;
+
+	String sendEmailForVolunteer(Volunteer volunteer) throws SendMailException, MessagingException;
+
 	/**
 	 * 
 	 * @param user
@@ -32,7 +34,7 @@ public interface EmailService {
 	
 	
 	School get(long id);
-	
-	
 
+
+    String sendEmailForTrust(EmailUser puser);
 }

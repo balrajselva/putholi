@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import imageCss from '../adminWebsite/css/imageCss.css';
 
 class adminSchoolCheck extends Component {
     state={
@@ -20,19 +21,19 @@ class adminSchoolCheck extends Component {
           status:target.id
         });
         if(target.id==="Accepted"){
-          if(this.props.location.user.role==="Admin")
+          if(this.props.location.currentUser.role==="Admin")
             this.state.status="AdminReviewed";
-          else if(this.props.location.user.role==="Reviewer")
+          else if(this.props.location.currentUser.role==="Reviewer")
             this.state.status="ReviewerConfirmed";
-          else if(this.props.location.user.role==="Approver")
+          else if(this.props.location.currentUser.role==="Approver")
             this.state.status="ApprovedSchool";
         }
         else if(target.id==="Rejected"){
-          if(this.props.location.user.role==="Admin")
+          if(this.props.location.currentUser.role==="Admin")
             this.state.status="AdminRejected";
-          else if(this.props.location.user.role==="Reviewer")
+          else if(this.props.location.currentUser.role==="Reviewer")
             this.state.status="ReviewerRejected";
-          else if(this.props.location.user.role==="Approver")
+          else if(this.props.location.currentUser.role==="Approver")
             this.state.status="ApproverRejected";
         }
         axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
@@ -41,10 +42,24 @@ class adminSchoolCheck extends Component {
             console.log(res.data);
             this.setState({spinner:false});
             window.alert("Status updated successfully");
+            if(this.props.location.currentUser.role==="Admin"){
+              this.props.history.push({ 
+                pathname:"/adminNewSchoolReview", 
+                currentUser:this.props.location.currentUser
+              });
+            }
+            else if(this.props.location.currentUser.role==="Reviewer"){
+              this.props.history.push({ 
+                pathname:"/reviewerSchoolCheck", 
+                currentUser:this.props.location.currentUser
+              });
+            }
+          else if(this.props.location.currentUser.role==="Approver"){
             this.props.history.push({ 
-              pathname:"/adminNewSchoolReview", 
-              user:this.props.location.user
+              pathname:"/approverSchoolReview", 
+              currentUser:this.props.location.currentUser
             });
+          }
           }
         })
         .catch(error=>{
@@ -53,9 +68,18 @@ class adminSchoolCheck extends Component {
         })
       }
     render() {
+      let returnLink=null;
+      if(this.props.location.currentUser.role==="Admin"){
+        returnLink = "accessReview"
+      }
+      else if(this.props.location.currentUser.role==="Approver"){
+        returnLink = "approverAccessReview"
+      }
+      else if(this.props.location.currentUser.role==="Reviewer"){
+        returnLink = "reviewerAccessReview"
+      }
         return (
             <div className="content-wrapper">
-                {/* Content Header (Page header) */}
                 <section className="content-header">
                     <h1>
                     {this.props.location.school.schoolInfo.schoolName}
@@ -65,21 +89,15 @@ class adminSchoolCheck extends Component {
                     <li><a href="../../index.html"><i className="fa fa-dashboard" /> Home</a></li>
                     </ol>
                 </section>
-                {/* Main content */}
                 <section className="content">
-                    {/* row */}
                     <div className="row">
                     <div className="col-md-12">
-                        {/* The time line */}
                         <ul className="timeline">
-                        {/* timeline time label */}
                         <li className="time-label">
                             <span className="bg-red">
                             {this.props.location.school.createdDate.split("T")[0]}
                             </span>
                         </li>
-                        {/* /.timeline-label */}
-                        {/* timeline item */}
                         <li>
                             <i className="fa fa-envelope bg-blue" />
                             <div className="timeline-item">
@@ -104,15 +122,13 @@ class adminSchoolCheck extends Component {
                                 </div>
                             </div>
                             <div className="timeline-footer">
-                                <a className="btn btn-default">Click to view School Pictures</a>&nbsp;
+                                <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                                 <a id="Returned" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Return to Beneficiary</a>&nbsp;
                                 <a id="Accepted" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm Requirements</a>&nbsp;
-                                <Link to={{pathname:"/adminNewSchoolReview", user:this.props.location.user}} className="btn btn-primary btn-xs">Back to List</Link>
+                                <Link to={{pathname:returnLink, currentUser:this.props.location.currentUser}} className="btn btn-primary btn-xs">Back to List</Link>
                             </div>
                             </div>
                         </li>
-                        {/* END timeline item */}
-                        {/* timeline item */}
                         <li>
                             <i className="fa fa-user bg-aqua" />
                             <div className="timeline-item">
@@ -127,26 +143,33 @@ class adminSchoolCheck extends Component {
                             <h3 className="timeline-header no-border"><a href="#">Admin History - </a> Initial Check complete</h3>
                             </div>
                         </li>
-                        {/* END timeline item */}
-                        {/* timeline item */}
-                        {/* END timeline item */}
-                        {/* timeline time label */}
-                        {/* /.timeline-label */}
-                        {/* timeline item */}
-                        {/* END timeline item */}
-                        {/* timeline item */}
+                       
                         <li>
                             <div className="timeline-footer">
                             <a href="#" className="btn btn-xs bg-maroon">Go to Top</a>
                             </div>
                         </li>
-                        {/* END timeline item */}
                         </ul>
                     </div>
-                    {/* /.col */}
                     </div>
-                    {/* /.row */}
-                    {/* /.row */}
+          
+                    <div className="modal fade" id="modal-default">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} id ="image1" alt="" ></img>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                  </div>
                 </section>
                 {/* /.content */}
                 {this.state.spinner?<div class="spinner"></div>:null}

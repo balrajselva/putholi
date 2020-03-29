@@ -8,8 +8,8 @@ class DonationDetails extends Component {
       percentage: 0,
       currentIndex: 0,
       translateValue: 0,
-     // imageList: this.props.history.location.state.state[0].proofOfIds.files
-      imageList: []
+     imageList: this.props.history.location.state.state[0].schoolImages
+      // imageList: []
     }
   }
 
@@ -66,10 +66,8 @@ class DonationDetails extends Component {
     this.setState({ percentage: calculatePercentage })
   }
 
-
   render() {
-
-
+    console.log(this.props)
     const Slide = ({ image }) => {
       const styles = {
         backgroundImage: `url(${image})`,
@@ -80,7 +78,6 @@ class DonationDetails extends Component {
       return <div className="slide" style={styles}></div>
     }
 
-
     const LeftArrow = (props) => {
       return (
         <div className="backArrow arrow" onClick={props.goToPrevSlide} >
@@ -89,7 +86,6 @@ class DonationDetails extends Component {
       );
     }
 
-
     const RightArrow = (props) => {
       return (
         <div className="nextArrow arrow" onClick={props.goToNextSlide}>
@@ -97,7 +93,6 @@ class DonationDetails extends Component {
         </div>
       );
     }
-
 
     const ProgressBar = (props) => {
       return (
@@ -135,7 +130,7 @@ class DonationDetails extends Component {
                         transition: 'transform ease-out 0.45s'
                       }}>
                       {this.state.imageList.map((value, index) =>
-                        <Slide key={index} image={value} />
+                        <Slide key={index} image={'data:image/png;base64,'+value.image} />
                       )}
                     </div>
                     <LeftArrow
@@ -149,9 +144,8 @@ class DonationDetails extends Component {
 
                   <div className="span11"><h4 className="title">Total Amount required for the project Rs. {this.props.history.location.state.state[0].projects[0].estimate}  </h4> </div>
 
-
                 </div>
-                <div className="span4">
+                <div className="span11">
                   <p>This School requires following items Request your valuable contribution for the development of the same. </p>
                   <ul className="links">
                     {requirements.map((value, index) =>
@@ -181,12 +175,8 @@ class DonationDetails extends Component {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
-
-
     )
   }
 }

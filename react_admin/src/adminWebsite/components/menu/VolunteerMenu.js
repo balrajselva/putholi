@@ -5,8 +5,8 @@ class VolunteerMenu extends Component {
     render() {
         const accessReview={
             pathname:"/volunteerSchoolCheck",
-            user:this.props.currentUser
-          }
+            currentUser:this.props.currentUser
+        }
         return (
             <div>
                 <aside className="main-sidebar">
@@ -43,8 +43,8 @@ class VolunteerMenu extends Component {
                         </a>
                         <ul className="treeview-menu">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> View Assigned Schools</Link></li>
-                        <li><a href="#"><i className="fa fa-circle-o" />Calendar </a></li>
-                        <li><a href="#"><i className="fa fa-circle-o" />Claim Expenses </a></li>
+                        {/* <li><a href="#"><i className="fa fa-circle-o" />Calendar </a></li>
+                        <li><a href="#"><i className="fa fa-circle-o" />Claim Expenses </a></li> */}
                         </ul>
                     </li>
                     </ul>

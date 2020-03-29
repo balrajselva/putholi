@@ -8,8 +8,8 @@ class SponsorLayout extends Component {
     render() {
         return (
             <div>
-                <Header currentUser={this.props.location.user}/>
-                <SponsorMenu currentUser={this.props.location.user}/>
+                <Header currentUser={this.props.location.currentUser}/>
+                <SponsorMenu currentUser={this.props.location.currentUser}/>
                 {this.props.children}
                 <Footer/>
             </div>

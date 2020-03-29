@@ -2,12 +2,14 @@ package com.revamp.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.Set;
 
 
 @Entity
@@ -22,7 +24,7 @@ public class User  extends AuditableEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userid", nullable = false)
+	@Column(name = "user_id", nullable = false)
 	private long userid;
 
 	@Column(name = "firstname")
@@ -63,11 +65,14 @@ public class User  extends AuditableEntity{
 	private Long school_id;
 
 	@JsonManagedReference
+	@JoinColumn(name = "address_id")
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
-	@JsonManagedReference
-	@OneToOne(cascade = CascadeType.ALL)
-	private IdentityProof identityProof;
+	@JsonProperty("proofOfId")
+	@Transient
+	private ProofOfId proofOfId;
 
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user",cascade = CascadeType.ALL)
+	private Set<IdentityProof> identityProof;
 }

@@ -13,8 +13,17 @@ revamp-service/.classpath
 revamp-service/.project
 revamp-service/.settings
 revamp-service/RemoteSystemsTempFiles
-revamp-service/.gitignore
+revamp-service/.idea
 /.recommenders/
+
+
+# Intellij
+revamp-service/.idea/*
+revamp-service/*.iml
+revamp-service/*.iws
+revamp-service/.idea
+revamp-service/workspace.xml
+
 
 revamp-service.iml
 

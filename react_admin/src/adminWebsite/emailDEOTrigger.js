@@ -55,23 +55,15 @@ class EmailDEOTrigger extends Component {
     onChangeHandler(e) {
         e.preventDefault();
         var files = e.target.files;
-
-
         let file=[];
-
         // loop through files
         for (var i = 0; i < files.length; i++) {
             file.push(files.item(i))
-
         }
         this.setState({
             attachmentFile :file
         })
-       
-
     }
-
-
     render() {
 
         if (!this.state.schoolList.requirements) return null;
@@ -115,23 +107,9 @@ class EmailDEOTrigger extends Component {
                                                     <td>{value.assetName}</td><td>{value.quantity}</td>
                                                 </tr>
                                             }) : null}
-
-
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
                             <div className="form-group">
                                 <div className="btn btn-default btn-file">
@@ -150,20 +128,7 @@ class EmailDEOTrigger extends Component {
                         </div>
                     </form>
                 </div>
-
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
         )
     }
 } export default withRouter(EmailDEOTrigger);

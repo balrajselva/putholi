@@ -16,9 +16,9 @@ class AddSchool extends Component {
       schoolType:null,
       numOfStudents:null,
       numOfTeachers:null,
-      primaryConName:null,
-      primaryConMail:null,
-      primaryConNum:null,
+      primaryConName:this.props.location.user.firstName,
+      primaryConMail:this.props.location.user.emailAddress,
+      primaryConNum:this.props.location.user.phoneNumber,
       secondaryConName:null,
       secondaryConNum:null,
       secondaryConMail:null,
@@ -50,6 +50,7 @@ class AddSchool extends Component {
       lastPincode:null,
       assetTypeList:null,
       assetNameList:null,
+      priority:null,
       reqError:null
     }
     componentDidMount(){
@@ -60,55 +61,25 @@ class AddSchool extends Component {
       })
     }
     handleChange=({target})=>{
-
-      this.setState({ 
-          [target.id]: target.value , 
-          lastErrorField:null,
-          reqError:null,
-          errorMessage:null
-      });
-      if(target.id==="pincode" && target.value.length===6){
-          this.setState({spinner:true,lastPincode:target.value});
-          axios.get("https://api.postalpincode.in/pincode/"+target.value)
-          .then(res=>{
-              console.log(res);
-              if(res.data[0].Message==="No records found"){
-                  this.setState({
-                      spinner:false,
-                      errorMessage:"Please enter valid Pincode or enter address manually."
-                  })
-              }
-              else{                    
-                  this.setState({
-                      locality:res.data[0].PostOffice,
-                      city:res.data[0].PostOffice[0].Division,
-                      district:res.data[0].PostOffice[0].District,
-                      state:res.data[0].PostOffice[0].State,
-                      country:res.data[0].PostOffice[0].Country,
-                      createLocalityDropDown:true,
-                      spinner:false
-                  });
-              }
-          })
-      }
-      else if(target.id==="assetType" && target.value!=="Others"){
-         this.setState({spinner:true});
-         axios.get("http://localhost:6060/puthuyir/lookup/field/"+target.value)
-         .then(res=>{
-            this.setState({
-               assetNameList:res.data,
-               spinner:false
-            })
-         })
-      }
-      else if(target.id==="assetType" && target.value==="Others"){
-         this.setState({assetNameList:[{key_value:"Others"}]});
-      }
-      else if(target.id==="fileInput"){
+      if(target.id==="fileInput"){
+         if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+            window.alert("Image size should be within 5MB");
+            return
+         }
+         else{
           this.setState({spinner:true});
           const reader=new FileReader();
           const file=target.files[0];
-          
+          if (file && file.type.match('image.*')) {
+              reader.readAsDataURL(file);
+          }
+          else{
+              this.setState({
+                  identityProof:null,
+                  localImageUrl:null,
+                  spinner:false
+              })
+          }
           reader.onloadend=()=>{
               this.setState({
                   fileInput:target.files[0],
@@ -116,7 +87,58 @@ class AddSchool extends Component {
                   spinner:false
               })
           }
-          reader.readAsDataURL(file)
+         }
+      }
+      else{
+         this.setState({
+            [target.id]: target.value ,
+            lastErrorField:null,
+            reqError:null,
+            errorMessage:null
+         });
+         if(target.id==="pincode" && target.value.length===6){
+            this.setState({spinner:true,lastPincode:target.value});
+            axios.get("https://api.postalpincode.in/pincode/"+target.value)
+            .then(res=>{
+               console.log(res);
+               if(res.data[0].Message==="No records found"){
+                     this.setState({
+                        spinner:false,
+                        errorMessage:"Please enter valid Pincode or enter address manually."
+                     })
+               }
+               else{
+                     this.setState({
+                        locality:res.data[0].PostOffice,
+                        city:res.data[0].PostOffice[0].Division,
+                        district:res.data[0].PostOffice[0].District,
+                        state:res.data[0].PostOffice[0].State,
+                        country:res.data[0].PostOffice[0].Country,
+                        createLocalityDropDown:true,
+                        spinner:false
+                     });
+               }
+            })
+            .catch(error=>{
+               this.setState({
+                  spinner:false
+            })
+            window.alert("Please enter the address manually")
+            })
+         }
+         else if(target.id==="assetType" && target.value!=="Others"){
+            this.setState({spinner:true});
+            axios.get("http://localhost:6060/puthuyir/lookup/field/"+target.value)
+            .then(res=>{
+               this.setState({
+                  assetNameList:res.data,
+                  spinner:false
+               })
+            })
+         }
+         else if(target.id==="assetType" && target.value==="Others"){
+            this.setState({assetNameList:[{key_value:"Others"}]});
+         }
       }
   }
   currentPincode= () =>{
@@ -130,15 +152,22 @@ class AddSchool extends Component {
   addRequirement= (e) =>{
       e.preventDefault();
       let hasError=null;
+      this.setState({reqError:null})
       this.state.reqList.map(reqList=>{
          if(reqList.assetName===this.state.assetName){
             this.setState({reqError:"*Can not have duplicate requirements*"})
             hasError=true;
             return
          }
+         if(reqList.priority===this.state.priority){
+            this.setState({reqError:"*Select different priority*"})
+            hasError=true;
+            return
+         }
       })
-      if(this.state.reqType===null || this.state.assetType===null ||this.state.assetName===null || this.state.quantity===null){
+      if(this.state.reqType===null || this.state.assetType===null ||this.state.assetName===null || this.state.quantity===null || this.state.priority===null){
          this.setState({reqError:"*Please provide all the above details*"})
+         hasError=true;
          return
       }
       if(this.state.reqList.length==3){
@@ -151,15 +180,18 @@ class AddSchool extends Component {
             aType=this.state.assetType
          else
             aType=this.state.otherAssetType
-         this.setState({
-            reqList:[...this.state.reqList,{
-               reqType:this.state.reqType,
-               assetType:aType,
-               assetName:this.state.otherAssetName,
-               quantity:this.state.quantity
-            }],
-            addReq:true
-         })
+         if(hasError===null){
+            this.setState({
+               reqList:[...this.state.reqList,{
+                  reqType:this.state.reqType,
+                  assetType:aType,
+                  assetName:this.state.otherAssetName,
+                  quantity:this.state.quantity,
+                  priority:this.state.priority
+               }],
+               addReq:true
+            })
+         }
          let lookup={
             key_field:"asset",
             key_value:this.state.otherAssetName,
@@ -177,11 +209,17 @@ class AddSchool extends Component {
             reqType:this.state.reqType,
             assetType:this.state.assetType,
             assetName:this.state.assetName,
-            quantity:this.state.quantity
+            quantity:this.state.quantity,
+            priority:this.state.priority
          }],
          addReq:true
       })
    }
+   }
+   updatePriority=(e)=>{
+      this.setState({
+         hasError:null,
+         priority:e.target.id});
    }
    deleteRequirement=(e)=>{
       e.preventDefault();
@@ -338,7 +376,6 @@ class AddSchool extends Component {
 
    }
     render() {
-       console.log(this.props.location.user);
          return (
 <div className="container">
    <section>
@@ -536,6 +573,14 @@ class AddSchool extends Component {
                                     </div>
                                  </div>
                                  <div className="control-group">
+                                    <label className="control-label">Priority (1-3)</label>
+                                    <div className="controls radio-container">
+                                       <input type="radio" name="myGroupName" id="1" onChange={(e)=>this.updatePriority(e)}></input>1&nbsp;&nbsp;
+                                       <input type="radio" name="myGroupName" id="2" onChange={(e)=>this.updatePriority(e)}></input>2&nbsp;&nbsp;
+                                       <input type="radio" name="myGroupName" id="3" onChange={(e)=>this.updatePriority(e)}></input>3
+                                    </div>
+                                 </div>
+                                 <div className="control-group">
                                     <button className="input-large" id="req" onClick={(e)=>this.addRequirement(e)}>Add requirement</button>
                                     <div style={{color:"red",fontSize:"15px",marginTop:"5px"}}>
                                        {this.state.reqError}
@@ -549,6 +594,7 @@ class AddSchool extends Component {
                                              <th>Asset Type</th>
                                              <th>Asset Name</th>
                                              <th>Quantity</th>
+                                             <th>Priority</th>
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -558,6 +604,7 @@ class AddSchool extends Component {
                                           <th>{req.assetType}</th>
                                           <th>{req.assetName}</th>
                                           <th>{req.quantity}</th>
+                                          <th>{req.priority}</th>
                                           <th><button className="input-small" id={i} onClick={(e)=>this.deleteRequirement(e)}>Delete</button></th>
                                        </tr>):null}
                                        </tbody>
@@ -569,10 +616,10 @@ class AddSchool extends Component {
                         <div label="Upload Pictures">
                            <div className="row">
                               <div className="span10">
-                                 <div className="control-group">
-                                    <label className="control-label" for="fileInput">Upload proof of identity of the school </label>
+                                 <div className="control-group" >
+                                    <label className="control-label" for="fileInput" id="file" >Click here to upload proof of identity</label>
                                     <div className="controls">
-                                       <input className="input-file" id="fileInput" type="file" onChange={this.handleChange}></input>
+                                       <input className="hidden"  id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
                                     </div>
                                  </div>
                                  <div className="control-group">

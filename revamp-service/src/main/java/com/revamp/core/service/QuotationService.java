@@ -1,9 +1,12 @@
 package com.revamp.core.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.Quotation;
+import com.revamp.core.model.UpdateQuotation;
 
 public interface QuotationService {
 
@@ -19,4 +22,15 @@ public interface QuotationService {
 	
 	List<Quotation> findBySchoolId(long schoolId);
 
+	List<Quotation> findByRequirementId(long requirementId);
+
+	List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId);
+
+    Boolean updateQuotation(UpdateQuotation updateQuotation);
+
+	Boolean updateSelectedQuotation(long schoolId, PuthuyirLookUp updateQuotation);
+
+	List<Quotation> findBySchoolIdAndStatus(long schoolId);
+
+    long save(Quotation quotation, Map<String,byte[]> filesInBytes, String imgPath);
 }

@@ -6,17 +6,36 @@ import axios from 'axios'
 class VolunteerSchoolCheck extends Component {
     state={
         spinner:true,
-        school:null
+        school:null,
+        getSchools:true
     }
     componentDidMount(){
-        axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.user.school_id)
-        .then(res=>{
-            console.log(res.data)
-            this.setState({
-                school:res.data,
-                spinner:false
+        if(this.props.location.user.school_id!==null){
+            axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.user.school_id)
+            .then(res=>{
+                console.log(res.data)
+                this.setState({
+                    school:res.data,
+                    getSchools:false,
+                    spinner:false
+                })
             })
-        })
+            .catch(error=>{
+                window.alert("Could not fetch school details due to "+error)
+                this.setState({
+                    spinner:false,
+                    getSchools:false
+                })
+            })
+        }
+        else{
+            this.setState({spinner:false})
+        }
+    }
+    dontCreateTable=()=>{
+        var rows=[];
+        rows.push(<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>)
+        return rows;
     }
     createTable=()=>{
         var rows=[];
@@ -27,7 +46,7 @@ class VolunteerSchoolCheck extends Component {
                 newTo = { 
                     pathname: "/volunteerSchoolReview", 
                     school:this.state.school,
-                    user:this.props.location.user
+                    currentUser:this.props.location.currentUser
                 };
                 pageLink="More Details";
             }
@@ -35,9 +54,20 @@ class VolunteerSchoolCheck extends Component {
                 newTo = { 
                     pathname: "/viewRequirements", 
                     school:this.state.school,
-                    user:this.props.location.user
+                    currentUser:this.props.location.currentUser
                 };
                 pageLink="View requirements";
+            }
+            if(this.state.school.schoolStatus==="null"){
+                newTo = { 
+                    pathname: "/addInvoice", 
+                    school:this.state.school,
+                    currentUser:this.props.location.currentUser
+                };
+                pageLink="Add Invoice";
+            }
+            if(this.state.school.schoolStatus==="QuotationAdded"){
+                pageLink="Sent for quotation approval";
             }
             rowsUpdated=true;
             rows.push(<tr>
@@ -47,7 +77,7 @@ class VolunteerSchoolCheck extends Component {
                 <td><span className="label label-warning">{this.state.school.schoolStatus}</span></td>
                 <td>{this.state.school.address.district}</td>
                 <td><a href=""><Link to={newTo}>{pageLink}</Link></a></td>
-            </tr>)			
+            </tr>)	
         if(rowsUpdated==false)
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
@@ -60,8 +90,6 @@ class VolunteerSchoolCheck extends Component {
                     {/* Small boxes (Stat box) */}
                     <div className="row">
                     <SmallBoxCard content={this.props.location.user.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
-                    {/* ./col */}
-                    <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
                     {/* ./col */}
                     <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
                     </div>
@@ -102,7 +130,7 @@ class VolunteerSchoolCheck extends Component {
                                         <th>District</th>
                                         <th>More Details</th>
                                     </tr>
-                                    {this.state.school!==null?this.createTable():<tr><td align="center" colSpan="7">School have not been assigned!</td></tr>}
+                                    {this.state.school!==null && this.state.getSchools===false?this.createTable():this.dontCreateTable()}
                                     </tbody></table>
                                 </div>
                             </div>

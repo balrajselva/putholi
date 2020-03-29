@@ -14,7 +14,9 @@ class VolunteerRegister extends Component {
       }
     }
     saveUser=(user)=>{
-      axios.get("http://localhost:6060/puthuyir/admin/verifyReferals/"+this.state.sponsor.email+"/"+user.emailAddress)
+      let email=JSON.parse(user.get("payload")).emailAddress;
+      console.log(email);
+      axios.get("http://localhost:6060/puthuyir/admin/verifyReferals/"+this.state.sponsor.email+"/"+email)
       .then(res=>{
         if(res.data===true){
           user.sponsorName=this.state.sponsor.name;
@@ -23,6 +25,10 @@ class VolunteerRegister extends Component {
         }
         else
           window.alert("Please use mail ID refered by Sponsor");
+      })
+      .catch(error=>{
+        window.alert("Could verify referals details due to "+error)
+        this.setState({spinner:false})
       })
     }
     render() {
@@ -48,7 +54,6 @@ class VolunteerRegister extends Component {
                     <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Volunteer"]}/>
                    </div>
                    </div>
-                {/* /.form-box */}
               </div>
           </body>
 

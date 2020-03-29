@@ -29,8 +29,8 @@ import lombok.Setter;
 public class VolunteerReference extends AuditableEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private long Id;
+	@Column(name = "volunteer_reference_id", nullable = false)
+	private long volunterReferenceId;
 	
 	@Column(name="sponsor_name")
 	private String sponsorName;
@@ -41,8 +41,8 @@ public class VolunteerReference extends AuditableEntity{
 	@Column(name="referalmails")
 	private String referalEmails;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id")
-	private Address address;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "address_id")
+//	private Address address;
 
 }

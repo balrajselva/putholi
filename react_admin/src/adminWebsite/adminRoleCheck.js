@@ -48,10 +48,25 @@ class adminRoleCheck extends Component {
           this.setState({user:res.data});
           this.setState({spinner:false});
           window.alert("Status updated successfully");
-          this.props.history.push({ 
-            pathname:"/accessReview", 
-            user:this.state.currentUser
-          });
+         
+          if(this.state.currentUser.role==="Admin"){
+            this.props.history.push({ 
+              pathname:"/accessReview", 
+              currentUser:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Reviewer"){
+            this.props.history.push({ 
+              pathname:"/reviewerAccessReview", 
+              currentUser:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Approver"){
+            this.props.history.push({ 
+              pathname:"/approverAccessReview", 
+              currentUser:this.state.currentUser
+            });
+          }
         }
         else{
           this.setState({spinner:false});
@@ -61,9 +76,21 @@ class adminRoleCheck extends Component {
     }
   
     render() {
+        let returnLink=null;
+        if(this.state.currentUser.role==="Admin"){
+          returnLink = "accessReview"
+        }
+        else if(this.state.currentUser.role==="Approver"){
+          returnLink = "approverAccessReview"
+        }
+        else if(this.state.currentUser.role==="Reviewer"){
+          returnLink = "reviewerAccessReview"
+        }
         let reviewButtonContent="";
-        if(this.state.currentUser.role==="Admin")
+        if(this.state.currentUser.role==="Admin"){
           reviewButtonContent="Send for Review";
+          returnLink = "accessReview"
+        }
         else if(this.state.currentUser.role==="Reviewer" || this.state.currentUser.role==="Super User")
           reviewButtonContent="Recommend to Approve";
         else if(this.state.currentUser.role==="Approver" || this.state.currentUser.role==="Super Admin")
@@ -117,7 +144,7 @@ class adminRoleCheck extends Component {
                               <div className="timeline-footer">
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
-                                <Link to={{pathname:"/accessReview", users:this.state.users, user:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
+                                <Link to={{pathname:returnLink, users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
                           </li>

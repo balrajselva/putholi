@@ -9,7 +9,7 @@ import { thisExpression } from '@babel/types';
 
 class ReferVolunteer extends Component {
     state={
-        sponsor:this.props.location.user,
+        currentUser:this.props.location.currentUser,
         pincode:null,
         locality:null,
         selectedLocality:null,
@@ -26,88 +26,93 @@ class ReferVolunteer extends Component {
     }
     createURL=()=>{
         console.log(this.state.referalEmails);
-        const Cryptr = require('cryptr');
-        const cryptr = new Cryptr('myTotalySecretKey');
-        
-        const encryptedName = cryptr.encrypt(this.state.sponsor.firstName);
-        const encryptedEmail =cryptr.encrypt(this.state.sponsor.emailAddress);
-        const url1 = "http://localhost:3000/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
-        this.setState({url:url1});
-        if(this.state.pincode===null){
-            this.setState({
-                lastErrorField:"pincode",
-                errorMessage:"Please enter pincode"
-            });
-            document.getElementById('pincode').style.borderColor="red";
-        }
-        else if(this.state.selectedLocality===null){
-            this.setState({
-                lastErrorField:"selectedLocality",
-                errorMessage:"Please select locality"
-            });
-            document.getElementById('selectedLocality').style.borderColor="red";
-        }
-        else if(this.state.state===null){
-            this.setState({lastErrorField:"state"});
-            document.getElementById('state').style.borderColor="red";
-        }
-        else if(this.state.city===null){
-            this.setState({lastErrorField:"city"});
-            document.getElementById('city').style.borderColor="red";
-        }
-        else if(this.state.district===null){
-            this.setState({lastErrorField:"district"});
-            document.getElementById('district').style.borderColor="red";
-        }
-        else if(this.state.country===null){
-            this.setState({lastErrorField:"country"});
-            document.getElementById('country').style.borderColor="red";
-        }
-        else if(this.state.referalEmails===null){
+       
+        // if(this.state.pincode===null){
+        //     this.setState({
+        //         lastErrorField:"pincode",
+        //         errorMessage:"Please enter pincode"
+        //     });
+        //     document.getElementById('pincode').style.borderColor="red";
+        // }
+        // else if(this.state.selectedLocality===null){
+        //     this.setState({
+        //         lastErrorField:"selectedLocality",
+        //         errorMessage:"Please select locality"
+        //     });
+        //     document.getElementById('selectedLocality').style.borderColor="red";
+        // }
+        // else if(this.state.state===null){
+        //     this.setState({lastErrorField:"state"});
+        //     document.getElementById('state').style.borderColor="red";
+        // }
+        // else if(this.state.city===null){
+        //     this.setState({lastErrorField:"city"});
+        //     document.getElementById('city').style.borderColor="red";
+        // }
+        // else if(this.state.district===null){
+        //     this.setState({lastErrorField:"district"});
+        //     document.getElementById('district').style.borderColor="red";
+        // }
+        // else if(this.state.country===null){
+        //     this.setState({lastErrorField:"country"});
+        //     document.getElementById('country').style.borderColor="red";
+        // }
+        if(this.state.referalEmails===null){
             this.setState({lastErrorField:"referalEmails"});
             document.getElementById('referalEmails').style.borderColor="red";
         }
         else{
-            this.setState({spinner:true})
-            document.getElementById('pincode').style.borderColor="#d2d6de";
-            document.getElementById('selectedLocality').style.borderColor="#d2d6de";
-            document.getElementById('state').style.borderColor="#d2d6de";
-            document.getElementById('city').style.borderColor="#d2d6de";
-            document.getElementById('district').style.borderColor="#d2d6de";
-            document.getElementById('country').style.borderColor="#d2d6de";
+            // document.getElementById('pincode').style.borderColor="#d2d6de";
+            // document.getElementById('selectedLocality').style.borderColor="#d2d6de";
+            // document.getElementById('state').style.borderColor="#d2d6de";
+            // document.getElementById('city').style.borderColor="#d2d6de";
+            // document.getElementById('district').style.borderColor="#d2d6de";
+            // document.getElementById('country').style.borderColor="#d2d6de";
             document.getElementById('referalEmails').style.borderColor="#d2d6de";
+            const Cryptr = require('cryptr');
+            const cryptr = new Cryptr('myTotalySecretKey');
+            const encryptedName = cryptr.encrypt(this.state.currentUser.firstName);
+            const encryptedEmail =cryptr.encrypt(this.state.currentUser.emailAddress);
+            const url1 = "http://localhost:3001/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
+            this.setState({
+                url:url1,
+                spinner:true
+            });
             const volunteers={
-                address:{
-                    addressLine1:this.state.addressLine_1,
-                    addressLine2:this.state.addressLine_2,
-                    pinCode:this.state.pincode,
-                    locality:this.state.selectedLocality,
-                    district:this.state.district,
-                    city:this.state.city,
-                    state:this.state.state,
-                    country:this.state.country,
-                },
+                // address:{
+                //     addressLine1:this.state.addressLine_1,
+                //     addressLine2:this.state.addressLine_2,
+                //     pinCode:this.state.pincode,
+                //     locality:this.state.selectedLocality,
+                //     district:this.state.district,
+                //     city:this.state.city,
+                //     state:this.state.state,
+                //     country:this.state.country,
+                // },
                 referalEmails:this.state.referalEmails,
-                sponsorName:this.state.sponsor.firstName,
-                sponsorEmail:this.state.sponsor.emailAddress
+                sponsorName:this.state.currentUser.firstName,
+                sponsorEmail:this.state.currentUser.emailAddress
             }
             axios.post("http://localhost:6060/puthuyir/admin/volunteerReferals",volunteers)
             .then(res=>{
                 if(res.status==200){
-                    window.alert("Data saved successfully!");
-                    this.setState({
-                        pincode:"",
-                        locality:null,
-                        selectedLocality:null,
-                        district:"",
-                        city:"",
-                        state:"",
-                        country:"",
-                        createLocalityDropDown:false,
-                        spinner:false,
-                        lastErrorField:null,
-                        errorMessage:null,
-                        referalEmails:""
+                    let referalEmailsTemp = this.state.referalEmails;
+                    let sponsorNameTemp = this.state.sponsorName;
+                    let sponsorEmailTemp = this.state.sponsorEmail;
+                    let dataData = new FormData();
+                    let userPayload = {
+                        "to" : referalEmailsTemp.split(","),
+                        "from" : "putholi@gmail.com",
+                        "registrationLink" : this.state.url,
+                        "cc" :["arunc231097@gmail.com","srijkay@yahoo.com"],
+                        "message":"Congratulations! You've been referred as Putholi trust volunteer by "+sponsorNameTemp+"("+sponsorEmailTemp+")",
+                        "subject" : "Referred as trust volunteer"
+                    }
+                    dataData.append("user",JSON.stringify(userPayload));
+                    axios.post('http://localhost:5050/email/sendmailForVolunteer', userPayload)
+                        .then((response) => {
+                            window.alert("Data saved successfully!");
+                            this.setState({spinner:false})
                     })
                 }
             })
@@ -155,35 +160,21 @@ class ReferVolunteer extends Component {
         return (
             <div>
                 <div className="content-wrapper">
-                    {/* Content Header (Page header) */}
                     <section className="content-header">
-                        {/* Small boxes (Stat box) */}
                         <div className="row">
-                            <SmallBoxCard content={this.props.location.user.role} linkTo="/trustMemberScreen" colour="bg-green"/>
-                            {/* ./col */}
-                            <SmallBoxCard content="Inbox" linkTo="/volunteer" colour="bg-yellow"/>
-                            {/* ./col */}
-                            <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
+                            <SmallBoxCard content="Trust Member" linkTo="" colour="bg-green"/>
+                            <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>
                         </div>
-                        <h1>
-                        Sponsor
-                        <small>screen</small>
-                        </h1>
                     </section>
-                    {/* Main content */}
                     <section className="content">
-                        {/* Small boxes (Stat box) */}
-                        {/* /.row */}
-                        {/* Main row */}
                         <div className="row">
                         <div className="col-xs-12">
                             <div className="box">
                             <div className="box-header">
                                 <h3 className="box-title">Refer volunteer</h3>
                             </div>
-                            {/* /.box-header */}
                             <div className="box-body">
-                            <div className="row">
+                            {/* <div className="row">
                                 <div className="form-group has-feedback col-md-6">
                                     <input type="text" className="form-control" id="pincode" placeholder="Pincode" onChange={this.handleChange} onPointerLeave={()=>this.currentPincode()}/>
                                     <span className="glyphicon glyphicon-home form-control-feedback" />
@@ -215,9 +206,9 @@ class ReferVolunteer extends Component {
                                     <input type="text" className="form-control" id="country" value={this.state.country} placeholder="Country" onChange={this.handleChange}/>
                                     <span className="glyphicon glyphicon-home form-control-feedback" />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="input-group">
-                                <span className="input-group-addon">Enter Email id's</span>
+                                <span className="input-group-addon">Enter Email id's separated by comma</span>
                                 <textarea className="form-control" rows={3} placeholder="Enter email id's" defaultValue={""} id="referalEmails" value={this.state.referalEmails} onChange={this.handleChange} />
                                 </div>
                                 <div className="input-group">
@@ -232,16 +223,12 @@ class ReferVolunteer extends Component {
                                 </div>
                             </div>
                             {this.state.url!=null?<div>{this.state.url}</div>:null}
-                            {/* /.box-body */}
                             </div>
-                            {/* /.box */}
                         </div>
                         </div>
-                        {/* /.row (main row) */}
                     </section>
-                    {/* /.content */}
                     </div>
-                    {this.state.spinner?<div class="spinner"></div>:null}
+                    {this.state.spinner?<div class="spinner" ></div>:null}
             </div>
         );
     }

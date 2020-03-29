@@ -22,10 +22,20 @@ import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
 import DEOEmailTrigger from '../adminWebsite/emailDEOTrigger';
 import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
 import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
+import ReviewerLayout from '../adminWebsite/components/layouts/ReviewerLayout';
+import ApproverLayout from '../adminWebsite/components/layouts/ApproverLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
-import AddQuotation from '../adminWebsite/quotation'
+import AddQuotation from '../adminWebsite/quotation';
+import Payment from '../adminWebsite/payment';
+import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
+import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
+import ApproverPendingWorkflow from '../adminWebsite/approverPendingWorkflow';
+import ViewSelectedQuotation from '../adminWebsite/ViewSelectedQuotation';
+import FundAllotment from '../adminWebsite/FundAllotment';
+import AdminInitiateWorkOrder from '../adminWebsite/AdminInitiateWorkOrder';
+import AddInvoice from '../adminWebsite/components/invoice/AddInvoice';
 
 class App extends Component {
   state = {
@@ -33,13 +43,30 @@ class App extends Component {
     spinner:false
   }
 
-  saveUser=(updatedUser)=>{
-    this.setState({user:updatedUser,spinner:true});
-    axios.post('http://localhost:6060/puthuyir/user',updatedUser)
+  constructor(props){
+    super(props);
+    this.state={config:"http://localhost:6060"}
+  }
+
+  saveUser=(regFormModel)=>{
+    this.setState({user:regFormModel.get("payload"),spinner:true});
+    axios.post(this.state.config+'/puthuyir/user',regFormModel,{
+      headers:{'Content-Type':'multipart/form-data'}
+    })
     .then(res=>{
         console.log(res);
         this.setState({spinner:false});
-        history.push("/confirmation");
+        // history.push("/confirmation");
+        if(res.data.role!=="Volunteer"){
+          history.push({
+            pathname: '/payment',
+            currentUser: res.data,
+          });
+        }
+    })
+    .catch(error=>{
+      window.alert("Registration failed due to "+error);
+      this.setState({spinner:false});
     })
   }
   
@@ -50,6 +77,24 @@ class App extends Component {
           <AdminLayout {...props}>
             <Component {...props}/>
           </AdminLayout>
+        )}/>
+      )
+    }
+    const ReviewerLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <ReviewerLayout {...props}>
+            <Component {...props}/>
+          </ReviewerLayout>
+        )}/>
+      )
+    }
+    const ApproverLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <ApproverLayout {...props}>
+            <Component {...props}/>
+          </ApproverLayout>
         )}/>
       )
     }
@@ -74,25 +119,40 @@ class App extends Component {
     return (
       <div>   
         <Router history={history}>
-          <Switch>
+          <Switch config={this.state.config}>
             <Route path="/confirmation" component={()=><ConfirmatinScreen/>}/>
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)}/>}/>}/>
-            <Route exact path="/login" history={history} component={()=><TrustLogin />}/>
+            <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger/>}/>
-            <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}/>}/>
-            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>}/>
+            <Route path="/volunteerRegister" history={history} render={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props}/>}/>
+            <Route path="/payment" history={history} render={(props)=><Payment {...props}{...this.props}/>}/>
+            <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
             <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
             <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
+            <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>
+            <AdminLayoutRoute exact path="/fundAllotment" component={(props)=><FundAllotment {...props}/>}/>
+            <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
+            <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props}/>}/>}/>
+            <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
+            <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
+            <ApproverLayoutRoute path="/approverAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
+            <ApproverLayoutRoute path="/approverReviewQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
+            <ApproverLayoutRoute path="/approverSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
+            <ApproverLayoutRoute path="/approverRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}

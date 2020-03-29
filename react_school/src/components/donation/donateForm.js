@@ -6,7 +6,6 @@ import axios from "axios";
 
 class DonationForm extends Component {
 
-
   constructor(props) {
     super(props);
     this.registeredUserEvent = this.registeredUserEvent.bind(this);
@@ -40,22 +39,14 @@ class DonationForm extends Component {
       userLogin: [],
       emailFlag: '',
       LoginInforValidation: ''
-
     }
-
   }
 
-
-
   submitClicked = (e) => {
-
-    const { userLogin: [] } = this.state;
     e.preventDefault();
-
+    const { userLogin: [] } = this.state;
     const data = new FormData(e.target);
-
     const isValid = this.validate(data);
-
     let params = {};
     let flagOption = "";
     let requestJSON = {};
@@ -69,7 +60,7 @@ class DonationForm extends Component {
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].id,
+        "schoolId" :this.props.history.location.state.state[0].schoolId,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount":data.get('yourContribution'),
@@ -78,7 +69,6 @@ class DonationForm extends Component {
       }
 
       if (isValid) {
-
         axios.post('http://localhost:6060/puthuyir/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
           .then((response) => {
             if (response.data.emailAddress === "email") {
@@ -99,14 +89,12 @@ class DonationForm extends Component {
       }
       flagOption = "1";
     }
-
-
     if (this.state.isClicked === "2") {
       let requestJSON =
       {
         "contribution": data.get('contribution'),
         "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].id,
+        "schoolId" :this.props.history.location.state.state[0].schoolId,
         "projectId": this.props.history.location.state.state[0].projects[0].projectId,
         "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
         "collectedAmount": data.get('yourContribution'),
@@ -114,12 +102,9 @@ class DonationForm extends Component {
         "requirements": this.props.history.location.state.state[0].projects[0].requirements
       }
 
-
       if (isValid) {
-
         let emailValidation = {
           emailAddress: data.get('email'),
-        
         }
         axios.post('http://localhost:6060/puthuyir/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
           .then(response => {
@@ -132,7 +117,6 @@ class DonationForm extends Component {
               this.setState({
                 emailError: ''
               });
-
               console.log("Before loading", params);
               axios.post('http://localhost:6060/puthuyir/donate/save', params, { headers: { 'Accept': 'application/json' } })
                 .then((response) => {
@@ -145,14 +129,8 @@ class DonationForm extends Component {
             }
           })
       }
-
       flagOption = "2";
-
-      
     }
-
-
-
     if (isValid) {
       this.setState({
         contributionError: "",
@@ -163,7 +141,6 @@ class DonationForm extends Component {
         lastNameError: "",
         phoneNumberError: ""
       });
-
       if (flagOption === "2") {
         if (this.state.isRegisteredClicked === "1") {
           params = {
@@ -183,14 +160,9 @@ class DonationForm extends Component {
             password: ''
           }
         }
-
       }
-
     }
   };
-
-
-
 
   validate = (data) => {
     let userNameError = "";
@@ -200,55 +172,43 @@ class DonationForm extends Component {
     let lastNameError = "";
     let emailError = "";
     let phoneNumberError = "";
-
     if (data.get('contribution').length === 0) {
       contributionError = "Please enter Contribution Amount";
     }
-
     if (!(Number(data.get('yourContribution')) >= Number(data.get('contribution')))) {
       contributionError = `Your Contribution Amount not more than ${data.get('yourContribution')}`;
     }
-
     if (contributionError) {
       this.setState({
         contributionError,
       });
       return false;
     }
-
     if (this.state.isClicked === "1") {
-
       if (data.get('username').length === 0) {
         userNameError = "Please enter the username";
       }
       else if (data.get('password').length === 0) {
         passwordError = "Please enter the password";
       }
-
-
       if (userNameError) {
         this.setState({
           userNameError,
         });
         return false;
       }
-
       if (passwordError) {
         this.setState({
           passwordError,
         });
         return false;
       }
-
       return true;
     }
-
     if (this.state.isClicked === "2") {
       if (data.get('firstName').length === 0) {
         firstNameError = "Please enter the firstName";
       }
-
-
       else if (data.get('lastName').length === 0) {
         lastNameError = "Please enter the SurName";
       }
@@ -264,16 +224,12 @@ class DonationForm extends Component {
       else if (this.state.isRegisteredClicked === "1" && data.get('passwordOption').length === 0) {
         passwordError = "Please enter the password";
       }
-
-
-
       if (firstNameError) {
         this.setState({
           firstNameError,
         });
         return false;
       }
-
       if (lastNameError) {
         this.setState({
           lastNameError,
@@ -298,22 +254,13 @@ class DonationForm extends Component {
         });
         return false;
       }
-
-
     }
-
-
     return true;
-
   }
-
-
 
   calculateContribution() {
     return this.props.history.location.state.state[0].projects[0].estimate - this.props.history.location.state.state[0].projects[0].collectedAmount
-
   }
-
 
   registeredUserEvent(e) {
     if (e === "1") {
@@ -329,7 +276,6 @@ class DonationForm extends Component {
       this.setState({ isAlreadyRegistered: 'none' });
       this.setState({ isClicked: null })
     }
-
   }
 
   registeredDonorEvent(e) {
@@ -346,13 +292,9 @@ class DonationForm extends Component {
       this.setState({ isAlreadyDonorRegistered: 'none' });
       this.setState({ isRegisteredClicked: null })
     }
-
   }
-
-
-
   render() {
-
+    console.log(this.props)
     return (
       <div>
         <div className="page_container">
@@ -360,7 +302,7 @@ class DonationForm extends Component {
             <div className="wrap">
               <div className="container">
                 Home/About
-                    </div>
+                </div>
             </div>
           </div>
           <div className="wrap">
@@ -368,10 +310,8 @@ class DonationForm extends Component {
               <section>
                 <div className="span12">
                   <form onSubmit={this.submitClicked} className="form-horizontal">
-
                     <fieldset>
                       <legend>Appreciate your interest in Donating fund for development of the school. Please use the payment gateway to pay the fund</legend>
-
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">School Name</label>
                         <div className="controls">
@@ -379,10 +319,8 @@ class DonationForm extends Component {
                             placeholder={this.props.history.location.state.state[0].schoolInfo.schoolName} disabled=""></input>
                         </div>
                       </div>
-
                       <div className="control-group">
-                        <label className="control-label" for="disabledInput">Estimated Total Amount
-</label>
+                        <label className="control-label" for="disabledInput">Estimated Total Amount</label>
                         <div className="controls">
                           <input readOnly className="input-xlarge disabled" id="disabledInput"
                             type="text" placeholder={this.props.history.location.state.state[0].projects[0].estimate} disabled=""></input>
@@ -393,7 +331,6 @@ class DonationForm extends Component {
                         <div className="controls">
                           <input readOnly className="input-xlarge disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
                         </div>
-
                       </div>
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">You can contribute Upto</label>
@@ -407,45 +344,37 @@ class DonationForm extends Component {
                         <div className="controls">
                           <input className="form-control" name="contribution" id="contribution" value={this.state.contribution} type="text"
                             placeholder="" disabled="" ></input>
-
                           <div style={{ fontSize: 12, color: "red" }}  >
                             {this.state.contributionError}
                           </div>
                         </div>
                       </div>
-
                       <h3>Already Registered Donor??</h3>
-                      <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
+                          <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
                           <input type="radio" class="bn3" name="bn" value="2" checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
-
-              <div style={{ display: this.state.isAlreadyRegistered }}>
-
+                        <div style={{ display: this.state.isAlreadyRegistered }}>
                         <div id="onebn">
                           <div style={{ fontSize: 12, color: "red" }}  >
                             {this.state.loginCredentialError}
                             {this.state.userNameError}
                             {this.state.passwordError}
                           </div>
+                          </div>
+                          <div className="control-group">
                           <label className="control-label" for="inputSuccess">User id / Email </label>
                           <div className="controls">
                             <input type="text" id="username" name="username" value={this.state.username}></input>
                           </div>
-                        </div>
-                        <div id="onebn">
+                          </div>
+                          <div className="control-group">
                           <label className="control-label" for="inputSuccess">Password</label>
                           <div className="controls">
-                            <input type="text" id="password" name="password" value={this.state.password}></input>
+                            <input type="password" id="password" name="password" value={this.state.password}></input>
+                          </div>
                           </div>
                         </div>
-
-                        <div className="form-actions" id="onebn">
-                          <button tye="submit" className="btn send_btn">Login</button>
-                          <button className="btn dark_btn">Cancel</button>
-                        </div>
-                      </div>
                       <div style={{ display: this.state.isRegisteredUser }}>
                         <div class="control-group success" id="multibn">
-
                           <label className="control-label" for="inputSuccess">First Name</label>
                           <div className="controls">
                             <input type="text" id="firstName" name="firstName" value={this.state.firstName}></input>
@@ -454,8 +383,6 @@ class DonationForm extends Component {
                             </div>
                           </div>
                         </div>
-
-
                         <div className="control-group success" id="multibn">
                           <label className="control-label" for="inputSuccess">Sur  Name</label>
                           <div className="controls">
@@ -465,7 +392,6 @@ class DonationForm extends Component {
                             </div>
                           </div>
                         </div>
-
                         <div className="control-group success" id="multibn">
                           <label className="control-label" for="inputSuccess">Email</label>
                           <div className="controls">
@@ -475,9 +401,6 @@ class DonationForm extends Component {
                             </div>
                           </div>
                         </div>
-
-
-
                         <div className="control-group success" id="multibn">
                           <label className="control-label" for="inputSuccess">Phone number</label>
                           <div className="controls">
@@ -488,15 +411,14 @@ class DonationForm extends Component {
                             </div>
                           </div>
 
-
                           <div className="control-group" id="multibn">
-                            <label className="control-label">Select if you wish to be a Registered Donor</label>
+                            <h5>Select if you wish to be a Registered Donor</h5>
                             <div className="controls">
-                              <label className="radio">
-                                <input type="radio" class="bn2" name="resgiteredYES" value="1" checked={this.state.isRegisteredClicked === "1"} onClick={e => this.registeredDonorEvent(e.target.value)} /> Yes
+                              <label >
+                                <input type="radio"  name="resgiteredYES" value="1" checked={this.state.isRegisteredClicked === "1"} onClick={e => this.registeredDonorEvent(e.target.value)} /> Yes
                               </label>
-                              <label class="radio">
-                                <input type="radio" class="bn3" name="resgiteredNO" value="2" checked={this.state.isRegisteredClicked === "2"} onClick={e => this.registeredDonorEvent(e.target.value)} /> No
+                              <label >
+                                <input type="radio"  name="resgiteredNO" value="2" checked={this.state.isRegisteredClicked === "2"} onClick={e => this.registeredDonorEvent(e.target.value)} /> No
                               </label>
                             </div>
                           </div>
@@ -504,22 +426,19 @@ class DonationForm extends Component {
                             <div className="control-group success" id="multibn">
                               <label className="control-label" for="inputSuccess">Password</label>
                               <div className="controls">
-                                <input type="text" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
+                                <input type="password" id="passwordOption" name="passwordOption" value={this.state.passwordOption}></input>
                                 <div style={{ fontSize: 12, color: "red" }}  >
                                   {this.state.passwordError}
                                 </div>
                               </div>
                             </div>
                           </div>
-
-                          <div className="form-actions" id="multibn">
-                            <button type="submit" className="btn send_btn">Login</button>
-                            <button className="btn dark_btn">Cancel</button>
                           </div>
+                          </div>
+                          <div className="form-actions" id="onebn">
+                          <button tye="submit" className="btn send_btn">Login</button>
+                          <button className="btn dark_btn">Cancel</button>
                         </div>
-                      </div>
-
-
                     </fieldset>
                   </form>
                 </div>
@@ -528,13 +447,6 @@ class DonationForm extends Component {
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
     );
   }
 

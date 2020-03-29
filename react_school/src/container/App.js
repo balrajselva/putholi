@@ -18,7 +18,9 @@ import DonationConfirmationPage from '../components/donation/paymentConfirmation
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
+import ConfirmatinScreen from '../Page/confirmationScreen';
 import SchoolLayout from '../components/layouts/schoolLayout';
+import TransactionResponse from '../components/donation/transactionResponse';
 
 class App extends Component {
   render(){
@@ -35,6 +37,8 @@ class App extends Component {
     <div>   
       <Router history={history}>
         <Switch>
+          <Route exact path="/confirmation" component={()=><ConfirmatinScreen/>}/>
+          <Route path="/transactionResponse" component={()=><TransactionResponse/>}/>  
           <SchoolLayoutRoute path="/index" component={()=><IndexPage  />}/>
           <SchoolLayoutRoute path="/about" component={()=><AboutPage  />}/>
           <SchoolLayoutRoute path="/features" component={()=><FeaturesPage  />}/>
@@ -46,9 +50,8 @@ class App extends Component {
           <SchoolLayoutRoute path="/donation" component={()=><Donation/>}/>
           <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails/>}/>
           <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm/>}/> 
-          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment/>}/>         
+          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment paymentFlow={(paymentPayload,donationUserPayload,projectUpdatePayload,user)=>this.paymentFlow(paymentPayload,donationUserPayload,projectUpdatePayload,user)}/>}/>         
           <SchoolLayoutRoute path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage/>}/>  
-           
           <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation/>}/>             
         </Switch>
       </Router>

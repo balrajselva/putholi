@@ -10,16 +10,6 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
  INFRASTRUCTURE ( "assettype", "infrastructure", "Infrastructure", "null", "null"),
  ASSERTTYPE_OTHERS ( "assettype", "others", "Others", "null", "null"),
  SPORTS ( "assettype", "sports", "Sports", "null", "null"),
- CHENNAI ( "city", "chennai", "Chennai", "district", "kanchipuram"),
- ENNORE ( "city", "ennore", "Ennore", "district", "tiruvallur"),
- PADAPPAI ( "city", "padappai", "Padappai", "district", "kanchipuram"),
- PUZHAL ( "city", "puzhal", "Puzhal", "district", "tiruvallur"),
- VELLAKOTTAI ( "city", "vallakottai", "Vallakottai", "district", "kanchipuram"),
- KANCHIPURAM ( "district", "kanchipuram", "Kanchipuram", "state", "TN"),
- TIRUVALLUR ( "district", "tiruvallur", "Tiruvallur", "state", "TN"),
- PALLAVARAM ( "locality", "pallavaram", "Pallavaram", "city", "chennai"),
- SHOLINGANALLUR ( "locality", "sholinganallur", "Sholinganallur", "city", "chennai"),
- TAMBARAM ( "locality", "tambaram", "Tambaram", "city", "chennai"),
  MAINTENANCE ( "reqtype", "maintenance", "Maintenance", "null", "null"),
  NEW_REQ ( "reqtype", "new", "New Requirement", "null", "null"),
  HIGHER_SEC_SCHOOL ( "schooltype", "highersecondary", "Higher Secondary School", "null", "null"),
@@ -36,8 +26,18 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
  REQ_VIEWED ( "projectstatus", "reqViewed", "ReqViewed", "null", "null"),
  REQ_MODIFIED ( "projectstatus", "reqModified", "ReqModified", "null", "null"),
  REQ_CONFIRMED ( "projectstatus", "reqConfirmed", "ReqConfirmed", "null", "null"),
- REQ_FULFILLED ( "projectstatus", "reqFulfilled", "ReqFullFilled", "null", "null");
- 
+ REQ_FULFILLED ( "projectstatus", "reqFulfilled", "ReqFullFilled", "null", "null"),
+ADMIN_APPROVED_QUOTATION("status","adminAcceptedQuotation","adminAcceptedQuotation"),
+PROJECT_INCOMPLETED ( "projectstatus", "projectInCompleted", "ProjectInCompleted", "null", "null"),
+REVIEWER_APPROVED_QUOTATION("status","reviewerAcceptedQuotation","reviewerAcceptedQuotation"),
+APPROVER_APPROVED_QUOTATION("status","approverAcceptedQuotation","approverAcceptedQuotation"),
+ADMIN_REJECTED_QUOTATION("status","adminRejectedQuotation","adminRejectedQuotation"),
+REVIEWER_REJECTED_QUOTATION("status","reviewerRejectedQuotation","reviewerRejectedQuotation"),
+APPROVER_REJECTED_QUOTATION("status","approverRejectedQuotation","approverRejectedQuotation"),
+QUOTATION_ACCEPTED("quotationStatus","quotationAccepted","quotationAccepted"),
+QUOTATION_ADDED("quotationStatus","quotationAdded","quotationAdded"),
+READY_FOR_ALLOTMENT("status","ReadyForAllotment","ReadyForAllotment"),
+    SUCCESS("paymentStatus","PAYMENT_SUCCESS","PAYMENT_SUCCESS");
 	private String field;
 	private String key;
 	private String value;
@@ -51,6 +51,11 @@ BATHROOM ( "asset", "bathroom", "Bathroom", "assettype", "infrastructure"),
 		this.parentField = parentField; 
 		this.parentValue = parentValue;
 	}
+    PuthuyirLookUp(String field, String key, String value) {
+        this.field = field;
+        this.key = key;
+        this.value = value;
+    }
 
 	public String getField() {
 		return field;

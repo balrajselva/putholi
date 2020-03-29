@@ -16,7 +16,6 @@ import lombok.Data;
 @MappedSuperclass
 @Data public class AuditableEntity {
 
-	
 	@Column(name = "created_date", nullable = false, updatable = false)
 	@CreatedDate
 	private Date createdDate;
