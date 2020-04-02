@@ -529,7 +529,7 @@ class viewRequirements extends Component {
                                                 </form>
                                             </div>
                                             </div>
-                                            <div className="row">
+                                            <div className="col-md-12">
                                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                                                 <div className="modal-footer">
                                                     <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>

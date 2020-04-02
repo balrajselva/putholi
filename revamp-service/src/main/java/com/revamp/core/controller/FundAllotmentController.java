@@ -76,4 +76,10 @@ public class FundAllotmentController {
 		fundMasterService.saveFund(fundMaster);
 		return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
 	}
+
+	@GetMapping("/fundMaster/{school_id}")
+	public ResponseEntity<List<FundMaster>> getFundMaster(@PathVariable("school_id") long schoolId){
+		List<FundMaster> fundMasters = fundMasterService.findBySchoolId(schoolId);
+		return ResponseEntity.ok().body(fundMasters);
+	}
 }
