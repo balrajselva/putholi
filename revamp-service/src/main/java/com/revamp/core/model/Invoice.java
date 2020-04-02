@@ -78,6 +78,21 @@ public class Invoice extends AuditableEntity {
 
 	private String totalAmount;
 
+	@Column(name = "work_status")
+	private String workStatus;
+
+	@Column(name = "bank_name")
+	private String bankName;
+
+	@Column(name = "ifsc")
+	private String ifsc;
+
+	@Column(name = "accountNum")
+	private String accountNum;
+
+	@Column(name = "payment_mode")
+	private String paymentMode;
+
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
 	private Set<InvoiceImage> invoiceImages;
 

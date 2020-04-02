@@ -30,7 +30,12 @@ class AddInvoice extends Component {
         currentReqId:null,
         invoiceRefNum:null,
         invoiceList:[],
-        invoiceId:null
+        invoiceId:null,
+        workStatus:null,
+        paymentMode:null,
+        ifsc:null,
+        bankName:null,
+        accountNum:null
     }
 
 
@@ -166,6 +171,9 @@ class AddInvoice extends Component {
         var inputDate = 0 - new Date(given[2], given[1] - 1, given[0]).getTime();
         return (today - inputDate) < 0;
     }
+    closeModel=()=>{
+        document.getElementById('modal-default').style.display='none';
+    }
 	saveClicked=()=>{
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
@@ -286,9 +294,38 @@ class AddInvoice extends Component {
                 errorMessage:"Please upload invoice"
             })
         }
+        else if(this.state.bankName===null){
+            this.setState({
+                lastErrorField:"bankName",
+                errorMessage:"Please enter bank name"
+            })
+        }
+        else if(this.state.ifsc===null){
+            this.setState({
+                lastErrorField:"ifsc",
+                errorMessage:"Please enter IFSC code"
+            })
+        }
+        else if(this.state.paymentMode===null){
+            this.setState({
+                lastErrorField:"paymentMode",
+                errorMessage:"Please enter payment mode"
+            })
+        }
+        else if(this.state.accountNum===null || isNaN(this.state.totalAmount)){
+            this.setState({
+                lastErrorField:"accountNum",
+                errorMessage:"Please enter account number"
+            })
+        }
+        else if(this.state.workStatus===null){
+            this.setState({
+                lastErrorField:"workStatus",
+                errorMessage:"Please select work status"
+            })
+        }
         else{
             document.getElementById("modal-default").style.display="none";
-            document.getElementById("modal-default").class="modal fade";
             document.getElementById("mainContent").class="skin-blue sidebar-mini";
             document.getElementById('companyName').style.borderColor="#d2d6de";
             document.getElementById('address_line_1').style.borderColor="#d2d6de";
@@ -302,6 +339,12 @@ class AddInvoice extends Component {
             document.getElementById('itemDescription').style.borderColor="#d2d6de";
             document.getElementById('tax').style.borderColor="#d2d6de";
             document.getElementById('shippingCost').style.borderColor="#d2d6de";
+            document.getElementById('bankName').style.borderColor="#d2d6de";
+            document.getElementById('ifsc').style.borderColor="#d2d6de";
+            document.getElementById('paymentMode').style.borderColor="#d2d6de";
+            document.getElementById('workStatus').style.borderColor="#d2d6de";
+            document.getElementById('accountNum').style.borderColor="#d2d6de";
+
             const invoice={
                 schoolId:this.props.location.school.schoolId,
                 requirementId:this.state.currentReqId,
@@ -321,6 +364,11 @@ class AddInvoice extends Component {
                 tax:this.state.tax,
                 shippingCost:this.state.shippingCost,
                 totalAmount:this.state.totalAmount,
+                workStatus:this.state.workStatus,
+                bankName:this.state.bankName,
+                ifsc:this.state.ifsc,
+                paymentMode:this.state.paymentMode,
+                accountNum:this.state.accountNum,
                 proofOfId:{
                     image:this.state.fileInput,
                     comments:"",
@@ -473,6 +521,16 @@ class AddInvoice extends Component {
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="invoicePreparedBy" placeholder="Invoice Prepared by" onChange={this.handleChange}/>
                                                     </div>
+                                                    <div className="form-group">
+                                                    <select className="form-control select2" style={{width: '100%'}} id="workStatus" value={this.state.workStatus} onChange={this.handleChange}>
+                                                        <option selected="selected" disabled>Select Work Status</option>
+                                                        <option key="Fully_Completed" value="Fully_Completed">Fully Completed</option>
+                                                        <option key="Partially_Completed" value="Partially_Completed">Partially Completed</option>
+                                                    </select>                                                    
+                                                    </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="discountDetails" placeholder="Discount Details" onChange={this.handleChange}/>
+                                                    </div>
                                                 </form>
                                             </div>
                                             </div>
@@ -481,12 +539,6 @@ class AddInvoice extends Component {
                                                 <form role="form">
                                                     <div className="form-group">
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                    <input type="text" className="form-control" id="discountDetails" placeholder="Discount Details" onChange={this.handleChange}/>
-                                                    </div>
-                                                    <div className="form-group">
-                                                    <input type="text" className="form-control" id="itemDescription" placeholder="Item Description" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="quantity" placeholder="Quantity" onChange={this.handleChange}/>
@@ -503,10 +555,29 @@ class AddInvoice extends Component {
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="totalAmount" placeholder="Total amount" onChange={this.handleChange}/>
                                                     </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="bankName" placeholder="Bank Name" onChange={this.handleChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="ifsc" placeholder="IFSC code" onChange={this.handleChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="paymentMode" placeholder="Payment Mode" onChange={this.handleChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="accountNum" placeholder="Account Number" onChange={this.handleChange}/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                    </div>
                                                 </form>
                                             </div>
                                             </div>
-                                            <div className="row">
+                                            <div className="col-md-12">
+                                            <div className="form-group">
+                                                    <input type="text" className="form-control" id="itemDescription" placeholder="Item Description" onChange={this.handleChange}/>
+                                                    </div>
+                                            </div>
+                                            <div className="col-md-12">
                                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                                                 <div className="modal-footer">
                                                     <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
