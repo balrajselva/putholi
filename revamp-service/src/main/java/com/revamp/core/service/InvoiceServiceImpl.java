@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import com.revamp.core.dao.FundMasterRepository;
 import com.revamp.core.lookup.PuthuyirLookUp;
+import com.revamp.core.model.FundMaster;
 import com.revamp.core.model.InvoiceImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
 	public InvoiceRepository repository;
+
+	@Autowired
+	public FundMasterRepository fundMasterRepository;
 
 	@Override
 	@Transactional
@@ -75,6 +80,22 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public List<Invoice> getInvoiceBySchoolId(long schoolId) {
 		return repository.findBySchoolId(schoolId);
+	}
+
+	@Override
+	@Transactional
+	public void updateInvoiceAndFund(List<FundMaster> fundMasterList, List<Invoice> invoiceList) {
+		invoiceList.forEach(invoice -> {
+			fundMasterList.forEach(fundMaster -> {
+				if(Objects.equals(fundMaster.getRequirementId(),invoice.getRequirement().getRequirementId())){
+					fundMaster.setInvoiceId(invoice.getId());
+					Invoice invoice1 = repository.findByInvoiceId(invoice.getId());
+					invoice1.setFundMaster(fundMaster);
+					repository.save(invoice1);
+				}
+			});
+		});
+		fundMasterRepository.saveAll(fundMasterList);
 	}
 
 	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {

@@ -38,6 +38,7 @@ import AdminInitiateWorkOrder from '../adminWebsite/AdminInitiateWorkOrder';
 import AddInvoice from '../adminWebsite/components/invoice/AddInvoice';
 import ReassignVolunteer from '../adminWebsite/ReassignVolunteer';
 import AdminInvoiceReview from '../adminWebsite/AdminInvoiceReview';
+import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
 
 class App extends Component {
   state = {
@@ -148,6 +149,7 @@ class App extends Component {
             <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props}/>}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
+            <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props}/>}/>
             <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
@@ -157,6 +159,8 @@ class App extends Component {
             <ReviewerLayoutRoute path="/reviewerSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <ApproverLayoutRoute path="/approverRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
+            <ReviewerLayoutRoute path="/reviewerApproveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props}/>}/>
+            <ApproverLayoutRoute path="/approveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props}/>}/>
           </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}

@@ -16,4 +16,6 @@ public class SchoolRegFormModel {
 
   	private MultipartFile[] files;
 
+  	private String anotherPayload;
+
 }
