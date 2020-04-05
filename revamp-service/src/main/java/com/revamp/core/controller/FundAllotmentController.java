@@ -74,7 +74,7 @@ public class FundAllotmentController {
 	public ResponseEntity<String> saveFundAllotment(@RequestBody List<FundMaster> fundMaster) {
 		System.out.println(fundMaster);
 		fundMasterService.saveFund(fundMaster);
-		return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
+		return new ResponseEntity<String>("Save Response", HttpStatus.OK);
 	}
 
 	@GetMapping("/fundMaster/{school_id}")

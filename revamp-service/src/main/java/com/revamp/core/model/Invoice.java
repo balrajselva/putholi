@@ -33,14 +33,20 @@ public class Invoice extends AuditableEntity {
 	@Column(name = "company_name")
 	private String companyName;
 
-	@Column(name = "requirement_id")
-	private long requirementId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "requirement_id", nullable = false)
+	private Requirement requirement;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "fund_id", nullable = true)
+	private FundMaster fundMaster;
 
 	@Column(name = "project_id")
 	private Long projectId;
 
-	@Column(name = "school_id")
-	private long schoolId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "school_id", nullable = false)
+	private School school;
 
 	private String address_line_1;
 

@@ -85,4 +85,7 @@ public class FundMaster extends AuditableEntity implements Serializable {
 
     @Column(name="payment_mode")
     private String paymentMode;
+
+    @Column(name="total_amount_paid")
+    private Integer totalAmountPaid;
 }

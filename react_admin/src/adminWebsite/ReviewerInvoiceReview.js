@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter,Link } from 'react-router-dom'
 import axios from 'axios'
 
-class AdminInvoiceReview extends Component {
+class ReviewerInvoiceReview extends Component {
 
 state={
   quoList:null,
@@ -15,38 +15,14 @@ state={
 }
 
 componentDidMount(){
-  console.log("School",this.props.location.school)
-  axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+  axios.get("http://localhost:6060/puthuyir/invoice")
   .then(res=>{
-    let resp=res.data;
-    console.log("Requirements",resp);
-    this.setState({
-        requirements:resp
-  })
-  axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
-  .then(res=>{
-      console.log("Quotations",res.data);
+      console.log("Invoices",res.data)
       this.setState({
-          quoList:res.data
+        invoiceList:res.data,
+        getRequirementList:false,
+        spinner:false
       })
-      axios.get("http://localhost:6060/puthuyir/invoice/"+this.props.location.school.schoolId)
-      .then(res=>{
-          console.log("Invoices",res.data)
-          this.setState({
-            invoiceList:res.data
-          })
-          axios.get("http://localhost:6060/puthuyir/fundMaster/"+this.props.location.school.schoolId)
-          .then(res=>{
-          console.log("Fund master",res.data)
-            this.setState({
-                fund:res.data,
-                getRequirementList:false,
-                spinner:false
-            })
-        })
-      })
-  })
-
   })
   .catch(error=>{
       window.alert("Unable to get details due to "+error)
@@ -66,26 +42,23 @@ handleChange=({target})=>{
 }
 
 selectInvoiceImage=(e)=>{
-    this.setState({spinner:true});
-    let invoiceId=e.target.id;
-    console.log(invoiceId);
-    console.log(this.state.invoiceList)
-
-    let invoice = this.state.invoiceList.filter(invoice => parseInt(invoice.id) === parseInt(invoiceId))
-    console.log(invoice)
-
-    this.setState({
-        invoiceImage:invoice[0].invoiceImages[0].image,
-        spinner:false
-    })
-    document.getElementById('modal-default').style.display='block';
+  this.setState({spinner:true});
+  let invoiceId=e.target.id;
+  console.log(invoiceId);
+  let invoice = this.state.invoiceList.filter(invoice => parseInt(invoice.id) === parseInt(invoiceId))
+  console.log(invoice)
+  this.setState({
+      invoiceImage:invoice[0].invoiceImages[0].image,
+      spinner:false
+  })
+  document.getElementById('modal-default').style.display='block';
 }
 
 onSubmit=(e)=>{
   e.preventDefault();
-  let newStatus = "Work_In_Progress";
+  let newStatus = "ReviewerApprovedInvoice";
   if(e.target.id==="Reject"){
-      newStatus="InvoiceRejected"
+      newStatus="ReviewerRejectedInvoice"
   }
   this.setState({
     spinner:true
@@ -95,21 +68,11 @@ onSubmit=(e)=>{
       this.setState({
         spinner:false
       })
-      let params ={
-        fundMasterList:this.state.fund,
-        invoiceList:this.state.invoiceList
-      }
-      axios.post("http://localhost:6060/puthuyir/invoice/updateFund",params)
-      .then(res=>{
-        window.alert("Status updated successfully!");
-        this.props.history.push({
-                pathname:"/adminPendingWorkflow",
-                currentUser:this.props.location.currentUser,
-                ...this.props
-        })
-        .catch(error=>{
-          window.alert("Updation failed due to "+error)
-        })
+      window.alert("Status updated successfully!");
+      this.props.history.push({
+              pathname:"/reviewer",
+              currentUser:this.props.location.currentUser,
+              ...this.props
       })
     })
     .catch(error=>{
@@ -123,30 +86,31 @@ onSubmit=(e)=>{
 createTable=()=>{
   var rows=[];
   let rowsUpdated=false;
-  for(let i=0;i<this.state.requirements.length;i++){
-    var reqId=this.state.requirements[i].requirementId;
-    var quotation=null;
-    var invoice=this.state.invoiceList.filter(invoice => invoice.requirement.requirementId === reqId);
-    var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
-    console.log(invoice[0],fund[0])
-    for(let j=0;j<this.state.quoList[reqId].length;j++){
-      var tempQuo=this.state.quoList[reqId][j];
-      if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
-        quotation = tempQuo;
-        break;
-      }
-    }
+  for(let i=0;i<this.state.invoiceList.length;i++){
+    // var reqId=this.state.requirements[i].requirementId;
+    // var quotation=null;
+    // var invoice=this.state.invoiceList.filter(invoice => invoice.requirementId === reqId);
+    // var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
+    // console.log(invoice[0],fund[0])
+    // for(let j=0;j<this.state.quoList[reqId].length;j++){
+    //   var tempQuo=this.state.quoList[reqId][j];
+    //   if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+    //     quotation = tempQuo;
+    //     break;
+    //   }
+    // }
       rowsUpdated=true;
       rows.push(<tr>
-          <td>{this.state.requirements[i].assetName}</td>
-          <td>{this.state.requirements[i].quantity}</td>                                        
-          <td>{quotation.totalAmount}</td>
-          <td>{fund[0].allottedAmount}</td>
-          <td>{invoice[0].totalAmount}</td>
-          <td>{invoice[0].workStatus}</td>
-          <td>{fund[0].totalAmountPaid}</td>
-          <td>{fund[0].fundStatus}</td>
-          <td><input type="button"  id={invoice[0].id+""} value="Show Invoice" onClick={(e)=>this.selectInvoiceImage(e)}/></td>
+          <td>{this.state.invoiceList[i].school.schoolId}</td>                                        
+          <td>{this.state.invoiceList[i].school.schoolInfo.schoolName}</td>                                        
+          <td>{this.state.invoiceList[i].requirement.assetName}</td>
+          <td>{this.state.invoiceList[i].requirement.quantity}</td>                                        
+          <td>{this.state.invoiceList[i].fundMaster.allottedAmount}</td>
+          <td>{this.state.invoiceList[i].totalAmount}</td>
+          <td>{this.state.invoiceList[i].workStatus}</td>
+          <td>{this.state.invoiceList[i].fundMaster.totalAmountPaid}</td>
+          <td>{this.state.invoiceList[i].fundMaster.fundStatus}</td>
+          <td><input type="button"  id={this.state.invoiceList[i].id+""} value="Show Invoice" onClick={(e)=>this.selectInvoiceImage(e)}/></td>
       </tr>)			
   }
   if(rowsUpdated==false)
@@ -234,7 +198,7 @@ render() {
             <div className="col-xs-12">
               <div className="box">
                 <div className="box-header">
-              <h3 className="box-title">New Requirement details for {this.props.location.school.schoolInfo.schoolName}</h3>
+              <h3 className="box-title">New Requirement details for </h3>
                   <div className="box-tools">
                     <div className="input-group input-group-sm" style={{width: 150}}>
                     
@@ -243,11 +207,12 @@ render() {
                 </div>
                 <div className="box-body table-responsive no-padding">
                     <table className="table table-hover">
-                    <tbody><tr>
+                      <tbody><tr>
+                          <th>School Id</th>
+                          <th>School Name</th>
                           <th>Requirement </th>
                           <th>Unit</th>
-                          <th>Quotation Amount</th>
-                          <th>Alloted Amount</th>
+                          <th>Allotted Amount</th>
                           <th>Invoice Amount</th>
                           <th>Work Status</th>
                           <th>Amount paid, if any</th>
@@ -256,6 +221,7 @@ render() {
                         </tr>
                         {this.state.getRequirementList?null:this.createTable()}
                       </tbody></table>
+                      <h3>Total amount to be disbursed</h3>
                       {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                       {this.state.spinner?<div class="spinner"></div>:null}
                   </div>
@@ -291,4 +257,4 @@ render() {
     )
 }
 }
-export default withRouter(AdminInvoiceReview);
+export default withRouter(ReviewerInvoiceReview);

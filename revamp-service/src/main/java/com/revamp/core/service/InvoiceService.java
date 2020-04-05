@@ -1,5 +1,6 @@
 package com.revamp.core.service;
 
+import com.revamp.core.model.FundMaster;
 import com.revamp.core.model.Invoice;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface InvoiceService {
 	void deleteQuotation(long invoiceId);
 
 	List<Invoice> getInvoiceBySchoolId(long schoolId);
+
+    void updateInvoiceAndFund(List<FundMaster> fundMasterList, List<Invoice> invoiceList);
 }

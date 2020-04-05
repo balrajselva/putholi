@@ -11,9 +11,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.revamp.core.model.Quotation;
-import com.revamp.core.model.SchoolRegFormModel;
+import com.revamp.core.model.*;
 import com.revamp.core.web.util.WebUtilities;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revamp.core.model.FundAllotment;
-import com.revamp.core.model.Invoice;
 import com.revamp.core.service.InvoiceService;
 
 /**
@@ -111,4 +110,9 @@ public class InvoiceController {
 		return new ResponseEntity<>("DELETE Response", HttpStatus.OK);
 	}
 
+	@PostMapping("/invoice/updateFund")
+	public ResponseEntity<String> update(@RequestBody Payload payload) {
+		invoiceService.updateInvoiceAndFund(payload.getFundMasterList(),payload.getInvoiceList());
+		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
+	}
 }

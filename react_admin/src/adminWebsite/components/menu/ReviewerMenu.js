@@ -6,12 +6,17 @@ class ReviewerMenu extends Component {
         const accessReview={
             pathname:"/reviewerAccessReview",
             currentUser:this.props.currentUser
-          }
-          const reviewerSchoolReview={
+        }
+        const reviewerSchoolReview={
             pathname:"/reviewer",
             currentUser:this.props.currentUser,
             ...this.props
-          }
+        }
+        const reviewerInvoiceReview={
+            pathname:"/reviewerInvoiceReview",
+            currentUser:this.props.currentUser,
+            ...this.props
+        }
         return (
             <div>
                 <aside className="main-sidebar">
@@ -42,6 +47,7 @@ class ReviewerMenu extends Component {
                         <ul className="treeview-menu">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
                         <li><Link to={reviewerSchoolReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
+                        <li><Link to={reviewerInvoiceReview}><i className="fa fa-circle-o" />Review Invoice</Link></li>
                         </ul>
                     </li>
                     </ul>

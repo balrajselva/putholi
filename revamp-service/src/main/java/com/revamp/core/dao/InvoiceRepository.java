@@ -9,7 +9,10 @@ import java.util.List;
 
 @Repository
 public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
-    @Query("SELECT u FROM Invoice u where u.schoolId=:schoolId")
+    @Query("SELECT u FROM Invoice u where u.school.schoolId=:schoolId")
     List<Invoice> findBySchoolId(long schoolId);
+
+    @Query("SELECT u FROM Invoice u where u.id=:invoiceId")
+    Invoice findByInvoiceId(long invoiceId);
 }
 
