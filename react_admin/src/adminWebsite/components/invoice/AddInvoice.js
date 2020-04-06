@@ -168,7 +168,8 @@ class AddInvoice extends Component {
     isFutureDate=(idate)=>{
         var today = new Date().getTime();
         var given = idate.split("-");
-        var inputDate = 0 - new Date(given[2], given[1] - 1, given[0]).getTime();
+        var inputDate = new Date(given[0],given[1] - 1, given[2]).getTime();
+        console.log(new Date(given[0],given[1] - 1, given[2]),given,today,inputDate)
         return (today - inputDate) < 0;
     }
     closeModel=()=>{
@@ -219,6 +220,7 @@ class AddInvoice extends Component {
             document.getElementById('pincode').style.borderColor="red";
         }
         else if(this.state.invoiceDate===null || this.isFutureDate(this.state.invoiceDate) === true){
+            console.log(this.state.invoiceDate,this.isFutureDate(this.state.invoiceDate))
             this.setState({
                 lastErrorField:"invoiceDate",
                 errorMessage:"Please enter valid Invoice Date"
@@ -344,10 +346,10 @@ class AddInvoice extends Component {
             document.getElementById('paymentMode').style.borderColor="#d2d6de";
             document.getElementById('workStatus').style.borderColor="#d2d6de";
             document.getElementById('accountNum').style.borderColor="#d2d6de";
-
+            console.log(this.state.requirements.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
             const invoice={
-                schoolId:this.props.location.school.schoolId,
-                requirementId:this.state.currentReqId,
+                school:this.props.location.school.schoolId+"",
+                requirement:this.state.currentReqId,
                 projectId:this.props.location.school.projects[0].projectId,
                 companyName:this.state.companyName,
                 address_line_1:this.state.address_line_1,

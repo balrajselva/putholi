@@ -33,6 +33,10 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
 	void updateSchoolStatusAndVolunteerId(@Param("id") long id, @Param("status") String status,@Param("volunteerId") Long volunteerId);
 
 	@Modifying
+	@Query("UPDATE School s set s.volunteerId = :volunteerId, modifiedDate = now() where s.schoolId = :id")
+	void updateVolunteerId(@Param("id") long id,@Param("volunteerId") Long volunteerId);
+
+	@Modifying
 	@Query("UPDATE School s set s.enableDonation = :donationFlag, modifiedDate = now() where s.schoolId = :id")
 	void updateDonationFlag(@Param("id") long id, @Param("donationFlag") String donationFlag);
 

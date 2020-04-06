@@ -28,6 +28,7 @@ public interface SchoolService {
 
 	School updateSchoolStatus(long id, String status);
 
-	School updateSchoolStatusAndVolunteerId(long id,Long volunteerId, String status);
+	School updateVolunteerId(long id,Long volunteerId);
 
+	School updateSchoolStatusAndVolunteerId(long id,Long volunteerId, String status);
 }
