@@ -160,8 +160,13 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
+	public School updateVolunteerId(long id, Long volunteerId) {
+		schoolRepository.updateVolunteerId(id,volunteerId);
+		return schoolRepository.findById(id).orElse(null);
+	}
+
 	public School updateSchoolStatusAndVolunteerId(long id, Long volunteerId, String status) {
-		schoolRepository.updateSchoolStatusAndVolunteerId(id, status,volunteerId);
+		schoolRepository.updateSchoolStatusAndVolunteerId(id, status, volunteerId);
 		return schoolRepository.findById(id).orElse(null);
 	}
 

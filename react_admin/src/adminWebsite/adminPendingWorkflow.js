@@ -65,15 +65,15 @@ class adminPendingWorkflow extends Component {
                 nextPage="fundDisbursement"
                 pageLink="Initiate Fund Disbursement";
             }
-            const newTo = { 
+            const newTo = {
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
                 currentUser:this.props.location.currentUser,
                 ...this.props
             };
-            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" || 
-                this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" || 
-                    this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT" || 
+            if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" ||
+                this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" ||
+                    this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT" ||
                     this.state.schools[i].schoolStatus==="FUND_ALLOTED" || this.state.schools[i].schoolStatus==="InvoiceAdded"){
                 rowsUpdated=true;
                 rows.push(<tr>

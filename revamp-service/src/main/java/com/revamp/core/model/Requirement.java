@@ -24,6 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Proxy(lazy = false)
 @Getter
 @Setter
+@ToString
 public class Requirement extends AuditableEntity {
 
 	private static final long serialVersionUID = -7230483495700936141L;
@@ -66,5 +67,11 @@ public class Requirement extends AuditableEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
+	public Requirement() {
+	}
+
+	public Requirement (String requirementId){
+		this.requirementId=Long.parseLong(requirementId);
+	}
 }

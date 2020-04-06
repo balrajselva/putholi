@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -81,4 +82,7 @@ public class School extends AuditableEntity {
 	@Transient
 	private List<Requirement> requirements;
 
+	public School (String schoolId){
+		this.schoolId=Long.parseLong(schoolId);
+	}
 }
