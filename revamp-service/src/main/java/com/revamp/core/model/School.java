@@ -82,6 +82,9 @@ public class School extends AuditableEntity {
 	@Transient
 	private List<Requirement> requirements;
 
+	public School(){
+
+    }
 	public School (String schoolId){
 		this.schoolId=Long.parseLong(schoolId);
 	}
