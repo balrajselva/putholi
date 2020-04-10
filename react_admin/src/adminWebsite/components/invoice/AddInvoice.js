@@ -81,19 +81,24 @@ class AddInvoice extends Component {
     }    
 
     submitInvoice=()=>{
-        axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"InvoiceAdded")
-        .then(res=>{
-            window.alert("Invoices submitted successfully!")
-            this.props.history.push({
-                pathname: '/volunteerSchoolCheck',
-                currentUser:this.props.location.currentUser,
-                school:this.props.location.school,
-                ...this.props            
-            });
-        })
-        .catch(error=>{
-            window.alert("Failed due to "+ error);
-        })
+        if(this.state.invoiceId !== null){
+            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"InvoiceAdded")
+            .then(res=>{
+                window.alert("Invoices submitted successfully!")
+                this.props.history.push({
+                    pathname: '/volunteerSchoolCheck',
+                    currentUser:this.props.location.currentUser,
+                    school:this.props.location.school,
+                    ...this.props            
+                });
+            })
+            .catch(error=>{
+                window.alert("Failed due to "+ error);
+            })
+        }
+        else{
+            this.setState({errorMessage:"Please add atleast one invoice"})
+        }   
     }
 
     requirementList=()=>{
@@ -112,13 +117,13 @@ class AddInvoice extends Component {
         })
     }    
     updateCurrentReqId=(e)=>{
-        console.log(e.target.ref)
+        console.log(e.target.id)
         this.setState({
             currentReqId:e.target.id.split("/")[0],
             invoiceRefNum:e.target.id.split("/")[1]
         })
     }
-    deleteQuotation=(e)=>{
+    deleteInvoice=(e)=>{
         e.preventDefault();
         var invoiceId=e.target.id.split("/")[0];
         var reqIndex=e.target.id.split("/")[1];
@@ -157,7 +162,7 @@ class AddInvoice extends Component {
                     Add Invoice
                 </button>
                 </td>                    
-                <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
+                <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
                 </td>
             </tr>)			
         }
@@ -388,16 +393,16 @@ class AddInvoice extends Component {
                 console.log(res);
                 this.setState({
                     spinner:false,
-                    invoiceId:res.data.invoiceId
+                    invoiceId:res.data
                 })
-                updateList(res.data);
+                updateList(res);
             })
             .catch(error=>{
                 window.alert("Failed to save invoice due to "+error);
             })
             let updateList=(res)=>{
                 let ql={
-                    invoiceId:res.invoiceId,
+                    invoiceId:res.data,
                     requirementId:this.state.currentReqId,
                     companyName:this.state.companyName,
                     address_line_1:this.state.address_line_1,
@@ -426,6 +431,7 @@ class AddInvoice extends Component {
                 this.setState({
                     requirements:i,
                 })
+                console.log(i)
             }
         }
     }
