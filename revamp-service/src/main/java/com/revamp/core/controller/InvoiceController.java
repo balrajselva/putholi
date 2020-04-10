@@ -53,6 +53,7 @@ public class InvoiceController {
 	@PostMapping(value = "/invoiceUpload")
 	public ResponseEntity<?> invoiceUploadFile(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 													 HttpServletRequest request) {
+		long id;
 		try {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			Invoice invoice = new ObjectMapper().readValue(regFormModel.getPayload(), Invoice.class);
@@ -60,17 +61,15 @@ public class InvoiceController {
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				long id = invoiceService.save(invoice, filesInBytes,imgPath);
+				 id = invoiceService.save(invoice, filesInBytes,imgPath);
 			} else {
-				long id = invoiceService.save(invoice, null, imgPath);
+				 id = invoiceService.save(invoice, null, imgPath);
 			}
 		} catch (IOException ex) {
 			logger.debug("Error on multiUploadFileModel {}", ex);
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
-
-
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 
 	@GetMapping("/downloadFile/{fileId}")
