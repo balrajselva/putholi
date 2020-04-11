@@ -136,6 +136,26 @@ createTable=()=>{
         break;
       }
     }
+    const newTo = { 
+      pathname: "/adminInvoiceCheck", 
+      school:this.props.location.school,
+      currentUser:this.props.location.currentUser,
+      invoice:invoice[0],
+      fund:fund[0],
+      quotation:quotation,
+      requirement:this.state.requirements[i],
+      ...this.props
+     };
+     if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
+      continue
+    // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
+     if(this.props.location.currentUser.role === "Admin" && invoice[0].invoiceStatus !== "InvoiceAdded")
+      continue
+     else if(this.props.location.currentUser.role === "Approver" && invoice[0].invoiceStatus !== "AdminReviewedInvoice")
+       continue
+     else if(this.props.location.currentUser.role === "Reviewer" && invoice[0].invoiceStatus !== "ReviewerConfirmedInvoice")
+      continue
+
       rowsUpdated=true;
       rows.push(<tr>
           <td>{this.state.requirements[i].assetName}</td>
@@ -146,7 +166,7 @@ createTable=()=>{
           <td>{invoice[0].workStatus}</td>
           <td>{fund[0].totalAmountPaid}</td>
           <td>{fund[0].fundStatus}</td>
-          <td><input type="button"  id={invoice[0].id+""} value="Show Invoice" onClick={(e)=>this.selectInvoiceImage(e)}/></td>
+          <td><a href=""><Link to={newTo}>More Details</Link></a></td>
       </tr>)			
   }
   if(rowsUpdated==false)
@@ -252,7 +272,7 @@ render() {
                           <th>Work Status</th>
                           <th>Amount paid, if any</th>
                           <th>Payment Status</th>
-                          <th>View Invoice</th>
+                          <th>More Details</th>
                         </tr>
                         {this.state.getRequirementList?null:this.createTable()}
                       </tbody></table>

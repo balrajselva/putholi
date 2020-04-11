@@ -51,14 +51,14 @@ class adminSchoolCheck extends Component {
             }
             else if(this.props.location.currentUser.role==="Reviewer"){
               this.props.history.push({ 
-                pathname:"/reviewerSchoolCheck", 
+                pathname:"/reviewer", 
                 currentUser:this.props.location.currentUser,
                 school:this.props.location.school
               });
             }
           else if(this.props.location.currentUser.role==="Approver"){
             this.props.history.push({ 
-              pathname:"/approverSchoolReview", 
+              pathname:"/approver", 
               currentUser:this.props.location.currentUser,
               school:this.props.location.school
             });

@@ -24,11 +24,11 @@ public class Invoice extends AuditableEntity {
 	@Column(name = "invoice_id")
 	private long id;
 
-	private String admin;
+	private Long admin;
 
-	private String approver;
+	private Long approver;
 
-	private String reviewer;
+	private Long reviewer;
 
 	@Column(name = "company_name")
 	private String companyName;
@@ -39,7 +39,7 @@ public class Invoice extends AuditableEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fund_id", nullable = true)
-	private FundMaster fundMaster;
+	private FundAllotment fundMaster;
 
 	@Column(name = "project_id")
 	private Long projectId;
@@ -86,6 +86,9 @@ public class Invoice extends AuditableEntity {
 
 	@Column(name = "work_status")
 	private String workStatus;
+
+	@Column(name = "invoice_status")
+	private String invoiceStatus;
 
 	@Column(name = "bank_name")
 	private String bankName;

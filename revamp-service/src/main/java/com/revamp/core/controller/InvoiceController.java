@@ -114,4 +114,10 @@ public class InvoiceController {
 		invoiceService.updateInvoiceAndFund(payload.getFundMasterList(),payload.getInvoiceList());
 		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
 	}
+
+	@PostMapping("/invoice/status/{id}/{userId}/{status}")
+	public ResponseEntity<String> update(@PathVariable("id") Long invoiceId,@PathVariable("userId") Long userId, @PathVariable("status") String status) {
+		invoiceService.updateStatus(invoiceId,userId,status);
+		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
+	}
 }
