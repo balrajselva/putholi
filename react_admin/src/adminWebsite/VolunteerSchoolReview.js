@@ -140,7 +140,6 @@ class VolunteerSchoolReview extends Component {
                             <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 className="modal-title">Add Quotations</h4>
                             </div>
                             <div className="modal-body">
                             <div className="row">

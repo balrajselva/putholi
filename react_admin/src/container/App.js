@@ -39,6 +39,7 @@ import AddInvoice from '../adminWebsite/components/invoice/AddInvoice';
 import ReassignVolunteer from '../adminWebsite/ReassignVolunteer';
 import AdminInvoiceReview from '../adminWebsite/AdminInvoiceReview';
 import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
+import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
 
 class App extends Component {
   state = {
@@ -141,6 +142,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/fundAllotment" component={(props)=><FundAllotment {...props}/>}/>
             <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props}/>}/>
+            <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>

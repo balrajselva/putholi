@@ -1,18 +1,11 @@
 package com.revamp.core.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.revamp.core.model.FundAllotment;
 
+import java.util.List;
+
 public interface FundAllotmentService {
-	
-	long save(FundAllotment fundAllocation);
+    void saveFund(List<FundAllotment> fundMaster);
 
-	Optional<FundAllotment> getFundAllocations(long id);
-
-	List<FundAllotment> getFundAllocations();
-	
-	void deleteFundAllocation(long id);
-
+    List<FundAllotment> findBySchoolId(long schoolId);
 }

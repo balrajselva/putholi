@@ -355,16 +355,16 @@ class viewRequirements extends Component {
                 console.log(res);
                 this.setState({
                     spinner:false,
-                    quotationId:res.data.quotationId
+                    quotationId:res.data
                 })
-                updateList(res.data);
+                updateList(res);
             })
             .catch(error=>{
                 window.alert("Failed to save quotation due to "+error);
             })
             let updateList=(res)=>{
                 let ql={
-                    quotationId:res.quotationId,
+                    quotationId:res.data,
                     requirementId:this.state.currentReqId,
                     companyName:this.state.companyName,
                     address_line_1:this.state.address_line_1,
@@ -479,10 +479,10 @@ class viewRequirements extends Component {
                                                     <input type="text" className="form-control" id="city" placeholder="Enter city" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="pincode" placeholder="Enter pincode" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="pincode" placeholder="Enter pincode" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="phoneNumber"placeholder="Enter phone number" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="phoneNumber"placeholder="Enter phone number" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="comment"placeholder="Comment / Special instructions" onChange={this.handleChange}/>

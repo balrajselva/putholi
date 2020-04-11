@@ -8,9 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.revamp.core.dao.FundMasterRepository;
-import com.revamp.core.lookup.PuthuyirLookUp;
-import com.revamp.core.model.FundMaster;
+import com.revamp.core.dao.FundAllotmentRepository;
+import com.revamp.core.model.FundAllotment;
 import com.revamp.core.model.InvoiceImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public InvoiceRepository repository;
 
 	@Autowired
-	public FundMasterRepository fundMasterRepository;
+	public FundAllotmentRepository fundMasterRepository;
 
 	@Override
 	@Transactional
@@ -84,18 +83,23 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	@Transactional
-	public void updateInvoiceAndFund(List<FundMaster> fundMasterList, List<Invoice> invoiceList) {
+	public void updateInvoiceAndFund(List<FundAllotment> fundAllotmentList, List<Invoice> invoiceList) {
 		invoiceList.forEach(invoice -> {
-			fundMasterList.forEach(fundMaster -> {
+			fundAllotmentList.forEach(fundMaster -> {
 				if(Objects.equals(fundMaster.getRequirementId(),invoice.getRequirement().getRequirementId())){
-					fundMaster.setInvoiceId(invoice.getId());
 					Invoice invoice1 = repository.findByInvoiceId(invoice.getId());
 					invoice1.setFundMaster(fundMaster);
 					repository.save(invoice1);
 				}
 			});
 		});
-		fundMasterRepository.saveAll(fundMasterList);
+	}
+
+	@Override
+	@Transactional
+	public void updateStatus(Long invoiceId, Long userId, String status) {
+		repository.updateStatus(invoiceId,status);
+		repository.updateAdmin(invoiceId,userId);
 	}
 
 	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
@@ -110,7 +114,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 			}
 
 			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
-
 
 			try {
 				Files.write(path, schoolImg.getImage());

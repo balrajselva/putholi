@@ -44,8 +44,8 @@ public class QuotationController {
 	@PostMapping("/quotation")
 	public ResponseEntity<?> setQuotation(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 												  HttpServletRequest request) {
-		long id;
 		try {
+			long id;
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			Quotation quotation = new ObjectMapper().readValue(regFormModel.getPayload(), Quotation.class);
 			System.out.println(quotation);
@@ -56,12 +56,11 @@ public class QuotationController {
 			} else {
 				id = quotationService.save(quotation, null, imgPath);
 			}
+			return new ResponseEntity<>(id, HttpStatus.OK);
 		} catch (IOException ex) {
 			logger.debug("Error on multiUploadFileModel {}", ex);
 			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>(id, HttpStatus.OK);
-
 	}
 
 	@PostMapping("/updateQuotation")

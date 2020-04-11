@@ -376,6 +376,7 @@ class AddInvoice extends Component {
                 ifsc:this.state.ifsc,
                 paymentMode:this.state.paymentMode,
                 accountNum:this.state.accountNum,
+                invoiceStatus:"InvoiceAdded",
                 proofOfId:{
                     image:this.state.fileInput,
                     comments:"",
@@ -422,6 +423,7 @@ class AddInvoice extends Component {
                     shippingCost:this.state.shippingCost,
                     totalAmount:this.state.totalAmount,
                     fileInput:this.state.fileInput,
+                    invoiceStatus:"InvoiceAdded",
                     localImageUrl:this.state.localImageUrl
                 };
                 let a=this.state.requirements[this.state.invoiceRefNum].invoiceList;
