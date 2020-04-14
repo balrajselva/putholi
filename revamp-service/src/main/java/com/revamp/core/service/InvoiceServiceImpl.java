@@ -83,16 +83,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	@Transactional
-	public void updateInvoiceAndFund(List<FundAllotment> fundAllotmentList, List<Invoice> invoiceList) {
-		invoiceList.forEach(invoice -> {
-			fundAllotmentList.forEach(fundMaster -> {
-				if(Objects.equals(fundMaster.getRequirementId(),invoice.getRequirement().getRequirementId())){
-					Invoice invoice1 = repository.findByInvoiceId(invoice.getId());
-					invoice1.setFundMaster(fundMaster);
-					repository.save(invoice1);
-				}
-			});
-		});
+	public void updateInvoiceAndFund(FundAllotment fundAllotment, Invoice invoice) {
+		Invoice invoice1 = repository.findByInvoiceId(invoice.getId());
+		invoice1.setFundMaster(fundAllotment);
+		repository.save(invoice1);
 	}
 
 	@Override

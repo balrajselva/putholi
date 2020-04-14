@@ -99,6 +99,24 @@ createTable=()=>{
     //     break;
     //   }
     // }
+    if(this.state.invoiceList[i].fundMaster === null ){
+      continue
+    }
+    if(this.props.location.currentUser.role==="Admin" && this.state.invoiceList[i].invoiceStatus !== "InvoiceAdded")
+      continue
+    if(this.props.location.currentUser.role==="Reviewer" && this.state.invoiceList[i].invoiceStatus !== "AdminReviewedInvoice")
+      continue
+      if(this.props.location.currentUser.role==="Approver" && this.state.invoiceList[i].invoiceStatus !== "ReviewerConfirmedInvoice")
+      continue
+      const newTo = { 
+      pathname: "/reviewerInvoiceCheck", 
+      school:this.state.invoiceList[i].school,
+      currentUser:this.props.location.currentUser,
+      invoice:this.state.invoiceList[i],
+      fund:this.state.invoiceList[i].fundMaster,
+      requirement:this.state.invoiceList[i].requirement,
+      ...this.props
+     };
       rowsUpdated=true;
       rows.push(<tr>
           <td>{this.state.invoiceList[i].school.schoolId}</td>                                        
@@ -110,7 +128,7 @@ createTable=()=>{
           <td>{this.state.invoiceList[i].workStatus}</td>
           <td>{this.state.invoiceList[i].fundMaster.totalAmountPaid}</td>
           <td>{this.state.invoiceList[i].fundMaster.fundStatus}</td>
-          <td><input type="button"  id={this.state.invoiceList[i].id+""} value="Show Invoice" onClick={(e)=>this.selectInvoiceImage(e)}/></td>
+          <td><a href=""><Link to={newTo}>More Details</Link></a></td>
       </tr>)			
   }
   if(rowsUpdated==false)

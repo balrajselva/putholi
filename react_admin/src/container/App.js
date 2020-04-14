@@ -143,6 +143,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props}/>}/>
             <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
+            <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
