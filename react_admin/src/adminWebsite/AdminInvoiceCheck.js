@@ -69,7 +69,15 @@ class adminInvoiceCheck extends Component {
           if(res.data!==""){
               axios.post("http://localhost:6060/puthuyir/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
               .then(res=>{
-                this.setState({spinner:false});
+                console.log(res)
+                let params ={
+                  fundMasterList:this.props.location.fund,
+                  invoiceList:this.props.location.invoice
+                }
+                console.log(params)
+                axios.post("http://localhost:6060/puthuyir/invoice/updateFund",params)
+                .then(res=>{
+                  this.setState({spinner:false});
                 window.alert("Status updated successfully");
                 if(this.props.location.currentUser.role==="Admin"){
                   this.props.history.push({ 
@@ -92,7 +100,7 @@ class adminInvoiceCheck extends Component {
                   school:this.props.location.school
                 });
               }
-              
+            })
               })
             }
         })
@@ -159,7 +167,7 @@ class adminInvoiceCheck extends Component {
                                 <ul>
                                     <li>Requirement  : {this.props.location.requirement.assetName}</li>
                                     <li>Unit : {this.props.location.requirement.quantity}</li>
-                                    <li>Quotation Amount : {this.props.location.quotation.totalAmount}</li>
+                                    {/* <li>Quotation Amount : {this.props.location.quotation.totalAmount}</li> */}
                                     <li>Alloted Amount : {this.props.location.fund.allottedAmount}</li>
                                     <li>Invoice Amount : {this.props.location.invoice.totalAmount}</li>
                                     <li>Work Status : {this.props.location.invoice.workStatus}</li>

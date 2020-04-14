@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Payload{
-    private List<FundAllotment> fundMasterList;
-    private List<Invoice> invoiceList;
+    private FundAllotment fundMasterList;
+    private Invoice invoiceList;
 }
