@@ -144,6 +144,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props}/>}/>
             <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
+            <ApproverLayoutRoute exact path="/approverInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
             <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
@@ -153,6 +154,7 @@ class App extends Component {
             <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props}/>}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props}/>}/>
+            <ReviewerLayoutRoute exact path="/approverInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props}/>}/>
             <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props}/>}/>
             <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>

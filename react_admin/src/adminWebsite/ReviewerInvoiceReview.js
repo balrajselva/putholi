@@ -99,7 +99,12 @@ createTable=()=>{
     //     break;
     //   }
     // }
-    if(this.state.invoiceList[i].fundMaster === null ){
+    let nextPage=null;
+    if(this.props.location.currentUser.role==="Reviewer")
+      nextPage="reviewerInvoiceCheck"
+      if(this.props.location.currentUser.role==="Approver")
+      nextPage="approverInvoiceCheck"
+      if(this.state.invoiceList[i].fundMaster === null ){
       continue
     }
     if(this.props.location.currentUser.role==="Admin" && this.state.invoiceList[i].invoiceStatus !== "InvoiceAdded")

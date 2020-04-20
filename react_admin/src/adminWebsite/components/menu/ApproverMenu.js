@@ -12,6 +12,11 @@ class ApproverMenu extends Component {
             currentUser:this.props.currentUser,
             ...this.props
           }
+          const approverInvoiceReview={
+            pathname:"/approverInvoiceReview",
+            currentUser:this.props.currentUser,
+            ...this.props
+        }
         return (
             <div>
                 <aside className="main-sidebar">
@@ -41,6 +46,7 @@ class ApproverMenu extends Component {
                         <ul className="treeview-menu">
                         <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
                         <li><Link to={approverSchoolReview}><i className="fa fa-circle-o" />Pending Workflow</Link></li>
+                        <li><Link to={approverInvoiceReview}><i className="fa fa-circle-o" />Review Invoice</Link></li>
                         </ul>
                     </li>
                     </ul>
