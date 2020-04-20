@@ -109,4 +109,12 @@ public class Invoice extends AuditableEntity {
 	@Transient
 	private ProofOfId proofOfId;
 
+	@Column(name="admin_comments")
+	private String adminComments;
+
+	@Column(name="reviewer_comments")
+	private String reviewerComments;
+
+	@Column(name="approver_comments")
+	private String approverComments;
 }
