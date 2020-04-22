@@ -85,7 +85,7 @@ public class QuotationServiceImpl implements QuotationService {
 		Boolean isUpdated=true;
 		for(Quotation quotation:updateQuotation.getQuotations()) {
 			int i=quotationRepository.updateQuotationStatus(quotation.getQuotationId(),PuthuyirLookUp.QUOTATION_ACCEPTED.name());
-			requirementRepository.updateRequirementEstimate(quotation.getRequirementId(),Integer.valueOf(quotation.getTotalAmount()));
+			requirementRepository.updateRequirementEstimate(quotation.getRequirementId(),quotation.getTotalAmount());
 		}
 		if(isUpdated==true){
 			schoolRepository.updateSchoolStatus(updateQuotation.getQuotations().get(0).getSchoolId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());

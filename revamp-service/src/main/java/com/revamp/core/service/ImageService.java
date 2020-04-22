@@ -1,11 +1,14 @@
 package com.revamp.core.service;
 
-import com.revamp.core.model.SchoolImage;
+import java.util.Collection;
+import java.util.List;
+
+import com.revamp.core.model.ImageDetails;
 
 public interface ImageService {
 
-	long save(SchoolImage image);
+	void save(List<ImageDetails> images);
 
-	SchoolImage get(long id);
+	List<ImageDetails> get(String module, Collection<Long> moduleId);
 	
 }

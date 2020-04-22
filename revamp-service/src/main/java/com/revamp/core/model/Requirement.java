@@ -67,11 +67,10 @@ public class Requirement extends AuditableEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
-
-	public Requirement() {
-	}
-
-	public Requirement (String requirementId){
-		this.requirementId=Long.parseLong(requirementId);
-	}
+	
+	@Transient
+	private List<ImageDetails> imageDetails;
+	
+	@Transient
+	private List<ImageDetails> postImplImageDetails;
 }

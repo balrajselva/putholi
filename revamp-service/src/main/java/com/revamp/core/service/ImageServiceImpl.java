@@ -1,26 +1,32 @@
 package com.revamp.core.service;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.revamp.core.dao.SchoolImageRepository;
-import com.revamp.core.model.SchoolImage;
+import com.revamp.core.dao.ImageDetailsRepository;
+import com.revamp.core.model.ImageDetails;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class ImageServiceImpl implements ImageService {
 
 	@Autowired
-	private SchoolImageRepository schoolImageRepository;
-
-	@Transactional
-	public long save(SchoolImage image) {
-		return schoolImageRepository.save(image).getImageId();
+	private ImageDetailsRepository repo;
+	
+	@Override
+	public void save(List<ImageDetails> images) {
+		repo.saveAll(images);
 	}
 
-	public SchoolImage get(long id) {
-		return schoolImageRepository.findById(id).orElse(null);
+	@Override
+	public List<ImageDetails> get(String module, Collection<Long> moduleId) {
+		return repo.findByModuleAndModuleIdIn(module, moduleId);
 	}
+
+
 
 }

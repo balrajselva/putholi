@@ -2,12 +2,17 @@ package com.revamp.core.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -76,7 +81,7 @@ public class Quotation extends AuditableEntity implements Serializable {
 	
 	private String pincode;
 	
-	private String quantity;
+	private double quantity;
 	
 	private String discountDetails;
 
@@ -91,7 +96,7 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@Column(name = "shipping_cost")
 	private String shippingCost;
 
-	private String totalAmount;
+	private double totalAmount;
 
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "quotation" ,cascade = CascadeType.ALL)
 	private Set<QuotationImage> quotationImages;
@@ -99,4 +104,12 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@JsonProperty("proofOfId")
 	@Transient
 	private ProofOfId proofOfId;
+	
+	@Transient
+	private double invoiceAmout;
+	
+	@JsonProperty("imageDetails")
+	@Transient
+	private List<ImageDetails> imageDetails;
+
 }

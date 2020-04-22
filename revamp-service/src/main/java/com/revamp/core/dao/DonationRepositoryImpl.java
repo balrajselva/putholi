@@ -17,10 +17,17 @@ public class DonationRepositoryImpl implements TrackDonationCustomRepository {
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
-	private static final String FIND_BY_TRACKING_ID = "select don.amount,pro.collected_amount collectedAmount, pro.estimate, "
-			+ "(pro.estimate - pro.collected_amount) balanceamt, req.assettype, req.assetname, req.quantity, req.status from donation don, project pro, requirement req "
-			+ "	where tracking_id= :trackingId" + "	and don.project_id = pro.project_id"
-			+ "	and don.project_id = req.project_id";
+	private static final String FIND_BY_TRACKING_ID = "select don.amount,pro.project_id projectId,pro.collected_amount collectedAmt, pro.estimated_amount estimatedamt, "+ 
+	"(pro.estimated_amount - pro.collected_amount) balanceAmt, req.assettype, req.assetname, req.quantity, req.status, req.requirement_id requirementId, "+
+	"exp.expenses_id expensesId,exp.quantity actQty,exp.amount_spent amtSpent,exp.status expStatus,exp.comments, "+
+	"qot.quotation_id quotationId, qot.item_description itemDesc,qot.quantity qotQty, qot.total_amount qotTotalAmt,qot.company_name qotCompanyName, inv.total_amount invoiceAmt "+
+	"from requirement req, project pro, donation don, expenses exp, quotation qot, invoice inv "+
+	"where don.tracking_id= :trackingId "+
+	"and don.project_id = pro.project_id "+ 
+	"and pro.project_id = req.project_id "+
+	"and req.requirement_id = exp.requirement_id "+
+    "and req.requirement_id = qot.requirement_id "+
+    "and req.requirement_id = inv.requirement_id";
 
 	@Autowired
 	DonationRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {

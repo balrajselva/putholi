@@ -22,7 +22,7 @@ public interface RequirementRepository extends CrudRepository<Requirement, Long>
 
 	@Modifying
 	@Query("UPDATE Requirement s set s.estimate = :estimate, modifiedDate = now() where s.requirementId = :id")
-	void updateRequirementEstimate(long id, Integer estimate);
+	void updateRequirementEstimate(long id, double estimate);
 
 	@Modifying
 	@Query("UPDATE Requirement s set s.collectedAmount = :collectedAmount, modifiedDate = now() where s.requirementId = :id")

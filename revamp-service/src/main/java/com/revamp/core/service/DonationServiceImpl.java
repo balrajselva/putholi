@@ -1,6 +1,9 @@
 package com.revamp.core.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revamp.core.converter.TrackDonationConverter;
 import com.revamp.core.dao.DonationRepository;
+import com.revamp.core.dao.ImageDetailsRepository;
 import com.revamp.core.dao.ProjectRepository;
-import com.revamp.core.dao.UserRepository;
 import com.revamp.core.dto.TrackDonationDTO;
 import com.revamp.core.model.Donation;
+import com.revamp.core.model.Expenses;
+import com.revamp.core.model.ImageDetails;
 import com.revamp.core.model.Project;
+import com.revamp.core.model.Quotation;
+import com.revamp.core.model.Requirement;
 import com.revamp.core.payload.DonationPayLoad;
 import com.revamp.core.payload.TrackDonationResponsePayLoad;
 
@@ -30,7 +37,7 @@ public class DonationServiceImpl implements DonationService {
 	private ProjectRepository projectRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private ImageDetailsRepository imageDetailsRepository;
 
 	@Transactional
 	@Override
@@ -48,8 +55,60 @@ public class DonationServiceImpl implements DonationService {
 	
 	public TrackDonationResponsePayLoad findMyDonation(String trackingId) {
 		List<TrackDonationDTO> list = donationRepository.findByTrackingId(trackingId); 
+		Map<Long, Long> reqMap = new HashMap<>();
+		Map<Long, Long> quotMap = new HashMap<>();
+		Map<Long, Long> projMap = new HashMap<>();
+		
+		for (TrackDonationDTO dto : list) {
+			long reqId = dto.getRequirementId();
+			long quotId = dto.getQuotationId();
+			long projId = dto.getProjectId();
+			
+			reqMap.put(reqId,reqId);
+			quotMap.put(quotId,quotId);
+			projMap.put(projId,projId);
+		}
+		 
+		Map<Long,List<ImageDetails>> reqImgDetails = getImageDetails("requirements",reqMap);
+		Map<Long,List<ImageDetails>> quotImgDetails = getImageDetails("quotations",quotMap);
+		Map<Long,List<ImageDetails>> postImplImgDetails = getImageDetails("postimpl",reqMap);
+		 
+		
 		TrackDonationConverter converter = new TrackDonationConverter();
-		return converter.convert(list);
+		TrackDonationResponsePayLoad payLoad = converter.convert(list); 
+		
+		
+		for (Requirement requirement : payLoad.getRequirements()) {
+			List<ImageDetails> listId = reqImgDetails.get(requirement.getRequirementId());
+			List<ImageDetails> listPostImplId = postImplImgDetails.get(requirement.getRequirementId());
+			requirement.setImageDetails(listId);
+			requirement.setPostImplImageDetails(listPostImplId);
+		}
+		
+		for (Quotation quotation : payLoad.getQuotations()) {
+			List<ImageDetails> listId = quotImgDetails.get(quotation.getQuotationId());
+			quotation.setImageDetails(listId);
+		}
+		
+		return payLoad;
+	}
+	
+	
+	
+	private Map<Long,List<ImageDetails>> getImageDetails(String moduleName, Map<Long, Long> reqMap) {
+		List<ImageDetails> listImgs = imageDetailsRepository.findByModuleAndModuleIdIn(moduleName, reqMap.values());
+		Map<Long,List<ImageDetails>> mapImageDetails = new HashMap<>();
+		for (ImageDetails imageDetails : listImgs) {
+			List<ImageDetails> listId = null;
+			if(mapImageDetails.containsKey(imageDetails.getModuleId())) {
+				listId = mapImageDetails.get(imageDetails.getModuleId());
+			}else {
+				listId = new ArrayList<>();
+				mapImageDetails.put(imageDetails.getModuleId(), listId);
+			}
+			listId.add(imageDetails);
+		}
+		return mapImageDetails;
 	}
 	
 	private String getTrackingId() {
