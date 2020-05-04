@@ -8,7 +8,7 @@ import com.revamp.core.dao.DonationUserRepository;
 import com.revamp.core.model.DonationUser;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class DonationServiceUserImpl implements DonationUserService {
 
 	@Autowired 

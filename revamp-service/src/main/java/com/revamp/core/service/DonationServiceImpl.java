@@ -18,7 +18,7 @@ import com.revamp.core.payload.DonationPayLoad;
 import com.revamp.core.payload.TrackDonationResponsePayLoad;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class DonationServiceImpl implements DonationService {
 
 	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

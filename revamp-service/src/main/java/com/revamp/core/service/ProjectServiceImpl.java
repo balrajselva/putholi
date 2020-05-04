@@ -12,7 +12,7 @@ import com.revamp.core.dao.ProjectRepository;
 import com.revamp.core.model.Project;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired

@@ -8,7 +8,7 @@ import com.revamp.core.dao.SchoolImageRepository;
 import com.revamp.core.model.SchoolImage;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class ImageServiceImpl implements ImageService {
 
 	@Autowired

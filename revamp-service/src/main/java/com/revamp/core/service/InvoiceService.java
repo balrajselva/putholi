@@ -28,4 +28,11 @@ public interface InvoiceService {
     void updateInvoiceAndFund(FundAllotment fundMasterList, Invoice invoiceList);
 
     void updateStatus(Long invoiceId, Long userId,String status);
+
+    void updateAdminComments(long invoiceId, String adminComments);
+
+    void updateApproverComments(long invoiceId, String approverComments);
+
+    void updateReviewerComments(long invoiceId, String reviewerComments);
+
 }
