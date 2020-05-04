@@ -19,7 +19,7 @@ import com.revamp.core.dao.InvoiceRepository;
 import com.revamp.core.model.Invoice;
 import com.revamp.exception.InvoiceFileNotFoundException;
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
@@ -96,7 +96,22 @@ public class InvoiceServiceImpl implements InvoiceService {
 		repository.updateAdmin(invoiceId,userId);
 	}
 
-	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
+    @Override
+    public void updateAdminComments(long invoiceId, String adminComments) {
+        repository.updateAdminComments(invoiceId,adminComments);
+    }
+
+    @Override
+    public void updateApproverComments(long invoiceId, String approverComments) {
+        repository.updateApproverComments(invoiceId,approverComments);
+    }
+
+    @Override
+    public void updateReviewerComments(long invoiceId, String reviewerComments) {
+        repository.updateReviewerComments(invoiceId,reviewerComments);
+    }
+
+    private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
 		list.forEach(schoolImg -> {
 			String tmpDirPath = dirPath+"\\"+fileSubPath;
 			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
