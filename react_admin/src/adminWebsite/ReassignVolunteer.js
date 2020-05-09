@@ -45,6 +45,10 @@ class ReassignVolunteer extends Component {
         })
     }
 
+    closeModel=()=>{
+      document.getElementById('modal-default').style.display='none';
+    }
+
     fetchSchool=()=>{
         if(this.state.schoolId === null){
             this.setState({
@@ -68,12 +72,14 @@ class ReassignVolunteer extends Component {
                     spinner:false
                   })
                 })
+                document.getElementById('modal-default').style.display='block';
               }
             else{
                 this.setState({
                     errorMessage:"Please enter valid school Id",
                     spinner:false
                 })
+                document.getElementById('modal-default').style.display='none';
             }
         })
         .catch(error=>{
@@ -96,7 +102,7 @@ class ReassignVolunteer extends Component {
         .then(res=>{
             console.log(res);
             this.setState({
-                spinner:false,
+                spinner:false
             })
             if(res.status===200){
                 window.alert("Volunteer changed successfully!");
@@ -109,7 +115,7 @@ class ReassignVolunteer extends Component {
         })
         .catch(error=>{
             this.setState({
-                spinner:false,
+                spinner:false
             })
             window.alert("File upload failed due to "+error)
         })
@@ -132,15 +138,15 @@ class ReassignVolunteer extends Component {
                 <div className="input-group">
                 <br />
                 {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
-                <button type="button" onClick={()=>this.fetchSchool()} className="btn btn-success" data-toggle="modal" data-target="#modal-default">
+                <button type="button" onClick={()=>this.fetchSchool()} className="btn btn-success" >
                     Find school
                     </button>
                 </div>
-              <div className="modal fade" id="modal-default">
+              <div className="modal" id="modal-default">
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
                         <span aria-hidden="true">×</span></button>
                       <h4 className="modal-title">Select Available Volunteers</h4>
                     </div>
@@ -161,7 +167,7 @@ class ReassignVolunteer extends Component {
                     </form>
                     </div>
                     <div className="modal-footer">
-                      <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                      <button type="button" className="btn btn-default pull-left" onClick={this.closeModel}>Close</button>
                       <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={()=>this.saveVolunteer()}>Save Changes</button>
                     </div>
                   </div>

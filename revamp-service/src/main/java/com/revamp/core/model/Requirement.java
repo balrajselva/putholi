@@ -58,8 +58,7 @@ public class Requirement extends AuditableEntity {
 	private Integer collectedAmount = 0;
 	
 	@Column(name = "status")
-	@Enumerated(EnumType.STRING)
-	private PuthuyirLookUp status;
+	private String status;
 	
 	@Column(name = "priority")
 	private String priority;

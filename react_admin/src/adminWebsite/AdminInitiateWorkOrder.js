@@ -33,13 +33,20 @@ class AdminInitiateWorkOrder extends Component {
                 getRequirementList:false
             })
             let currentQuotationTemp = null;
-            for(let j=0;j<this.state.quoList[this.state.requirements[0].requirementId].length;j++){
-                var tempQuo=this.state.quoList[this.state.requirements[0].requirementId][j];
+            for(let i=0;i<this.state.requirements.length;i++){
+              if(this.state.requirements[i].status === "WORK_ORDER_GENERATED"){
+                console.log("skip")
+                continue;
+              }
+              for(let j=0;j<this.state.quoList[this.state.requirements[i].requirementId].length;j++){
+                var tempQuo=this.state.quoList[this.state.requirements[i].requirementId][j];
                 if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+                  console.log(tempQuo)
                     currentQuotationTemp = tempQuo;
                   break;
                 }
               }
+            }
             this.setState({
                 currentReqId:this.state.requirements[0].requirementId,
                 currentQuotation:currentQuotationTemp
@@ -56,21 +63,34 @@ class AdminInitiateWorkOrder extends Component {
         });
     }
     updateCurrentReq=({target})=>{
+        this.setState({spinner:true})
         console.log(target.value);
-        let currentQuotationTemp=this.state.quoList[target.value]
+        console.log(this.state.quoList)
+        let currentQuotationTemp=null;
         for(let j=0;j<this.state.quoList[target.value].length;j++){
             var tempQuo=this.state.quoList[target.value][j];
+            console.log(tempQuo)
             if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+              console.log(tempQuo)
                 currentQuotationTemp = tempQuo;
               break;
             }
           }
+          console.log(currentQuotationTemp)
         this.setState({
             currentReqId:target.value,
-            currentQuotation:currentQuotationTemp
+            currentQuotation:currentQuotationTemp,
+            spinner:false
         })
     }
+    // openModal=()=>{
+    //   document.getElementById('modal-default').style.display='block';
+    // }
+    // closeModel=()=>{
+    //   document.getElementById('modal-default').style.display='none';
+    // }
     generatePdf=()=>{
+      // document.getElementById('modal-default').style.display='block';
         var date=new Date();
         console.log(date);
         var orderId = this.props.location.school.schoolId+""+this.state.currentReqId+this.state.currentQuotation.quotationId+date.getFullYear()+date.getMonth()+date.getDate()+date.getTime();
@@ -81,8 +101,77 @@ class AdminInitiateWorkOrder extends Component {
             pdf.addImage(imgData, 'PNG', 0, 0);
             pdf.save("download.pdf");
         })
+        var isDone=false;
+        axios.put("http://localhost:6060/puthuyir/updateRequirement/"+this.state.currentReqId+"/"+"WORK_ORDER_GENERATED")
+        .then(res=>{
+          axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+          .then(res=>{
+              let resp=res.data;
+              console.log(resp);
+              this.setState({
+                  requirements:resp,
+                  spinner:false
+              })
+      axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+      .then(res=>{
+          console.log(res.data);
+          this.setState({
+              quoList:res.data,
+              spinner:false,
+              getRequirementList:false
+          })
+          let currentQuotationTemp = null;
+          for(let i=0;i<this.state.requirements.length;i++){
+            if(this.state.requirements[i].status === "WORK_ORDER_GENERATED"){
+              console.log("skip")
+              continue;
+            }
+            for(let j=0;j<this.state.quoList[this.state.requirements[i].requirementId].length;j++){
+              var tempQuo=this.state.quoList[this.state.requirements[i].requirementId][j];
+              if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+                console.log(tempQuo)
+                  currentQuotationTemp = tempQuo;
+                  isDone = true;
+                break;
+              }
+            }
+          }
+          this.setState({
+              currentReqId:this.state.requirements[0].requirementId,
+              currentQuotation:currentQuotationTemp
+          })
+      })
+      .catch(error=>{
+          window.alert("Unable to get quotations due to "+error)
+      })
+  })
+          if(!isDone){
+            this.setState({
+              spinner:false
+            })
+            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"WORK_ORDER_INITIATED")
+            .then(res=>{
+              this.setState({
+                spinner:false
+              })
+              this.props.history.push({ 
+                pathname:"/adminPendingWorkflow", 
+                currentUser:this.props.location.currentUser,
+                school:this.props.location.school
+              });
+            })
+            .catch(error=>{
+
+            })
+          }
+
+        })
+        .catch(error=>{
+          window.alert("Unable to generate work order due to "+error)
+        })
     }
     render() {
+        console.log(this.state)
         return (
             <div className="content-wrapper">
   {/* Content Header (Page header) */}
@@ -145,7 +234,10 @@ class AdminInitiateWorkOrder extends Component {
               <div className="form-group">
                 <label>Select requirement</label>
                 <select className="form-control" id="currentReqId" onChange={this.updateCurrentReq}>
-                  {this.state.requirements!==null?this.state.requirements.map(req=><option key={req.requirementId} value={req.requirementId}>{req.assetName}</option>):null}
+                  {this.state.requirements!==null?this.state.requirements.map(req=>{
+                  if(req.status!=="WORK_ORDER_GENERATED"){
+                    return(<option key={req.requirementId} value={req.requirementId}>{req.assetName}</option>)
+                    }}):null}
                 </select>
               </div>
             </td>
@@ -164,6 +256,8 @@ class AdminInitiateWorkOrder extends Component {
             </td>
           </tr>
         </tbody></table>
+        {this.state.spinner?<div class="spinner"></div>:null}
+
     </div>
     {this.state.currentQuotation!==null?
                             <div className="modal fade" id="modal-default">
@@ -294,9 +388,9 @@ class AdminInitiateWorkOrder extends Component {
                                         <div className="col-xs-12">
                                             Volunteer name : {this.props.location.school.user.firstName}<br/>  Contact number : {this.props.location.school.user.phoneNumber}<br/>
                                             Email : {this.props.location.school.user.emailAddress}
-                                            <button type="button" className="btn btn-success pull-right" onClick={()=>this.generatePdf()}><i className="fa fa-credit-card" /> Submit Work order
+                                            <button type="button" className="btn btn-success pull-right" onClick={()=>this.generatePdf()}><i className="fa fa-download" /> Submit Work order
                                             </button>
-                                            <button type="button" className="btn btn-primary pull-right" style={{marginRight: 5}}>
+                                            <button type="button" className="btn btn-primary pull-right" data-dismiss="modal" style={{marginRight: 5}}>
                                             <i className="fa fa-download" /> Cancel
                                             </button>
                                         </div>

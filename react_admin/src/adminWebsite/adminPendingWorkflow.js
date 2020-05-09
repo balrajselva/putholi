@@ -31,12 +31,20 @@ class adminPendingWorkflow extends Component {
             let nextPage=null;
             var pageLink=null;
             if(this.state.schools[i].schoolStatus==="ApprovedSchool"){
+                nextPage="adminDEOtrigger"
+                pageLink="Initiate Email to DEO"
+            }
+            if(this.state.schools[i].schoolStatus==="DEO_EMAIL_SENT"){
                 nextPage="adminUploadDEOresponse"
                 pageLink="Upload DEO response"
             }
             if(this.state.schools[i].schoolStatus==="DEO_APPROVED"){
                 nextPage="assignToVolunteer"
                 pageLink="Assign School to Volunteer"
+            }
+            if(this.state.schools[i].schoolStatus==="DEO_REJECTED"){
+                nextPage="adminPendingWorkflow"
+                pageLink="Close project"
             }
             if(this.state.schools[i].schoolStatus==="VolunteerRejected"){
                 nextPage="assignToVolunteer"
@@ -74,7 +82,8 @@ class adminPendingWorkflow extends Component {
             if(this.state.schools[i].schoolStatus==="ApprovedSchool" || this.state.schools[i].schoolStatus==="DEO_APPROVED" ||
                 this.state.schools[i].schoolStatus==="VolunteerAccepted" || this.state.schools[i].schoolStatus==="VolunteerRejected" ||
                     this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT" ||
-                    this.state.schools[i].schoolStatus==="FUND_ALLOTED" || this.state.schools[i].schoolStatus==="InvoiceAdded"){
+                    this.state.schools[i].schoolStatus==="FUND_ALLOTED" || this.state.schools[i].schoolStatus==="InvoiceAdded" ||
+                    this.state.schools[i].schoolStatus==="DEO_EMAIL_SENT" || this.state.schools[i].schoolStatus==="DEO_REJECTED"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>

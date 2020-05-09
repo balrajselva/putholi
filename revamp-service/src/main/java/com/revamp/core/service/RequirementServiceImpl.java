@@ -67,6 +67,13 @@ public class RequirementServiceImpl implements RequirementService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public Requirement updateStatus(long id, String status) {
+		requirementRepository.updateStatus(id, status);
+		return requirementRepository.findById(id).orElse(null);
+	}
+
 	private static Requirement getReq(List<Requirement> requirements,int finalI1) {
 		for(Requirement requirement1: requirements){
 			if(Integer.valueOf(requirement1.getPriority()).equals(finalI1))

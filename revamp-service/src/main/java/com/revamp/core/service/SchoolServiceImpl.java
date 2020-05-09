@@ -66,7 +66,7 @@ public class SchoolServiceImpl implements SchoolService {
 		school.setUser(beneUser);
 		school.getRequirements().forEach(req -> {
 			req.setUser(beneUser);
-			req.setStatus(PuthuyirLookUp.REQ_ADDED);
+			req.setStatus("REQ_ADDED");
 		});
 	}
 	
@@ -136,7 +136,7 @@ public class SchoolServiceImpl implements SchoolService {
 
 	@Override
 	public long saveDEOresponse(final DEOInfo deoInfo, Map<String, byte[]> files, String imgPath) {
-		String status="DEO_APPROVED";
+		String status=PuthuyirLookUp.valueOf(deoInfo.getStatus()).toString();
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		schoolRepository.updateSchoolStatus(deoInfo.getSchool_id(), status);
 		if (files != null && files.size() > 0) {
