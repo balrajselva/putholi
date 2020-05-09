@@ -499,15 +499,13 @@ class AddInvoice extends Component {
                                     <div className="modal-body">
                                     <div className="row">
                                         <section className="content">
-                                        <div className="form-group">
-                                            <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Click to upload Invoice</label>
-                                            <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
-                                        </div>
                                         <div className="row">
                                         <div className="col-md-6">
                                             <div className="box box-primary">
                                                 <form role="form">
                                                 <div className="form-group">
+                                                    <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Upload Invoice Image</label>
+                                                    <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                                     <input type="text" className="form-control" id="companyName" placeholder="Enter Company name" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
@@ -548,6 +546,8 @@ class AddInvoice extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
+                                                    <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Upload Post Image</label>
+                                                    <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">

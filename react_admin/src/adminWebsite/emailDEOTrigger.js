@@ -4,29 +4,14 @@ import {withRouter} from 'react-router-dom';
 
 class EmailDEOTrigger extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            schoolList: [],
-            toAddress: null,
-            subject: null,
-            bodyMessage: null,
-            selectedFile: [],
-            attachmentFile: null,
-            imageURL: ''
-           
-        }
-       
-        this.routeParam = props.match.params.schoolID;
-        this.onChangeHandler = this.onChangeHandler.bind(this);
-        this.submitClicked = this.submitClicked.bind(this);
-    }
-    componentDidMount() {
-         fetch('http://localhost:6060/puthuyir/school/'+this.routeParam)
-            .then(response =>
-                response.json())
-            .then(users => this.setState({ schoolList: users }));
+    state = {
+        schoolList: [],
+        toAddress: null,
+        subject: null,
+        bodyMessage: null,
+        selectedFile: [],
+        attachmentFile: null,
+        imageURL: ''
     }
 
     submitClicked = (e) => {
@@ -35,21 +20,32 @@ class EmailDEOTrigger extends Component {
         let userPayload = {
             "toEmailAddress" : dataData.get('toAddress'),
             "subject" : "Initiate to DEO Email",
-            "schoolName":this.state.schoolList.schoolInfo.schoolName,
-            "schoolRegNo":this.state.schoolList.schoolInfo.schoolRegNo,
-            "schoolType":this.state.schoolList.schoolInfo.schoolType,
-            "requirements" :this.state.schoolList.requirements
+            "schoolName":this.props.location.school.schoolInfo.schoolName,
+            "schoolRegNo":this.props.location.school.schoolInfo.schoolRegNo,
+            "schoolType":this.props.location.school.schoolInfo.schoolType,
+            "requirements" :this.props.location.school.projects[0].requirements
         }
  
         dataData.append("user",JSON.stringify(userPayload));
        
-
-        axios.post('http://localhost:5050/email/sendattachment', dataData
-        )
+        axios.post('http://localhost:5050/email/sendattachment', dataData)
             .then((response) => {
                 console.log(response.data);
+                axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"DEO_EMAIL_SENT")
+                .then(response=>{
+                    this.props.history.push({ 
+                        pathname:"/adminPendingWorkflow", 
+                        currentUser:this.props.location.currentUser,
+                        school:this.props.location.school
+                      });
+                })
+                .catch(error=>{
+                    window.alert("Email initiation failed due to "+error)
+                })
             })
-
+            .catch(error=>{
+                window.alert("Email initiation failed due to "+error)
+            })
     }
 
     onChangeHandler(e) {
@@ -65,12 +61,11 @@ class EmailDEOTrigger extends Component {
         })
     }
     render() {
-
-        if (!this.state.schoolList.requirements) return null;
-
         return (
-
-            <div className="col-md-9">
+            <div className="content-wrapper">
+                              <section className="content">
+            <div className="row">
+            <div className="col-xs-12">
                 <div className="box box-primary">
                     <div className="box-header with-border">
                         <h3 className="box-title">Compose New Message</h3>
@@ -86,7 +81,7 @@ class EmailDEOTrigger extends Component {
                             <div className="form-group">
 
                                 <div className="tab-content">
-                                    <div className="span4"><strong>School Name </strong>: {this.state.schoolList.schoolInfo.schoolName}</div>
+                                    <div className="span4"><strong>School Name </strong>: {this.props.location.school.schoolInfo.schoolName}</div>
 
                                     <table className="table table-bordered table-striped">
                                         <thead>
@@ -98,26 +93,25 @@ class EmailDEOTrigger extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {(this.state.schoolList.requirements !== null) ? this.state.schoolList.requirements.map((value, index) => {
-
-                                                return <tr>
-
-
-                                                    <td>{value.reqType}</td><td>{value.assetType}</td>
-                                                    <td>{value.assetName}</td><td>{value.quantity}</td>
+                                            {this.props.location.school.projects[0].requirements !==null ? this.props.location.school.projects[0].requirements.map((value) => 
+                                                 <tr>
+                                                    <td>{value.reqType}</td>
+                                                    <td>{value.assetType}</td>
+                                                    <td>{value.assetName}</td>
+                                                    <td>{value.quantity}</td>
                                                 </tr>
-                                            }) : null}
+                                            ) : null}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <div className="btn btn-default btn-file">
                                     <i className="fa fa-paperclip"></i> Attachment
-                  <input type="file" name="attachmentFile" multiple="multiple" ref={fileInput => this.fileInput = fileInput} onChange={e => this.onChangeHandler(e)}></input>
+                                    <input type="file" name="attachmentFile" multiple="multiple" ref={fileInput => this.fileInput = fileInput} onChange={e => this.onChangeHandler(e)}></input>
                                 </div>
                                 <p className="help-block">Max. 32MB</p>
-                            </div>
+                            </div> */}
                         </div>
                         <img src={this.state.imageURL} alt="img" />
                         <div className="box-footer">
@@ -128,6 +122,9 @@ class EmailDEOTrigger extends Component {
                         </div>
                     </form>
                 </div>
+                </div>
+            </div>
+            </section>
             </div>
         )
     }

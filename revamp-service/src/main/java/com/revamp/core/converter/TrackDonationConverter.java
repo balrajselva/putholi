@@ -16,7 +16,7 @@ public class TrackDonationConverter {
 			req.setAssetName(trackDonationDTO.getAssetName());
 			req.setAssetType(trackDonationDTO.getAssetType());
 			req.setQuantity(trackDonationDTO.getQuantity());
-			req.setStatus(PuthuyirLookUp.REQ_ADDED); 
+			req.setStatus("REQ_ADDED");
 			pl.getRequirements().add(req);
 		}
 		pl.setAmt(dto.getAmount());

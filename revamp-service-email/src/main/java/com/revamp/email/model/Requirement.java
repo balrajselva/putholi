@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Proxy;
 
 import lombok.Getter;
@@ -22,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Requirement implements java.io.Serializable {
+public class Requirement extends AuditableEntity implements java.io.Serializable{
 
 	private static final long serialVersionUID = -7230483495700936141L;
 
@@ -36,12 +38,17 @@ public class Requirement implements java.io.Serializable {
 
 	private int quantity;
 
+	private Integer estimate;
+
+	private Integer collectedAmount = 0;
+
 	private String status;
 
 	private Date dateAdded;
 	
 	private String priority;
-	
+
+    @JsonIgnore
 	private String user;
 
 }

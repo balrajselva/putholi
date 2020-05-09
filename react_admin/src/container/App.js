@@ -19,7 +19,7 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
-import DEOEmailTrigger from '../adminWebsite/emailDEOTrigger';
+import DEOEmailTrigger from '../adminWebsite/EmailDEOTrigger';
 import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
 import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
 import ReviewerLayout from '../adminWebsite/components/layouts/ReviewerLayout';
@@ -40,6 +40,7 @@ import ReassignVolunteer from '../adminWebsite/ReassignVolunteer';
 import AdminInvoiceReview from '../adminWebsite/AdminInvoiceReview';
 import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
 import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
+import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
 
 class App extends Component {
   state = {
@@ -143,6 +144,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props}/>}/>
             <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
+            <AdminLayoutRoute exact path="/adminDEOtrigger" component={(props)=><EmailDEOTrigger {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <ApproverLayoutRoute exact path="/approverInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>

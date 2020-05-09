@@ -10,4 +10,6 @@ public interface RequirementService {
 	public List<Requirement> findBySchoolId(long id);
 
 	void updateRequirements(Donation donation);
+
+    Requirement updateStatus(long id, String status);
 }
