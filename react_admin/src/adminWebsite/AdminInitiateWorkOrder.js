@@ -83,18 +83,18 @@ class AdminInitiateWorkOrder extends Component {
             spinner:false
         })
     }
-    // openModal=()=>{
-    //   document.getElementById('modal-default').style.display='block';
-    // }
-    // closeModel=()=>{
-    //   document.getElementById('modal-default').style.display='none';
-    // }
+    openModal=()=>{
+      document.getElementById('modal-default').style.display='block';
+    }
+    closeModel=()=>{
+      document.getElementById('modal-default').style.display='none';
+    }
     generatePdf=()=>{
-      // document.getElementById('modal-default').style.display='block';
+        this.setState({spinner:true});
         var date=new Date();
         console.log(date);
         var orderId = this.props.location.school.schoolId+""+this.state.currentReqId+this.state.currentQuotation.quotationId+date.getFullYear()+date.getMonth()+date.getDate()+date.getTime();
-        console.log(orderId);
+        console.log(this.state.currentReqId);
         const pdf = new jsPDF();
         html2canvas(document.querySelector("#modalToPdf")).then(canvas=>{
             const imgData = canvas.toDataURL('image/png');
@@ -112,59 +112,63 @@ class AdminInitiateWorkOrder extends Component {
                   requirements:resp,
                   spinner:false
               })
-      axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
-      .then(res=>{
-          console.log(res.data);
-          this.setState({
-              quoList:res.data,
-              spinner:false,
-              getRequirementList:false
-          })
-          let currentQuotationTemp = null;
-          for(let i=0;i<this.state.requirements.length;i++){
-            if(this.state.requirements[i].status === "WORK_ORDER_GENERATED"){
-              console.log("skip")
-              continue;
-            }
-            for(let j=0;j<this.state.quoList[this.state.requirements[i].requirementId].length;j++){
-              var tempQuo=this.state.quoList[this.state.requirements[i].requirementId][j];
-              if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
-                console.log(tempQuo)
-                  currentQuotationTemp = tempQuo;
-                  isDone = true;
-                break;
-              }
-            }
-          }
-          this.setState({
-              currentReqId:this.state.requirements[0].requirementId,
-              currentQuotation:currentQuotationTemp
-          })
-      })
-      .catch(error=>{
-          window.alert("Unable to get quotations due to "+error)
-      })
-  })
-          if(!isDone){
-            this.setState({
-              spinner:false
-            })
-            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"WORK_ORDER_INITIATED")
+            axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
             .then(res=>{
-              this.setState({
-                spinner:false
+                console.log(res.data);
+                document.getElementById('modal-default').style.display='none';
+                this.setState({
+                    quoList:res.data,
+                    spinner:false,
+                    getRequirementList:false
+                })
+                let currentQuotationTemp = null;
+                let reqId = null;
+                let temp = 0;
+                for(let i=0;i<this.state.requirements.length;i++){
+                  if(this.state.requirements[i].status === "WORK_ORDER_GENERATED"){
+                    temp += 1;
+                    console.log("skip")
+                    continue;
+                  }
+                  for(let j=0;j<this.state.quoList[this.state.requirements[i].requirementId].length;j++){
+                    var tempQuo=this.state.quoList[this.state.requirements[i].requirementId][j];
+                    if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+                      console.log(tempQuo)
+                      reqId = this.state.requirements[i].requirementId;
+                      currentQuotationTemp = tempQuo;
+                      break;
+                    }
+                  }
+                }
+                if(parseInt(temp) === parseInt(this.state.requirements.length)){
+                    this.setState({
+                      spinner:false
+                    })
+                    axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"WORK_ORDER_INITIATED")
+                    .then(res=>{
+                      this.setState({
+                        spinner:false
+                      })
+                      this.props.history.push({ 
+                        pathname:"/adminPendingWorkflow", 
+                        currentUser:this.props.location.currentUser,
+                        school:this.props.location.school
+                      });
+                    })
+                    .catch(error=>{
+                    })
+                }
+                else{
+                  this.setState({
+                      currentReqId:reqId,
+                      currentQuotation:currentQuotationTemp
+                  })
+                }
               })
-              this.props.history.push({ 
-                pathname:"/adminPendingWorkflow", 
-                currentUser:this.props.location.currentUser,
-                school:this.props.location.school
-              });
-            })
-            .catch(error=>{
-
-            })
-          }
-
+              .catch(error=>{
+                  window.alert("Unable to get quotations due to "+error)
+              })
+          })
         })
         .catch(error=>{
           window.alert("Unable to generate work order due to "+error)
@@ -250,7 +254,7 @@ class AdminInitiateWorkOrder extends Component {
             <td>
               <div className="form-group">
                 <br />
-                <button type="button" className="btn btn-success pull-center" data-toggle="modal" data-target="#modal-default"><i className="fa fa-credit-card" /> Generate  Work order
+                <button type="button" className="btn btn-success pull-center" onClick={this.openModal}><i className="fa fa-credit-card" /> Generate  Work order
                 </button>
               </div>
             </td>
@@ -260,11 +264,11 @@ class AdminInitiateWorkOrder extends Component {
 
     </div>
     {this.state.currentQuotation!==null?
-                            <div className="modal fade" id="modal-default">
+                            <div className="modal" id="modal-default">
                                 <div className="modal-dialog">
                                 <div className="modal-content" id="modalToPdf">
                                     <div className="modal-header">
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" className="close" onClick={this.closeModel} aria-label="Close">
                                         <span aria-hidden="true">×</span></button>
                                     <div className="row">
                                         <div className="col-lg-12">
@@ -360,6 +364,7 @@ class AdminInitiateWorkOrder extends Component {
                                             To add terms and conditions
                                             </p>
                                         </div>
+                                        {this.state.spinner?<div class="spinner"></div>:null}
                                         {/* /.col */}
                                         <div className="col-xs-6">
                                             <p className="lead">Amount Due 2/22/2019</p>
@@ -390,7 +395,7 @@ class AdminInitiateWorkOrder extends Component {
                                             Email : {this.props.location.school.user.emailAddress}
                                             <button type="button" className="btn btn-success pull-right" onClick={()=>this.generatePdf()}><i className="fa fa-download" /> Submit Work order
                                             </button>
-                                            <button type="button" className="btn btn-primary pull-right" data-dismiss="modal" style={{marginRight: 5}}>
+                                            <button type="button" className="btn btn-primary pull-right" onClick={this.closeModel} style={{marginRight: 5}}>
                                             <i className="fa fa-download" /> Cancel
                                             </button>
                                         </div>

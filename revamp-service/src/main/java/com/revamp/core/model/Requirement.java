@@ -67,6 +67,12 @@ public class Requirement extends AuditableEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "requirement" ,cascade = CascadeType.ALL)
+	private Set<PostImage> postImages;
+
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "requirement" ,cascade = CascadeType.ALL)
+	private Set<PreImage> preImages;
+
 	public Requirement() {
 	}
 

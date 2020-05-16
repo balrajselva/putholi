@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
+import '../../css/workOrder.css'
 import './reviewQuotation.css'
 class viewRequirements extends Component {
 
@@ -31,6 +32,8 @@ class viewRequirements extends Component {
         errorMessage:null,
         currentReqId:null,
         quotationRefNum:null,
+        preImagesInput:null,
+        localPreImageUrl:null,
         quotaionList:[],
         quotationId:null
     }
@@ -38,7 +41,9 @@ class viewRequirements extends Component {
 
     handleChange=({target})=>{
         document.getElementById(target.id).style.borderColor="#d2d6de";
-        if(target.id==="fileInput"){
+        console.log("handle change",target)
+        if(target.id==="fileInput" || (parseInt(target.id.split("/").length) === parseInt(3) && target.id.split("/")[2]==="preImagesInput")){
+            console.log("image input");
             if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
                 window.alert("Image size should be within 5MB");
                 return
@@ -59,12 +64,22 @@ class viewRequirements extends Component {
                   })
               }
               reader.onloadend=()=>{
+                if(target.id==="fileInput"){
                   this.setState({
                       fileInput:target.files[0],
                       localImageUrl:reader.result,
                       errorMessage:"",
                       spinner:false
                   })
+                }
+                else {
+                    this.setState({
+                        preImagesInput:target.files[0],
+                        localPreImageUrl:reader.result,
+                        errorMessage:"",
+                        spinner:false
+                    })
+                }
               }
             }
         }
@@ -113,6 +128,17 @@ class viewRequirements extends Component {
         })
     }    
     updateCurrentReqId=(e)=>{
+        if(e.target.ref !=="preImages" && this.state.preImagesInput ===null){
+            this.setState({errorMessage:"Please upload Pre-Image of requirement"});
+            return;
+        }
+        this.setState({
+            currentReqId:e.target.id.split("/")[0],
+            quotationRefNum:e.target.id.split("/")[1]
+        })
+        document.getElementById('modal-default').style.display='block';
+    }
+    uploadPreImage=(e)=>{
         this.setState({
             currentReqId:e.target.id.split("/")[0],
             quotationRefNum:e.target.id.split("/")[1]
@@ -155,11 +181,19 @@ class viewRequirements extends Component {
                 <td>{this.state.requirements[i].assetName}</td>
                 <td>{this.state.requirements[i].quantity}</td>                                        
                 <td>
-                <button id={this.state.requirements[i].requirementId+"/"+i} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onClick={(e)=>this.updateCurrentReqId(e)} >
+                     <div className="form-group">
+                        <label for={this.state.requirements[i].requirementId+"/"+i+"/preImagesInput"} class="btn btn-default">Add Pre-Image</label>
+                        <input class="hidden" type="file" id={this.state.requirements[i].requirementId+"/"+i+"/preImagesInput"} onChange={this.handleChange}/>
+                    </div>
+                </td>
+                <td>
+                <button id={this.state.requirements[i].requirementId+"/"+i} ref="quotation" type="button" class="btn btn-default" onClick={(e)=>this.updateCurrentReqId(e)} >
                     Add Quotation
                 </button>
                 </td>                    
                 <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.quotationId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
+                </td>
+                <td>{this.state.requirements[i].preImages.length>0?this.state.requirements[i].preImages.map((req,j)=><div>{req.fileInput.name}</div>):null}
                 </td>
             </tr>)			
         }
@@ -350,8 +384,12 @@ class viewRequirements extends Component {
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(quotation));
             regFormModel.append('files',this.state.fileInput);
+            if(this.state.preImages!==null){
+                regFormModel.append('preImages',this.state.preImages)
+            }
             axios.post('http://localhost:6060/puthuyir/quotation',regFormModel)
             .then(res=>{
+                document.getElementById('modal-default').style.display='none';
                 console.log(res);
                 this.setState({
                     spinner:false,
@@ -388,10 +426,13 @@ class viewRequirements extends Component {
                     fileInput:this.state.fileInput,
                     localImageUrl:this.state.localImageUrl
                 };
-                let a=this.state.requirements[this.state.quotationRefNum].quotaionList;
-                a.push(ql);
+                let quoTemp=this.state.requirements[this.state.quotationRefNum].quotaionList;
+                quoTemp.push(ql);
                 let i=[...this.state.requirements];
-                i[this.state.quotationRefNum].quotaionList=a;
+                i[this.state.quotationRefNum].quotaionList=quoTemp;
+                let preImgTemp=this.state.requirements[this.state.quotationRefNum].preImages;
+                preImgTemp.push({fileInput:this.state.preImagesInput});
+                i[this.state.quotationRefNum].preImages= preImgTemp;
                 this.setState({
                     requirements:i,
                 })
@@ -438,20 +479,23 @@ class viewRequirements extends Component {
                                         <th>ID</th>
                                         <th>Requirements</th>
                                         <th>Units</th>
-                                        <th>Status</th>
-                                        <th>Details</th>
+                                        <th>Pre Image</th>
+                                        <th>Quotation</th>
+                                        <th>Quotation Details</th>
+                                        <th>Pre Image Details</th>
                                         </tr>
                                         {this.state.getRequirementList?null:this.createTable()}
                                     </tbody>
                                 </table>
                             </div>
+                            {this.state.spinner?<div class="spinner"></div>:null}
                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                             
-                            <div className="modal fade" id="modal-default">
+                            <div className="modal" id="modal-default">
                                 <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" className="close" onClick={this.closeModel} aria-label="Close">
                                         <span aria-hidden="true">×</span></button>
                                     <h4 className="modal-title">Add Quotations</h4>
                                     </div>
@@ -532,8 +576,8 @@ class viewRequirements extends Component {
                                             <div className="col-md-12">
                                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                                                 <div className="modal-footer">
-                                                    <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                                    <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={()=>this.saveClicked()}>Save</button>
+                                                    <button type="button" className="btn btn-default pull-left" onClick={()=>this.closeModel}>Close</button>
+                                                    <button type="button" className="btn btn-primary" onClick={()=>this.saveClicked()}>Save</button>
                                                 </div>
                                             </div>
                                         </div>
