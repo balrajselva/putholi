@@ -9,14 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.revamp.core.dao.FundAllotmentRepository;
-import com.revamp.core.model.FundAllotment;
-import com.revamp.core.model.InvoiceImage;
+import com.revamp.core.dao.RequirementRepository;
+import com.revamp.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revamp.core.dao.InvoiceRepository;
-import com.revamp.core.model.Invoice;
 import com.revamp.exception.InvoiceFileNotFoundException;
 @Service
 @Transactional(readOnly = false)
@@ -26,14 +25,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public InvoiceRepository repository;
 
 	@Autowired
+	public RequirementRepository requirementRepository;
+
+	@Autowired
 	public FundAllotmentRepository fundMasterRepository;
 
 	@Override
 	@Transactional
-	public long save(Invoice invoice, Map<String, byte[]> files, String imgPath) {
+	public long save(Invoice invoice, Map<String, byte[]> files, Map<String,byte[]> postImage,String imgPath) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
+		Requirement requirement= invoice.getRequirement();
 		if (files != null && files.size() > 0) {
 			files.forEach((k,v) -> {
 				Set<InvoiceImage> siSet = new HashSet<InvoiceImage>();
@@ -44,8 +47,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 				invoice.setInvoiceImages(siSet);
 			});
 		}
+		if (postImage != null && postImage.size() > 0) {
+			postImage.forEach((k,v) -> {
+				Set<PreImage> siSet = new HashSet<PreImage>();
+				String filePath = fileSubPath+ invoice.getId()+"_";
+				PreImage si = new PreImage(filePath+k,v,invoice.getProofOfId().getComments());
+				si.setRequirement(requirement);
+				siSet.add(si);
+				requirement.setPreImages(siSet);
+			});
+		}
 
 		repository.save(invoice);
+		requirementRepository.save(requirement);
 		if (files != null && files.size() > 0) {
 			this.saveImgToFS(imgPath,fileSubPath,invoice.getInvoiceImages());
 		}

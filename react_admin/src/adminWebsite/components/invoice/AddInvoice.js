@@ -33,6 +33,7 @@ class AddInvoice extends Component {
         invoiceId:null,
         workStatus:null,
         paymentMode:null,
+        postImage:null,
         ifsc:null,
         bankName:null,
         accountNum:null
@@ -64,6 +65,36 @@ class AddInvoice extends Component {
               reader.onloadend=()=>{
                   this.setState({
                       fileInput:target.files[0],
+                      localImageUrl:reader.result,
+                      errorMessage:"",
+                      spinner:false
+                  })
+              }
+            }
+        }
+        else if(target.id==="postImage"){
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
+                return
+             }
+             else{
+              this.setState({spinner:true});
+              const reader=new FileReader();
+              const file=target.files[0]; 
+              if (file && file.type.match('image.*')) {
+                  reader.readAsDataURL(file);
+              }
+              else{
+                  this.setState({
+                    fileInput:null,
+                      localImageUrl:null,
+                      errorMessage:"",
+                      spinner:false
+                  })
+              }
+              reader.onloadend=()=>{
+                  this.setState({
+                      postImage:target.files[0],
                       localImageUrl:reader.result,
                       errorMessage:"",
                       spinner:false
@@ -162,6 +193,8 @@ class AddInvoice extends Component {
                     Add Invoice
                 </button>
                 </td>                    
+                <td>{this.state.requirements[i].postImage.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
+                </td>
                 <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
                 </td>
             </tr>)			
@@ -301,6 +334,12 @@ class AddInvoice extends Component {
                 errorMessage:"Please upload invoice"
             })
         }
+        // else if(this.state.postImage===null){
+        //     this.setState({
+        //         lastErrorField:"postImage",
+        //         errorMessage:"Please upload post image"
+        //     })
+        // }
         else if(this.state.bankName===null){
             this.setState({
                 lastErrorField:"bankName",
@@ -351,6 +390,7 @@ class AddInvoice extends Component {
             document.getElementById('paymentMode').style.borderColor="#d2d6de";
             document.getElementById('workStatus').style.borderColor="#d2d6de";
             document.getElementById('accountNum').style.borderColor="#d2d6de";
+            document.getElementById('postImage').style.borderColor="#d2d6de";
             console.log(this.state.requirements.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
             const invoice={
                 school:this.props.location.school.schoolId+"",
@@ -389,6 +429,7 @@ class AddInvoice extends Component {
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(invoice));
             regFormModel.append('files',this.state.fileInput);
+            regFormModel.append('postImage',this.state.postImage);
             axios.post('http://localhost:6060/puthuyir/invoiceUpload',regFormModel)
             .then(res=>{ 
                 console.log(res);
@@ -481,6 +522,7 @@ class AddInvoice extends Component {
                                         <th>Quotation valid date</th>
                                         <th>Add Invoice</th>
                                         <th>File Details</th>
+                                        <th>Post Image Details</th>
                                         </tr>
                                         {this.state.getRequirementList?null:this.createTable()}
                                     </tbody>
@@ -547,7 +589,7 @@ class AddInvoice extends Component {
                                                 <form role="form">
                                                     <div className="form-group">
                                                     <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Upload Post Image</label>
-                                                    <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
+                                                    <input class="hidden" type="file" id="postImage" onChange={this.handleChange}/>
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">

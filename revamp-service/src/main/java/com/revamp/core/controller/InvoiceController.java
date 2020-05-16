@@ -61,9 +61,14 @@ public class InvoiceController {
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				 id = invoiceService.save(invoice, filesInBytes,imgPath);
+				Map<String, byte[]> postImageInBytes = null;
+				if(regFormModel.getPreImage() != null) {
+					postImageInBytes = WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPostImage()));
+				}
+				 id = invoiceService.save(invoice, filesInBytes, postImageInBytes, imgPath);
 			} else {
-				 id = invoiceService.save(invoice, null, imgPath);
+				 id = invoiceService.save(invoice, null, null, imgPath);
 			}
 		} catch (IOException ex) {
 			logger.debug("Error on multiUploadFileModel {}", ex);

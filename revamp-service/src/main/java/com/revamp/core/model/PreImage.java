@@ -14,12 +14,12 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class PostImage extends AuditableEntity{
+public class PreImage extends AuditableEntity{
     private static final long serialVersionUID = -2136842348977561820L;
 
-    public PostImage() {}
+    public PreImage() {}
 
-    public PostImage(String filePath, byte[] image, String comments) {
+    public PreImage(String filePath, byte[] image, String comments) {
         this.filePath = filePath;
         this.image = image;
         this.comments = comments;

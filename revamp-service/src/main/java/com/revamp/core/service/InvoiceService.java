@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface InvoiceService {
 
-	long save(Invoice invoice, Map<String,byte[]> filesInBytes, String imgPath);
+	long save(Invoice invoice, Map<String,byte[]> filesInBytes,Map<String,byte[]> postImageInBytes,String imgPath);
 	
 	Invoice getFile(long fileId);
 

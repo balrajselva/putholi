@@ -52,9 +52,14 @@ public class QuotationController {
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				id = quotationService.save(quotation, filesInBytes,imgPath);
+				Map<String, byte[]> preImageInBytes = null;
+				if(regFormModel.getPreImage() != null) {
+					 preImageInBytes = WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPreImage()));
+				}
+				id = quotationService.save(quotation, filesInBytes, preImageInBytes, imgPath);
 			} else {
-				id = quotationService.save(quotation, null, imgPath);
+				id = quotationService.save(quotation, null, null, imgPath);
 			}
 			return new ResponseEntity<>(id, HttpStatus.OK);
 		} catch (IOException ex) {
@@ -71,18 +76,18 @@ public class QuotationController {
 
 	@PostMapping("/updateSelectedQuotation/{id}/{status}")
 	public ResponseEntity<Boolean> updateSelectedQuotation(@PathVariable("id") long schoolId,@PathVariable("status") String status) {
-		PuthuyirLookUp status1=null;
+		String status1=null;
 		if(status.equals("ReviewerConfirmed")){
-			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION;
+			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION.name();
 		}
 		else if(status.equals("ApproverConfirmed")){
-			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION;
+			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name();
 		}
 		else if(status.equals("ReviewerRejected")){
-			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION;
+			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION.name();
 		}
 		else if(status.equals("ApproverRejected")){
-			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION;
+			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION.name();
 		}
 		Boolean isUpdated=quotationService.updateSelectedQuotation(schoolId,status1);
 		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
