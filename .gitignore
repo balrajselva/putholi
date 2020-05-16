@@ -6,6 +6,7 @@
 *.ear
 .metadata
 /workspace.code-workspace
+**/.mvn
 
 # Eclipse #
 RemoteSystemsTempFiles/*
@@ -15,7 +16,7 @@ revamp-service/.settings
 revamp-service/RemoteSystemsTempFiles
 revamp-service/.idea
 /.recommenders/
-
+**/.settings
 
 # Intellij
 revamp-service/.idea/*
@@ -23,9 +24,5 @@ revamp-service/*.iml
 revamp-service/*.iws
 revamp-service/.idea
 revamp-service/workspace.xml
-
-
 revamp-service.iml
-
-.idea/
-/.idea/
+**/.idea

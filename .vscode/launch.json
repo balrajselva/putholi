@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RevampBatchApplication<revamp-batch>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.revamp.batch.RevampBatchApplication",
+            "projectName": "revamp-batch",
+            "args": ""
+        }
+    ]
+}
