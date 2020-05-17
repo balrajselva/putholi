@@ -1,28 +1,19 @@
-
 # Java/Maven Temporary Files #
-*/target/**
-*.jar
-*.war
-*.ear
-.metadata
-/workspace.code-workspace
+
+**/target
+**/*log
+**/.metadata
+**/workspace.code-workspace
 **/.mvn
-
-# Eclipse #
-RemoteSystemsTempFiles/*
-revamp-service/.classpath
-revamp-service/.project
-revamp-service/.settings
-revamp-service/RemoteSystemsTempFiles
-revamp-service/.idea
-/.recommenders/
+# Eclipse
 **/.settings
-
+**/.project
+**/.factorypath
+**/RemoteSystemsTempFiles
+**/.recommenders
 # Intellij
-revamp-service/.idea/*
-revamp-service/*.iml
-revamp-service/*.iws
-revamp-service/.idea
-revamp-service/workspace.xml
-revamp-service.iml
 **/.idea
+**/*.iml
+**/*.iws
+**/.idea
+**/workspace.xml
