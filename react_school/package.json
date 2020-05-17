@@ -1,5 +1,5 @@
 {
-  "name": "revamp-service",
+  "name": "data-service",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

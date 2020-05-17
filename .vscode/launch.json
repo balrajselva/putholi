@@ -7,7 +7,7 @@
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "com.revamp.batch.RevampBatchApplication",
-            "projectName": "revamp-batch",
+            "projectName": "batch-service",
             "args": ""
         }
     ]
