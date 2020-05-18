@@ -384,8 +384,8 @@ class viewRequirements extends Component {
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(quotation));
             regFormModel.append('files',this.state.fileInput);
-            if(this.state.preImages!==null){
-                regFormModel.append('preImages',this.state.preImages)
+            if(this.state.preImagesInput!==null){
+                regFormModel.append('preImage',this.state.preImagesInput)
             }
             axios.post('http://localhost:6060/puthuyir/quotation',regFormModel)
             .then(res=>{
