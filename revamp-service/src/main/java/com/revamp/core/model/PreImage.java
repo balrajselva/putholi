@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "postimage")
+@Table(name = "preimage")
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -35,6 +35,7 @@ public class PreImage extends AuditableEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "requirement_id", nullable = false)
+    @JsonIgnore
     private Requirement requirement;
 
     @Column(name = "comments")

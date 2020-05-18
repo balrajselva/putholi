@@ -193,8 +193,8 @@ class AddInvoice extends Component {
                     Add Invoice
                 </button>
                 </td>                    
-                <td>{this.state.requirements[i].postImage.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
-                </td>
+                {/* <td>{this.state.requirements[i].postImage.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
+                </td> */}
                 <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
                 </td>
             </tr>)			
@@ -522,7 +522,7 @@ class AddInvoice extends Component {
                                         <th>Quotation valid date</th>
                                         <th>Add Invoice</th>
                                         <th>File Details</th>
-                                        <th>Post Image Details</th>
+                                        {/* <th>Post Image Details</th> */}
                                         </tr>
                                         {this.state.getRequirementList?null:this.createTable()}
                                     </tbody>
