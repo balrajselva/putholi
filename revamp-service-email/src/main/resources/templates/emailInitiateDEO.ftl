@@ -133,29 +133,26 @@ Dear DEO ,
      </table>
 
 <p>Requirements Details: </p>
-
-
    <table class="table table-bordered table-striped">
    <thead>
-   <tr>
-   <th>Requirement Type</th>
-   <th>Asset Type</th>
-   <th>Asset Name</th>
-   <th>Priority</th>
-   <th>Quantity</th></tr>
+     <tr>
+       <th>Requirement Type</th>
+       <th>Asset Type</th>
+       <th>Asset Name</th>
+       <th>Priority</th>
+       <th>Quantity</th>
+     </tr>
    </thead>
-
    <tbody>
-   <#list requirements as details>
-   <tr>
-  	<td>${details.reqType}</td>
-  	<td>${details.assetType}</td>
- 	<td>${details.assetName}</td>
- 	<td>${details.priority}</td>
- 	<td>${details.quantity}</td>
- 	</tr>                                               
-</#list>
-
+       <#list requirements as details>
+         <tr>
+            <td>${details.reqType}</td>
+            <td>${details.assetType}</td>
+            <td>${details.assetName}</td>
+            <td>${details.priority}</td>
+            <td>${details.quantity}</td>
+        </tr>                                               
+      </#list>
     </tbody>
     </table>
 </body>
