@@ -28,10 +28,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	@Query("SELECT u FROM User u WHERE u.emailAddress = :emailAddress and u.password = :password")
     User findByEmailAddressPassword(@Param("emailAddress") String emailaddress, @Param("password") String password);
 
-	@Query("SELECT u FROM User u where u.address.district = :district and u.role='Volunteer' and u.school_id=NULL and u.status='ApprovedUser'")
+	@Query("SELECT u FROM User u where u.address.district = :district and u.role in ('TrustVolunteer','Volunteer') and u.school_id=NULL and u.status='ApprovedUser'")
 	List<User> findByDistrict(@Param("district") String district);
 
-	@Query("SELECT u FROM User u where u.role='Volunteer' and u.school_id=NULL and u.status='ApprovedUser'")
+	@Query("SELECT u FROM User u where u.role in ('TrustVolunteer','Volunteer') and u.school_id=NULL and u.status='ApprovedUser'")
 	List<User> findAllVolunteers();
 
 	@Modifying

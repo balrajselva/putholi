@@ -30,12 +30,7 @@ public class Quotation implements Serializable {
 	@Column(name = "quotation_id")
 	private long quotationId;
 	
-	@Column(name = "quotated_amount")
-	private long quotatedAmount;
-
-    @Column(name="quotation_date")
-    private String quotationDate;
-	
+	    
 	@Column(name = "school_id")
 	private long schoolId;
 
@@ -44,5 +39,8 @@ public class Quotation implements Serializable {
 	
 	@Column(name = "quotation_validity_date")
 	private String quotationValidityDate;
+	
+	@Column(name="quotation_status")
+	private String quotationStatus;
 	
 }

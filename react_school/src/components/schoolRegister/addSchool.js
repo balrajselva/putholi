@@ -4,7 +4,7 @@ import './style.css';
 import '../../css/School_registration.css';
 import Tabs from '../../components/Tabs/Tabs';
 import axios from 'axios';
-import EditRequirements from './EditRequirements';
+import BeneficiarySummary from './BeneficiarySummary';
 
 class AddSchool extends Component {
     constructor(props) {
@@ -229,7 +229,7 @@ class AddSchool extends Component {
    }
    handleSubmit=(e)=>{
       e.preventDefault();
-      var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+      var emailRegex=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
       var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.schoolRegNum===null ){
             this.setState({
@@ -305,20 +305,19 @@ class AddSchool extends Component {
             });
       
          }
-        else if(this.state.fileInput===null){
+        else if(this.state.reqList.length===0){
+         this.setState({
+            
+             //lastErrorField:"reqList",
+             errorMessage:"Please add atleast one requirement"
+         });
+         }
+         else if(this.state.fileInput===null){
             this.setState({
                 lastErrorField:"fileInput",
                 errorMessage:"Please upload School Images"
             });
-      
-        }
-        
-        else if(this.state.reqList===null){
-         this.setState({
-             lastErrorField:"req",
-             errorMessage:"Please add atleast one requirement"
-         });
-         }
+      }
         else{
          this.setState({spinner:true});
          let schoolDetails={
@@ -389,13 +388,14 @@ class AddSchool extends Component {
                      <div className="control-group">
                               <label className="control-label" for="input01">Registration Number</label>
                               <div className="controls">
-                                 <input type="text" className="input-xlarge" value={this.state.schoolRegNum} id="schoolRegNum" onChange={this.handleChange}></input>
+                                 <input type="text" className="input-xlarge" value={this.state.schoolRegNum} id="schoolRegNum" onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                               </div>
                            </div>
                            <div className="control-group">
                               <label className="control-label" for="input01">School Name</label>
                               <div className="controls">
                                  <input type="text" className="input-xlarge" value={this.state.schoolName} id="schoolName" onChange={this.handleChange}></input>
+                                 <span style={{ fontSize: 22, color: "red" }}>*</span>
                               </div>
                            </div>
                            <div className="control-group">
@@ -409,18 +409,21 @@ class AddSchool extends Component {
                                     <option value="Secondary school">Secondary School</option>
                                     <option value="Higher Secondary School">Higher Secondary School</option>
                                  </select>
+                                 <span style={{ fontSize: 22, color: "red" }}>*</span>
                               </div>
                            </div>
                            <div className="control-group">
                               <label className="control-label" for="input01">Number of Students</label>
                               <div className="controls">
-                                 <input type="number" className="input-xlarge" value={this.state.numOfStudents} id="numOfStudents" onChange={this.handleChange}></input>
+                                 <input type="text" className="input-xlarge" value={this.state.numOfStudents} id="numOfStudents" onChange={this.handleChange}></input>
+                                 <span style={{ fontSize: 22, color: "red" }}>*</span>
                               </div>
                            </div>
                            <div className="control-group">
                               <label className="control-label" for="input01">Number of Teachers</label>
                               <div className="controls">
-                                 <input type="number" className="input-xlarge" value={this.state.numOfTeachers} id="numOfTeachers" onChange={this.handleChange}></input>
+                                 <input type="text" className="input-xlarge" value={this.state.numOfTeachers} id="numOfTeachers" onChange={this.handleChange}></input>
+                                 <span style={{ fontSize: 22, color: "red" }}>*</span>
                               </div> 
                               </div>
                               </div>
@@ -449,18 +452,21 @@ class AddSchool extends Component {
                                     <label className="control-label" for="input01">Secondary Contact Name</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="secondaryConName" value={this.state.secondaryConName} onChange={this.handleChange}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Secondary Contact Number </label>
                                     <div className="controls">
-                                       <input type="number" className="input-xlarge" id="secondaryConNum" value={this.state.secondaryConNum} onChange={this.handleChange}></input>
+                                       <input type="text" className="input-xlarge" id="secondaryConNum" value={this.state.secondaryConNum} onChange={this.handleChange}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Secondary Contact Email </label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="secondaryConMail" value={this.state.secondaryConMail} onChange={this.handleChange}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                               </div>
@@ -473,6 +479,7 @@ class AddSchool extends Component {
                                     <label className="control-label" for="input01">Address line 1</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="addressLine_1" value={this.state.addressLine_1} onChange={this.handleChange}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -484,7 +491,8 @@ class AddSchool extends Component {
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Pincode</label>
                                     <div className="controls">
-                                       <input type="number" className="input-xlarge" id="pincode" value={this.state.pincode} onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}></input>
+                                       <input type="text" className="input-xlarge" id="pincode" value={this.state.pincode} onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -494,30 +502,35 @@ class AddSchool extends Component {
                                  <option selected="selected">Select Locality</option>
                                  {this.state.createLocalityDropDown?this.state.locality.map((locality) => <option key={locality.Name} value={locality.Name}>{locality.Name}</option>):null}
                                  </select>
+                                 <span style={{ fontSize: 22, color: "red" }}>*</span>
                                  </div>
                               </div>
                                  <div className="control-group">
                                     <label className="control-label" for="input01">City</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="city"value={this.state.city}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" for="select01">District</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="district" value={this.state.district}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" for="select01">State</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="state" value={this.state.state}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" for="select01">Country</label>
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="country" value={this.state.country}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                               </div>
@@ -534,6 +547,7 @@ class AddSchool extends Component {
                                           <option>New</option>
                                           <option>Maintainence </option>
                                        </select>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -544,11 +558,13 @@ class AddSchool extends Component {
                                           {this.state.assetTypeList!==null?this.state.assetTypeList.map((asset) => <option key={asset} value={asset}>{asset}</option>):null}
                                           <option key="Others" value="Others">Others</option>
                                        </select>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  {this.state.assetType==="Others"?<div className="control-group">
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" value={this.state.otherAssetType} onChange={this.handleChange} id="otherAssetType" placeholder="Enter other asset type"></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>:null}
                                  <div className="control-group">
@@ -559,17 +575,20 @@ class AddSchool extends Component {
                                           {this.state.assetNameList!==null?this.state.assetNameList.map((asset) => <option key={asset.key_value} value={asset.key_value}>{asset.key_value}</option>):null}
                                           <option key="Others" value="Others">Others</option>
                                        </select>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  {this.state.assetName==="Others"?<div className="control-group">
                                     <div className="controls">
                                        <input type="text" className="input-xlarge" id="otherAssetName" value={this.state.otherAssetName} onChange={this.handleChange} placeholder="Enter other asset name"></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>:null}
                                  <div className="control-group">
                                     <label className="control-label" for="input01">Quantity</label>
                                     <div className="controls">
-                                       <input type="number" className="input-xlarge" id="quantity" value={this.state.quantity} onChange={this.handleChange}></input>
+                                       <input type="text" className="input-xlarge" id="quantity" value={this.state.quantity} onChange={this.handleChange}></input>
+                                       <span style={{ fontSize: 22, color: "red" }}>*</span>
                                     </div>
                                  </div>
                                  <div className="control-group">
@@ -617,10 +636,10 @@ class AddSchool extends Component {
                            <div className="row">
                               <div className="span10">
                                  <div className="control-group" >
-                                    <label className="control-label" for="fileInput" id="file" >Click here to upload proof of identity</label>
+                                    <label className="control-label" for="fileInput" id="file" >Click here to upload School Pictures</label>
                                     <div className="controls">
-                                       <input className="hidden"  id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
-                                    </div>
+                                    <span style={{ fontSize: 22, color: "red" }}>*</span><input className="hidden" id="fileInput" type="file" title={this.state.fileInput} onChange={this.handleChange}></input>
+                                       </div>
                                  </div>
                                  <div className="control-group">
                                     <label className="control-label" >Comments / Message to Trust</label>
@@ -634,7 +653,7 @@ class AddSchool extends Component {
                            </div>
                         </div>
                            
-                        <EditRequirements {...this.props}/>
+                        <BeneficiarySummary {...this.props}/>
                         </Tabs>
                         <div class="form-actions">
                            <div style={{color:"red",fontSize:"15px",marginBottom:"5px"}}>

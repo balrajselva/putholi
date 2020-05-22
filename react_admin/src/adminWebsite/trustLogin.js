@@ -40,6 +40,12 @@ class trustLogin extends Component {
               currentUser : res.data
             });
           }
+          else if(res.data!==""&&res.data.role==="TrustVolunteer" && res.data.status==="ApprovedUser"){
+            this.props.history.push({
+              pathname: '/volunteerSchoolCheck',
+              currentUser : res.data
+            });
+          }
           else if(res.data!=="" && (res.data.role==="Admin" || res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/accessReview',

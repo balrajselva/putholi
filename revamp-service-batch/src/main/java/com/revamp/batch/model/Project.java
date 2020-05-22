@@ -26,9 +26,6 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Proxy(lazy = false)
-@Getter
-@Setter
-@ToString
 public class Project implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5416628745442805358L;
@@ -45,6 +42,46 @@ public class Project implements java.io.Serializable {
 
 	@Column(name = "collected_amount")
 	private int collectedAmount;
+	
+	@Column(name = "estimated_amount")
+	private int estimatedAmount;
+
+	public long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(long projectId) {
+		this.projectId = projectId;
+	}
+
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
+	}
+
+	public int getCollectedAmount() {
+		return collectedAmount;
+	}
+
+	public void setCollectedAmount(int collectedAmount) {
+		this.collectedAmount = collectedAmount;
+	}
+
+	public int getEstimatedAmount() {
+		return estimatedAmount;
+	}
+
+	public void setEstimatedAmount(int estimatedAmount) {
+		this.estimatedAmount = estimatedAmount;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 
 	
 
