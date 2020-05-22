@@ -343,12 +343,15 @@ class DonationForm extends Component {
                         <label className="control-label" for="disabledInput">Your Contribution in Rs</label>
                         <div className="controls">
                           <input className="form-control" name="contribution" id="contribution" value={this.state.contribution} type="text"
-                            placeholder="" disabled="" ></input>
+                            placeholder="" disabled="" ></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           <div style={{ fontSize: 12, color: "red" }}  >
                             {this.state.contributionError}
                           </div>
                         </div>
                       </div>
+                      <h3>Donor Type</h3>
+                          <input type="radio" class="bn22" name="bndontype" value="Indiv" checked="checked" /> Individual
+                          <input type="radio" class="bn33" name="bndontype" value="Org"  /> Organization                          
                       <h3>Already Registered Donor??</h3>
                           <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
                           <input type="radio" class="bn3" name="bn" value="2" checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
@@ -437,7 +440,7 @@ class DonationForm extends Component {
                           </div>
                           <div className="form-actions" id="onebn">
                           <button tye="submit" className="btn send_btn">Login</button>
-                          <button className="btn dark_btn">Cancel</button>
+                          <a className="btn dark_btn" href="/donation">Back to Search Results</a>
                         </div>
                     </fieldset>
                   </form>

@@ -34,17 +34,11 @@ class UserDetailsForm extends Component {
     
     submitClicked=(e)=>{
         e.preventDefault();
-        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        //var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        var emailRegex=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         
-        if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
-            this.setState({
-                lastErrorField:"confirmPassword",
-                errorMessage:"Please enter atleast 8 character password or check whether password and confirm passowrd are same."
-            });
-            document.getElementById('confirmPassword').style.borderColor="red";
-        }
-        else if(this.state.firstName===null){
+        if(this.state.firstName===null){
             this.setState({
                 lastErrorField:"firstName",
                 errorMessage:"Please enter First name"
@@ -58,34 +52,7 @@ class UserDetailsForm extends Component {
             });
             document.getElementById('gender').style.borderColor="red";
         }
-        else if(this.state.role===null){
-            this.setState({
-                lastErrorField:"role",
-                errorMessage:"Please select role"
-            });
-            document.getElementById('role').style.borderColor="red";
-        }
-        else if(this.state.identityProof===null){
-            this.setState({
-                lastErrorField:"identityProof",
-                errorMessage:"Please upload Identity Proof"
-            });
-            document.getElementById('identityProof').style.borderColor="red";
-        }
-        else if(this.state.email===null || !emailRegex.test(this.state.email)){
-            this.setState({
-                lastErrorField:"email",
-                errorMessage:"Please enter valid email ID"
-            });
-            document.getElementById('email').style.borderColor="red";
-        }
-        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
-            this.setState({
-                lastErrorField:"phoneNumber",
-                errorMessage:"Please enter valid mobile number"
-            });
-            document.getElementById('phoneNumber').style.borderColor="red";
-        }
+
         else if(this.state.addressLine_1===null){
             this.setState({
                 lastErrorField:"addressLine_1",
@@ -123,6 +90,47 @@ class UserDetailsForm extends Component {
             this.setState({lastErrorField:"country"});
             document.getElementById('country').style.borderColor="red";
         }
+
+        else if(this.state.role===null){
+            this.setState({
+                lastErrorField:"role",
+                errorMessage:"Please select role"
+            });
+            document.getElementById('role').style.borderColor="red";
+        }
+        
+        else if(this.state.email===null || !emailRegex.test(this.state.email)){
+            this.setState({
+                lastErrorField:"email",
+                errorMessage:"Please enter valid email ID"
+            });
+            document.getElementById('email').style.borderColor="red";
+        }
+        else if(this.state.phoneNumber===null || !mobNumRegex.test(this.state.phoneNumber)){
+            this.setState({
+                lastErrorField:"phoneNumber",
+                errorMessage:"Please enter valid mobile number"
+            });
+            document.getElementById('phoneNumber').style.borderColor="red";
+        }
+        else if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
+            this.setState({
+                lastErrorField:"confirmPassword",
+                errorMessage:"Please enter atleast 8 character password or check whether password and confirm passowrd are same."
+            });
+            document.getElementById('confirmPassword').style.borderColor="red";
+        }
+
+        else if(this.state.identityProof===null){
+            this.setState({
+                lastErrorField:"identityProof",
+                errorMessage:"Please upload Identity Proof"
+            });
+            document.getElementById('identityProof').style.borderColor="red";
+        }
+        
+
+        
         else{
             document.getElementById('confirmPassword').style.borderColor="#d2d6de";
             document.getElementById('firstName').style.borderColor="#d2d6de";
@@ -211,8 +219,8 @@ class UserDetailsForm extends Component {
             reader.readAsDataURL(file)
         }
     }
-    onCancel=(e)=>{
-        e.preventDefault();
+    onCancel=(f)=>{
+        f.preventDefault();
         this.props.history.push("/index");
     }
 
@@ -245,14 +253,14 @@ class UserDetailsForm extends Component {
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="others">Others</option>
-                            </select>
+                            </select><span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>                   
                     </tr>
                     <tr>
                         <td> 
                             Address line 1 :
                         </td>
-                        <td><input class="form-control" type="text" id="addressLine_1" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="addressLine_1" onChange={this.handleChange}/><span style={{ fontSize: 22, color: "red" }}>*</span></td>
                     </tr>
                     <tr>
                         <td>
@@ -262,26 +270,32 @@ class UserDetailsForm extends Component {
                     </tr>
                     <tr>
                         <td>Pincode :</td>
-                        <td><input class="form-control" type="text" id="pincode" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="pincode" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span>
+                        </td>
                         <td>Localtiy : </td>
                         <select class="dropdown" id="selectedLocality" value={this.state.selectedLocality} onChange={this.handleChange}>
                                 <option value="" selected hidden>Select Locality</option>
                                 {this.state.createDropDown?this.state.locality.map((locality) => <option key={locality.Name} value={locality.Name}>{locality.Name}</option>):null}
                         </select>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span>
                     </tr>
                                            
                     <tr>
                         <td>City :</td>
-                        <td><input class="form-control" type="text" id="city" value={this.state.city} onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="city" value={this.state.city} onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span>
+                        </td>
                         <td>District :</td>
-                        <td><input class="form-control" type="text" id="district" value={this.state.district} onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="district" value={this.state.district} onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span></td>
                         {this.state.spinner?<Spinner/>:null}
                     </tr>
                     <tr>
                         <td>State : </td>
-                        <td><input class="form-control" type="text" id="state" value={this.state.state} onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="state" value={this.state.state} onChange={this.handleChange}/><span style={{ fontSize: 22, color: "red" }}>*</span></td>
                         <td>Country : </td>
-                        <td><input class="form-control" type="text" id="country" value={this.state.country} onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="country" value={this.state.country} onChange={this.handleChange}/><span style={{ fontSize: 22, color: "red" }}>*</span></td>
                     </tr>
                     
                     <tr>
@@ -290,25 +304,30 @@ class UserDetailsForm extends Component {
                             <select class="form-control" id="role" value={this.selected} onChange={this.handleChange} >
                                 <option value="" selected hidden>Select Role</option>
                                 <option value="beneficiary">Beneficiary</option>
-                            </select>
+                            </select><span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>Email : </td>
-                        <td><input class="form-control" type="email" id="email" value={this.props.user.emailAddress} disabled/>
+                        <td><input class="form-control" type="email" id="email" value={this.props.user.emailAddress} disabled/><span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>Mobile : </td>
-                        <td><input class="form-control" type="text" id="phoneNumber" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="text" id="phoneNumber" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span></td>
                     </tr>
                     <tr>
                         <td>Confirm password : </td>
-                        <td><input class="form-control" type="password" id="confirmPassword" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="password" id="confirmPassword" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span>
+                        </td>
                     </tr>
                     <tr>
                         <td>Upload Identity proof : </td>
-                        <td><input class="form-control" type="file" id="identityProof" accept="image/x-png,image/jpeg" onChange={this.handleChange}/></td>
+                        <td><input class="form-control" type="file" id="identityProof" accept="image/x-png,image/jpeg" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 22, color: "red" }}>*</span>
+                        </td>
                         <td colSpan="2">{this.state.localImageUrl?<div>Id proof preview:</div>:null}</td>
                     </tr>
                     <tr>
@@ -324,7 +343,7 @@ class UserDetailsForm extends Component {
                     <tr>
                         <td></td>
                         <td><button type="button" class="btn btn-success" onClick={(e)=>this.submitClicked(e)}>Submit</button></td>
-                        <td><button type="button" class="btn btn-danger" onClick={()=>this.onCancel()}>Cancel</button></td>
+                        <td><button type="button" class="btn btn-danger" onClick={(f)=>this.onCancel(f)}>Cancel</button></td>
                     </tr>
                     <div class="btn-group" role="group" >
                    

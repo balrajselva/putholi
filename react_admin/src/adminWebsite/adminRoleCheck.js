@@ -142,24 +142,35 @@ class adminRoleCheck extends Component {
                                 </div>
                               </div>
                               <div className="timeline-footer">
+                              
+                                <button  type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">View User Picture</button>
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
                                 <Link to={{pathname:returnLink, users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
                           </li>
-                          <li>
-                            <i className="fa fa-user bg-aqua" />
-                            <div className="timeline-item">
-                              <h3 className="timeline-header no-border">User to resubmit the required details</h3>
+
+                          <div className="modal fade" id="modal-default">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
                             </div>
-                          </li>
-                          <li>
-                            <i className="fa fa-user bg-aqua" />
-                            <div className="timeline-item">
-                              <h3 className="timeline-header no-border"><a href="#">User request History - </a> Access Granted</h3>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.props.location.user.identityProof[0].image} id ="image1" alt="" ></img>
+                                
+                                </section>
                             </div>
-                          </li>
+                        </div>
+                      </div>    
+                    </div>
+                  </div>
+                  
+                           
                           <li>
                             <div className="timeline-footer">
                               <a href="#" className="btn btn-xs bg-maroon">Go to Top</a>

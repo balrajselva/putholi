@@ -18,13 +18,18 @@ import com.revamp.batch.model.School;
 @Repository
 public interface BatchRepository extends CrudRepository<School, Long> {
 
-	@Query("FROM School where status = :status")
+	@Query("FROM School where school_status = :status")
 	public List<School> status(@Param("status") String status);
 
 	@Modifying
 	@Query("UPDATE School SET status =:status WHERE school_id = :schoolid")
 	public int updateStatus(@Param("schoolid") long school_id, @Param("status") String status);
 
+	@Modifying
+	@Query("UPDATE Project SET status =:status WHERE school_id = :schoolid")
+	public int updateProject(@Param("schoolid") long school_id, @Param("status") String status);
+
+	
 	@Modifying
 	@Query("UPDATE FundAllotment SET status =:status WHERE requirement_id = :requirement_id")
 	public int updateFundStatus(@Param("requirement_id") long requirement_id, @Param("status") String status);

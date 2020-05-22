@@ -141,21 +141,22 @@ Dear DEO ,
    <th>Requirement Type</th>
    <th>Asset Type</th>
    <th>Asset Name</th>
+   <th>Priority</th>
    <th>Quantity</th></tr>
    </thead>
 
    <tbody>
    <#list requirements as details>
    <tr>
-
-
-                                                    <td>${details.reqType}</td><td>${details.assetType}</td>
-                                                    <td>${details.assetName}</td><td>${details.quantity}</td>
-                                                </tr>
-
+  	<td>${details.reqType}</td>
+  	<td>${details.assetType}</td>
+ 	<td>${details.assetName}</td>
+ 	<td>${details.priority}</td>
+ 	<td>${details.quantity}</td>
+ 	</tr>                                               
 </#list>
 
-                                        </tbody>
-                                        </table>
+    </tbody>
+    </table>
 </body>
 </html>
