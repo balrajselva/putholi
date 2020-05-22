@@ -117,8 +117,8 @@ class adminSchoolCheck extends Component {
                                 <br></br>
                                 Number of Teachers: {this.props.location.school.schoolInfo.numberOfTeachers}
                                 <br></br>
-                                Student / Teacher Ratio :({this.props.location.school.schoolInfo.numberOfStudents} / {this.props.location.school.schoolInfo.numberOfTeachers})
-                                  (Guideline value to be greater  than 10)
+                                Student / Teacher Ratio : {Math.round(this.props.location.school.schoolInfo.numberOfStudents/this.props.location.school.schoolInfo.numberOfTeachers)}
+                                  &nbsp;(Guideline value to be greater  than 10)
                                 </div>
                                 <h4>Address of the School</h4>
                                 <ul>
