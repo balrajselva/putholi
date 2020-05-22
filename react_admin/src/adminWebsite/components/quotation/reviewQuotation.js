@@ -183,6 +183,7 @@ class reviewQuotation extends Component {
                     <h4>
                     {this.props.location.school.projects[0].requirements[i].assetName}
                     </h4>
+                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">View Preimages</button>  
                     </section>
                     <section className="content">
                         <div className="row">

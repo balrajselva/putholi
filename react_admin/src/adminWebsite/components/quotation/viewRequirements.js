@@ -511,7 +511,7 @@ class viewRequirements extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                 <div className="form-group">
-                                                    <input type="text" className="form-control" id="companyName" placeholder="Enter Company name" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="companyName" placeholder="Enter Company name*" onChange={this.handleChange} />
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="address_line_1" placeholder="Enter Address Line 1" onChange={this.handleChange}/>
@@ -535,7 +535,7 @@ class viewRequirements extends Component {
                                                     <input type="text" className="form-control" id="quotationPreparedBy" placeholder="Quotation Prepared by" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="warranty" placeholder="Warranty" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="warranty" placeholder="Warranty" onChange={this.handleChange}/>
                                                     </div>
                                                 </form>
                                             </div>
@@ -556,19 +556,19 @@ class viewRequirements extends Component {
                                                     <input type="text" className="form-control" id="itemDescription" placeholder="Item Description" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="quantity" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Quantity" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="quantity" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Quantity" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="unitPrice" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Unit Price" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="unitPrice" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Unit Price" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="tax" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Tax in %" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="tax" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Tax in %" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="shippingCost" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Shipping Cost" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="shippingCost" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Shipping Cost" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="number" className="form-control" id="totalAmount" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Total amount" onChange={this.handleChange}/>
+                                                    <input type="text" className="form-control" id="totalAmount" pattern= {/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/} placeholder="Total amount" onChange={this.handleChange}/>
                                                     </div>
                                                 </form>
                                             </div>

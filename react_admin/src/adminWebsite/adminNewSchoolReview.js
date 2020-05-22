@@ -40,9 +40,11 @@ class adminNewSchoolReview extends Component {
             console.log(validateStatus);
             if(validateStatus.length!==0)
                 continue;
-            if(this.state.schools[i].schoolStatus==="AdminRejected" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
+            //if(this.state.schools[i].schoolStatus==="ReturnedToBeneficiary" || this.state.schools[i].schoolStatus==="ReviewerRejected" || this.state.schools[i].schoolStatus==="ApproverRejected" || this.state.schools[i].schoolStatus==="ApprovedSchool")
+            if(this.state.schools[i].schoolStatus==="ReturnedToBeneficiary" || this.state.schools[i].schoolStatus==="ApprovedSchool")
                 continue;
-            else if(this.state.currentUser.role==="Admin" && this.state.schools[i].schoolStatus!== "SCHOOL_REGISTERED")
+            //else if(this.state.currentUser.role==="Admin" && this.state.schools[i].schoolStatus!== "SCHOOL_REGISTERED")
+            else if(this.state.currentUser.role==="Admin" && (this.state.schools[i].schoolStatus!== "SCHOOL_REGISTERED" && this.state.schools[i].schoolStatus!=="ReviewerRejected" && this.state.schools[i].schoolStatus!=="ApproverRejected" ))
                 continue;
             else if(this.state.currentUser.role==="Reviewer" && (this.state.schools[i].schoolStatus==="ReviewerConfirmed" ||this.state.schools[i].schoolStatus==="ApproverConfirmed" ||this.state.schools[i].schoolStatus==="SCHOOL_REGISTERED"))
                 continue;

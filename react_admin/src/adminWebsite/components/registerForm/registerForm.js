@@ -31,18 +31,15 @@ class registerForm extends Component {
     }
 
     submitClicked=()=>{
-        var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z0-9]+$/;
+        //var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z0-9]+$/;
+        var emailRegex=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
+        
         if(this.state.lastErrorField!==null)
             document.getElementById(this.state.lastErrorField).style.borderColor="#d2d6de";
-        if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
-            this.setState({
-                lastErrorField:"confirmPassword",
-                errorMessage:"Please enter atleast 8 character password or check whether password and confirm passowrd are same."
-            });
-            document.getElementById('confirmPassword').style.borderColor="red";
-        }
-        else if(this.state.firstName===null){
+        
+        if(this.state.firstName===null){
             this.setState({
                 lastErrorField:"firstName",
                 errorMessage:"Please enter First name"
@@ -100,13 +97,6 @@ class registerForm extends Component {
             this.setState({lastErrorField:"country"});
             document.getElementById('country').style.borderColor="red";
         }
-        else if(this.state.identityProof===null){
-            this.setState({
-                lastErrorField:"identityProof",
-                errorMessage:"Please upload Identity Proof"
-            });
-            document.getElementById('identityProof').style.borderColor="red";
-        }
         else if(this.state.email===null || !emailRegex.test(this.state.email)){
             this.setState({
                 lastErrorField:"email",
@@ -120,6 +110,20 @@ class registerForm extends Component {
                 errorMessage:"Please enter valid mobile number"
             });
             document.getElementById('phoneNumber').style.borderColor="red";
+        }
+        else if(this.state.confirmPassword===null || this.state.confirmPassword.length<8 || this.state.password!==this.state.confirmPassword ){
+            this.setState({
+                lastErrorField:"confirmPassword",
+                errorMessage:"Please enter atleast 8 character password or check whether password and confirm passowrd are same."
+            });
+            document.getElementById('confirmPassword').style.borderColor="red";
+        }
+        else if(this.state.identityProof===null){
+            this.setState({
+                lastErrorField:"identityProof",
+                errorMessage:"Please upload Identity Proof"
+            });
+            document.getElementById('identityProof').style.borderColor="red";
         }
         else if(!document.getElementById('checkBox').checked){
             this.setState({
@@ -251,13 +255,15 @@ class registerForm extends Component {
         }
     }
 
+    
+
     render() {
         return (
             <div>
                <div className="row">
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="firstName" value={this.state.firstName} placeholder="First name" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-user form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-user form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="lastName" value={this.state.lastName} placeholder="Last name" onChange={this.handleChange}/>
@@ -271,20 +277,21 @@ class registerForm extends Component {
                             <option>Male</option>
                             <option>Female</option>
                         </select>
-                        <span className="glyphicon glyphicon-user form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-user form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <select className="form-control select2" style={{width: '100%'}} id="role" value={this.state.role} onChange={this.handleChange}>
                             <option selected="selected">Select Role</option>
                             {this.props.roles.map((role) => <option key={role} value={role}>{role}</option>)}
                         </select>
-                        <span className="glyphicon glyphicon-star form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-user form-control-feedback" />
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="addressLine_1" onChange={this.handleChange} placeholder="Address Line 1" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-user form-control-feedback" />
+                        
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="addressLine_2" onChange={this.handleChange} placeholder="Address Line 2" onChange={this.handleChange}/>
@@ -293,58 +300,59 @@ class registerForm extends Component {
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
-                        <input type="number" className="form-control" id="pincode" placeholder="Pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <input type="text" className="form-control" id="pincode" placeholder="Pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <select className="form-control select2" id="selectedLocality" value={this.state.selectedLocality} onChange={this.handleChange} style={{width: '100%'}}>
                             <option selected="selected">Select Locality</option>
                             {this.state.createLocalityDropDown?this.state.locality.map((locality) => <option key={locality.Name} value={locality.Name}>{locality.Name}</option>):null}
                         </select>
-                        <span className="glyphicon glyphicon-home form-control-feedback" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" onChange={this.handleChange}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="city" value={this.state.city} placeholder="City" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="district" value={this.state.district} placeholder="District" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="state" value={this.state.state} placeholder="State" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <input type="text" className="form-control" id="country" value={this.state.country} placeholder="Country" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-home form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-home form-control-feedback" />
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group has-feedback col-md-6">
                         <input type="email" className="form-control" id="email" value={this.state.emailAddress} placeholder="Email" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-envelope form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback col-md-6">
-                        <input type="number" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
-                        <span className="glyphicon glyphicon-phone form-control-feedback" />
+                        <input type="text" className="form-control" id="phoneNumber" onChange={this.handleChange} placeholder="Mobile" onChange={this.handleChange}/>
+                        <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-phone form-control-feedback" />
                     </div>
                 </div>
                 <div className="form-group has-feedback">
                     <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.handleChange}/>
-                    <span className="glyphicon glyphicon-lock form-control-feedback" />
+                    <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-lock form-control-feedback" />
                 </div>
                 <div className="form-group has-feedback">
                     <input type="password" className="form-control" id="confirmPassword" placeholder="Confirm password" onChange={this.handleChange}/>
-                    <span className="glyphicon glyphicon-log-in form-control-feedback" />
+                    <span style={{ fontSize: 12, color: "red" }} className="glyphicon glyphicon-log-in form-control-feedback" />
                 </div>
                 <div className="row">
                     <div className="form-group">
-                        <label for="identityProof" id="file" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
+                    <label for="identityProof" id="file" style={{cursor:"pointer",border:"1px solid #d2d6de",marginLeft:"15px"}}>Click here to upload identity proof</label>
+                    <span style={{ fontSize: 22, color: "red" }}>*</span>
                         <input class="hidden" type="file" id="identityProof" onChange={this.handleChange}/>
                     </div>
                 </div>
@@ -355,9 +363,10 @@ class registerForm extends Component {
                 </div>
                 {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                 <div className="col-md-12">
-                    <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.submitClicked()}>Register</button><br/>
+                    <button type="submit" className="btn btn-primary btn-block btn-flat" onClick={()=>this.submitClicked()}>Register</button>
+                    <br/>
                     </div>
-                  <Link to="/volunteerLogin" className="text-center" style={{marginLeft:'2%'}}>Already have a membership? Login...</Link>
+                  <Link to="/login" className="text-center" style={{marginLeft:'2%'}}>Already have a membership? Login...</Link>
                   {this.state.spinner?<div class="spinner"></div>:null}
             </div>
         );

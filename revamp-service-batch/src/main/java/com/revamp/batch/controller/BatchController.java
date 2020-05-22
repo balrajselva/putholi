@@ -1,5 +1,7 @@
 package com.revamp.batch.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -28,7 +30,7 @@ public class BatchController {
 
 	// ---Get a user by id---
 	@GetMapping("/status")
-	public ResponseEntity<List<School>> getFundWatcher(@RequestParam("status") String pstatus ,@RequestParam("days") String days) {
+	public ResponseEntity<List<School>> getFundWatcher(@RequestParam("status") String pstatus ,@RequestParam("days") String days) throws IOException, ParseException {
 		logger.info("BatchController Status");
 		List<School> list = batchServices.findbySchoolStatus(pstatus);
 		String status = batchServices.updateSchoolStatus(list,days);

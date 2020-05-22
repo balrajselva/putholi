@@ -37,6 +37,8 @@ public class EmailUser {
 	 
 	 private String name;
 	 
+	 private String priority;
+	 
 	 private List<Requirement> requirements;
 	 
 	 private String fromEmailAddress;

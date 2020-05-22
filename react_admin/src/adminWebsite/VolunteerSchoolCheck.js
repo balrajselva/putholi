@@ -58,6 +58,15 @@ class VolunteerSchoolCheck extends Component {
                 };
                 pageLink="Upload Quotation";
             }
+            if(this.state.school.schoolStatus==="WORK_ORDER_INITIATED"){
+                newTo = { 
+                    pathname: "/addInvoice", 
+                    school:this.state.school,
+                    currentUser:this.props.location.currentUser
+                };
+                pageLink="Process WorkOrder";
+            }
+
             if(this.state.school.schoolStatus==="null"){
                 newTo = { 
                     pathname: "/addInvoice", 
