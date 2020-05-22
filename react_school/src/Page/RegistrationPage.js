@@ -82,8 +82,8 @@ class RegistrationPage extends Component {
             console.log(res);
             if(res.data.status === "ApprovedUser" && res.data.role==="beneficiary"){
                 this.props.history.push({
-                    pathname: '/schoolRegistration',
-                   //pathname: '/beneficarySummary',
+                    // pathname: '/schoolRegistration',
+                   pathname: '/beneficarySummary',
                     user: res.data
                 });
             }
