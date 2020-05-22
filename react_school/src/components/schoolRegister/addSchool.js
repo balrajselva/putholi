@@ -51,6 +51,7 @@ class AddSchool extends Component {
       assetTypeList:null,
       assetNameList:null,
       priority:null,
+      maxPriority:null,
       reqError:null
     }
     componentDidMount(){
@@ -219,7 +220,8 @@ class AddSchool extends Component {
    updatePriority=(e)=>{
       this.setState({
          hasError:null,
-         priority:e.target.id});
+         priority:e.target.id
+      });
    }
    deleteRequirement=(e)=>{
       e.preventDefault();
@@ -231,6 +233,18 @@ class AddSchool extends Component {
       e.preventDefault();
       var emailRegex=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
       var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
+      let maxPriority = 0;
+      for(let i=0;i<this.state.reqList.length;i++){
+         if(this.state.reqList[i].priority > maxPriority){
+            maxPriority = this.state.reqList[i].priority;
+         }
+      }
+      if(parseInt(maxPriority) !== parseInt(this.state.reqList.length)){
+         this.setState({
+            errorMessage:"Please select priority in ascending order"
+        });
+        return;
+      }
         if(this.state.schoolRegNum===null ){
             this.setState({
                 lastErrorField:"schoolRegNum",
@@ -307,7 +321,6 @@ class AddSchool extends Component {
          }
         else if(this.state.reqList.length===0){
          this.setState({
-            
              //lastErrorField:"reqList",
              errorMessage:"Please add atleast one requirement"
          });

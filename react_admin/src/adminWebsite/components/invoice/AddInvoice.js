@@ -6,7 +6,7 @@ import '../quotation/reviewQuotation.css';
 class AddInvoice extends Component {
 
     state={
-        requirements:"",
+        quotations:"",
         getRequirementList:true,
         spinner:true,
         companyName:null,
@@ -41,6 +41,7 @@ class AddInvoice extends Component {
 
 
     handleChange=({target})=>{
+        console.log(target)
         document.getElementById(target.id).style.borderColor="#d2d6de";
         if(target.id==="fileInput"){
             if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
@@ -86,13 +87,14 @@ class AddInvoice extends Component {
               }
               else{
                   this.setState({
-                    fileInput:null,
+                      postImage:null,
                       localImageUrl:null,
                       errorMessage:"",
                       spinner:false
                   })
               }
               reader.onloadend=()=>{
+                  console.log("postImage")
                   this.setState({
                       postImage:target.files[0],
                       localImageUrl:reader.result,
@@ -141,7 +143,7 @@ class AddInvoice extends Component {
                 resp[i].invoiceList=[]
             };
             this.setState({
-                requirements:resp,
+                quotations:resp,
                 getRequirementList:false,
                 spinner:false
             })
@@ -166,36 +168,36 @@ class AddInvoice extends Component {
         .catch(error=>{
             window.alert("Deletion failed due to "+error)
         })
-        var array=[...this.state.requirements[reqIndex].invoiceList];
+        var array=[...this.state.quotations[reqIndex].invoiceList];
         array.splice(invIndex,1);
-        if(this.state.requirements[reqIndex].invoiceList.length===1){
+        if(this.state.quotations[reqIndex].invoiceList.length===1){
             array=[];
         }
-        let i=[...this.state.requirements];
+        let i=[...this.state.quotations];
         i[reqIndex].invoiceList=array;
         this.setState({
-            requirements:i,
+            quotations:i,
         })
      }
     createTable=()=>{
         var rows=[];
         let rowsUpdated=false;
-        for(let i=0;i<this.state.requirements.length;i++){
+        for(let i=0;i<this.state.quotations.length;i++){
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{i+1}</td>
-                <td>{this.state.requirements[i].itemDescription}</td>
-                <td>{this.state.requirements[i].quantity}</td>      
-                <td>{this.state.requirements[i].totalAmount}</td>   
-                <td>{this.state.requirements[i].quotationValidityDate.split("T")[0]}</td>                                                                 
+                <td>{this.state.quotations[i].itemDescription}</td>
+                <td>{this.state.quotations[i].quantity}</td>      
+                <td>{this.state.quotations[i].totalAmount}</td>   
+                <td>{this.state.quotations[i].quotationValidityDate.split("T")[0]}</td>                                                                 
                 <td>
-                <button id={this.state.requirements[i].requirementId+"/"+i} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onClick={(e)=>this.updateCurrentReqId(e)} >
+                <button id={this.state.quotations[i].requirementId+"/"+i} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" onClick={(e)=>this.updateCurrentReqId(e)} >
                     Add Invoice
                 </button>
                 </td>                    
-                {/* <td>{this.state.requirements[i].postImage.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
-                </td> */}
-                <td>{this.state.requirements[i].invoiceList.length>0?this.state.requirements[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
+                <td>{this.state.quotations[i].invoiceList.length>0?this.state.quotations[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
+                </td>
+                <td>{this.state.quotations[i].postImage !==undefined && this.state.quotations[i].postImage.length>0?this.state.quotations[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
                 </td>
             </tr>)			
         }
@@ -224,7 +226,7 @@ class AddInvoice extends Component {
             })
             document.getElementById('companyName').style.borderColor="red";
         }
-        if(this.state.requirements[this.state.invoiceRefNum].invoiceList.length===1){
+        if(this.state.quotations[this.state.invoiceRefNum].invoiceList.length===1){
             this.setState({
                 errorMessage:"Only one invoice can be added per requirement"
             })
@@ -334,12 +336,12 @@ class AddInvoice extends Component {
                 errorMessage:"Please upload invoice"
             })
         }
-        // else if(this.state.postImage===null){
-        //     this.setState({
-        //         lastErrorField:"postImage",
-        //         errorMessage:"Please upload post image"
-        //     })
-        // }
+        else if(this.state.postImage===null){
+            this.setState({
+                lastErrorField:"postImage",
+                errorMessage:"Please upload post image"
+            })
+        }
         else if(this.state.bankName===null){
             this.setState({
                 lastErrorField:"bankName",
@@ -391,7 +393,7 @@ class AddInvoice extends Component {
             document.getElementById('workStatus').style.borderColor="#d2d6de";
             document.getElementById('accountNum').style.borderColor="#d2d6de";
             document.getElementById('postImage').style.borderColor="#d2d6de";
-            console.log(this.state.requirements.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
+            console.log(this.state.quotations.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
             const invoice={
                 school:this.props.location.school.schoolId+"",
                 requirement:this.state.currentReqId,
@@ -422,14 +424,16 @@ class AddInvoice extends Component {
                     comments:"",
                 },
             }
-            console.log(invoice);
             this.setState({
                 spinner:true
             });
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(invoice));
             regFormModel.append('files',this.state.fileInput);
-            regFormModel.append('postImage',this.state.postImage);
+            if(this.state.postImage!==null){
+                regFormModel.append('postImage',this.state.postImage);
+            }
+            console.log(regFormModel);
             axios.post('http://localhost:6060/puthuyir/invoiceUpload',regFormModel)
             .then(res=>{ 
                 console.log(res);
@@ -463,16 +467,17 @@ class AddInvoice extends Component {
                     tax:this.state.tax,
                     shippingCost:this.state.shippingCost,
                     totalAmount:this.state.totalAmount,
+                    postImage:this.state.postImage,
                     fileInput:this.state.fileInput,
                     invoiceStatus:"InvoiceAdded",
                     localImageUrl:this.state.localImageUrl
                 };
-                let a=this.state.requirements[this.state.invoiceRefNum].invoiceList;
+                let a=this.state.quotations[this.state.invoiceRefNum].invoiceList;
                 a.push(ql);
-                let i=[...this.state.requirements];
+                let i=[...this.state.quotations];
                 i[this.state.invoiceRefNum].invoiceList=a;
                 this.setState({
-                    requirements:i,
+                    quotations:i,
                 })
                 console.log(i)
             }
@@ -480,7 +485,7 @@ class AddInvoice extends Component {
     }
     
     render() {	
-        console.log(this.state.requirements);
+        console.log(this.state.quotations);
         return (
             <div>
             <div style={{fontSize:"large"}}>
@@ -522,7 +527,7 @@ class AddInvoice extends Component {
                                         <th>Quotation valid date</th>
                                         <th>Add Invoice</th>
                                         <th>File Details</th>
-                                        {/* <th>Post Image Details</th> */}
+                                        <th>Post Image Details</th>
                                         </tr>
                                         {this.state.getRequirementList?null:this.createTable()}
                                     </tbody>
@@ -588,7 +593,7 @@ class AddInvoice extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
-                                                    <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Upload Post Image</label>
+                                                    <label for="postImage" astyle={{cursor:"pointer",border:"2px solid black"}}>Upload Post Image</label>
                                                     <input class="hidden" type="file" id="postImage" onChange={this.handleChange}/>
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>
