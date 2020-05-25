@@ -127,6 +127,10 @@ createTable=()=>{
     var reqId=this.state.requirements[i].requirementId;
     var quotation=null;
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
+    // filter will always return a list
+    if(invoice[0] === null || invoice[0] === undefined || invoice[0].invoiceStatus === null){
+      continue;
+    }
     var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
     console.log(invoice[0],fund[0])
     for(let j=0;j<this.state.quoList[reqId].length;j++){

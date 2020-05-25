@@ -34,9 +34,9 @@ public class PostImage extends AuditableEntity{
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "requirement_id", nullable = false)
+    @JoinColumn(name = "invoice_id", nullable = false)
     @JsonIgnore
-    private Requirement requirement;
+    private Invoice invoice;
 
     @Column(name = "comments")
     String comments;

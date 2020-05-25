@@ -36,7 +36,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
-		Requirement requirement= invoice.getRequirement();
+		Requirement requirement= requirementRepository.findById(invoice.getRequirement().getRequirementId()).get();
 		if (files != null && files.size() > 0) {
 			files.forEach((k,v) -> {
 				Set<InvoiceImage> siSet = new HashSet<InvoiceImage>();
@@ -49,17 +49,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 		}
 		if (postImage != null && postImage.size() > 0) {
 			postImage.forEach((k,v) -> {
-				Set<PreImage> siSet = new HashSet<PreImage>();
+				Set<PostImage> siSet = new HashSet<>();
 				String filePath = fileSubPath+ invoice.getId()+"_";
-				PreImage si = new PreImage(filePath+k,v,invoice.getProofOfId().getComments());
-				si.setRequirement(requirement);
+				PostImage si = new PostImage(filePath+k,v,invoice.getProofOfId().getComments());
+				si.setInvoice(invoice);
 				siSet.add(si);
-				requirement.setPreImages(siSet);
+				invoice.setPostImages(siSet);
 			});
 		}
 
-		repository.save(invoice);
+		// Invoice Status will be "INVOICE_IN_PROGRESS" in requirement table
+		requirement.setInvoiceStatus("INVOICE_IN_PROGRESS");
 		requirementRepository.save(requirement);
+
+		// Save invoice
+		repository.save(invoice);
 		if (files != null && files.size() > 0) {
 			this.saveImgToFS(imgPath,fileSubPath,invoice.getInvoiceImages());
 		}
