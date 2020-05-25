@@ -27,7 +27,6 @@ import ApproverLayout from '../adminWebsite/components/layouts/ApproverLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
-import AddQuotation from '../adminWebsite/quotation';
 import Payment from '../adminWebsite/payment';
 import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
 import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
@@ -152,7 +151,6 @@ class App extends Component {
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
-            <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props}/>}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props}/>}/>

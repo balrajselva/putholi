@@ -7,7 +7,7 @@ class AddInvoice extends Component {
 
     state={
         quotations:"",
-        getRequirementList:true,
+        getQuotationList:true,
         spinner:true,
         companyName:null,
         address_line_1:null,
@@ -134,7 +134,7 @@ class AddInvoice extends Component {
         }   
     }
 
-    requirementList=()=>{
+    quotationList=()=>{
         axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/selectedQuotations")
         .then(res=>{
             let resp=res.data;
@@ -144,7 +144,7 @@ class AddInvoice extends Component {
             };
             this.setState({
                 quotations:resp,
-                getRequirementList:false,
+                getQuotationList:false,
                 spinner:false
             })
         })
@@ -179,10 +179,15 @@ class AddInvoice extends Component {
             quotations:i,
         })
      }
+     deletePostImage=(e)=>{
+     }
     createTable=()=>{
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.quotations.length;i++){
+            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS"){
+                continue;
+            }	
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{i+1}</td>
@@ -197,9 +202,9 @@ class AddInvoice extends Component {
                 </td>                    
                 <td>{this.state.quotations[i].invoiceList.length>0?this.state.quotations[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
                 </td>
-                <td>{this.state.quotations[i].postImage !==undefined && this.state.quotations[i].postImage.length>0?this.state.quotations[i].invoiceList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deleteInvoice(e)}>Delete</button></div>):null}
+                <td>{this.state.quotations[i].invoiceList.length>0?this.state.quotations[i].invoiceList.map((req,j)=><div>{req.postImage.name}<button class="btn btn-default" id={req.invoiceId+"/"+i+"/"+j} onClick={(e)=>this.deletePostImage(e)}>Delete</button></div>):null}
                 </td>
-            </tr>)			
+            </tr>)
         }
         if(rowsUpdated==false)
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
@@ -476,6 +481,8 @@ class AddInvoice extends Component {
                 a.push(ql);
                 let i=[...this.state.quotations];
                 i[this.state.invoiceRefNum].invoiceList=a;
+                i[this.state.invoiceRefNum].requirement.invoiceStatus="INVOICE_IN_PROGRESS"
+                console.log(i);
                 this.setState({
                     quotations:i,
                 })
@@ -486,10 +493,11 @@ class AddInvoice extends Component {
     
     render() {	
         console.log(this.state.quotations);
+        console.log(this.props);
         return (
             <div>
             <div style={{fontSize:"large"}}>
-            {this.state.getRequirementList?this.requirementList():null}
+            {this.state.getQuotationList?this.quotationList():null}
                 <div className="content-wrapper">
                     <section className="content-header">
                         <h1>
@@ -529,12 +537,12 @@ class AddInvoice extends Component {
                                         <th>File Details</th>
                                         <th>Post Image Details</th>
                                         </tr>
-                                        {this.state.getRequirementList?null:this.createTable()}
+                                        {this.state.getQuotationList?null:this.createTable()}
                                     </tbody>
                                 </table>
                             </div>
                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
-                            
+                            {this.state.spinner?<div class="spinner"></div>:null}
                             <div className="modal fade" id="modal-default">
                                 <div className="modal-dialog">
                                 <div className="modal-content">
@@ -550,8 +558,8 @@ class AddInvoice extends Component {
                                         <div className="col-md-6">
                                             <div className="box box-primary">
                                                 <form role="form">
-                                                <div className="form-group">
-                                                    <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Upload Invoice Image</label>
+                                                    <div className="form-group">
+                                                    <label for="fileInput" className="form-control" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>Upload Invoice Image</label>
                                                     <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                                     <input type="text" className="form-control" id="companyName" placeholder="Enter Company name" onChange={this.handleChange}/>
                                                     </div>
@@ -593,7 +601,7 @@ class AddInvoice extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
-                                                    <label for="postImage" astyle={{cursor:"pointer",border:"2px solid black"}}>Upload Post Image</label>
+                                                    <label for="postImage" className="form-control" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>Upload Post Image</label>
                                                     <input class="hidden" type="file" id="postImage" onChange={this.handleChange}/>
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>

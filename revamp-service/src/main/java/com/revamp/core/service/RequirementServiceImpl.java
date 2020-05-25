@@ -75,6 +75,11 @@ public class RequirementServiceImpl implements RequirementService {
 		return requirementRepository.findById(id).orElse(null);
 	}
 
+	@Override
+	public Requirement findById(long id) {
+		return requirementRepository.findById(id).get();
+	}
+
 	private static Requirement getReq(List<Requirement> requirements,int finalI1) {
 		for(Requirement requirement1: requirements){
 			if(Integer.valueOf(requirement1.getPriority()).equals(finalI1))

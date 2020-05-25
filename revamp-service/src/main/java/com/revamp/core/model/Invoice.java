@@ -21,7 +21,7 @@ public class Invoice extends AuditableEntity {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "invoice_id")
+	@Column(name = "ork")
 	private long id;
 
 	private Long admin;
@@ -105,8 +105,8 @@ public class Invoice extends AuditableEntity {
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
 	private Set<InvoiceImage> invoiceImages;
 
-//	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
-//	private Set<PostImage> postImages;
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
+	private Set<PostImage> postImages;
 
 	@JsonProperty("proofOfId")
 	@Transient

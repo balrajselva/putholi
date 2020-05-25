@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.*;
+import com.revamp.core.service.RequirementService;
 import com.revamp.core.web.util.WebUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class QuotationController {
 
 	@Autowired
 	QuotationService quotationService;
+
+	@Autowired
+	RequirementService requirementService;
 
 	@Value("${image.path}")
 	private String imgPath;
@@ -129,10 +133,12 @@ public class QuotationController {
 
 	@GetMapping("/{school_id}/selectedQuotations")
 	public List<Quotation> findBySchoolIdAndSelectedQuotation(@PathVariable("school_id") long schoolId){
-		List<Quotation> quotations = quotationService.findBySchoolIdAndStatus(schoolId);
+		List<Quotation> quotationList = quotationService.findBySchoolIdAndStatus(schoolId);
 		System.out.println(schoolId);
-		System.out.println(quotations);
-		return quotations;
+		for (Quotation quotation:quotationList) {
+			quotation.setRequirement(requirementService.findById(quotation.getRequirementId()));
+		}
+		return quotationList;
 	}
 
 }
