@@ -13,4 +13,6 @@ public interface RequirementService {
 	void updateRequirements(Donation donation);
 
     Requirement updateStatus(long id, String status);
+
+    public Requirement findById(long id);
 }
