@@ -193,7 +193,7 @@ class viewRequirements extends Component {
                 </td>                    
                 <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.quotationId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
                 </td>
-                <td>{this.state.requirements[i].preImages.length>0?this.state.requirements[i].preImages.map((req,j)=><div>{req.fileInput.name}</div>):null}
+                <td>{this.state.requirements[i].preImages !==null && this.state.requirements[i].preImages.length>0?this.state.requirements[i].preImages.map((req,j)=><div>{req.fileInput.name}</div>):null}
                 </td>
             </tr>)			
         }
@@ -435,6 +435,7 @@ class viewRequirements extends Component {
                 i[this.state.quotationRefNum].preImages= preImgTemp;
                 this.setState({
                     requirements:i,
+                    preImagesInput:null
                 })
             }
         }

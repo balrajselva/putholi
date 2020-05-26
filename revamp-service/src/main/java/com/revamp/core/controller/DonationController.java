@@ -54,8 +54,7 @@ public class DonationController {
 	}
 
 	/**
-	 * 
-	 * @param donation Id
+	 *
 	 * @return donation
 	 */
 	@GetMapping("/donate/{id}")
@@ -133,6 +132,7 @@ public class DonationController {
 	@GetMapping("/donate/paymentDonation/{order_id}/{status}")
 	public ResponseEntity<Donation> getPaymentUser(@PathVariable("order_id") String orderId,@PathVariable("status") String status) {
 		if(status.equals("SUCCESS")) {
+			System.out.println("success");
 			Donation donation = donationService.getByOrderId(orderId);
 			long id = projectService.saveOrUpdate(donation.getProject().getProjectId(),donation.getEstimate(),donation.getStatus(),donation.getCollectedAmount());
 			donation.setPaymentStatus(status);
@@ -140,6 +140,7 @@ public class DonationController {
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
 		}
 		else{
+			System.out.println("not success");
 			Donation donation = donationService.getByOrderId(orderId);
 			donation.setPaymentStatus(status);
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
