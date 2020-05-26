@@ -447,6 +447,7 @@ class AddInvoice extends Component {
                     invoiceId:res.data
                 })
                 updateList(res);
+                window.alert("SuccesfuLly uploaded invoice!!!");
             })
             .catch(error=>{
                 window.alert("Failed to save invoice due to "+error);
@@ -659,9 +660,6 @@ class AddInvoice extends Component {
                   </div>
                 </div>
           </div>
-          <div class="timeline-footer">
-                                <a class="btn btn-warning btn-flat btn" onClick={()=>this.submitInvoice()}>Submit Invoice</a>
-                            </div>
               </section>
               
                   </div>

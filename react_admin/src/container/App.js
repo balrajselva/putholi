@@ -60,12 +60,14 @@ class App extends Component {
     .then(res=>{
         console.log(res);
         this.setState({spinner:false});
-        // history.push("/confirmation");
         if(res.data.role!=="Volunteer"){
           history.push({
             pathname: '/payment',
             currentUser: res.data,
           });
+        }
+        else{
+          history.push("/confirmation");
         }
     })
     .catch(error=>{
