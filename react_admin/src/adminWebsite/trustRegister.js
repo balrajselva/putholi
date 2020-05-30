@@ -47,7 +47,7 @@ class trustRegister extends Component {
                 </div>
               </div>
             {/* <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Co-ordinator","Fund Raiser","Reviewer","Trust Member"]}/> */}
-            <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Reviewer","Volunteer","Trust Member"]}/>
+            <RegisterForm saveUser={(user)=>this.saveUser(user)} roles={["Admin","Approver","Reviewer","TrustVolunteer","Trust Member"]}/>
           </div>
         </div>
       </body>

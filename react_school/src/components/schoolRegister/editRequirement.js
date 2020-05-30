@@ -65,6 +65,7 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
 																	<button type="submit" id="submit_button1" disabled>Delete</button>
 																</div>
 																	 </td>
+
                                                                       <td>New</td>
                                                                       <td>Sports</td>
                                                                       <td>Football</td>
@@ -101,6 +102,7 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
 																	<button type="submit" id="submit_button4" disabled>Edit</button>
 																	<button type="submit" id="submit_button5" disabled>Delete</button>
 																</div>
+
                                                                      </td>
                                                                       <td>New</td>
                                                                       <td>Infrastructure</td>

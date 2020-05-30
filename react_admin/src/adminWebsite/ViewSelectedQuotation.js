@@ -107,7 +107,7 @@ class ViewSelectedQuotation extends Component {
             rowsUpdated=true;
             rows.push(
                 <tr>   
-                    <td><input type="button"  id={iter+"/"+quotation.quotationId} value="Show quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
+                    <td><input type="button" class="btn btn-success" id={iter+"/"+quotation.quotationId} value="Selected quotation" onClick={(e)=>this.selectQuotationImage(e)}/></td>
                     <td>{quotation.companyName}</td>
                     <td>{quotation.city}</td>
                     <td>{quotation.contact}</td>
@@ -139,8 +139,13 @@ class ViewSelectedQuotation extends Component {
                 <div>
                 <section className="content-header">
                     <h4>
-                    {this.props.location.school.projects[0].requirements[i].assetName}
+                    Requirement:{this.props.location.school.projects[0].requirements[i].assetName}
                     </h4>
+                   
+                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1">View Other Quotations</button>  
+                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default2">View Preimages</button>  
+                    
+                    
                     </section>
                     <section className="content">
                         <div className="row">
@@ -197,7 +202,8 @@ class ViewSelectedQuotation extends Component {
             <div style={{fontSize:"large"}}>
                 <div className="content-wrapper">
                     <h4>
-                        {this.props.location.school.schoolInfo.schoolName}
+                        School Name : {this.props.location.school.schoolInfo.schoolName}
+                        
                     </h4>
                 {this.state.getRequirementList?null:this.getContent()}
                 <section className="content">
@@ -271,6 +277,44 @@ class ViewSelectedQuotation extends Component {
                       </div>    
                     </div>
                 </div>    
+                <div className="modal" id="modal-default1">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            window.alert("Display Other Quotations here")
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.state.preimage} id ="image1" alt="" ></img>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                </div>    
+
+                <div className="modal" id="modal-default2">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            window.alert("Display Preimages here")
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <img src={'data:image/png;base64,'+this.state.preimage} id ="image1" alt="" ></img>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                </div>    
+                
                 </div>
             </div>
         </div>

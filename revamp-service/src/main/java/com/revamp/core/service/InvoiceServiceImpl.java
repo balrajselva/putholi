@@ -9,31 +9,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.revamp.core.dao.FundAllotmentRepository;
-import com.revamp.core.model.FundAllotment;
-import com.revamp.core.model.InvoiceImage;
+import com.revamp.core.dao.RequirementRepository;
+import com.revamp.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revamp.core.dao.InvoiceRepository;
-import com.revamp.core.model.Invoice;
 import com.revamp.exception.InvoiceFileNotFoundException;
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class InvoiceServiceImpl implements InvoiceService {
 
 	@Autowired
 	public InvoiceRepository repository;
 
 	@Autowired
+	public RequirementRepository requirementRepository;
+
+	@Autowired
 	public FundAllotmentRepository fundMasterRepository;
 
 	@Override
 	@Transactional
-	public long save(Invoice invoice, Map<String, byte[]> files, String imgPath) {
+	public long save(Invoice invoice, Map<String, byte[]> files, Map<String,byte[]> postImage,String imgPath) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
+		Requirement requirement= requirementRepository.findById(invoice.getRequirement().getRequirementId()).get();
 		if (files != null && files.size() > 0) {
 			files.forEach((k,v) -> {
 				Set<InvoiceImage> siSet = new HashSet<InvoiceImage>();
@@ -44,7 +47,22 @@ public class InvoiceServiceImpl implements InvoiceService {
 				invoice.setInvoiceImages(siSet);
 			});
 		}
+		if (postImage != null && postImage.size() > 0) {
+			postImage.forEach((k,v) -> {
+				Set<PostImage> siSet = new HashSet<>();
+				String filePath = fileSubPath+ invoice.getId()+"_";
+				PostImage si = new PostImage(filePath+k,v,invoice.getProofOfId().getComments());
+				si.setInvoice(invoice);
+				siSet.add(si);
+				invoice.setPostImages(siSet);
+			});
+		}
 
+		// Invoice Status will be "INVOICE_IN_PROGRESS" in requirement table
+		requirement.setInvoiceStatus("INVOICE_IN_PROGRESS");
+		requirementRepository.save(requirement);
+
+		// Save invoice
 		repository.save(invoice);
 		if (files != null && files.size() > 0) {
 			this.saveImgToFS(imgPath,fileSubPath,invoice.getInvoiceImages());
@@ -96,7 +114,22 @@ public class InvoiceServiceImpl implements InvoiceService {
 		repository.updateAdmin(invoiceId,userId);
 	}
 
-	private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
+    @Override
+    public void updateAdminComments(long invoiceId, String adminComments) {
+        repository.updateAdminComments(invoiceId,adminComments);
+    }
+
+    @Override
+    public void updateApproverComments(long invoiceId, String approverComments) {
+        repository.updateApproverComments(invoiceId,approverComments);
+    }
+
+    @Override
+    public void updateReviewerComments(long invoiceId, String reviewerComments) {
+        repository.updateReviewerComments(invoiceId,reviewerComments);
+    }
+
+    private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
 		list.forEach(schoolImg -> {
 			String tmpDirPath = dirPath+"\\"+fileSubPath;
 			if(!Files.isDirectory(Paths.get(tmpDirPath))) {

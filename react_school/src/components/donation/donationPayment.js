@@ -147,10 +147,20 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
                           </tr>
                           <tr>
                             <td>
-                              <lable>Donoted Amount
+                              <lable>Donor Type
                             </lable></td>
                             <td>
-                              {this.props.history.location.user.contribution}
+                              {this.props.history.location.user.donationuserid}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <lable>Donoted Amount details
+                            </lable></td>
+                            <td>
+                              Total Donated Amount : {this.props.history.location.user.contribution}
+                             Amount to School :
+                              Bank Processing Fee :
                             </td>
                           </tr>
                           <tr>
@@ -169,6 +179,7 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
                   </div>
                   {this.state.spinner?<div class="spinner"></div>:null}
                   <h3><button onClick={this.submitClick}>Link to Payment Gateway</button></h3>
+                  <a className="btn dark_btn" href="/donation">Back to Search Results</a>
                 </div>
               </div>
             </section>

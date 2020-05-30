@@ -27,7 +27,7 @@ public class DonationRepositoryImpl implements TrackDonationCustomRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	@Override
 	public List<TrackDonationDTO> findByTrackingId(String trackingId) {
 		Map<String, String> queryParams = new HashMap<>();

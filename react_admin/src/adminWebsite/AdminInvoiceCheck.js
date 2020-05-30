@@ -8,20 +8,23 @@ class adminInvoiceCheck extends Component {
         spinner:false,
         status:null,
         comment:null,
+        approverComments:null,
+        adminComments:null,
+        reviewerComments:null,
         errorMessage:null
     }
 
     handleChange=({target})=>{
         this.setState({ 
-            comment: target.value , 
+            [target.id]: target.value , 
             lastErrorField:null,
             errorMessage:""
         });
     }
 
     updateStatus=({target})=>{
-        if(this.state.comment === null){
-            this.setState({
+      if((this.props.location.currentUser.role==="Admin" && this.state.adminComments === null) || (this.props.location.currentUser.role==="Reviewer" && this.state.reviewerComments === null) || (this.props.location.currentUser.role==="Approver" && this.state.approverComments === null)){
+        this.setState({
                 errorMessage:"Please provide proper comment"
             })
             return
@@ -30,33 +33,44 @@ class adminInvoiceCheck extends Component {
           spinner:true, 
           status:target.id
         });
-        let adminComments=null;
         let invoiceStatus=null;
+        let adminComments=null;
+        let approverComments=null;
+        let reviewerComments=null;
         if(target.id==="Accept"){
           if(this.props.location.currentUser.role==="Admin"){
             invoiceStatus="AdminReviewedInvoice";
-            adminComments=this.state.comment;
+            adminComments=this.state.adminComments;
           }
           else if(this.props.location.currentUser.role==="Reviewer"){
             invoiceStatus="ReviewerConfirmedInvoice";
+            reviewerComments=this.state.reviewerComments;
           }
-          else if(this.props.location.currentUser.role==="Approver")
+          else if(this.props.location.currentUser.role==="Approver"){
             invoiceStatus="ApprovedInvoice";
+            approverComments=this.state.approverComments;
+          }
         }
         else if(target.id==="Reject"){
           if(this.props.location.currentUser.role==="Admin"){
             invoiceStatus="AdminRejectedInvoice";
-            adminComments=this.state.comment;
+            adminComments=this.state.adminComments;
           }
-          else if(this.props.location.currentUser.role==="Reviewer")
+          else if(this.props.location.currentUser.role==="Reviewer"){
             invoiceStatus="ReviewerRejectedInvoice";
-          else if(this.props.location.currentUser.role==="Approver")
+            reviewerComments=this.state.reviewerComments;
+          }
+          else if(this.props.location.currentUser.role==="Approver"){
             invoiceStatus="ApproverRejectedInvoice";
+            approverComments=this.state.approverComments;
+          }
         }
         let fundDisbursement={
             invoiceId:this.props.location.invoice.id,
             invoiceAmount:this.props.location.invoice.invoiceAmount,
             adminComments:adminComments,
+            reviewerComments:reviewerComments,
+            approverComments:approverComments,
             initiatedBy:this.props.location.currentUser.userid,
             bankName:this.props.location.invoice.bankName,
             ifscCode:this.props.location.invoice.ifsc,
@@ -118,10 +132,15 @@ class adminInvoiceCheck extends Component {
         else if(this.props.location.currentUser.role==="Reviewer"){
             document.getElementById("adminComments").setAttribute('disabled',true)
             document.getElementById("approverComments").setAttribute('disabled',true)
+            this.setState({adminComments:this.props.location.invoice.adminComments})
         }
         else if(this.props.location.currentUser.role==="Approver"){
             document.getElementById("reviewerComments").setAttribute('disabled',true)
             document.getElementById("adminComments").setAttribute('disabled',true)
+            this.setState({
+              reviewerComments:this.props.location.invoice.reviewerComments,
+              adminComments:this.props.location.invoice.adminComments
+            })
         }
    }
     
@@ -200,9 +219,9 @@ class adminInvoiceCheck extends Component {
                                                     <th>Approver Comments </th>
                                                 </tr>
                                                 <tr>
-                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.comments} onChange={this.handleChange} rows="3"></textarea></td>
-                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.comments} onChange={this.handleChange} rows="3"></textarea></td>
-                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.comments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.reviewerComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} onChange={this.handleChange} rows="3"></textarea></td>
                                                 </tr>
                                             </tbody></table>
                                             {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}

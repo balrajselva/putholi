@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.*;
+import com.revamp.core.service.RequirementService;
 import com.revamp.core.web.util.WebUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class QuotationController {
 
 	@Autowired
 	QuotationService quotationService;
+
+	@Autowired
+	RequirementService requirementService;
 
 	@Value("${image.path}")
 	private String imgPath;
@@ -52,9 +56,14 @@ public class QuotationController {
 			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				id = quotationService.save(quotation, filesInBytes,imgPath);
+				Map<String, byte[]> preImageInBytes = null;
+				if(regFormModel.getPreImage() != null) {
+					 preImageInBytes = WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPreImage()));
+				}
+				id = quotationService.save(quotation, filesInBytes, preImageInBytes, imgPath);
 			} else {
-				id = quotationService.save(quotation, null, imgPath);
+				id = quotationService.save(quotation, null, null, imgPath);
 			}
 			return new ResponseEntity<>(id, HttpStatus.OK);
 		} catch (IOException ex) {
@@ -71,18 +80,18 @@ public class QuotationController {
 
 	@PostMapping("/updateSelectedQuotation/{id}/{status}")
 	public ResponseEntity<Boolean> updateSelectedQuotation(@PathVariable("id") long schoolId,@PathVariable("status") String status) {
-		PuthuyirLookUp status1=null;
+		String status1=null;
 		if(status.equals("ReviewerConfirmed")){
-			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION;
+			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION.name();
 		}
 		else if(status.equals("ApproverConfirmed")){
-			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION;
+			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name();
 		}
 		else if(status.equals("ReviewerRejected")){
-			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION;
+			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION.name();
 		}
 		else if(status.equals("ApproverRejected")){
-			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION;
+			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION.name();
 		}
 		Boolean isUpdated=quotationService.updateSelectedQuotation(schoolId,status1);
 		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
@@ -124,10 +133,12 @@ public class QuotationController {
 
 	@GetMapping("/{school_id}/selectedQuotations")
 	public List<Quotation> findBySchoolIdAndSelectedQuotation(@PathVariable("school_id") long schoolId){
-		List<Quotation> quotations = quotationService.findBySchoolIdAndStatus(schoolId);
+		List<Quotation> quotationList = quotationService.findBySchoolIdAndStatus(schoolId);
 		System.out.println(schoolId);
-		System.out.println(quotations);
-		return quotations;
+		for (Quotation quotation:quotationList) {
+			quotation.setRequirement(requirementService.findById(quotation.getRequirementId()));
+		}
+		return quotationList;
 	}
 
 }

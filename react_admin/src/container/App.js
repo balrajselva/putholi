@@ -23,7 +23,7 @@ import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
 import TrustMemberScreen from '../adminWebsite/TrustMemberScreen';
 import AdminUploadDEOresponse from '../adminWebsite/adminUploadDEOresponse';
-import DEOEmailTrigger from '../adminWebsite/emailDEOTrigger';
+import DEOEmailTrigger from '../adminWebsite/EmailDEOTrigger';
 import AssignToVolunteer from '../adminWebsite/AssignToVolunteer';
 import VolunteerLayout from '../adminWebsite/components/layouts/VolunteerLayout';
 import ReviewerLayout from '../adminWebsite/components/layouts/ReviewerLayout';
@@ -31,7 +31,6 @@ import ApproverLayout from '../adminWebsite/components/layouts/ApproverLayout';
 import VolunteerSchoolCheck from '../adminWebsite/VolunteerSchoolCheck';
 import VolunteerSchoolReview from '../adminWebsite/VolunteerSchoolReview';
 import RequirementHome from '../adminWebsite/requirement';
-import AddQuotation from '../adminWebsite/quotation';
 import Payment from '../adminWebsite/payment';
 import ReviewQuotation from '../adminWebsite/components/quotation/reviewQuotation';
 import ReviewerPendingWorkflow from '../adminWebsite/reviewerPendingWorkflow';
@@ -44,6 +43,7 @@ import ReassignVolunteer from '../adminWebsite/ReassignVolunteer';
 import AdminInvoiceReview from '../adminWebsite/AdminInvoiceReview';
 import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
 import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
+import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
 
 class App extends Component {
   state = {
@@ -64,12 +64,14 @@ class App extends Component {
     .then(res=>{
         console.log(res);
         this.setState({spinner:false});
-        // history.push("/confirmation");
         if(res.data.role!=="Volunteer"){
           history.push({
             pathname: '/payment',
             currentUser: res.data,
           });
+        }
+        else{
+          history.push("/confirmation");
         }
     })
     .catch(error=>{
@@ -151,6 +153,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/workOrder" component={(props)=><AdminInitiateWorkOrder {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props}/>}/>
             <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
+            <AdminLayoutRoute exact path="/adminDEOtrigger" component={(props)=><EmailDEOTrigger {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <ApproverLayoutRoute exact path="/approverInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props}/>}/>
@@ -158,7 +161,6 @@ class App extends Component {
             <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props}/>}/>}/>
-            <VolunteerLayoutRoute path="/addQuotation" history={history} component={(props)=><AddQuotation {...props}/>}/>}/>
             <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props}/>}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props}/>}/>

@@ -82,13 +82,21 @@ class RegistrationPage extends Component {
             console.log(res);
             if(res.data.status === "ApprovedUser" && res.data.role==="beneficiary"){
                 this.props.history.push({
-                    pathname: '/schoolRegistration',
+                    // pathname: '/schoolRegistration',
+                   pathname: '/beneficarySummary',
                     user: res.data
                 });
             }
-            else if(res.data.status !== "ApprovedUser" && res.data.role==="beneficiary"){
+            
+            else if((res.data.status !== "ApprovedUser" && res.data.role==="beneficiary") && (res.data.status !== "AdminRejected" && res.data.role==="beneficiary")){
+             //   else if(res.data.role==="beneficary" && (res.data.status !=="ApprovedUser" || res.data.status !=="AdminRejected")) {
                 this.props.history.push({
                     pathname: '/confirm'
+                });
+            }
+            else if(res.data.status === "AdminRejected" && res.data.role==="beneficiary"){
+                this.props.history.push({
+                    pathname: '/rejectScreen'
                 });
             }
             else{

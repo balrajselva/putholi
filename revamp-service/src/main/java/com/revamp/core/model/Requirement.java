@@ -58,15 +58,20 @@ public class Requirement extends AuditableEntity {
 	private Integer collectedAmount = 0;
 	
 	@Column(name = "status")
-	@Enumerated(EnumType.STRING)
-	private PuthuyirLookUp status;
-	
+	private String status;
+
+	@Column(name = "invoice_status")
+	private String invoiceStatus;
+
 	@Column(name = "priority")
 	private String priority;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "requirement" ,cascade = CascadeType.ALL)
+	private Set<PreImage> preImages;
 
 	public Requirement() {
 	}

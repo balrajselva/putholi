@@ -30,10 +30,10 @@ class adminUploadDEOresponse extends Component {
             reader.readAsDataURL(file)
         }
         else if(target.id==="approved"){
-            this.setState({status:"DEO Approved"});
+            this.setState({status:"DEO_APPROVED"});
         }
         else if(target.id==="rejected"){
-            this.setState({status:"DEO Rejected"});
+            this.setState({status:"DEO_REJECTED"});
         }
         else{
             document.getElementById(target.id).style.borderColor="#d2d6de";

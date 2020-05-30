@@ -28,9 +28,10 @@ class adminSchoolCheck extends Component {
           else if(this.props.location.currentUser.role==="Approver")
             this.state.status="ApprovedSchool";
         }
+        
         else if(target.id==="Rejected"){
           if(this.props.location.currentUser.role==="Admin")
-            this.state.status="AdminRejected";
+            this.state.status="ReturnedToBeneficiary";
           else if(this.props.location.currentUser.role==="Reviewer")
             this.state.status="ReviewerRejected";
           else if(this.props.location.currentUser.role==="Approver")
@@ -73,13 +74,13 @@ class adminSchoolCheck extends Component {
     render() {
       let returnLink=null;
       if(this.props.location.currentUser.role==="Admin"){
-        returnLink = "accessReview"
+        returnLink = "adminNewSchoolReview"
       }
       else if(this.props.location.currentUser.role==="Approver"){
-        returnLink = "approverAccessReview"
+        returnLink = "approver"
       }
       else if(this.props.location.currentUser.role==="Reviewer"){
-        returnLink = "reviewerAccessReview"
+        returnLink = "reviewer"
       }
         return (
             <div className="content-wrapper">
@@ -111,6 +112,14 @@ class adminSchoolCheck extends Component {
                                 <ul>
                                     {this.createReqList()}
                                 </ul>
+                                <div className="box-body"><h4>Student/Teacher Details Below: </h4>
+                                Number of Students: {this.props.location.school.schoolInfo.numberOfStudents}
+                                <br></br>
+                                Number of Teachers: {this.props.location.school.schoolInfo.numberOfTeachers}
+                                <br></br>
+                                Student / Teacher Ratio : {Math.round(this.props.location.school.schoolInfo.numberOfStudents/this.props.location.school.schoolInfo.numberOfTeachers)}
+                                  &nbsp;(Guideline value to be greater  than 10)
+                                </div>
                                 <h4>Address of the School</h4>
                                 <ul>
                                     <li>
@@ -153,7 +162,7 @@ class adminSchoolCheck extends Component {
                                         </div>
                             <div className="timeline-footer">
                                 <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
-                                <a id="Returned" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Return to Beneficiary</a>&nbsp;
+                                <a id="Rejected" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>RejectSchool</a>&nbsp;
                                 <a id="Accepted" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm Requirements</a>&nbsp;
                                 <Link to={{pathname:returnLink, currentUser:this.props.location.currentUser}} className="btn btn-primary btn-xs">Back to List</Link>
                             </div>

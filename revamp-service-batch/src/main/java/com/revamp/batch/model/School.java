@@ -20,8 +20,7 @@ import lombok.Setter;
 @Data
 @Entity
 @Table(name="school")
-@Getter
-@Setter
+
 public class School implements Serializable  {
 	
 	
@@ -35,11 +34,8 @@ public class School implements Serializable  {
 	@Column(name = "school_id", nullable = false)
 	private long schoolId;
 	
-	@Column(name = "status")
+	@Column(name = "school_status")
 	private String status;
-	
-	@Column(name="Requirement_Fund")
-	private String Requirement_Fund;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "school_id")

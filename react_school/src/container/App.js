@@ -18,9 +18,14 @@ import DonationConfirmationPage from '../components/donation/paymentConfirmation
 import AddSchool from '../components/schoolRegister/addSchool';
 import TrackDonation from '../components/donation/trackDonation';
 import ConfirmationPage from '../Page/ConfirmationPage';
+import RejectionPage from '../Page/RejectionPage';
 import ConfirmatinScreen from '../Page/confirmationScreen';
 import SchoolLayout from '../components/layouts/schoolLayout';
 import TransactionResponse from '../components/donation/transactionResponse';
+import BeneficiarySummary from '../components/schoolRegister/BeneficiarySummary';
+import EditRequirement from '../components/schoolRegister/editRequirement';
+import AddRequirement from '../components/schoolRegister/addRequirement';
+
 
 class App extends Component {
   render(){
@@ -45,14 +50,18 @@ class App extends Component {
           <SchoolLayoutRoute path="/blog" component={()=><BlogPage  />}/>
           <SchoolLayoutRoute path="/gallery" component={()=><GalleryPage  />}/>
           <SchoolLayoutRoute path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
+          <SchoolLayoutRoute path="/beneficarySummary" history={history} component={(props)=><BeneficiarySummary {...props}/>}/>
           <SchoolLayoutRoute path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
           <SchoolLayoutRoute path="/confirm" component={()=><ConfirmationPage/>}/>
+          <SchoolLayoutRoute path="/rejectScreen" component={()=><RejectionPage/>}/>
           <SchoolLayoutRoute path="/donation" component={()=><Donation/>}/>
           <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails/>}/>
           <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm/>}/> 
           <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment paymentFlow={(paymentPayload,donationUserPayload,projectUpdatePayload,user)=>this.paymentFlow(paymentPayload,donationUserPayload,projectUpdatePayload,user)}/>}/>         
           <SchoolLayoutRoute path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage/>}/>  
           <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation/>}/>             
+          <SchoolLayoutRoute path="/editRequirements" component={()=><EditRequirement/>}/>             
+          <SchoolLayoutRoute path="/addRequirements" component={()=><AddRequirement/>}/>             
         </Switch>
       </Router>
     </div>

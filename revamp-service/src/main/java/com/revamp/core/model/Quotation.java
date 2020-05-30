@@ -6,10 +6,12 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 /**
  * The persistent class for the quotation database table.
@@ -99,4 +101,9 @@ public class Quotation extends AuditableEntity implements Serializable {
 	@JsonProperty("proofOfId")
 	@Transient
 	private ProofOfId proofOfId;
+
+	@JsonProperty("requirement")
+	@Transient
+	@Nullable
+	Requirement requirement;
 }

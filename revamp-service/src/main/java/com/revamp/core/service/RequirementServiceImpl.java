@@ -1,6 +1,7 @@
 package com.revamp.core.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.revamp.core.model.Donation;
@@ -65,6 +66,18 @@ public class RequirementServiceImpl implements RequirementService {
 			if(remainingAmount <= 0)
 				break;
 		}
+	}
+
+	@Override
+	@Transactional
+	public Requirement updateStatus(long id, String status) {
+		requirementRepository.updateStatus(id, status);
+		return requirementRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public Requirement findById(long id) {
+		return requirementRepository.findById(id).get();
 	}
 
 	private static Requirement getReq(List<Requirement> requirements,int finalI1) {

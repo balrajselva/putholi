@@ -28,9 +28,9 @@ public interface QuotationService {
 
     Boolean updateQuotation(UpdateQuotation updateQuotation);
 
-	Boolean updateSelectedQuotation(long schoolId, PuthuyirLookUp updateQuotation);
+	Boolean updateSelectedQuotation(long schoolId, String updateQuotation);
 
 	List<Quotation> findBySchoolIdAndStatus(long schoolId);
 
-    long save(Quotation quotation, Map<String,byte[]> filesInBytes, String imgPath);
+    long save(Quotation quotation, Map<String,byte[]> filesInBytes, Map<String,byte[]> preImageInBytes, String imgPath);
 }

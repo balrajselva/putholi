@@ -91,21 +91,21 @@ public class QuotationServiceImpl implements QuotationService {
 			schoolRepository.updateSchoolStatus(updateQuotation.getQuotations().get(0).getSchoolId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());
 			School school=schoolRepository.findBySchoolId(updateQuotation.getQuotations().get(0).getSchoolId());
 			projectRepository.updateProjectStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION,Integer.valueOf(updateQuotation.getTotalAmount()),updateQuotation.getComment());
-			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION);
+			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());
 		}
 		return isUpdated;
 	}
 
 	@Override
-	public Boolean updateSelectedQuotation(long schoolId,PuthuyirLookUp status) {
+	public Boolean updateSelectedQuotation(long schoolId,String status) {
 		Boolean isUpdated=true;
 		if(isUpdated==true){
-			schoolRepository.updateSchoolStatus(schoolId,status.name());
-			if(status.name().equals(PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name())){
+			schoolRepository.updateSchoolStatus(schoolId,status);
+			if(status.equals(PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name())){
 				schoolRepository.updateDonationFlag(schoolId,"Y");
 			}
 			School school=schoolRepository.findBySchoolId(schoolId);
-			projectRepository.updateStatus(school.getProjects().iterator().next().getProjectId(),status,"ABCD");
+			projectRepository.updateStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.valueOf(status),"ABCD");
 			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),status);
 		}
 		return isUpdated;
@@ -118,11 +118,12 @@ public class QuotationServiceImpl implements QuotationService {
 
 	@Override
 	@Transactional
-	public long save(Quotation quotation, Map<String, byte[]> files, String imgPath) {
+	public long save(Quotation quotation, Map<String, byte[]> files, Map<String, byte[]> preImage,String imgPath) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		quotation.setQuotationStatus(PuthuyirLookUp.QUOTATION_ADDED.name());
+		Optional<Requirement> requirement= requirementRepository.findById(quotation.getRequirementId());
 		if (files != null && files.size() > 0) {
 			files.forEach((k,v) -> {
 				Set<QuotationImage> siSet = new HashSet<QuotationImage>();
@@ -133,8 +134,19 @@ public class QuotationServiceImpl implements QuotationService {
 				quotation.setQuotationImages(siSet);
 			});
 		}
+		if (preImage != null && preImage.size() > 0) {
+			preImage.forEach((k,v) -> {
+				Set<PreImage> siSet = new HashSet<PreImage>();
+				String filePath = fileSubPath+ quotation.getQuotationId()+"_";
+				PreImage si = new PreImage(filePath+k,v,quotation.getProofOfId().getComments());
+				si.setRequirement(requirement.get());
+				siSet.add(si);
+				requirement.get().setPreImages(siSet);
+			});
+		}
 
 		quotationRepository.save(quotation);
+		requirementRepository.save(requirement.get());
 		if (files != null && files.size() > 0) {
 			this.saveImgToFS(imgPath,fileSubPath,quotation.getQuotationImages());
 		}
