@@ -18,6 +18,21 @@ class Menu extends Component {
           currentUser:this.props.currentUser,
           ...this.props
         }
+        const schoolReport={
+          pathname:"/schoolReport",
+          currentUser:this.props.currentUser,
+          ...this.props
+        }
+        const userReport={
+          pathname:"/userReport",
+          currentUser:this.props.currentUser,
+          ...this.props
+        }
+        const vendorReport={
+          pathname:"/vendorReport",
+          currentUser:this.props.currentUser,
+          ...this.props
+        }
         const reassignVolunteer={
           pathname:"/reassignVolunteer",
           currentUser:this.props.currentUser,
@@ -116,6 +131,23 @@ class Menu extends Component {
                         <li><Link to={reassignVolunteer}><i className="fa fa-circle-o" />Re-assign Volunteer</Link></li>
                        { /* <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li> */}
                       </ul>
+                      <li className="active treeview">
+                  { /*    <a href="admin_initiate_workorder.html">
+                        <i className="fa fa-folder" /> <span>Workflow Management</span>
+                        <span className="pull-right-container">
+                          <i className="fa fa-angle-left pull-right" />
+                        </span>
+                  </a> */ }
+                <li className="header">Reports</li> 
+                      <ul className="treeview-menu">
+                        
+                        <li><Link to={userReport}><i className="fa fa-circle-o" />User Report</Link></li>
+                        <li><Link to={schoolReport}><i className="fa fa-circle-o" />School Report</Link></li>
+                        <li><Link to={vendorReport}><i className="fa fa-circle-o" />Vendor Report</Link></li>
+
+                       { /* <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li> */}
+                      </ul>
+                    </li>
                     </li>
                   </ul>
                 </section>

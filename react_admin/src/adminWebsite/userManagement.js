@@ -4,7 +4,7 @@ import './css/adminMainPage.css';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 
-class adminRoleCheck extends Component {
+class userManagement extends Component {
     state={
         user:this.props.location.user,
         currentUser:this.props.location.currentUser,
@@ -19,27 +19,11 @@ class adminRoleCheck extends Component {
       });
       if(target.id==="Accepted"){
         if(this.state.currentUser.role==="Admin")
-          this.state.status="AdminReviewed";
-        else if(this.state.currentUser.role==="Reviewer")
-          this.state.status="ReviewerConfirmed";
-        else if(this.state.currentUser.role==="Approver")
-          this.state.status="ApprovedUser";
-        else if(this.state.currentUser.role==="Super User")
-          this.state.status="SuperUserReviewed";
-        else if(this.state.currentUser.role==="Super Admin")
-          this.state.status="SuperAdminApproved";
+          this.state.status="UserDetailsUpdated";
       }
       else{
         if(this.state.currentUser.role==="Admin")
-          this.state.status="AdminRejected";
-        else if(this.state.currentUser.role==="Reviewer")
-          this.state.status="ReviewerRejected";
-        else if(this.state.currentUser.role==="Approver")
-          this.state.status="ApproverRejected";
-        else if(this.state.currentUser.role==="Super User")
-          this.state.status="SuperUserRejected";
-        else if(this.state.currentUser.role==="Super Admin")
-          this.state.status="SuperAdminRejected";
+          this.state.status="DeletedUser";        
       }
       axios.put("http://localhost:6060/puthuyir/updateUser/"+this.state.user.userid+"/"+this.state.status)
       .then(res=>{
@@ -51,22 +35,11 @@ class adminRoleCheck extends Component {
          
           if(this.state.currentUser.role==="Admin"){
             this.props.history.push({ 
-              pathname:"/accessReview", 
+              pathname:"/userReport", 
               currentUser:this.state.currentUser
             });
           }
-          else if(this.state.currentUser.role==="Reviewer"){
-            this.props.history.push({ 
-              pathname:"/reviewerAccessReview", 
-              currentUser:this.state.currentUser
-            });
-          }
-          else if(this.state.currentUser.role==="Approver"){
-            this.props.history.push({ 
-              pathname:"/approverAccessReview", 
-              currentUser:this.state.currentUser
-            });
-          }
+      
         }
         else{
           this.setState({spinner:false});
@@ -78,23 +51,13 @@ class adminRoleCheck extends Component {
     render() {
         let returnLink=null;
         if(this.state.currentUser.role==="Admin"){
-          returnLink = "accessReview"
-        }
-        else if(this.state.currentUser.role==="Approver"){
-          returnLink = "approverAccessReview"
-        }
-        else if(this.state.currentUser.role==="Reviewer"){
-          returnLink = "reviewerAccessReview"
+          returnLink = "userReport"
         }
         let reviewButtonContent="";
         if(this.state.currentUser.role==="Admin"){
-          reviewButtonContent="Send for Review";
-          returnLink = "accessReview"
+          reviewButtonContent="Edit Details";
+          returnLink = "userReport"
         }
-        else if(this.state.currentUser.role==="Reviewer" || this.state.currentUser.role==="Super User")
-          reviewButtonContent="Recommend to Approve";
-        else if(this.state.currentUser.role==="Approver" || this.state.currentUser.role==="Super Admin")
-          reviewButtonContent="Approve";
         return (
             <div class="adminContainer" style={{fontSize:"large"}}>
                 {this.state.getUserList?this.userList():null}
@@ -175,7 +138,7 @@ class adminRoleCheck extends Component {
                               
                                 <button  type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">View User Picture</button>
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
-                                <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
+                                <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Delete Access</div>&nbsp;
                                 <Link to={{pathname:returnLink, users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
                               </div>
                             </div>
@@ -217,4 +180,4 @@ class adminRoleCheck extends Component {
     }
 }
 
-export default withRouter(adminRoleCheck);
+export default withRouter(userManagement);
