@@ -3,7 +3,7 @@ import axios from "axios";
 import {withRouter} from 'react-router-dom';
 
 class EmailDEOTrigger extends Component {
-
+ 
     state = {
         schoolList: [],
         toAddress: null,
@@ -24,6 +24,7 @@ class EmailDEOTrigger extends Component {
             "schoolRegNo":this.props.location.school.schoolInfo.schoolRegNo,
             "schoolType":this.props.location.school.schoolInfo.schoolType,
             "requirements" :this.props.location.school.projects[0].requirements
+            
         }
  
         dataData.append("user",JSON.stringify(userPayload));
@@ -101,6 +102,7 @@ class EmailDEOTrigger extends Component {
                                                     <td>{value.assetName}</td>
                                                     <td>{value.priority}</td>
                                                     <td>{value.quantity}</td>
+
                                                 </tr>
                                             ) : null}
                                         </tbody>

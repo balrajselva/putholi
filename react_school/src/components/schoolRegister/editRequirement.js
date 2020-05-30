@@ -39,7 +39,6 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
   
   <div class="control-group">
 
-
                   <table class="table table-bordered table-striped">
                                                                 <thead>
                                                                     <tr>
@@ -65,6 +64,7 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
 																	<button type="submit" id="submit_button1" disabled>Delete</button>
 																</div>
 																	 </td>
+
                                                                       <td>New</td>
                                                                       <td>Sports</td>
                                                                       <td>Football</td>
@@ -101,6 +101,7 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
 																	<button type="submit" id="submit_button4" disabled>Edit</button>
 																	<button type="submit" id="submit_button5" disabled>Delete</button>
 																</div>
+
                                                                      </td>
                                                                       <td>New</td>
                                                                       <td>Infrastructure</td>
@@ -112,7 +113,6 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
 
                                                                   </tbody>
                 </table>
-
                             </div>
 </div>
 
@@ -220,8 +220,6 @@ View Admin Comments: <textarea class="input-large" id="textarea" disabled ></tex
                             <button class="btn dark_btn">Cancel</button>
                           </div>
 </div>
-
-
 
      )
     }
