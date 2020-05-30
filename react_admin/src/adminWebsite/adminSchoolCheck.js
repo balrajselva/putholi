@@ -124,6 +124,33 @@ class adminSchoolCheck extends Component {
                                 </ul>
                                 </div>
                             </div>
+                            <div className="row">
+                                    <div className="col-xs-12">
+                                    <div className="box">
+                                        {/* <div className="box-header">
+                                            <h4 className="box-title">Search Users</h4>
+                                        </div> */}
+                                        <div className="box-body table-responsive no-padding">
+                                            <table className="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                    <th>User Comments </th>
+                                                    <th>Admin Comments </th>
+                                                    <th>Reviewer Comments </th>
+                                                    <th>Approver Comments </th>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="userComments" value={this.state.userComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.reviewerComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                </tr>
+                                            </tbody></table>
+                                            {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div>
                             <div className="timeline-footer">
                                 <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                                 <a id="Returned" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Return to Beneficiary</a>&nbsp;
@@ -132,21 +159,7 @@ class adminSchoolCheck extends Component {
                             </div>
                             </div>
                         </li>
-                        <li>
-                            <i className="fa fa-user bg-aqua" />
-                            <div className="timeline-item">
-                            <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
-                            <h3 className="timeline-header no-border">Beneficiary to resubmit the requirements</h3>
-                            </div>
-                        </li>
-                        <li>
-                            <i className="fa fa-user bg-aqua" />
-                            <div className="timeline-item">
-                            <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
-                            <h3 className="timeline-header no-border"><a href="#">Admin History - </a> Initial Check complete</h3>
-                            </div>
-                        </li>
-                       
+                        
                         <li>
                             <div className="timeline-footer">
                             <a href="#" className="btn btn-xs bg-maroon">Go to Top</a>

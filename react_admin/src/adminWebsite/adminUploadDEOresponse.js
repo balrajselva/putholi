@@ -166,6 +166,29 @@ class adminUploadDEOresponse extends Component {
                         {this.state.localImageUrl?<img style={{marginLeft:"10px"}} width="80%" height="100%" src={this.state.localImageUrl} alt="Identity proof"/>:null}
                         {/* /.box-body */}
                         {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+
+                                                      <div className="row">
+                                    <div className="col-xs-12">
+                                    <div className="box">
+                                        {/* <div className="box-header">
+                                            <h4 className="box-title">Search Users</h4>
+                                        </div> */}
+                                        <div className="box-body table-responsive no-padding">
+                                            <table className="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                    <th>User Comments </th>
+                                                    <th>Admin Comments </th>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                </tr>
+                                            </tbody></table>
+                                            {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+                                        </div>
+                                        </div>
+                                        </div></div>
                         <div className="box-footer">
                             <button type="submit" className="btn btn-primary" onClick={(e)=>this.onSubmit(e)}>Submit</button>&nbsp;
                             <Link to={schoolList} className="btn btn-primary">Back to User List</Link>

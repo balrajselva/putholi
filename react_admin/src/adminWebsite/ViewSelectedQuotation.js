@@ -217,6 +217,33 @@ class ViewSelectedQuotation extends Component {
                         <input type="text-area" className="form-control" id="comment" value={this.state.comment} onChange={this.handleChange}/>
                     </div>
                 </div>
+
+                <div className="row">
+                                    <div className="col-xs-12">
+                                    <div className="box">
+                                        {/* <div className="box-header">
+                                            <h4 className="box-title">Search Users</h4>
+                                        </div> */}
+                                        <div className="box-body table-responsive no-padding">
+                                            <table className="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                    <th>Admin Comments </th>
+                                                    <th>Reviewer Comments </th>
+                                                    <th>Approver Comments </th>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.reviewerComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                </tr>
+                                            </tbody></table>
+                                            {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+                                        </div>
+                                        </div>
+										</div>
+                                        </div>
+
                 <div className="row">
                     <div className="input-group-btn form-group has-feedback">
                         &nbsp;<button type="submit" className="btn btn-warning form-control" id="Accepted" onClick={(e)=>this.approveQuotation(e)}>Approve</button>

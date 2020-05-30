@@ -9,11 +9,15 @@ import SponsorLayout from '../adminWebsite/components/layouts/SponsorLayout';
 import AdminLayout from '../adminWebsite/components/layouts/AdminLayout';
 import AdminNewSchoolReview from '../adminWebsite/adminNewSchoolReview';
 import AdminAccessReview from '../adminWebsite/adminAccessReview';
+import UserReport from '../adminWebsite/userReport';
+import VendorReport from '../adminWebsite/vendorReport';
 import AdminRoleCheck from '../adminWebsite/adminRoleCheck';
+import UserManagement from '../adminWebsite/userManagement';
 import TrustRegister from '../adminWebsite/trustRegister';
 import TrustLogin from '../adminWebsite/trustLogin';
 import VolunteerRegister from '../adminWebsite/VolunteerRegister';
 import AdminPendingWorkflow from '../adminWebsite/adminPendingWorkflow';
+import SchoolReport from '../adminWebsite/schoolReport';
 import AdminSchoolCheck from '../adminWebsite/adminSchoolCheck';
 import ReferVolunteer from '../adminWebsite/ReferVolunteer';
 import ConfirmatinScreen from '../adminWebsite/confirmationScreen';
@@ -133,9 +137,13 @@ class App extends Component {
             <AdminLayoutRoute path="/reassignVolunteer" history={history} component={(props)=><ReassignVolunteer {...props}{...this.props}/>}/>            
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props}/>}/>
+            <AdminLayoutRoute path="/schoolReport" history={history} component={(props)=><SchoolReport {...props}/>}/>
             <AdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props}/>}/>
+            <AdminLayoutRoute path="/userReport" history={history} component={(props)=><UserReport {...props}/>}/>
+            <AdminLayoutRoute path="/vendorReport" history={history} component={(props)=><VendorReport {...props}/>}/>
             <AdminLayoutRoute path="/adminSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props}/>}/>
             <AdminLayoutRoute path="/adminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props}/>}/>
+            <AdminLayoutRoute path="/userManagement" history={history} component={(props)=><UserManagement {...props}/>}/>
             <AdminLayoutRoute path="/adminUploadDEOresponse" history={history} component={(props)=><AdminUploadDEOresponse {...props}/>}/>
             <AdminLayoutRoute path="/assignToVolunteer" history={history} component={(props)=><AssignToVolunteer {...props}/>}/>
             <AdminLayoutRoute exact path="/reviewQuotation" component={(props)=><ReviewQuotation {...props}/>}/>

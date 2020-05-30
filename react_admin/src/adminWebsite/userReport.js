@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
-class adminAccessReview extends Component {
+class userReport extends Component {
     state={
         currentUser:this.props.location.currentUser,
         users:"",
@@ -31,41 +31,14 @@ class adminAccessReview extends Component {
             let newTo = null;
             if(this.state.currentUser.role==="Admin"){
                 newTo = { 
-                    pathname: "/adminRoleCheck", 
+                    pathname: "/userManagement", 
                     user:this.state.users[i],
                     currentUser:this.state.currentUser
                 };
             }
-            else if(this.state.currentUser.role==="Reviewer"){
-                newTo = { 
-                    pathname: "/reviewerRoleCheck", 
-                    user:this.state.users[i],
-                    currentUser:this.state.currentUser
-                };
-            }
-            else if(this.state.currentUser.role==="Approver"){
-                newTo = { 
-                    pathname: "/approverRoleCheck", 
-                    user:this.state.users[i],
-                    currentUser:this.state.currentUser
-                };
-            }
-<<<<<<< Updated upstream
-            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
-=======
+            
             //if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
-            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="DeletedUser" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
->>>>>>> Stashed changes
-                continue;
-            else if(this.state.currentUser.role==="Admin" && (this.state.users[i].role==="Admin" ||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver"|| this.state.users[i].status==="AdminReviewed" || this.state.users[i].status==="ReviewerConfirmed"))
-                continue;
-            else if(this.state.currentUser.role==="Reviewer" && (this.state.users[i].status==="ReviewerConfirmed" ||this.state.users[i].role==="Admin"|| this.state.users[i].role==="Reviewer" ||this.state.users[i].role==="Approver"||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="NewUser") ||(this.state.users[i].role==="beneficiary"&&this.state.users[i].status==="NewUser")))
-                continue;
-            else if(this.state.currentUser.role==="Approver" && (this.state.users[i].status==="AdminReviewed" || this.state.users[i].role==="Admin"||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver" ||(this.state.users[i].role==="Volunteer"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Co-ordinator"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Fund Raiser"&&this.state.users[i].status==="NewUser") || (this.state.users[i].role==="Trust Member"&&this.state.users[i].status==="NewUser") ||(this.state.users[i].role==="beneficiary"&&this.state.users[i].status==="NewUser")))
-                continue;
-            else if(this.state.currentUser.role==="Super User" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].role==="beneficiary" || this.state.users[i].status==="SuperUserReviewed"))
-                continue;
-            else if(this.state.currentUser.role==="Super Admin" && (this.state.users[i].role==="Super User"||this.state.users[i].role==="Super Admin"||this.state.users[i].role==="Trust Member" ||this.state.users[i].role==="Co-ordinator" || this.state.users[i].role==="Fund Raiser" || this.state.users[i].role==="Volunteer" || this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].role==="beneficiary" || this.state.users[i].status==="NewUser"))
+            if(this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
                 continue;
             else{
                 rowsUpdated=true;
@@ -130,7 +103,9 @@ class adminAccessReview extends Component {
                                         </div>
                                         </div>
                                     </div>
+                                    
                                     {/* /.box-header */}
+                                    <div>Provide Search Options</div>
                                     <div className="box-body table-responsive no-padding">
                                         <table className="table table-hover">
                                         <tbody>
@@ -163,4 +138,4 @@ class adminAccessReview extends Component {
     }
 }
 
-export default withRouter(adminAccessReview);
+export default withRouter(userReport);

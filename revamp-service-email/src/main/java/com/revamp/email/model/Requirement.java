@@ -44,4 +44,17 @@ public class Requirement implements java.io.Serializable {
 	
 	private String user;
 
+<<<<<<< Updated upstream
+=======
+    @JsonIgnore
+	private String postImages;
+
+	@JsonIgnore
+	private String preImages;
+	
+	@JsonIgnore
+	private String invoiceStatus;
+	
+
+>>>>>>> Stashed changes
 }
