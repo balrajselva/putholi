@@ -66,6 +66,15 @@ section > ul li {
   margin: 40px 0 39px;
 }
 
+input[type=submit] {
+  display:none;
+}
+
+input[type=checkbox]:checked ~ input[type=submit] {
+  display:block;
+}
+
+
 /* Faded out hr */
 hr.soften {
   height: 1px;

@@ -26,10 +26,16 @@ class editRequirement extends Component {
 <h3>Cuddalore Boys School, Cuddalore</h3>
 <div class="control-group success" id="multibn">
 
-Admin Comments: <textarea class="input-large" id="textarea"  disabled ></textarea>
+View Admin Comments: <textarea class="input-large" id="textarea" disabled ></textarea>
 </div>
 </table>
+</div>
 
+<div class="span10">
+
+  <div class="control-group">
+  <legend>Old Value is below</legend>
+  </div>
 
   <div class="control-group">
 
@@ -37,8 +43,7 @@ Admin Comments: <textarea class="input-large" id="textarea"  disabled ></textare
                   <table class="table table-bordered table-striped">
                                                                 <thead>
                                                                     <tr>
-                                                                    <th>Req.No</th>
-                                                                      <th>Action</th>
+                                                                    <th>Req.No</th>                                                                  <th>Action</th>
                                                                       <th>Project Type</th>
                                                                       <th>Asset Type</th>
                                                                       <th>Asset Name</th>
@@ -87,21 +92,117 @@ Admin Comments: <textarea class="input-large" id="textarea"  disabled ></textare
 
                                                                   </tbody>
                 </table>
-                <div class="form-actions">
-                  <div>
-						   <input type="checkbox" id="inputSuccess"/> Disclaimer
-						   
-						   </div>
-                            <button type="submit" class="btn send_btn">Re-Submit</button>
-                            <button class="btn dark_btn">Cancel</button>
-                          </div>
 
                             </div>
 </div>
+
+<div class="control-group">
+		 <div class="control-group">
+            <div class="controls">
+              <select id="projType">
+                <option>Select Project Type</option>
+                <option>New</option>
+                <option>Maintainence </option>
+              </select>
+            </div>
+          </div>
 </div>
+		  <div class="control-group">
+            <label class="control-label" for="select01">Asset Type</label>
+            <div class="controls">
+              <select id="asstType">
+                <option selected>Select</option>
+                <option>Sports</option>
+                <option>Infrastructure</option>
+                <option value="Other">Others</option>
+              </select>
+            </div>
+        </div>
+
+            <div class="control-group">
+                  <div class="controls">
+
+                   </div>
+              </div>
+
+		  <div class="control-group">
+            <label class="control-label" for="select01">Asset Name</label>
+            <div class="controls">
+              <select id="asstName">
+                <option>Select</option>
+                <option>Football</option>
+                <option>Bathroom</option>
+                <option value="OtherName">Others</option>
+              </select>
+            </div>
+            </div>
+            <div class="control-group">
+                  <div class="controls">
+
+                   </div>
+              </div>
+
+
+		  <div class="control-group">
+            <label class="control-label" for="input01">Quantity</label>
+            <div class="controls">
+              <input type="text" class="input-small" id="qty"/>
+             </div>
+        </div>
+        <div class="control-group">
+              <label class="control-label" for="select01">Select Priority</label>
+              <div class="controls">
+                <select id="priority">
+                  <option>1st Priority</option>
+                  <option>2nd Priority</option>
+                  <option>3rd Priority</option>
+                  <option value="OtherName">Others</option>
+                </select>
+              </div>
+              </div>
+
+		<div class="control-group">
+    	<input type="button" class="add-row" value="Submit Changes" />
+		</div>
+
+<legend>New Value</legend>
+	<table class="table table-bordered table-striped">
+                                                      <thead>
+                                                          <tr>
+                                                            <th>Select</th>
+                                                            <th>Requirement Type</th>
+                                                            <th>Asset Type</th>
+                                                            <th>Asset Name</th>
+                                                            <th>Quantity</th>
+                                                            <th>Priority</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+
+
+
+                                                        </tbody>
+</table>
+
+
+
 </div>
+
+
 </div>
+
 </div>
+<div class="form-actions">
+						   <input type="checkbox" id="inputSuccess" /> Disclaimer
+
+               <div class="form-actions"></div>
+						    <button type="submit" class="btn send_btn">Submit</button>
+                            <button class="btn dark_btn">Cancel</button>
+                          </div>
+</div>
+
+
+
      )
     }
 }
