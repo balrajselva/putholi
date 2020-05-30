@@ -92,6 +92,28 @@ class VolunteerSchoolReview extends Component {
                             </ul>
                             </div>
                         </div>
+                        <div className="row">
+                                    <div className="col-xs-12">
+                                    <div className="box">
+                                        {/* <div className="box-header">
+                                            <h4 className="box-title">Search Users</h4>
+                                        </div> */}
+                                        <div className="box-body table-responsive no-padding">
+                                            <table className="table table-hover">
+                                            <tbody>
+                                            <tr>
+                                                    <th>User Comments </th>
+                                                   </tr>
+                                                <tr>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="userComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                   
+                                                </tr>
+                                            </tbody></table>
+                                            {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div>
                         <div className="timeline-footer">
                         <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                             <a id="Accepted" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Accept</a>&nbsp;
@@ -102,20 +124,7 @@ class VolunteerSchoolReview extends Component {
                     </li>
                     {/* END timeline item */}
                     {/* timeline item */}
-                    <li>
-                        <i className="fa fa-user bg-aqua" />
-                        <div className="timeline-item">
-                        <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
-                        <h3 className="timeline-header no-border">Beneficiary to resubmit the requirements</h3>
-                        </div>
-                    </li>
-                    <li>
-                        <i className="fa fa-user bg-aqua" />
-                        <div className="timeline-item">
-                        <span className="time"><i className="fa fa-clock-o" /> 25 mins ago</span>
-                        <h3 className="timeline-header no-border"><a href="#">Admin History - </a> Initial Check complete</h3>
-                        </div>
-                    </li>
+                    
                     {/* END timeline item */}
                     {/* timeline item */}
                     {/* END timeline item */}

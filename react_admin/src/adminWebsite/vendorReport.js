@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
-class adminAccessReview extends Component {
+class vendorReport extends Component {
     state={
         currentUser:this.props.location.currentUser,
         users:"",
@@ -51,7 +51,7 @@ class adminAccessReview extends Component {
                 };
             }
             //if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ReviewerRejected" || this.state.users[i].status==="ApproverRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
-            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="DeletedUser" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
+            if(this.state.users[i].status==="AdminRejected" || this.state.users[i].status==="ApprovedUser"|| this.state.users[i].status==="SuperAdminApproved" || this.state.users[i].status==="PaymentPending")
                 continue;
             else if(this.state.currentUser.role==="Admin" && (this.state.users[i].role==="Admin" ||this.state.users[i].role==="Reviewer"||this.state.users[i].role==="Approver"|| this.state.users[i].status==="AdminReviewed" || this.state.users[i].status==="ReviewerConfirmed"))
                 continue;
@@ -161,4 +161,4 @@ class adminAccessReview extends Component {
     }
 }
 
-export default withRouter(adminAccessReview);
+export default withRouter(vendorReport);
