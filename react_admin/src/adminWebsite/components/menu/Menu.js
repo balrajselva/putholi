@@ -138,18 +138,20 @@ class Menu extends Component {
                           <i className="fa fa-angle-left pull-right" />
                         </span>
                   </a> */ }
-                <li className="header">Reports</li> 
-                      <ul className="treeview-menu">
-                        
+                  <ul className="sidebar-menu" data-widget="tree">
+                   <li className="header">Reports</li> 
+                    <li className="active treeview">
+                    <ul className="treeview-menu">
                         <li><Link to={userReport}><i className="fa fa-circle-o" />User Report</Link></li>
                         <li><Link to={schoolReport}><i className="fa fa-circle-o" />School Report</Link></li>
                         <li><Link to={vendorReport}><i className="fa fa-circle-o" />Vendor Report</Link></li>
-
+                    </ul>
                        { /* <li><a href="#"><i className="fa fa-circle-o" />Project Closure</a></li> */}
-                      </ul>
+                      </li>
+                    </ul>
                     </li>
                     </li>
-                  </ul>
+                    </ul>
                 </section>
                 {/* /.sidebar */}
               </aside>
