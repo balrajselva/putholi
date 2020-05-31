@@ -12,7 +12,7 @@ class ReassignVolunteer extends Component {
         oldVolunteer:null,
         newVolunteer:null,
         newVolunteerId:null,
-        spinner:false
+        spinner:true
     }
 
     handleChange=({target})=>{
@@ -34,10 +34,19 @@ class ReassignVolunteer extends Component {
         axios.get("http://localhost:6060/puthuyir/volunteer/getAll")
         .then(res=>{
             console.log(res.data)
-            this.setState({
-                volunteerList:res.data,
+            if(parseInt(res.data.length) == parseInt(0)){
+              this.setState({
+                errorMessage:"There are no avalible volunteers to assign. Please add more volunteer.",
                 spinner:false
-            });
+              })
+              document.getElementById("findSchoolButton").setAttribute("disabled",true);
+            }
+            else{
+              this.setState({
+                  volunteerList:res.data,
+                  spinner:false
+              });
+            }
         })
         .catch(error=>{
             this.setState({spinner:false});
@@ -62,6 +71,17 @@ class ReassignVolunteer extends Component {
         .then(res=>{
             console.log(res.data)
             if(res.data.length !== 0){
+                if(res.data.schoolStatus === 'SCHOOL_REGISTERED' || res.data.schoolStatus === 'AdminReviewed' || res.data.schoolStatus === 'AdminRejected' || res.data.schoolStatus === 'ReviewerConfirmed'
+                || res.data.schoolStatus === 'ReviewerRejected' || res.data.schoolStatus === 'ApprovedSchool' || res.data.schoolStatus === 'RejectedSchool' || res.data.schoolStatus === 'DEOEmailSent'
+                || res.data.schoolStatus === 'DEO_APPROVED' || res.data.schoolStatus === 'DEO_REJECTED'){
+                  this.setState({
+                    errorMessage:"Can't re-assign volunteer to school with status = '"+res.data.schoolStatus+"'",
+                    spinner:false
+                })
+                document.getElementById("schoolId").style.borderColor="red";
+                return
+                }
+                else{
                 this.setState({
                     school:res.data
                 })
@@ -73,6 +93,7 @@ class ReassignVolunteer extends Component {
                   })
                 })
                 document.getElementById('modal-default').style.display='block';
+              }
               }
             else{
                 this.setState({
@@ -138,7 +159,7 @@ class ReassignVolunteer extends Component {
                 <div className="input-group">
                 <br />
                 {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
-                <button type="button" onClick={()=>this.fetchSchool()} className="btn btn-success" >
+                <button type="button" id="findSchoolButton" onClick={()=>this.fetchSchool()} className="btn btn-success" >
                     Find school
                     </button>
                 </div>

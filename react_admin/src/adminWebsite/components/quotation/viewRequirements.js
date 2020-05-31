@@ -35,12 +35,16 @@ class viewRequirements extends Component {
         preImagesInput:null,
         localPreImageUrl:null,
         quotaionList:[],
-        quotationId:null
+        quotationId:null,
+        quoCount:0
     }
 
 
     handleChange=({target})=>{
         document.getElementById(target.id).style.borderColor="#d2d6de";
+        this.setState({
+            errorMessage:null
+        })
         console.log("handle change",target)
         if(target.id==="fileInput" || (parseInt(target.id.split("/").length) === parseInt(3) && target.id.split("/")[2]==="preImagesInput")){
             console.log("image input");
@@ -93,7 +97,7 @@ class viewRequirements extends Component {
     }    
 
     submitQuotation=()=>{
-        if(this.state.quotationId !== null){
+        if(parseInt(this.state.quoCount) === parseInt(this.state.requirements.length)){
             axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
             .then(res=>{
                 window.alert("Quotations submitted successfully!")
@@ -109,7 +113,7 @@ class viewRequirements extends Component {
             })
         }
         else{
-            this.setState({errorMessage:"Please add atleast one quotation"})
+            this.setState({errorMessage:"Please add quotation for all requirements"})
         }
     }
 
@@ -391,9 +395,11 @@ class viewRequirements extends Component {
             .then(res=>{
                 document.getElementById('modal-default').style.display='none';
                 console.log(res);
+                let quoCountTemp = parseInt(this.state.quoCount) + 1;
                 this.setState({
                     spinner:false,
-                    quotationId:res.data
+                    quotationId:res.data,
+                    quoCount:quoCountTemp
                 })
                 updateList(res);
             })
@@ -504,7 +510,7 @@ class viewRequirements extends Component {
                                     <div className="row">
                                         <section className="content">
                                         <div className="form-group">
-                                            <label for="fileInput" style={{cursor:"pointer",border:"2px solid black"}}>Click to upload Quotation</label>
+                                            <label for="fileInput" className="form-control" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>Click to upload Quotation</label>
                                             <input class="hidden" type="file" id="fileInput" onChange={this.handleChange}/>
                                         </div>
                                         <div className="row">
