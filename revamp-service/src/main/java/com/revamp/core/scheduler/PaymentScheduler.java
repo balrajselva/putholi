@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.revamp.core.dao.InvoiceRepository;
 import com.revamp.core.model.Invoice;
+import com.revamp.core.service.InvoiceService;
 
 /*
  * Scheduler looks up invoice table and picks up record(s) that are in 'InvoiceApproved'
@@ -36,28 +37,45 @@ public class PaymentScheduler {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 
+	@Autowired
+	private InvoiceService invoiceService;
+
 	@Scheduled(cron = "${cronExpression}")
 	public void findApprovedInvoices() {
 		logger.info("Start Invoice Scheduler :{}", ZonedDateTime.now());
-		List<Invoice> invoices = invoiceRepository.findByInvoiceStatus("InvoiceApproved");
-		if (invoices != null) {
-			logger.info("Nnumber of invoices in Approved Status : {}", invoices.size());
-			createPaymentFile(invoices);
-		} else {
-			logger.warn("There are no invoices in Approved Status");
+		try {
+			List<Invoice> invoices = invoiceRepository.findByInvoiceStatus("INVOICEAPPROVED");
+			if (invoices != null) {
+				logger.info("Nnumber of invoices in Approved Status : {}", invoices.size());
+				createPaymentFile(invoices);
+				updateInvoiceRecords(invoices);
+			} else {
+				logger.warn("There are no invoices in Approved Status");
+			}
+		} catch (FileNotFoundException e) {
+			logger.error("Error creating payment file {}", e.toString());
 		}
 		logger.info("End Invoice Scheduler :{}", ZonedDateTime.now());
 	}
 
-	public void createPaymentFile(List<Invoice> invoices) {
+	private void createPaymentFile(List<Invoice> invoices) throws FileNotFoundException {
 		File textOutputFile = new File(filePath);
 		try (PrintWriter pw = new PrintWriter(textOutputFile)) {
 			for (Invoice invoice : invoices) {
 				pw.println(toPaymentString(invoice));
 			}
-		} catch (FileNotFoundException e) {
-			logger.error("Error creating payment file {}", e.toString());
 		}
+	}
+
+	private void updateInvoiceRecords(List<Invoice> invoices) {
+		try {
+			for (Invoice invoice : invoices) {
+				invoiceService.updateStatus(invoice.getId(), 1l, "PAYMENTINITIATED");
+			}
+		} catch (Exception e) {
+			logger.error("Error updating invoice record in payment scheduler");
+		}
+		logger.info("Invoice records updated to PAYMENTINITIATED");
 	}
 
 	private String toPaymentString(Invoice invoice) {
