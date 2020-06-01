@@ -35,6 +35,8 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
     @Modifying
     @Query("UPDATE Invoice s set s.reviewerComments = :reviewerComments where s.id = :invoiceId")
     void updateReviewerComments(long invoiceId, String reviewerComments);
+    
+    List<Invoice> findByInvoiceStatus(String invoiceStatus);
 
 
 }
