@@ -151,4 +151,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 
+	@Override
+	public List<Invoice> findByInvoiceStatus(String invoiceStatus) {
+		return repository.findByInvoiceStatus(invoiceStatus);
+	}
+
+
 }
