@@ -1,13 +1,13 @@
 package com.revamp.core.service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.revamp.core.dao.VolunteerReferenceRepository;
 
-import com.revamp.core.model.User;
 import com.revamp.core.model.VolunteerReference;
 
 @Service
@@ -15,8 +15,6 @@ import com.revamp.core.model.VolunteerReference;
 public class VolunteerReferenceServiceImpl implements VolunteerReferenceService{
 	
 	@Autowired VolunteerReferenceRepository volunteerReferenceRepository;
-	
-	private boolean isPresent = false;
 
 	@Transactional
 	public long save(VolunteerReference vReference) {
@@ -25,12 +23,13 @@ public class VolunteerReferenceServiceImpl implements VolunteerReferenceService{
 
 	@Transactional
 	public boolean verifyReferals(String sponsorEmail, String volunteerEmail) {
+		AtomicReference<Boolean> isPresent = new AtomicReference<>(false);
 		List<VolunteerReference> vReferals=volunteerReferenceRepository.findBySponsorEmail(sponsorEmail);
 		vReferals.forEach(volunteer->{
 			String[] referalMails=volunteer.getReferalEmails().split(",");
 			for(String mail:referalMails){
 				if(mail.equals(volunteerEmail)){
-					isPresent=true;
+					isPresent.set(true);
 					break;
 				}
 				else{
@@ -38,7 +37,7 @@ public class VolunteerReferenceServiceImpl implements VolunteerReferenceService{
 				}
 			}
 		});
-		return isPresent;
+		return isPresent.get();
 	}
 
 }

@@ -28,6 +28,10 @@ import AddRequirement from '../components/schoolRegister/addRequirement';
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={config:"http://localhost:6060"}
+  }
   render(){
   const SchoolLayoutRoute=({component:Component,...rest})=>{
     return(
@@ -40,28 +44,28 @@ class App extends Component {
   }
   return (
     <div>   
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/confirmation" component={()=><ConfirmatinScreen/>}/>
-          <Route path="/transactionResponse" component={()=><TransactionResponse/>}/>  
-          <SchoolLayoutRoute path="/index" component={()=><IndexPage  />}/>
-          <SchoolLayoutRoute path="/about" component={()=><AboutPage  />}/>
-          <SchoolLayoutRoute path="/features" component={()=><FeaturesPage  />}/>
-          <SchoolLayoutRoute path="/blog" component={()=><BlogPage  />}/>
-          <SchoolLayoutRoute path="/gallery" component={()=><GalleryPage  />}/>
-          <SchoolLayoutRoute path="/schoolregistration" history={history} component={(props)=><AddSchool {...props}/>}/>
-          <SchoolLayoutRoute path="/beneficarySummary" history={history} component={(props)=><BeneficiarySummary {...props}/>}/>
-          <SchoolLayoutRoute path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props}/>}/>
-          <SchoolLayoutRoute path="/confirm" component={()=><ConfirmationPage/>}/>
-          <SchoolLayoutRoute path="/rejectScreen" component={()=><RejectionPage/>}/>
-          <SchoolLayoutRoute path="/donation" component={()=><Donation/>}/>
-          <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails/>}/>
-          <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm/>}/> 
-          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment paymentFlow={(paymentPayload,donationUserPayload,projectUpdatePayload,user)=>this.paymentFlow(paymentPayload,donationUserPayload,projectUpdatePayload,user)}/>}/>         
-          <SchoolLayoutRoute path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage/>}/>  
-          <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation/>}/>             
-          <SchoolLayoutRoute path="/editRequirements" component={()=><EditRequirement/>}/>             
-          <SchoolLayoutRoute path="/addRequirements" component={()=><AddRequirement/>}/>             
+      <Router history={history} config={this.state.config}>
+        <Switch config={this.state.config}>
+          <Route exact path="/confirmation" component={()=><ConfirmatinScreen config={this.state.config}/>}/>
+          <Route path="/transactionResponse" component={()=><TransactionResponse config={this.state.config}/>}/>  
+          <SchoolLayoutRoute path="/index" component={()=><IndexPage  config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/about" component={()=><AboutPage  config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/features" component={()=><FeaturesPage  config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/blog" component={()=><BlogPage  config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/gallery" component={()=><GalleryPage  config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/schoolregistration" history={history} component={(props)=><AddSchool {...props} config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/beneficarySummary" history={history} component={(props)=><BeneficiarySummary {...props} config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/registrationPage" history={history} component={(props)=><RegistrationPage {...props} config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/confirm" component={()=><ConfirmationPage config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/rejectScreen" component={()=><RejectionPage config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/donation" component={()=><Donation config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/donationDetails" component={()=><DonationDetails config={this.state.config}/>}/>
+          <SchoolLayoutRoute path="/donationRegistrationForm" component={()=><DonationForm config={this.state.config}/>}/> 
+          <SchoolLayoutRoute path="/donationPayment" component={()=><DonationPayment paymentFlow={(paymentPayload,donationUserPayload,projectUpdatePayload,user)=>this.paymentFlow(paymentPayload,donationUserPayload,projectUpdatePayload,user)} config={this.state.config}/>}/>         
+          <SchoolLayoutRoute path="/donationPaymentConfirmation" component={()=><DonationConfirmationPage config={this.state.config}/>}/>  
+          <SchoolLayoutRoute path="/trackDonation" component={()=><TrackDonation config={this.state.config}/>}/>             
+          <SchoolLayoutRoute path="/editRequirements" component={()=><EditRequirement config={this.state.config}/>}/>             
+          <SchoolLayoutRoute path="/addRequirements" component={()=><AddRequirement config={this.state.config}/>}/>             
         </Switch>
       </Router>
     </div>

@@ -69,7 +69,7 @@ class DonationForm extends Component {
       }
 
       if (isValid) {
-        axios.post('http://localhost:6060/puthuyir/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
+        axios.post(this.props.config+'/puthuyir/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
           .then((response) => {
             if (response.data.emailAddress === "email") {
               this.setState({
@@ -106,7 +106,7 @@ class DonationForm extends Component {
         let emailValidation = {
           emailAddress: data.get('email'),
         }
-        axios.post('http://localhost:6060/puthuyir/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
+        axios.post(this.props.config+'/puthuyir/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
           .then(response => {
             if (response.data === "SUCCESS") {
               this.setState({
@@ -118,7 +118,7 @@ class DonationForm extends Component {
                 emailError: ''
               });
               console.log("Before loading", params);
-              axios.post('http://localhost:6060/puthuyir/donate/save', params, { headers: { 'Accept': 'application/json' } })
+              axios.post(this.props.config+'/puthuyir/donate/save', params, { headers: { 'Accept': 'application/json' } })
                 .then((response) => {
                   var requestPayload = Object.assign(requestJSON, response.data);
                   this.props.history.push({

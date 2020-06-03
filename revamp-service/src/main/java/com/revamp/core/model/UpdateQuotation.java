@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Proxy;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 @ToString
 @JsonAutoDetect
 public class UpdateQuotation {
+    @JsonIgnore
     private List<Quotation> quotations;
 
     private String totalAmount;

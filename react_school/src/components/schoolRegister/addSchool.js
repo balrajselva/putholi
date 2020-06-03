@@ -370,7 +370,7 @@ class AddSchool extends Component {
       var regFormModel=new FormData();
       regFormModel.set('payload',JSON.stringify(schoolDetails));
       regFormModel.append('files',this.state.fileInput)
-      axios.post('http://localhost:6060/puthuyir/school',regFormModel,{
+      axios.post(this.props.config+'/puthuyir/school',regFormModel,{
          headers:{'Content-Type':'multipart/form-data'}
       })
       .then(res=>{

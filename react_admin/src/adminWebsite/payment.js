@@ -37,7 +37,7 @@ class payment extends Component {
           user:this.props.location.currentUser,
           amount:this.state.registrationFee
         }
-        axios.post('http://localhost:6060/puthuyir/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
+        axios.post(this.props.config+'/puthuyir/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
         .then(response=>{
           axios.post('http://localhost:7070/payment/orders', paymentPayload)
           .then(response => {

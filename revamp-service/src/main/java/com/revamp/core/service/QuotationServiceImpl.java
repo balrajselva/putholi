@@ -183,6 +183,11 @@ public class QuotationServiceImpl implements QuotationService {
 					requirementRepository.save(requirement);
 				}
 			}
+			List<Quotation> quotationList = quotation.getValue();
+			for(Quotation quotation1:quotationList){
+				quotation1.setQuotationStatus(PuthuyirLookUp.ADMIN_REJECTED_QUOTATION.name());
+				quotationRepository.save(quotation1);
+			}
 		}
 	}
 

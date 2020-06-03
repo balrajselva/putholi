@@ -391,7 +391,7 @@ class viewRequirements extends Component {
             if(this.state.preImagesInput!==null){
                 regFormModel.append('preImage',this.state.preImagesInput)
             }
-            axios.post('http://localhost:6060/puthuyir/quotation',regFormModel)
+            axios.post(this.props.config+'/puthuyir/quotation',regFormModel)
             .then(res=>{
                 document.getElementById('modal-default').style.display='none';
                 console.log(res);

@@ -14,7 +14,7 @@ constructor(){
 }
  
  componentDidMount() {
-    fetch('http://localhost:6060/puthuyir/getAllSchools')
+    fetch(this.props.config+'/puthuyir/getAllSchools')
      .then(response => 
           response.json()) 
     .then(users => this.setState({ 
