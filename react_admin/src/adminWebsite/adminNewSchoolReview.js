@@ -12,7 +12,7 @@ class adminNewSchoolReview extends Component {
         currentUser:this.props.location.currentUser
     }
     componentDidMount(){
-        axios.get("http://localhost:6060/puthuyir/getAllSchools")
+        axios.get(this.props.config+"/puthuyir/getAllSchools")
         .then(res=>{
             console.log(res.data)
             this.setState({

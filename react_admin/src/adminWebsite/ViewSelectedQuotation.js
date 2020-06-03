@@ -51,7 +51,7 @@ class ViewSelectedQuotation extends Component {
             approverComments:this.state.approverComments,
             reviewerComments:this.state.reviewerComments
         }
-        axios.post("http://localhost:6060/puthuyir/updateSelectedQuotation",updatequotation)
+        axios.post(this.props.config+"/puthuyir/updateSelectedQuotation",updatequotation)
         .then(res=>{
             window.alert("Quotations updated successfully")
             this.setState({spinner:false});
@@ -78,7 +78,7 @@ class ViewSelectedQuotation extends Component {
     }
     componentDidMount(){
         console.log(this.props.location.school)
-        axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+        axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
             console.log(res.data);
             this.setState({

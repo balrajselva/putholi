@@ -55,7 +55,7 @@ class AddSchool extends Component {
       reqError:null
     }
     componentDidMount(){
-      axios.get("http://localhost:6060/puthuyir/lookup/getAll")
+      axios.get(this.props.config+"/puthuyir/lookup/getAll")
       .then(res=>{
          console.log(res.data);
          this.setState({assetTypeList:res.data});
@@ -129,7 +129,7 @@ class AddSchool extends Component {
          }
          else if(target.id==="assetType" && target.value!=="Others"){
             this.setState({spinner:true});
-            axios.get("http://localhost:6060/puthuyir/lookup/field/"+target.value)
+            axios.get(this.props.config+"/puthuyir/lookup/field/"+target.value)
             .then(res=>{
                this.setState({
                   assetNameList:res.data,
@@ -199,7 +199,7 @@ class AddSchool extends Component {
             parent_key:aType,
             parent_field:"assettype"
          }
-         axios.post("http://localhost:6060/puthuyir/lookup/save",lookup)
+         axios.post(this.props.config+"/puthuyir/lookup/save",lookup)
          .then(res=>{
             console.log(res.data);
          })

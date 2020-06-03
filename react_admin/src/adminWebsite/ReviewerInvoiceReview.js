@@ -15,7 +15,7 @@ state={
 }
 
 componentDidMount(){
-  axios.get("http://localhost:6060/puthuyir/invoice")
+  axios.get(this.props.config+"/puthuyir/invoice")
   .then(res=>{
       console.log("Invoices",res.data)
       this.setState({
@@ -63,7 +63,7 @@ onSubmit=(e)=>{
   this.setState({
     spinner:true
   })
-    axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+    axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
     .then(res=>{
       this.setState({
         spinner:false

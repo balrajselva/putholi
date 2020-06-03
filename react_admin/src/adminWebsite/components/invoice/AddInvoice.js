@@ -115,7 +115,7 @@ class AddInvoice extends Component {
 
     submitInvoice=()=>{
         if(this.state.invoiceId !== null){
-            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"InvoiceAdded")
+            axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"InvoiceAdded")
             .then(res=>{
                 window.alert("Invoices submitted successfully!")
                 this.props.history.push({
@@ -135,7 +135,7 @@ class AddInvoice extends Component {
     }
 
     quotationList=()=>{
-        axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/selectedQuotations")
+        axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/selectedQuotations")
         .then(res=>{
             let resp=res.data;
             console.log(res.data)
@@ -161,7 +161,7 @@ class AddInvoice extends Component {
         var invoiceId=e.target.id.split("/")[0];
         var reqIndex=e.target.id.split("/")[1];
         var invIndex=e.target.id.split("/")[2];
-        axios.delete("http://localhost:6060/puthuyir/invoice/"+invoiceId)
+        axios.delete(this.props.config+"/puthuyir/invoice/"+invoiceId)
         .then(res=>{
 
         })

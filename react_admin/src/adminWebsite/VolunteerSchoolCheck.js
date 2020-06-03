@@ -11,7 +11,7 @@ class VolunteerSchoolCheck extends Component {
     }
     componentDidMount(){
         if(this.props.location.currentUser.school_id!==null){
-            axios.get("http://localhost:6060/puthuyir/school/"+this.props.location.currentUser.school_id)
+            axios.get(this.props.config+"/puthuyir/school/"+this.props.location.currentUser.school_id)
             .then(res=>{
                 console.log(res.data)
                 this.setState({

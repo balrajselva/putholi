@@ -98,7 +98,7 @@ class viewRequirements extends Component {
 
     submitQuotation=()=>{
         if(parseInt(this.state.quoCount) >= parseInt(this.state.requirements.length)*2){
-            axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
+            axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
             .then(res=>{
                 window.alert("Quotations submitted successfully!")
                 this.props.history.push({
@@ -118,7 +118,7 @@ class viewRequirements extends Component {
     }
 
     requirementList=()=>{
-        axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+        axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/requirements")
         .then(res=>{
             let resp=res.data;
             for(let i=0;i<resp.length;i++){
@@ -157,7 +157,7 @@ class viewRequirements extends Component {
         var quotationId=e.target.id.split("/")[0];
         var reqIndex=e.target.id.split("/")[1];
         var quoIndex=e.target.id.split("/")[2];
-        axios.delete("http://localhost:6060/puthuyir/quotation/"+quotationId)
+        axios.delete(this.props.config+"/puthuyir/quotation/"+quotationId)
         .then(res=>{
 
         })

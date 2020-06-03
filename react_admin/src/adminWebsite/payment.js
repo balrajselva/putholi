@@ -9,7 +9,7 @@ class payment extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://localhost:6060/puthuyir/trustMemberRegistration")
+        axios.get(this.props.config+"/puthuyir/trustMemberRegistration")
         .then(res=>{
           let resp=res.data;
           console.log(resp);
