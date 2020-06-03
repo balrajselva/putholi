@@ -19,5 +19,16 @@ public class UpdateQuotation {
 
     private String totalAmount;
 
-    private String comment;
+    private String adminComments;
+
+    private String approverComments;
+
+    private String reviewerComments;
+
+    private Long schoolId;
+
+    private String status;
+
+    Map<Long,List<Quotation>> rejectQuotations;
+
 }

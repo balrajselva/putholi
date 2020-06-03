@@ -8,16 +8,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.revamp.core.dao.ProjectRepository;
-import com.revamp.core.dao.RequirementRepository;
-import com.revamp.core.dao.SchoolRepository;
+import com.revamp.core.dao.*;
 import com.revamp.core.lookup.PuthuyirLookUp;
 import com.revamp.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.revamp.core.dao.QuotationRepository;
 
 @Service
 @Transactional
@@ -34,6 +30,9 @@ public class QuotationServiceImpl implements QuotationService {
 
 	@Autowired
 	private RequirementRepository requirementRepository;
+
+	@Autowired
+	private ImageRepository imageRepository;
 
 	QuotationServiceImpl(QuotationRepository quotationRepository) {
 		this.quotationRepository = quotationRepository;
@@ -90,25 +89,41 @@ public class QuotationServiceImpl implements QuotationService {
 		if(isUpdated==true){
 			schoolRepository.updateSchoolStatus(updateQuotation.getQuotations().get(0).getSchoolId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());
 			School school=schoolRepository.findBySchoolId(updateQuotation.getQuotations().get(0).getSchoolId());
-			projectRepository.updateProjectStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION,Integer.valueOf(updateQuotation.getTotalAmount()),updateQuotation.getComment());
+			projectRepository.updateProject(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION,Integer.valueOf(updateQuotation.getTotalAmount()),updateQuotation.getAdminComments());
 			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_APPROVED_QUOTATION.name());
 		}
 		return isUpdated;
 	}
 
 	@Override
-	public Boolean updateSelectedQuotation(long schoolId,String status) {
-		Boolean isUpdated=true;
-		if(isUpdated==true){
-			schoolRepository.updateSchoolStatus(schoolId,status);
-			if(status.equals(PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name())){
-				schoolRepository.updateDonationFlag(schoolId,"Y");
-			}
-			School school=schoolRepository.findBySchoolId(schoolId);
-			projectRepository.updateStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.valueOf(status),"ABCD");
-			requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),status);
+	public void updateSelectedQuotation(UpdateQuotation updateQuotation) {
+		String status =null;
+		switch (updateQuotation.getStatus()) {
+			case "ReviewerConfirmed":
+				status = PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION.name();
+				break;
+			case "ApproverConfirmed":
+				status = PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name();
+				break;
+			case "ReviewerRejected":
+				status = PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION.name();
+				break;
+			case "ApproverRejected":
+				status = PuthuyirLookUp.APPROVER_REJECTED_QUOTATION.name();
+				break;
 		}
-		return isUpdated;
+		schoolRepository.updateSchoolStatus(updateQuotation.getSchoolId(),status);
+		if(status.equals(PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name())){
+			schoolRepository.updateDonationFlag(updateQuotation.getSchoolId(),"Y");
+		}
+		School school=schoolRepository.findBySchoolId(updateQuotation.getSchoolId());
+		if(status.startsWith("APPROVER")) {
+			projectRepository.updateApproverStatus(school.getProjects().iterator().next().getProjectId(), PuthuyirLookUp.valueOf(status), updateQuotation.getApproverComments());
+		}
+		else  if(status.startsWith("REVIEWER")) {
+			projectRepository.updateReviewerStatus(school.getProjects().iterator().next().getProjectId(), PuthuyirLookUp.valueOf(status), updateQuotation.getReviewerComments());
+		}
+		requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),status);
 	}
 
 	@Override
@@ -151,6 +166,24 @@ public class QuotationServiceImpl implements QuotationService {
 			this.saveImgToFS(imgPath,fileSubPath,quotation.getQuotationImages());
 		}
 		return quotation.getQuotationId();
+	}
+
+	@Override
+	public void rejectQuotation(UpdateQuotation updateQuotation) {
+		schoolRepository.updateSchoolStatus(updateQuotation.getSchoolId(),PuthuyirLookUp.ADMIN_REJECTED_QUOTATION.name());
+		School school=schoolRepository.findBySchoolId(updateQuotation.getSchoolId());
+		projectRepository.updateProjectStatus(school.getProjects().iterator().next().getProjectId(), PuthuyirLookUp.ADMIN_REJECTED_QUOTATION,updateQuotation.getAdminComments());
+		requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),PuthuyirLookUp.ADMIN_REJECTED_QUOTATION.name());
+		for (Map.Entry<Long,List<Quotation>> quotation:updateQuotation.getRejectQuotations().entrySet()) {
+			Requirement requirement = requirementRepository.findById(quotation.getKey()).get();
+			if(requirement.getPreImages()!=null) {
+				for (PreImage preImage : requirement.getPreImages()) {
+					imageRepository.deleteById(preImage.getImageId());
+					requirement.setPreImages(null);
+					requirementRepository.save(requirement);
+				}
+			}
+		}
 	}
 
 	private void saveImgToFS(String dirPath, String fileSubPath, Set<QuotationImage> list) {

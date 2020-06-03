@@ -19,11 +19,18 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	List<Project> findBySchoolId(@Param("schoolId") long schoolId);
 
 	@Modifying
-	@Query("UPDATE Project s set s.status = :status,s.estimate= :estimate,s.commentList= :commentList, modifiedDate = now() where s.projectId = :id")
-	void updateProjectStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("estimate")Integer estimate,@Param("commentList") String commentList);
+	@Query("UPDATE Project s set s.status = :status,s.estimate= :estimate,s.adminComments= :adminComments, modifiedDate = now() where s.projectId = :id")
+	void updateProject(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("estimate")Integer estimate,@Param("adminComments") String adminComments);
 
 	@Modifying
-	@Query("UPDATE Project s set s.status = :status,s.commentList= :commentList, modifiedDate = now() where s.projectId = :id")
-	void updateStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("commentList") String commentList);
+	@Query("UPDATE Project s set s.status = :status, s.adminComments= :adminComments, modifiedDate = now() where s.projectId = :id")
+	void updateProjectStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("adminComments") String adminComments);
 
+	@Modifying
+	@Query("UPDATE Project s set s.status = :status,s.approverComments= :approverComments, modifiedDate = now() where s.projectId = :id")
+	void updateApproverStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("approverComments") String approverComments);
+
+	@Modifying
+	@Query("UPDATE Project s set s.status = :status,s.reviewerComments= :reviewerComments, modifiedDate = now() where s.projectId = :id")
+	void updateReviewerStatus(@Param("id") long id, @Param("status") PuthuyirLookUp status,@Param("reviewerComments") String reviewerComments);
 }

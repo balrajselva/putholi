@@ -13,8 +13,21 @@ class ViewSelectedQuotation extends Component {
         temp1:null,
         status:null,
         quotationImage:null,
+        adminComments:null,
+        approverComments:null,
+        reviewerComments:null,
         showImage:false
     } 
+
+    handleChange=({target})=>{
+        this.setState({ 
+            [target.id]: target.value , 
+            lastErrorField:null,
+            errorMessage:""
+        });
+        document.getElementById(target.id).style.borderColor="#d2d6de";
+    }
+
     approveQuotation=(e)=>{
         let status=null;
         console.log(e.target.id);
@@ -32,7 +45,13 @@ class ViewSelectedQuotation extends Component {
         }
         this.setState({spinner:true});
         console.log(status);
-        axios.post("http://localhost:6060/puthuyir/updateSelectedQuotation/"+this.props.location.school.schoolId+"/"+status)
+        let updatequotation = {
+            schoolId:this.props.location.school.schoolId,
+            status:status,
+            approverComments:this.state.approverComments,
+            reviewerComments:this.state.reviewerComments
+        }
+        axios.post("http://localhost:6060/puthuyir/updateSelectedQuotation",updatequotation)
         .then(res=>{
             window.alert("Quotations updated successfully")
             this.setState({spinner:false});
@@ -70,6 +89,19 @@ class ViewSelectedQuotation extends Component {
         })
         .catch(error=>{
             window.alert("Unable to get quotations due to "+error)
+        })
+        if(this.props.location.currentUser.role==="Approver"){
+            document.getElementById("adminComments").setAttribute("disabled",true);
+            document.getElementById("reviewerComments").setAttribute("disabled",true);
+        }
+        else if(this.props.location.currentUser.role==="Reviewer"){
+            document.getElementById("adminComments").setAttribute("disabled",true);
+            document.getElementById("approverComments").setAttribute("disabled",true);
+        }
+        this.setState({
+            adminComments:this.props.location.school.projects[0].adminComments,
+            approverComments:this.props.location.school.projects[0].approverComments,
+            reviewerComments:this.props.location.school.projects[0].reviewerComments,
         })
     }
 
@@ -213,14 +245,6 @@ class ViewSelectedQuotation extends Component {
                     </div>
                     <div className="form-group has-feedback col-md-6">
                         <input type="input" className="form-control" id="country" value={this.props.location.school.projects[0].estimate} onChange={this.handleChange} disabled/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="form-group has-feedback col-md-3">
-                    <h4>  Comment : </h4>
-                    </div>
-                    <div className="form-group has-feedback col-md-6">
-                        <input type="text-area" className="form-control" id="comment" value={this.state.comment} onChange={this.handleChange}/>
                     </div>
                 </div>
 

@@ -10,10 +10,11 @@ class trustLogin extends Component {
     errorMessage:null
   }
   handleChange=({target})=>{
-    document.getElementById(target.id).style.borderColor="#d2d6de";
+      document.getElementById(target.id).style.borderColor="#d2d6de";
       this.setState({ 
           [target.id]: target.value , 
-          errorMessage:""
+          errorMessage:"",
+          spinner:false
       });
   }
   signIn=(e)=>{

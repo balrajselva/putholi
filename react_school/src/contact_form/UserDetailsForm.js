@@ -208,17 +208,42 @@ class UserDetailsForm extends Component {
             })
         }
         else if(target.id==="identityProof"){
-            const reader=new FileReader();
-            const file=target.files[0];
-            reader.onloadend=()=>{
-                this.setState({
-                    identityProof:file,
-                    localImageUrl:reader.result
-                })
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+                window.alert("Image size should be within 5MB");
+                return
             }
-            reader.readAsDataURL(file)
+            else{
+                this.setState({spinner:true});
+                const reader=new FileReader();
+                const file=target.files[0]; 
+                if (file && file.type.match('image.*')) {
+                    reader.readAsDataURL(file);
+                }
+                else{
+                    this.setState({
+                        identityProof:null,
+                        localImageUrl:null,
+                        spinner:false
+                    })
+                }
+                reader.onloadend=()=>{
+                    this.setState({
+                        identityProof:target.files[0],
+                        localImageUrl:reader.result,
+                        spinner:false
+                    })
+                }            
+            }
         }
     }
+
+    currentPincode=()=>{
+        if(this.state.pincode!=null && this.state.pincode.length!=6){
+            this.setState({pinCode:""});
+            document.getElementById("pincode").value="";
+        }
+    }
+
     onCancel=(f)=>{
         f.preventDefault();
         this.props.history.push("/index");
@@ -270,7 +295,7 @@ class UserDetailsForm extends Component {
                     </tr>
                     <tr>
                         <td>Pincode :</td>
-                        <td><input class="form-control" type="text" id="pincode" onChange={this.handleChange}/>
+                        <td><input class="form-control" type="text" id="pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
                         <span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
                         <td>Localtiy : </td>
