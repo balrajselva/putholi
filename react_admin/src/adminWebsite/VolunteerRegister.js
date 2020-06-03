@@ -16,7 +16,7 @@ class VolunteerRegister extends Component {
     saveUser=(user)=>{
       let email=JSON.parse(user.get("payload")).emailAddress;
       console.log(email);
-      axios.get("http://localhost:6060/puthuyir/admin/verifyReferals/"+this.state.sponsor.email+"/"+email)
+      axios.get(this.props.config+"/puthuyir/admin/verifyReferals/"+this.state.sponsor.email+"/"+email)
       .then(res=>{
         if(res.data===true){
           user.sponsorName=this.state.sponsor.name;

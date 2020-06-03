@@ -24,7 +24,7 @@ class VolunteerSchoolReview extends Component {
         else if(target.id==="Rejected"){
             this.state.status="VolunteerRejected";
         }
-        axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
+        axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
         .then(res=>{
           if(res.data!==""){
             console.log(res.data);

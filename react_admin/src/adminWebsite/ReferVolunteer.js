@@ -93,7 +93,7 @@ class ReferVolunteer extends Component {
                 sponsorName:this.state.currentUser.firstName,
                 sponsorEmail:this.state.currentUser.emailAddress
             }
-            axios.post("http://localhost:6060/puthuyir/admin/volunteerReferals",volunteers)
+            axios.post(this.props.config+"/puthuyir/admin/volunteerReferals",volunteers)
             .then(res=>{
                 if(res.status==200){
                     let referalEmailsTemp = this.state.referalEmails;

@@ -78,10 +78,10 @@ class adminInvoiceCheck extends Component {
             paymentMode:this.props.location.invoice.paymentMode
         }
         console.log(fundDisbursement)
-        axios.post("http://localhost:6060/puthuyir/fundDisbursement",fundDisbursement)
+        axios.post(this.props.config+"/puthuyir/fundDisbursement",fundDisbursement)
         .then(res=>{
           if(res.data!==""){
-              axios.post("http://localhost:6060/puthuyir/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
+              axios.post(this.props.config+"/puthuyir/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
               .then(res=>{
                 console.log(res)
                 let params ={
@@ -89,7 +89,7 @@ class adminInvoiceCheck extends Component {
                   invoiceList:this.props.location.invoice
                 }
                 console.log(params)
-                axios.post("http://localhost:6060/puthuyir/invoice/updateFund",params)
+                axios.post(this.props.config+"/puthuyir/invoice/updateFund",params)
                 .then(res=>{
                   this.setState({spinner:false});
                 window.alert("Status updated successfully");

@@ -13,7 +13,7 @@ class userReport extends Component {
         spinner:true
     }
     userList=()=>{
-        axios.get("http://localhost:6060/puthuyir/user")
+        axios.get(this.props.config+"/puthuyir/user")
         .then(res=>{
             console.log(res.data)
             this.setState({

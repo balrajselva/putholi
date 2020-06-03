@@ -25,7 +25,7 @@ class userManagement extends Component {
         if(this.state.currentUser.role==="Admin")
           this.state.status="DeletedUser";        
       }
-      axios.put("http://localhost:6060/puthuyir/updateUser/"+this.state.user.userid+"/"+this.state.status)
+      axios.put(this.props.config+"/puthuyir/updateUser/"+this.state.user.userid+"/"+this.state.status)
       .then(res=>{
         if(res.data!==""){
           console.log(res.data);

@@ -14,14 +14,14 @@ state={
 
 componentDidMount(){
   console.log("School",this.props.location.school)
-  axios.get("http://localhost:6060/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+  axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/requirements")
   .then(res=>{
     let resp=res.data;
     console.log("Requirements",resp);
     this.setState({
         requirements:resp
   })
-  axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+  axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
   .then(res=>{
       console.log("Quotations",res.data);
       this.setState({
@@ -68,10 +68,10 @@ onSubmit=(e)=>{
     fundmaster.push(temp)
   }
   console.log(fundmaster)
-  axios.post("http://localhost:6060/puthuyir/fundAllotment",fundmaster)
+  axios.post(this.props.config+"/puthuyir/fundAllotment",fundmaster)
   .then(res=>{
     console.log(res);
-    axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/FUND_ALLOTED")
+    axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/FUND_ALLOTED")
     .then(res=>{
       this.setState({
         spinner:false

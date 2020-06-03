@@ -13,7 +13,7 @@ class trustRegister extends Component {
   }
 
   componentDidMount(){
-    axios.get("http://localhost:6060/puthuyir/trustMemberRegistration")
+    axios.get(this.props.config+"/puthuyir/trustMemberRegistration")
     .then(res=>{
       this.setState({
           registrationFee:res.data,
