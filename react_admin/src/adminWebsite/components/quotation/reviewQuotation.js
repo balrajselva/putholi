@@ -182,6 +182,9 @@ class reviewQuotation extends Component {
         let quotationList=this.state.quotationList[iter];
         for(let i=0;i<quotationList.length;i++){
             let quotation=quotationList[i];
+            if(quotation.quotationStatus === "ADMIN_REJECTED_QUOTATION"){
+                continue;
+            }
             rowsUpdated=true;
             rows.push(
                 <tr>                               

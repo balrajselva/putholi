@@ -439,7 +439,7 @@ class AddInvoice extends Component {
                 regFormModel.append('postImage',this.state.postImage);
             }
             console.log(regFormModel);
-            axios.post('http://localhost:6060/puthuyir/invoiceUpload',regFormModel)
+            axios.post(this.props.config+'/puthuyir/invoiceUpload',regFormModel)
             .then(res=>{ 
                 console.log(res);
                 this.setState({

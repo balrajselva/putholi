@@ -4,7 +4,7 @@ import RequirementHome from './components/quotation/viewRequirements';
 
 class Requirement extends Component {
     render() {
-        return (<RequirementHome/>)
+        return (<RequirementHome {...this.props}/>)
     }
 }
 
