@@ -34,5 +34,7 @@ public interface InvoiceService {
     void updateApproverComments(long invoiceId, String approverComments);
 
     void updateReviewerComments(long invoiceId, String reviewerComments);
+    
+    List<Invoice> findByInvoiceStatus(String invoiceStatus);
 
 }
