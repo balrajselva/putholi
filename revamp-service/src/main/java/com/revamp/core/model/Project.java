@@ -33,7 +33,11 @@ public class Project extends AuditableEntity {
 	@Column(name = "estimated_amount")
 	private Integer estimate;
 
-	private String commentList;
+	private String adminComments;
+
+	private String approverComments;
+
+	private String reviewerComments;
 
 	@Column(name = "collected_amount")
 	private Integer collectedAmount;

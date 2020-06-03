@@ -97,7 +97,7 @@ class viewRequirements extends Component {
     }    
 
     submitQuotation=()=>{
-        if(parseInt(this.state.quoCount) === parseInt(this.state.requirements.length)){
+        if(parseInt(this.state.quoCount) >= parseInt(this.state.requirements.length)*2){
             axios.put("http://localhost:6060/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"QuotationAdded")
             .then(res=>{
                 window.alert("Quotations submitted successfully!")
@@ -113,7 +113,7 @@ class viewRequirements extends Component {
             })
         }
         else{
-            this.setState({errorMessage:"Please add quotation for all requirements"})
+            this.setState({errorMessage:"Please add atleast 2 quotations for all requirements"})
         }
     }
 

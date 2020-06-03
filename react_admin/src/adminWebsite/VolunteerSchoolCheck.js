@@ -58,6 +58,14 @@ class VolunteerSchoolCheck extends Component {
                 };
                 pageLink="Upload Quotation";
             }
+            if(this.state.school.schoolStatus==="ADMIN_REJECTED_QUOTATION"){
+                newTo = { 
+                    pathname: "/viewRequirements", 
+                    school:this.state.school,
+                    currentUser:this.props.location.currentUser
+                };
+                pageLink="Upload Quotation";
+            }
             if(this.state.school.schoolStatus==="WORK_ORDER_INITIATED"){
                 newTo = { 
                     pathname: "/addInvoice", 

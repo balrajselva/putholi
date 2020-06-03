@@ -78,23 +78,16 @@ public class QuotationController {
 		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
 	}
 
-	@PostMapping("/updateSelectedQuotation/{id}/{status}")
-	public ResponseEntity<Boolean> updateSelectedQuotation(@PathVariable("id") long schoolId,@PathVariable("status") String status) {
-		String status1=null;
-		if(status.equals("ReviewerConfirmed")){
-			status1= PuthuyirLookUp.REVIEWER_APPROVED_QUOTATION.name();
-		}
-		else if(status.equals("ApproverConfirmed")){
-			status1= PuthuyirLookUp.APPROVER_APPROVED_QUOTATION.name();
-		}
-		else if(status.equals("ReviewerRejected")){
-			status1= PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION.name();
-		}
-		else if(status.equals("ApproverRejected")){
-			status1= PuthuyirLookUp.APPROVER_REJECTED_QUOTATION.name();
-		}
-		Boolean isUpdated=quotationService.updateSelectedQuotation(schoolId,status1);
-		return new ResponseEntity<>(isUpdated,HttpStatus.OK);
+	@PostMapping("/rejectQuotations")
+	public ResponseEntity<Boolean> rejectQuotations(@RequestBody UpdateQuotation updateQuotation) {
+		quotationService.rejectQuotation(updateQuotation);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping("/updateSelectedQuotation")
+	public ResponseEntity<Boolean> updateSelectedQuotation(@RequestBody UpdateQuotation updateQuotation) {
+		quotationService.updateSelectedQuotation(updateQuotation);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/quotation/{id}")

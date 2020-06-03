@@ -9,22 +9,28 @@ class reviewQuotation extends Component {
         spinner:true,
         getRequirementList:true,
         totalAmount:0,
-        reqList:null,
-        comment:null,
+        quotationList:null,
         temp1:null,
         selectedQuotations:[],
         errorMessage:null,
-        quotationImage:null
+        quotationImage:null,
+        adminComments:null
     } 
+
     approveQuotation=()=>{
-        if(this.state.selectedQuotations.length != Object.getOwnPropertyNames(this.state.reqList).length){
+        if(this.state.selectedQuotations.length != Object.getOwnPropertyNames(this.state.quotationList).length){
             this.setState({errorMessage:"Please select atleast one quotation for each requirement"})
+            return
+        }
+        if(this.state.adminComments === null){
+            this.setState({errorMessage:"Please add comments"})
+            document.getElementById("adminComments").style.borderColor="red";
             return
         }
         let updateQuotation={
             totalAmount:this.state.totalAmount,
             quotations:this.state.selectedQuotations,
-            comment:this.state.comment
+            adminComments:this.state.adminComments
         };
         this.setState({spinner:true});
         axios.post("http://localhost:6060/puthuyir/updateQuotation",updateQuotation)
@@ -42,12 +48,41 @@ class reviewQuotation extends Component {
             window.alert("Unable to update due to"+error);
         })
     }
+
+    rejectQuotation=()=>{
+        if(this.state.adminComments === null){
+            this.setState({errorMessage:"Please add comments"})
+            document.getElementById("adminComments").style.borderColor="red";
+            return
+        }
+        let updateQuotation={
+            adminComments:this.state.adminComments,
+            schoolId:this.props.location.school.schoolId,
+            rejectQuotations:this.state.quotationList
+        };
+        this.setState({spinner:true});
+        axios.post("http://localhost:6060/puthuyir/rejectQuotations",updateQuotation)
+        .then(res=>{
+            window.alert("Quotations rejected successfully")
+            this.setState({spinner:false});
+            this.props.history.push({
+                pathname:"/adminPendingWorkflow",
+                currentUser:this.props.location.currentUser,
+                ...this.props
+            })
+        })
+        .catch(error=>{
+            this.setState({spinner:false});
+            window.alert("Unable to update due to"+error);
+        })
+    }
+
     componentDidMount(){
         axios.post("http://localhost:6060/puthuyir/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
             console.log(res.data);
             this.setState({
-                reqList:res.data,
+                quotationList:res.data,
                 spinner:false,
                 getRequirementList:false
             })
@@ -67,12 +102,13 @@ class reviewQuotation extends Component {
             lastErrorField:null,
             errorMessage:""
         });
+        document.getElementById(target.id).style.borderColor="#d2d6de";
     }
     selectQuotation=(e)=>{
         this.setState({errorMessage:null});
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
-        let quotationList=this.state.reqList[reqId];
+        let quotationList=this.state.quotationList[reqId];
         let temp=null;
         let newList = this.state.selectedQuotations.filter(list=>parseInt(list.quotationId) !== parseInt(quoId));
         let isDelete = false;
@@ -126,8 +162,8 @@ class reviewQuotation extends Component {
         this.setState({spinner:true});
         let reqId=e.target.id.split("/")[0];
         let quoId=e.target.id.split("/")[1];
-        console.log(this.state.reqList[reqId],quoId)
-        let quotationList=this.state.reqList[reqId];
+        console.log(this.state.quotationList[reqId],quoId)
+        let quotationList=this.state.quotationList[reqId];
         for(let i=0;i<quotationList.length;i++){
             let quotation=quotationList[i];
             if(quotation.quotationId+""==quoId+""){
@@ -142,8 +178,8 @@ class reviewQuotation extends Component {
 
     createTable=(iter)=>{
         var rows=[];
-        let rowsUpdated=false;;
-        let quotationList=this.state.reqList[iter];
+        let rowsUpdated=false;
+        let quotationList=this.state.quotationList[iter];
         for(let i=0;i<quotationList.length;i++){
             let quotation=quotationList[i];
             rowsUpdated=true;
@@ -254,14 +290,6 @@ class reviewQuotation extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="form-group has-feedback col-md-3">
-                    <h4>  Comment : </h4>
-                    </div>
-                    <div className="form-group has-feedback col-md-6">
-                        <input type="text-area" className="form-control" id="comment" value={this.state.comment} onChange={this.handleChange}/>
-                    </div>
-                </div>
-                <div className="row">
                                     <div className="col-xs-12">
                                     <div className="box">
                                         {/* <div className="box-header">
@@ -271,15 +299,14 @@ class reviewQuotation extends Component {
                                             <table className="table table-hover">
                                             <tbody>
                                             <tr>
-
                                                     <th>Admin Comments </th>
                                                     <th>Reviewer Comments </th>
                                                     <th>Approver Comments </th>
                                                 </tr>
                                                 <tr>
                                                     <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} onChange={this.handleChange} rows="3"></textarea></td>
-                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.reviewerComments} onChange={this.handleChange} rows="3"></textarea></td>
-                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} onChange={this.handleChange} rows="3"></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="reviewerComments" value={this.state.reviewerComments} rows="3" disabled></textarea></td>
+                                                    <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} rows="3" disabled></textarea></td>
                                                 </tr>
                                             </tbody></table>
                                             {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
@@ -293,7 +320,7 @@ class reviewQuotation extends Component {
                         &nbsp;<button type="submit" className="btn btn-warning form-control" onClick={()=>this.approveQuotation()}>Approve</button>
                     </div> 
                     <div className="input-group-btn">
-                        <button type="submit" className="btn btn-danger form-control">Cancel</button>
+                        <button type="submit" className="btn btn-danger form-control" onClick={()=>this.rejectQuotation()}>Reject</button>
                     </div>
                 </div>
                 {this.state.spinner?<div class="spinner"></div>:null}
