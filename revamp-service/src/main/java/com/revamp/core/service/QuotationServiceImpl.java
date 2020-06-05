@@ -169,6 +169,7 @@ public class QuotationServiceImpl implements QuotationService {
 	}
 
 	@Override
+	@Transactional
 	public void rejectQuotation(UpdateQuotation updateQuotation) {
 		schoolRepository.updateSchoolStatus(updateQuotation.getSchoolId(),PuthuyirLookUp.ADMIN_REJECTED_QUOTATION.name());
 		School school=schoolRepository.findBySchoolId(updateQuotation.getSchoolId());
@@ -186,7 +187,7 @@ public class QuotationServiceImpl implements QuotationService {
 			List<Quotation> quotationList = quotation.getValue();
 			for(Quotation quotation1:quotationList){
 				quotation1.setQuotationStatus(PuthuyirLookUp.ADMIN_REJECTED_QUOTATION.name());
-				quotationRepository.save(quotation1);
+				quotationRepository.updateQuotationStatus(quotation1.getQuotationId(),quotation1.getQuotationStatus());
 			}
 		}
 	}

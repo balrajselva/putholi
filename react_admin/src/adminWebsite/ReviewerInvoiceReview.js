@@ -101,20 +101,20 @@ createTable=()=>{
     // }
     let nextPage=null;
     if(this.props.location.currentUser.role==="Reviewer")
-      nextPage="reviewerInvoiceCheck"
-      if(this.props.location.currentUser.role==="Approver")
-      nextPage="approverInvoiceCheck"
-      if(this.state.invoiceList[i].fundMaster === null ){
+      nextPage="/reviewerInvoiceCheck"
+    if(this.props.location.currentUser.role==="Approver")
+      nextPage="/approverInvoiceCheck"
+    if(this.state.invoiceList[i].fundMaster === null ){
       continue
     }
     if(this.props.location.currentUser.role==="Admin" && this.state.invoiceList[i].invoiceStatus !== "InvoiceAdded")
       continue
     if(this.props.location.currentUser.role==="Reviewer" && this.state.invoiceList[i].invoiceStatus !== "AdminReviewedInvoice")
       continue
-      if(this.props.location.currentUser.role==="Approver" && this.state.invoiceList[i].invoiceStatus !== "ReviewerConfirmedInvoice")
+    if(this.props.location.currentUser.role==="Approver" && this.state.invoiceList[i].invoiceStatus !== "ReviewerConfirmedInvoice")
       continue
       const newTo = { 
-      pathname: "/reviewerInvoiceCheck", 
+      pathname: nextPage, 
       school:this.state.invoiceList[i].school,
       currentUser:this.props.location.currentUser,
       invoice:this.state.invoiceList[i],
