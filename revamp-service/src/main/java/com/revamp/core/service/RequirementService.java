@@ -15,4 +15,6 @@ public interface RequirementService {
     Requirement updateStatus(long id, String status);
 
     public Requirement findById(long id);
+
+    Requirement updateInvoiceStatus(long id, String status);
 }

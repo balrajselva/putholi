@@ -75,6 +75,13 @@ public class RequirementServiceImpl implements RequirementService {
 		return requirementRepository.findById(id).orElse(null);
 	}
 
+
+	@Override
+	@Transactional
+	public Requirement updateInvoiceStatus(long id, String status) {
+		requirementRepository.updateInvoiceStatus(id, status);
+		return requirementRepository.findById(id).orElse(null);
+	}
 	@Override
 	public Requirement findById(long id) {
 		return requirementRepository.findById(id).get();

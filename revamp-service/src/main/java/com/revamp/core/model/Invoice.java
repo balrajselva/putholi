@@ -21,7 +21,7 @@ public class Invoice extends AuditableEntity {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ork")
+	@Column(name = "invoice_id")
 	private long id;
 
 	private Long admin;
