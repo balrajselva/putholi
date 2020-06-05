@@ -91,30 +91,64 @@ class adminInvoiceCheck extends Component {
                 console.log(params)
                 axios.post(this.props.config+"/puthuyir/invoice/updateFund",params)
                 .then(res=>{
-                  this.setState({spinner:false});
-                window.alert("Status updated successfully");
-                if(this.props.location.currentUser.role==="Admin"){
-                  this.props.history.push({ 
-                    pathname:"/reviewInvoice", 
-                    currentUser:this.props.location.currentUser,
-                    school:this.props.location.school
-                  });
-                }
-                else if(this.props.location.currentUser.role==="Reviewer"){
-                  this.props.history.push({ 
-                    pathname:"/reviewer", 
-                    currentUser:this.props.location.currentUser,
-                    school:this.props.location.school
-                  });
-                }
-              else if(this.props.location.currentUser.role==="Approver"){
-                this.props.history.push({ 
-                  pathname:"/approver", 
-                  currentUser:this.props.location.currentUser,
-                  school:this.props.location.school
-                });
-              }
-            })
+                  if(this.props.location.invoice.workStatus === "Fully_Completed" && invoiceStatus === "ApprovedInvoice"){
+                    axios.put(this.props.config+"/puthuyir/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/Fully_Completed")
+                    .then(res=>{
+                        this.setState({spinner:false});
+                        window.alert("Status updated successfully");
+                        if(this.props.location.currentUser.role==="Admin"){
+                          this.props.history.push({ 
+                            pathname:"/reviewInvoice", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                        else if(this.props.location.currentUser.role==="Reviewer"){
+                          this.props.history.push({ 
+                            pathname:"/reviewer", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                        else if(this.props.location.currentUser.role==="Approver"){
+                          this.props.history.push({ 
+                            pathname:"/approver", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                      })
+                      .catch(error=>{
+                        this.setState({spinner:false});
+                        window.alert("Requirement updation failed due to "+error);
+                      })
+                    }
+                    else{
+                      this.setState({spinner:false});
+                        window.alert("Status updated successfully");
+                        if(this.props.location.currentUser.role==="Admin"){
+                          this.props.history.push({ 
+                            pathname:"/reviewInvoice", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                        else if(this.props.location.currentUser.role==="Reviewer"){
+                          this.props.history.push({ 
+                            pathname:"/reviewer", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                        else if(this.props.location.currentUser.role==="Approver"){
+                          this.props.history.push({ 
+                            pathname:"/approver", 
+                            currentUser:this.props.location.currentUser,
+                            school:this.props.location.school
+                          });
+                        }
+                    }
+                })
               })
             }
         })

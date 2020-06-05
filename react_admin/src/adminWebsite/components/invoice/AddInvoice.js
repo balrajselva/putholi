@@ -188,6 +188,9 @@ class AddInvoice extends Component {
             if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS"){
                 continue;
             }	
+            if(this.state.quotations[i].requirement.status === "Fully_Completed"){
+                continue;
+            }
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{i+1}</td>

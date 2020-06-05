@@ -465,11 +465,26 @@ class viewRequirements extends Component {
                         </ol>
                     </section>
                     <section className="content">
+                        <div className="row col-xs-12">
+                            {this.props.location.school.projects[0].adminComments !== null?
+                        <div className="box-body table-responsive no-padding">
+                            <table className="table table-hover">
+                            <tbody>
+                            <tr>
+                                    <th>Admin Comments </th>
+                                </tr>
+                                <tr>
+                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.props.location.school.projects[0].adminComments} rows="3" disabled></textarea></td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+    :null}
+                        </div>
                         <div className="row">
                         <div className="col-xs-12">
                             <div className="box">
                             <div className="box-header">
-                                <h3 className="box-title">Upload appropriate documents</h3>
+                                <h4 className="box-title">Upload quotation</h4>
                                 <div className="box-tools">
                                 <div className="input-group input-group-sm" style={{width: 150}}>
                                     <input type="text" name="table_search" className="form-control pull-right" placeholder="Search" />
