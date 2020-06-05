@@ -42,6 +42,13 @@ public class RequirementController {
 		return ResponseEntity.ok().body(requirement);
 	}
 
+	@PutMapping("/updateRequirement/invoiceStatus/{id}/{status}")
+	public ResponseEntity<Requirement> updateInvoiceStatus(@PathVariable long id, @PathVariable String status) {
+		System.out.println("Update requirement"+id+""+status);
+		Requirement requirement = requirementService.updateInvoiceStatus(id, status);
+		return ResponseEntity.ok().body(requirement);
+	}
+
 //	@PostMapping("/requirement")
 //	public ResponseEntity<?> setQuotation(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 //										  HttpServletRequest request) {

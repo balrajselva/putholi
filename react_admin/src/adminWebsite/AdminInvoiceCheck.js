@@ -37,6 +37,7 @@ class adminInvoiceCheck extends Component {
         let adminComments=null;
         let approverComments=null;
         let reviewerComments=null;
+        let fund=this.props.location.fund;
         if(target.id==="Accept"){
           if(this.props.location.currentUser.role==="Admin"){
             invoiceStatus="AdminReviewedInvoice";
@@ -49,6 +50,7 @@ class adminInvoiceCheck extends Component {
           else if(this.props.location.currentUser.role==="Approver"){
             invoiceStatus="ApprovedInvoice";
             approverComments=this.state.approverComments;
+            fund.totalAmountPaid= fund.totalAmountPaid!==null || fund.totalAmountPaid !== undefined ?parseInt(fund.totalAmountPaid)+parseInt(this.props.location.invoice.totalAmount):parseInt(this.props.location.invoice.totalAmount);
           }
         }
         else if(target.id==="Reject"){
@@ -91,9 +93,11 @@ class adminInvoiceCheck extends Component {
                 console.log(params)
                 axios.post(this.props.config+"/puthuyir/invoice/updateFund",params)
                 .then(res=>{
-                  if(this.props.location.invoice.workStatus === "Fully_Completed" && invoiceStatus === "ApprovedInvoice"){
-                    axios.put(this.props.config+"/puthuyir/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/Fully_Completed")
+                  if(invoiceStatus === "ApprovedInvoice"){
+                    axios.put(this.props.config+"/puthuyir/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/"+this.props.location.invoice.workStatus)
                     .then(res=>{
+                      axios.put(this.props.config+"/puthuyir/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
+                      .then(res=>{
                         this.setState({spinner:false});
                         window.alert("Status updated successfully");
                         if(this.props.location.currentUser.role==="Admin"){
@@ -118,6 +122,7 @@ class adminInvoiceCheck extends Component {
                           });
                         }
                       })
+                    })
                       .catch(error=>{
                         this.setState({spinner:false});
                         window.alert("Requirement updation failed due to "+error);

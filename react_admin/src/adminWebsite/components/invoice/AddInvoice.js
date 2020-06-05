@@ -185,12 +185,9 @@ class AddInvoice extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.quotations.length;i++){
-            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS"){
+            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS" || this.state.quotations[i].requirement.status === "Fully_Completed"){
                 continue;
             }	
-            if(this.state.quotations[i].requirement.status === "Fully_Completed"){
-                continue;
-            }
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{i+1}</td>
@@ -450,7 +447,7 @@ class AddInvoice extends Component {
                     invoiceId:res.data
                 })
                 updateList(res);
-                window.alert("SuccesfuLly uploaded invoice!!!");
+                window.alert("Succesfully uploaded invoice!!!");
             })
             .catch(error=>{
                 window.alert("Failed to save invoice due to "+error);

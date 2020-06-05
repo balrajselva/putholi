@@ -128,11 +128,11 @@ createTable=()=>{
     var quotation=null;
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
     // filter will always return a list
-    if(invoice[0] === null || invoice[0] === undefined || invoice[0].invoiceStatus === null){
+    for(let k=0;k<invoice.length;k++){
+    if(invoice[k] === null || invoice[k] === undefined || invoice[k].invoiceStatus === null){
       continue;
     }
     var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
-    console.log(invoice[0],fund[0])
     for(let j=0;j<this.state.quoList[reqId].length;j++){
       var tempQuo=this.state.quoList[reqId][j];
       if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
@@ -144,7 +144,7 @@ createTable=()=>{
       pathname: "/adminInvoiceCheck", 
       school:this.props.location.school,
       currentUser:this.props.location.currentUser,
-      invoice:invoice[0],
+      invoice:invoice[k],
       fund:fund[0],
       quotation:quotation,
       requirement:this.state.requirements[i],
@@ -153,11 +153,11 @@ createTable=()=>{
      if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
       continue
     // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
-     if(this.props.location.currentUser.role === "Admin" && invoice[0].invoiceStatus !== "InvoiceAdded")
+     if(this.props.location.currentUser.role === "Admin" && invoice[k].invoiceStatus !== "InvoiceAdded")
       continue
-     else if(this.props.location.currentUser.role === "Approver" && invoice[0].invoiceStatus !== "AdminReviewedInvoice")
+     else if(this.props.location.currentUser.role === "Approver" && invoice[k].invoiceStatus !== "AdminReviewedInvoice")
        continue
-     else if(this.props.location.currentUser.role === "Reviewer" && invoice[0].invoiceStatus !== "ReviewerConfirmedInvoice")
+     else if(this.props.location.currentUser.role === "Reviewer" && invoice[k].invoiceStatus !== "ReviewerConfirmedInvoice")
       continue
 
       rowsUpdated=true;
@@ -166,13 +166,14 @@ createTable=()=>{
           <td>{this.state.requirements[i].quantity}</td>                                        
           <td>{quotation.totalAmount}</td>
           <td>{fund[0].allottedAmount}</td>
-          <td>{invoice[0].totalAmount}</td>
-          <td>{invoice[0].workStatus}</td>
+          <td>{invoice[k].totalAmount}</td>
+          <td>{invoice[k].workStatus}</td>
           <td>{fund[0].totalAmountPaid}</td>
           <td>{fund[0].fundStatus}</td>
           <td><a href=""><Link to={newTo}>More Details</Link></a></td>
       </tr>)			
   }
+}
   if(rowsUpdated==false)
       rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
   return rows;
