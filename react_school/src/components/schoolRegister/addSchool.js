@@ -55,7 +55,7 @@ class AddSchool extends Component {
       reqError:null
     }
     componentDidMount(){
-      axios.get(this.props.config+"/puthuyir/lookup/getAll")
+      axios.get(this.props.config+"/lookup/getAll")
       .then(res=>{
          console.log(res.data);
          this.setState({assetTypeList:res.data});
@@ -129,7 +129,7 @@ class AddSchool extends Component {
          }
          else if(target.id==="assetType" && target.value!=="Others"){
             this.setState({spinner:true});
-            axios.get(this.props.config+"/puthuyir/lookup/field/"+target.value)
+            axios.get(this.props.config+"/lookup/field/"+target.value)
             .then(res=>{
                this.setState({
                   assetNameList:res.data,
@@ -199,7 +199,7 @@ class AddSchool extends Component {
             parent_key:aType,
             parent_field:"assettype"
          }
-         axios.post(this.props.config+"/puthuyir/lookup/save",lookup)
+         axios.post(this.props.config+"/lookup/save",lookup)
          .then(res=>{
             console.log(res.data);
          })
@@ -370,7 +370,7 @@ class AddSchool extends Component {
       var regFormModel=new FormData();
       regFormModel.set('payload',JSON.stringify(schoolDetails));
       regFormModel.append('files',this.state.fileInput)
-      axios.post(this.props.config+'/puthuyir/school',regFormModel,{
+      axios.post(this.props.config+'/school',regFormModel,{
          headers:{'Content-Type':'multipart/form-data'}
       })
       .then(res=>{

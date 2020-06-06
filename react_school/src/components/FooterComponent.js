@@ -73,7 +73,7 @@ class FooterComponent extends Component {
                                 <div className="span5">
                                     <div className="foot_logo"><a href="index.html"><img src="img/logo.png" alt="" /></a></div>
                                                   <br/>
-                                    <div className="copyright">&copy; Managed by Puthuyir Trust, To Revamp all Government Schools in Tamilnadu</div>
+                                    <div className="copyright">&copy; Managed by Putholi Trust, To Revamp all Government Schools in Tamilnadu</div>
                                 </div>
                                 <div className="span7">
                                     <div className="foot_right_block">

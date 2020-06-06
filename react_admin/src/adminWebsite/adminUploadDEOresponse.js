@@ -65,7 +65,7 @@ class adminUploadDEOresponse extends Component {
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(deoResponse));
             regFormModel.append('files',this.state.deoFile)
-            axios.post(this.props.config+"/puthuyir/school/saveDEOresponse",regFormModel)
+            axios.post(this.props.config+"/school/saveDEOresponse",regFormModel)
             .then(res=>{
                 console.log(res);
                 this.setState({

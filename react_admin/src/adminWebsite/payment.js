@@ -9,7 +9,7 @@ class payment extends Component {
     }
 
     componentDidMount(){
-        axios.get(this.props.config+"/puthuyir/trustMemberRegistration")
+        axios.get(this.props.config+"/trustMemberRegistration")
         .then(res=>{
           let resp=res.data;
           console.log(resp);
@@ -37,7 +37,7 @@ class payment extends Component {
           user:this.props.location.currentUser,
           amount:this.state.registrationFee
         }
-        axios.post(this.props.config+'/puthuyir/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
+        axios.post(this.props.config+'/donate/trustDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
         .then(response=>{
           axios.post('http://localhost:7070/payment/orders', paymentPayload)
           .then(response => {

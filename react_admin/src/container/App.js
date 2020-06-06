@@ -53,12 +53,12 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.state={config:"http://localhost:6060"}
+    this.state={config:"http://localhost:6060/putholi"}
   }
 
   saveUser=(regFormModel)=>{
     this.setState({user:regFormModel.get("payload"),spinner:true});
-    axios.post(this.state.config+'/puthuyir/user',regFormModel,{
+    axios.post(this.state.config+'/user',regFormModel,{
       headers:{'Content-Type':'multipart/form-data'}
     })
     .then(res=>{

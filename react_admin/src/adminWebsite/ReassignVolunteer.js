@@ -31,7 +31,7 @@ class ReassignVolunteer extends Component {
     }
 
     componentDidMount(){
-        axios.get(this.props.config+"/puthuyir/volunteer/getAll")
+        axios.get(this.props.config+"/volunteer/getAll")
         .then(res=>{
             console.log(res.data)
             if(parseInt(res.data.length) == parseInt(0)){
@@ -67,7 +67,7 @@ class ReassignVolunteer extends Component {
             return
         }
         this.setState({spinner:true})
-        axios.get(this.props.config+"/puthuyir/school/"+this.state.schoolId)
+        axios.get(this.props.config+"/school/"+this.state.schoolId)
         .then(res=>{
             console.log(res.data)
             if(res.data.length !== 0){
@@ -85,7 +85,7 @@ class ReassignVolunteer extends Component {
                 this.setState({
                     school:res.data
                 })
-                axios.get(this.props.config+"/puthuyir/user/"+res.data.volunteerId)
+                axios.get(this.props.config+"/user/"+res.data.volunteerId)
                 .then(res=>{
                   this.setState({
                     oldVolunteer: res.data,
@@ -119,7 +119,7 @@ class ReassignVolunteer extends Component {
         this.setState({
           spinner:true,
         })
-        axios.post(this.props.config+"/puthuyir/school/changeVolunteer/"+this.state.school.schoolId+"/"+this.state.school.volunteerId+"/"+this.state.newVolunteerId)
+        axios.post(this.props.config+"/school/changeVolunteer/"+this.state.school.schoolId+"/"+this.state.school.volunteerId+"/"+this.state.newVolunteerId)
         .then(res=>{
             console.log(res);
             this.setState({

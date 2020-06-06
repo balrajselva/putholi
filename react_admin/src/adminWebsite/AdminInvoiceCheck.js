@@ -11,7 +11,8 @@ class adminInvoiceCheck extends Component {
         approverComments:null,
         adminComments:null,
         reviewerComments:null,
-        errorMessage:null
+        errorMessage:null,
+        isProjectCompleted:false
     }
 
     handleChange=({target})=>{
@@ -50,7 +51,19 @@ class adminInvoiceCheck extends Component {
           else if(this.props.location.currentUser.role==="Approver"){
             invoiceStatus="ApprovedInvoice";
             approverComments=this.state.approverComments;
-            fund.totalAmountPaid= fund.totalAmountPaid!==null || fund.totalAmountPaid !== undefined ?parseInt(fund.totalAmountPaid)+parseInt(this.props.location.invoice.totalAmount):parseInt(this.props.location.invoice.totalAmount);
+            console.log(this.props.location.invoice.totalAmount,parseInt(this.props.location.invoice.totalAmount));
+            fund.totalAmountPaid = ((fund.totalAmountPaid !== null) ? parseInt(fund.totalAmountPaid)+parseInt(this.props.location.invoice.totalAmount):parseInt(this.props.location.invoice.totalAmount));
+            for(let i=0;i<this.props.location.school.projects.length;i++){
+              let count = 0;
+              for(let j=0;j<this.props.location.school.projects[i].requirements.length;j++){
+                if(this.props.location.school.projects[i].requirements[j].status==="Fully_Completed"){
+                  count++;
+                }
+              }
+              if(parseInt(count) === this.props.location.school.projects[i].requirements.length-1){
+                this.setState({isProjectCompleted:true})
+              }
+            }
           }
         }
         else if(target.id==="Reject"){
@@ -80,46 +93,79 @@ class adminInvoiceCheck extends Component {
             paymentMode:this.props.location.invoice.paymentMode
         }
         console.log(fundDisbursement)
-        axios.post(this.props.config+"/puthuyir/fundDisbursement",fundDisbursement)
+        axios.post(this.props.config+"/fundDisbursement",fundDisbursement)
         .then(res=>{
           if(res.data!==""){
-              axios.post(this.props.config+"/puthuyir/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
+              axios.post(this.props.config+"/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
               .then(res=>{
                 console.log(res)
                 let params ={
-                  fundMasterList:this.props.location.fund,
+                  fundMasterList:fund,
                   invoiceList:this.props.location.invoice
                 }
                 console.log(params)
-                axios.post(this.props.config+"/puthuyir/invoice/updateFund",params)
+                axios.post(this.props.config+"/invoice/updateFund",params)
                 .then(res=>{
                   if(invoiceStatus === "ApprovedInvoice"){
-                    axios.put(this.props.config+"/puthuyir/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/"+this.props.location.invoice.workStatus)
+                    axios.put(this.props.config+"/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/"+this.props.location.invoice.workStatus)
                     .then(res=>{
-                      axios.put(this.props.config+"/puthuyir/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
+                      axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
                       .then(res=>{
-                        this.setState({spinner:false});
-                        window.alert("Status updated successfully");
-                        if(this.props.location.currentUser.role==="Admin"){
-                          this.props.history.push({ 
-                            pathname:"/reviewInvoice", 
-                            currentUser:this.props.location.currentUser,
-                            school:this.props.location.school
-                          });
+                        if(this.state.isProjectCompleted === true){
+                          axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/ALL_INVOICES_PROCESSED")
+                          .then(res=>{
+                            this.setState({spinner:false});
+                            window.alert("Status updated successfully");
+                            if(this.props.location.currentUser.role==="Admin"){
+                              this.props.history.push({ 
+                                pathname:"/reviewInvoice", 
+                                currentUser:this.props.location.currentUser,
+                                school:this.props.location.school
+                              });
+                            }
+                            else if(this.props.location.currentUser.role==="Reviewer"){
+                              this.props.history.push({ 
+                                pathname:"/reviewer", 
+                                currentUser:this.props.location.currentUser,
+                                school:this.props.location.school
+                              });
+                            }
+                            else if(this.props.location.currentUser.role==="Approver"){
+                              this.props.history.push({ 
+                                pathname:"/approver", 
+                                currentUser:this.props.location.currentUser,
+                                school:this.props.location.school
+                              });
+                            }
+                          })
+                          .catch(error=>{
+                            window.alert("Failed to udpate school status due to "+error);
+                          })
                         }
-                        else if(this.props.location.currentUser.role==="Reviewer"){
-                          this.props.history.push({ 
-                            pathname:"/reviewer", 
-                            currentUser:this.props.location.currentUser,
-                            school:this.props.location.school
-                          });
-                        }
-                        else if(this.props.location.currentUser.role==="Approver"){
-                          this.props.history.push({ 
-                            pathname:"/approver", 
-                            currentUser:this.props.location.currentUser,
-                            school:this.props.location.school
-                          });
+                        else{
+                          this.setState({spinner:false});
+                          window.alert("Status updated successfully");
+                          if(this.props.location.currentUser.role==="Admin"){
+                            this.props.history.push({ 
+                              pathname:"/reviewInvoice", 
+                              currentUser:this.props.location.currentUser,
+                              school:this.props.location.school
+                            });
+                          }
+                          else if(this.props.location.currentUser.role==="Reviewer"){
+                            this.props.history.push({ 
+                              pathname:"/reviewer", 
+                              currentUser:this.props.location.currentUser,
+                              school:this.props.location.school
+                            });
+                          }
+                          else if(this.props.location.currentUser.role==="Approver"){
+                            this.props.history.push({ 
+                              pathname:"/approver", 
+                              currentUser:this.props.location.currentUser,
+                              school:this.props.location.school
+                            });
+                          }
                         }
                       })
                     })
@@ -231,6 +277,10 @@ class adminInvoiceCheck extends Component {
                                     <li>Work Status : {this.props.location.invoice.workStatus}</li>
                                     <li>Amount paid, if any : {this.props.location.fund.totalAmountPaid}</li>
                                     <li>Payment Status : {this.props.location.fund.fundStatus}</li>
+                                    {
+                                    this.props.location.currentUser.role==="Admin"?        
+                                    <li>Exceeding allotted amount : {parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid)<=parseInt(this.props.location.fund.allottedAmount)?<h4>No</h4>:<h4><b>Yes</b>{document.getElementById("Accept").setAttribute("disabled",true)}</h4>}</li>:null
+                                    }
                                 </ul>
                                 <h4>Address of the School</h4>
                                 <ul>
@@ -271,7 +321,7 @@ class adminInvoiceCheck extends Component {
                                 </div>
                             </div>
                             <div className="timeline-footer">
-                                <a id="Accept" className="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Show Invoice</a>&nbsp;
+                                <a className="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Show Invoice</a>&nbsp;
                                 <a id="Accept" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm</a>&nbsp;
                                 <a id="Reject" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</a>&nbsp;
                                 <Link to={{pathname:returnLink, currentUser:this.props.location.currentUser, school:this.props.location.school}} className="btn btn-primary btn-xs">Back to List</Link>

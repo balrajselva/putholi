@@ -16,26 +16,26 @@ state={
 
 componentDidMount(){
   console.log("School",this.props.location.school)
-  axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+  axios.get(this.props.config+"/"+this.props.location.school.schoolId+"/requirements")
   .then(res=>{
     let resp=res.data;
     console.log("Requirements",resp);
     this.setState({
         requirements:resp
   })
-  axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+  axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
   .then(res=>{
       console.log("Quotations",res.data);
       this.setState({
           quoList:res.data
       })
-      axios.get(this.props.config+"/puthuyir/invoice/"+this.props.location.school.schoolId)
+      axios.get(this.props.config+"/invoice/"+this.props.location.school.schoolId)
       .then(res=>{
           console.log("Invoices",res.data)
           this.setState({
             invoiceList:res.data
           })
-          axios.get(this.props.config+"/puthuyir/fundMaster/"+this.props.location.school.schoolId)
+          axios.get(this.props.config+"/fundMaster/"+this.props.location.school.schoolId)
           .then(res=>{
           console.log("Fund master",res.data)
             this.setState({
@@ -90,7 +90,7 @@ onSubmit=(e)=>{
   this.setState({
     spinner:true
   })
-    axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
     .then(res=>{
       this.setState({
         spinner:false
@@ -99,7 +99,7 @@ onSubmit=(e)=>{
         fundMasterList:this.state.fund,
         invoiceList:this.state.invoiceList
       }
-      axios.post(this.props.config+"/puthuyir/invoice/updateFund",params)
+      axios.post(this.props.config+"/invoice/updateFund",params)
       .then(res=>{
         window.alert("Status updated successfully!");
         this.props.history.push({

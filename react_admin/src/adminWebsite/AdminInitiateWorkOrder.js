@@ -16,7 +16,7 @@ class AdminInitiateWorkOrder extends Component {
       }
       componentDidMount(){
         console.log(this.props.location.school)
-        axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+        axios.get(this.props.config+"/"+this.props.location.school.schoolId+"/requirements")
             .then(res=>{
                 let resp=res.data;
                 console.log(resp);
@@ -24,7 +24,7 @@ class AdminInitiateWorkOrder extends Component {
                     requirements:resp,
                     spinner:false
                 })
-        axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+        axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
             console.log(res.data);
             this.setState({
@@ -102,9 +102,9 @@ class AdminInitiateWorkOrder extends Component {
             pdf.save("download.pdf");
         })
         var isDone=false;
-        axios.put(this.props.config+"/puthuyir/updateRequirement/"+this.state.currentReqId+"/"+"WORK_ORDER_GENERATED")
+        axios.put(this.props.config+"/updateRequirement/"+this.state.currentReqId+"/"+"WORK_ORDER_GENERATED")
         .then(res=>{
-          axios.get(this.props.config+"/puthuyir/"+this.props.location.school.schoolId+"/requirements")
+          axios.get(this.props.config+"/"+this.props.location.school.schoolId+"/requirements")
           .then(res=>{
               let resp=res.data;
               console.log(resp);
@@ -112,7 +112,7 @@ class AdminInitiateWorkOrder extends Component {
                   requirements:resp,
                   spinner:false
               })
-            axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+            axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
             .then(res=>{
                 console.log(res.data);
                 document.getElementById('modal-default').style.display='none';
@@ -144,7 +144,7 @@ class AdminInitiateWorkOrder extends Component {
                     this.setState({
                       spinner:false
                     })
-                    axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"WORK_ORDER_INITIATED")
+                    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+"WORK_ORDER_INITIATED")
                     .then(res=>{
                       this.setState({
                         spinner:false
@@ -287,11 +287,11 @@ class AdminInitiateWorkOrder extends Component {
                                         <div className="col-sm-3 invoice-col">
                                             From
                                             <address>
-                                            <strong>Puthuyir Trust</strong><br />
+                                            <strong>Putholi Trust</strong><br />
                                             address 1<br />
                                             address 2<br />
                                             9199889898989<br />
-                                            Email: info@puthuyir.com
+                                            Email: info@putholi.com
                                             </address>
                                         </div>
                                         {/* /.col */}
