@@ -10,7 +10,7 @@ class transactionResponse extends Component {
         let orderId=window.location.href.split("?")[1].split("&")[0].split("=")[1];
         let status=window.location.href.split("?")[1].split("&")[1].split("=")[1];
         if(orderId.startsWith("SCHL") && status==='CHARGED'){
-            axios.get(this.props.config+'/puthuyir/donate/paymentDonation/'+orderId+"/SUCCESS")
+            axios.get(this.props.config+'/donate/paymentDonation/'+orderId+"/SUCCESS")
             .then(res=>{
                 let emailPayload ={
                     from:'puthyiradminteam@putholi.com',
@@ -35,7 +35,7 @@ class transactionResponse extends Component {
             })
         }   
         else if(orderId.startsWith("TRST") && status==='CHARGED'){
-            axios.get(this.props.config+'/puthuyir/donate/trustDonation/trust/'+orderId+"/SUCCESS")
+            axios.get(this.props.config+'/donate/trustDonation/trust/'+orderId+"/SUCCESS")
             .then(res=>{
                 console.log(res.data)
                 let emailPayload ={
@@ -49,7 +49,7 @@ class transactionResponse extends Component {
                     'Content-Type': 'application/json',
                 }
                 console.log(emailPayload);
-                axios.put(this.props.config+'/puthuyir/updateUser/'+res.data.user.userid+"/NewUser")
+                axios.put(this.props.config+'/updateUser/'+res.data.user.userid+"/NewUser")
                 axios.post('http://localhost:5050/email/sendmail/trust', emailPayload, { headers: headersPassing})
                 .then(response => {
                     this.props.history.push({
@@ -59,7 +59,7 @@ class transactionResponse extends Component {
             })
         }   
         else if(orderId.startsWith("SCHL")){
-            axios.get(this.props.config+'/puthuyir/donate/paymentDonation/'+orderId+"/FAILURE")
+            axios.get(this.props.config+'/donate/paymentDonation/'+orderId+"/FAILURE")
             .then(res=>{
                 console.log(res.data)
                 window.alert("Payment failed due to "+status)
@@ -69,7 +69,7 @@ class transactionResponse extends Component {
             })
         }
         else if(orderId.startsWith("TRST")){
-            axios.get(this.props.config+'/puthuyir/donate/trustDonation/trust/'+orderId+"/FAILURE")
+            axios.get(this.props.config+'/donate/trustDonation/trust/'+orderId+"/FAILURE")
             .then(res=>{
                 console.log(res.data)
                 window.alert("Payment failed due to "+status)

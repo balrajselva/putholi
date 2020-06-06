@@ -37,7 +37,7 @@ class adminSchoolCheck extends Component {
           else if(this.props.location.currentUser.role==="Approver")
             this.state.status="ApproverRejected";
         }
-        axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
+        axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+this.state.status)
         .then(res=>{
           if(res.data!==""){
             console.log(res.data);

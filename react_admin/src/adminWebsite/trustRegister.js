@@ -13,7 +13,7 @@ class trustRegister extends Component {
   }
 
   componentDidMount(){
-    axios.get(this.props.config+"/puthuyir/trustMemberRegistration")
+    axios.get(this.props.config+"/trustMemberRegistration")
     .then(res=>{
       this.setState({
           registrationFee:res.data,
@@ -31,7 +31,7 @@ class trustRegister extends Component {
       <body className="hold-transition register-page">
         <div className="register-box">
           <div className="register-logo">
-            <b>Welcome to Puthuyir</b>
+            <b>Welcome to Putholi</b>
           </div>
           {this.state.spinner?<div class="spinner"></div>:null}
           <div className="register-box-body">

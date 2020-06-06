@@ -105,6 +105,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		Invoice invoice1 = repository.findByInvoiceId(invoice.getId());
 		invoice1.setFundMaster(fundAllotment);
 		repository.save(invoice1);
+		fundMasterRepository.save(fundAllotment);
 	}
 
 	@Override

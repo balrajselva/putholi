@@ -37,7 +37,7 @@ class AssignToVolunteer extends Component {
     getUsers=(e)=>{
         e.preventDefault();
         this.setState({spinner:true})
-        axios.get(this.props.config+"/puthuyir/volunteer/"+this.props.location.school.address.district)
+        axios.get(this.props.config+"/volunteer/"+this.props.location.school.address.district)
         .then(res=>{
             console.log(res.data)
             if(res.data.length !== 0){
@@ -48,7 +48,7 @@ class AssignToVolunteer extends Component {
             }
             else{
               window.alert("Couldn't find volunteers associated to the school district. Displaying all the available volunteers")
-              axios.get(this.props.config+"/puthuyir/volunteer/getAll")
+              axios.get(this.props.config+"/volunteer/getAll")
               .then(res=>{
                 if(res.data.length === 0){
                   window.alert("There are no active volunteers right now")
@@ -85,7 +85,7 @@ class AssignToVolunteer extends Component {
         var schoolId=this.props.location.school.schoolId
         var userId=this.state.selectedVolunteerId
         console.log(schoolId,userId);
-        axios.post(this.props.config+"/puthuyir/school/assignSchool/"+schoolId+"/"+userId)
+        axios.post(this.props.config+"/school/assignSchool/"+schoolId+"/"+userId)
         .then(res=>{
             console.log(res);
             this.setState({

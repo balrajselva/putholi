@@ -62,7 +62,7 @@ class RegistrationPage extends Component {
     };
     saveUser=(updatedUser)=>{
         this.setState({user:updatedUser,spinner:true});
-        axios.post(this.props.config+'/puthuyir/user',updatedUser)
+        axios.post(this.props.config+'/user',updatedUser)
         .then(res=>{
             console.log(res);
             this.props.history.push({
@@ -77,7 +77,7 @@ class RegistrationPage extends Component {
             emailAddress:email,
             password:password
         }
-        axios.post(this.props.config+'/puthuyir/verify_user',user)
+        axios.post(this.props.config+'/verify_user',user)
         .then(res=>{
             console.log(res);
             if(res.data.status === "ApprovedUser" && res.data.role==="beneficiary"){

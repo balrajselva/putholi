@@ -11,7 +11,7 @@ import axios from 'axios';
         spinner:true
     }
     componentDidMount(){
-        axios.get(this.props.config+"/puthuyir/getAllSchools")
+        axios.get(this.props.config+"/getAllSchools")
         .then(res=>{
             console.log(res.data)
             this.setState({

@@ -26,7 +26,7 @@ class trustLogin extends Component {
         emailAddress:this.state.email,
         password:this.state.password
       }
-      axios.post(this.props.config+"/puthuyir/verify_user",user)
+      axios.post(this.props.config+"/verify_user",user)
       .then(res=>{
         console.log(res.data)
           if(res.data.status==="PaymentPending"){

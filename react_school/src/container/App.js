@@ -30,7 +30,7 @@ import AddRequirement from '../components/schoolRegister/addRequirement';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state={config:"http://localhost:6060"}
+    this.state={config:"http://localhost:6060/putholi"}
   }
   render(){
   const SchoolLayoutRoute=({component:Component,...rest})=>{

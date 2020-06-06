@@ -32,7 +32,7 @@ class EmailDEOTrigger extends Component {
         axios.post('http://localhost:5050/email/sendattachment', dataData)
             .then((response) => {
                 console.log(response.data);
-                axios.put(this.props.config+"/puthuyir/updateSchool/"+this.props.location.school.schoolId+"/"+"DEO_EMAIL_SENT")
+                axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+"DEO_EMAIL_SENT")
                 .then(response=>{
                     this.props.history.push({ 
                         pathname:"/adminPendingWorkflow", 

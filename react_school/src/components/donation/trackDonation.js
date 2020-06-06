@@ -23,12 +23,12 @@ class TrackDonation extends Component {
    }
 
    getResult = () => {
-      //fetch(this.props.config+'/puthuyir/donation/' + this.state.trackingid)
+      //fetch(this.props.config+'/donation/' + this.state.trackingid)
       // .then((response) => {
       //  this.setState({ responsePayLoad: 'pressed' }, () => console.log(response));
       //})
 
-      fetch(this.props.config+'/puthuyir/donation/' + this.state.trackingid).
+      fetch(this.props.config+'/donation/' + this.state.trackingid).
          then(response => response.json()).
          then((repos) => {
             console.log(repos.amt);

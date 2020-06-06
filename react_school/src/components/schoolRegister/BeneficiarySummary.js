@@ -8,7 +8,7 @@ class BeneficiarySummary extends Component {
     schools:null
   }
   componentDidMount(){
-    axios.get(this.props.config+"/puthuyir/school/user/"+this.props.location.user.userid)
+    axios.get(this.props.config+"/school/user/"+this.props.location.user.userid)
     .then(res=>{
         console.log(res.data)
         this.setState({

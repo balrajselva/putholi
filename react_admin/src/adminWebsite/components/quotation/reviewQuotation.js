@@ -33,7 +33,7 @@ class reviewQuotation extends Component {
             adminComments:this.state.adminComments
         };
         this.setState({spinner:true});
-        axios.post(this.props.config+"/puthuyir/updateQuotation",updateQuotation)
+        axios.post(this.props.config+"/updateQuotation",updateQuotation)
         .then(res=>{
             window.alert("Quotations updated successfully")
             this.setState({spinner:false});
@@ -61,7 +61,7 @@ class reviewQuotation extends Component {
             rejectQuotations:this.state.quotationList
         };
         this.setState({spinner:true});
-        axios.post(this.props.config+"/puthuyir/rejectQuotations",updateQuotation)
+        axios.post(this.props.config+"/rejectQuotations",updateQuotation)
         .then(res=>{
             window.alert("Quotations rejected successfully")
             this.setState({spinner:false});
@@ -78,7 +78,7 @@ class reviewQuotation extends Component {
     }
 
     componentDidMount(){
-        axios.post(this.props.config+"/puthuyir/getQuotations/"+this.props.location.school.schoolId)
+        axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
         .then(res=>{
             console.log(res.data);
             this.setState({
