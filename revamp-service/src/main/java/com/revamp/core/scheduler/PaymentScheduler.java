@@ -31,8 +31,8 @@ public class PaymentScheduler {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentScheduler.class);
 
-	@Value("${payment.filePath}")
-	private String filePath;
+	@Value("${payment.fileName}")
+	private String fileName;
 
 	@Value("${corporate.code}")
 	private String corporateCode;
@@ -65,7 +65,7 @@ public class PaymentScheduler {
 	}
 
 	private void createPaymentFile(List<Invoice> invoices) throws FileNotFoundException {
-		File textOutputFile = new File(filePath);
+		File textOutputFile = new File(fileName);
 		try (PrintWriter pw = new PrintWriter(textOutputFile)) {
 			for (Invoice invoice : invoices) {
 				pw.println(toPaymentString(invoice));
@@ -84,17 +84,27 @@ public class PaymentScheduler {
 		logger.info("Invoice records updated to PAYMENTINITIATED");
 	}
 
+	// Mappings are done based on file format expected by the bank
 	private String toPaymentString(Invoice invoice) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(invoice.getPaymentMode() != null ? invoice.getPaymentMode() + DELIMIT : DELIMIT)
-				.append(corporateCode).append(DELIMIT).append(invoice.getId()).append(DELIMIT)
-				.append(corporateAccountNumber).append(DELIMIT).append(invoice.getCreatedDate()).append(DELIMIT)
-				.append(transactionCurrency).append(DELIMIT)
-				.append(invoice.getTotalAmount() != null ? invoice.getTotalAmount() + DELIMIT : DELIMIT)
-				.append(invoice.getCompanyName() != null ? invoice.getCompanyName() + DELIMIT : DELIMIT)
-				.append(invoice.getAccountNum() != null ? invoice.getAccountNum() + DELIMIT : DELIMIT)
-				.append(invoice.getBankName() != null ? invoice.getBankName() + DELIMIT : DELIMIT)
-				.append(invoice.getIfsc() != null ? invoice.getIfsc() + DELIMIT : DELIMIT);
+		builder.append(invoice.getBankName().equalsIgnoreCase("AXIS") ? "I" : "P").append(DELIMIT) // 1
+				.append(invoice.getPaymentMode() != null ? invoice.getPaymentMode() + DELIMIT : DELIMIT) // 2
+				.append(corporateCode).append(DELIMIT) // 3
+				.append(invoice.getId()).append(DELIMIT) // 4
+				.append(corporateAccountNumber).append(DELIMIT) // 5
+				.append(invoice.getCreatedDate()).append(DELIMIT) // 6
+				.append(transactionCurrency).append(DELIMIT) // 7
+				.append(invoice.getTotalAmount() != null ? invoice.getTotalAmount() + DELIMIT : DELIMIT) // 8
+				.append(invoice.getCompanyName() != null ? invoice.getCompanyName() + DELIMIT : DELIMIT) // 9
+				.append("1000123" + DELIMIT) // 10
+				.append(invoice.getAccountNum() != null ? invoice.getAccountNum() + DELIMIT : DELIMIT) // 11
+				.append("10" + DELIMIT) // 12
+				.append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT)
+				.append(invoice.getIfsc() != null ? invoice.getIfsc() + DELIMIT : DELIMIT) // 19
+				.append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT) // 20-25
+				.append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT) // 26-31
+				.append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT) // 32-37
+				.append(DELIMIT).append(DELIMIT).append(DELIMIT).append(DELIMIT); // 38-41
 		return builder.toString();
 	}
 
