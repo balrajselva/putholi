@@ -39,6 +39,10 @@ public class DonationController {
 
 	@Autowired
 	private TrustDonationService trustDonationService;
+
+	@Autowired
+	private CashCounterService cashCounterService;
+
 	/**
 	 * 
 	 * @param donation
@@ -137,6 +141,7 @@ public class DonationController {
 			long id = projectService.saveOrUpdate(donation.getProject().getProjectId(),donation.getEstimate(),donation.getStatus(),donation.getCollectedAmount());
 			donation.setPaymentStatus(status);
 			requirementService.updateRequirements(donation);
+			cashCounterService.saveInflowCashDonor(donation);
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
 		}
 		else{
@@ -152,6 +157,7 @@ public class DonationController {
 		if(status.equals("SUCCESS")) {
 			TrustDonation donation = trustDonationService.getByOrderId(orderId);
 			donation.setPaymentStatus(status);
+			cashCounterService.saveInflowCashTrust(donation);
 			return ResponseEntity.ok().body(trustDonationService.saveTrustUser(donation));
 		}
 		else{

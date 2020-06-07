@@ -34,6 +34,7 @@ class AddInvoice extends Component {
         workStatus:null,
         paymentMode:null,
         postImage:null,
+        fileInput:null,
         ifsc:null,
         bankName:null,
         accountNum:null

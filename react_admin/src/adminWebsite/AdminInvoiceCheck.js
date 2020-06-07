@@ -279,7 +279,7 @@ class adminInvoiceCheck extends Component {
                                     <li>Payment Status : {this.props.location.fund.fundStatus}</li>
                                     {
                                     this.props.location.currentUser.role==="Admin"?        
-                                    <li>Exceeding allotted amount : {parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid)<=parseInt(this.props.location.fund.allottedAmount)?<h4>No</h4>:<h4><b>Yes</b>{document.getElementById("Accept").setAttribute("disabled",true)}</h4>}</li>:null
+                                    <li>Exceeding allotted amount : {parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid!==null?this.props.location.fund.totalAmountPaid:0)<=parseInt(this.props.location.fund.allottedAmount)?<h4>No</h4>:<h4><b>Yes</b>{document.getElementById("Accept").setAttribute("disabled",true)}</h4>}</li>:null
                                     }
                                 </ul>
                                 <h4>Address of the School</h4>
@@ -322,8 +322,8 @@ class adminInvoiceCheck extends Component {
                             </div>
                             <div className="timeline-footer">
                                 <a className="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Show Invoice</a>&nbsp;
-                                <a id="Accept" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm</a>&nbsp;
-                                <a id="Reject" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</a>&nbsp;
+                                <div id="Accept" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm</div>&nbsp;
+                                <div id="Reject" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</div>&nbsp;
                                 <Link to={{pathname:returnLink, currentUser:this.props.location.currentUser, school:this.props.location.school}} className="btn btn-primary btn-xs">Back to List</Link>
                             </div>
                             </div>

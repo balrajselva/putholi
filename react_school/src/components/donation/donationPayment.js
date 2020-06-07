@@ -3,11 +3,28 @@ import { withRouter, Router, MemoryRouter } from 'react-router-dom';
 import axios from "axios";
 class DonationPayment extends Component {
   state={
-    spinner:false
+    processingFee:null,
+    spinner:true
   }
   constructor(props) {
     super(props);
     this.submitClick = this.submitClick.bind(this);
+  }
+
+  componentDidMount(){
+    axios.get(this.props.config+"/getProcessingFee")
+    .then(response=>{
+      this.setState({
+        processingFee:response.data,
+        spinner:false
+      })
+    })
+    .catch(error=>{
+      this.setState({spinner:false})
+      window.alert("Unable to fetch the processing fee due to "+error);
+      window.alert("Please contact administrator");
+      this.props.history.push("/index");
+    })
   }
 
   submitClick = (e) => {
@@ -26,10 +43,12 @@ class DonationPayment extends Component {
     }
 
     let paymentUserPayload = {
-      amount: this.props.history.location.user.contribution,
+      amount: Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee))),
       paymentStatus: 'PENDING',
       paymentMode: 'CASH'
     };
+
+    //To create order for bank processing
     let paymentPayload = {
       order_id:orderId,
       amount:this.props.history.location.user.contribution,
@@ -42,9 +61,9 @@ class DonationPayment extends Component {
     }
 
 let projectUpdatePayload = {}
-var finalCollectedAmount = Number(this.props.history.location.user.contribution)+ Number(this.props.history.location.user.ContributionAmount);
+var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) + Number(this.props.history.location.user.ContributionAmount);
 
-    if ((Number(this.props.history.location.user.contribution < Number(this.props.history.location.user.collectedAmount)))) {
+    if ((Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) < Number(this.props.history.location.user.collectedAmount))) {
       projectUpdatePayload={
           projectId: this.props.history.location.user.projectId,
           estimate: this.props.history.location.user.estimate,
@@ -158,9 +177,9 @@ var finalCollectedAmount = Number(this.props.history.location.user.contribution)
                               <lable>Donoted Amount details
                             </lable></td>
                             <td>
-                              Total Donated Amount : {this.props.history.location.user.contribution}
-                             Amount to School :
-                              Bank Processing Fee :
+                              Total Donated Amount : <b>{this.props.history.location.user.contribution} INR</b><br/>
+                              Amount to School : <b>{Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))} INR</b><br/>
+                              Bank Processing Fee (<b>{(Number(this.state.processingFee)*100).toFixed(2)}%</b>): <b>{Math.round(Number(this.props.history.location.user.contribution)*Number(this.state.processingFee))} INR</b>
                             </td>
                           </tr>
                           <tr>
