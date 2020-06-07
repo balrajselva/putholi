@@ -168,7 +168,7 @@ class DonationDetails extends Component {
               <ProgressBar percentage={this.state.percentage} />
 
               <div>
-                <a className="btn dark_btn marg20" href="/donation">Back to Search Results</a>
+                <a className="btn dark_btn marg20" href="/donation">Back to Search Results</a>&nbsp;
                 {this.calculateContribution() != 0 &&
                   <a onClick={e => this.onSubmit(this.props.history.location.state.state[0].id)} className="btn dark_btn marg20" >Donate Now</a>
                 }
