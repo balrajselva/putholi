@@ -94,6 +94,17 @@ class reviewQuotation extends Component {
                 getRequirementList:false
             })
         })
+
+        if(this.props.location.currentUser.role==="Admin"){
+            document.getElementById("approverComments").setAttribute("disabled",true);
+            document.getElementById("reviewerComments").setAttribute("disabled",true);
+        }
+        this.setState({
+            adminComments:this.props.location.school.projects[0].adminComments,
+            approverComments:this.props.location.school.projects[0].approverComments,
+            reviewerComments:this.props.location.school.projects[0].reviewerComments,
+        })
+
     }
 
     handleChange=({target})=>{

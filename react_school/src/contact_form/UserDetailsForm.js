@@ -298,7 +298,9 @@ class UserDetailsForm extends Component {
                         <td><input class="form-control" type="text" id="pincode" onChange={this.handleChange} onMouseLeave={()=>this.currentPincode()}/>
                         <span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
-                        <td>Localtiy : </td>
+                        </tr>
+                        <tr>
+                        <td>Locality : </td>
                         <select class="dropdown" id="selectedLocality" value={this.state.selectedLocality} onChange={this.handleChange}>
                                 <option value="" selected hidden>Select Locality</option>
                                 {this.state.createDropDown?this.state.locality.map((locality) => <option key={locality.Name} value={locality.Name}>{locality.Name}</option>):null}
@@ -311,6 +313,8 @@ class UserDetailsForm extends Component {
                         <td><input class="form-control" type="text" id="city" value={this.state.city} onChange={this.handleChange}/>
                         <span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
+                        </tr>
+                        <tr>
                         <td>District :</td>
                         <td><input class="form-control" type="text" id="district" value={this.state.district} onChange={this.handleChange}/>
                         <span style={{ fontSize: 22, color: "red" }}>*</span></td>
@@ -319,6 +323,8 @@ class UserDetailsForm extends Component {
                     <tr>
                         <td>State : </td>
                         <td><input class="form-control" type="text" id="state" value={this.state.state} onChange={this.handleChange}/><span style={{ fontSize: 22, color: "red" }}>*</span></td>
+                        </tr>
+                        <tr>
                         <td>Country : </td>
                         <td><input class="form-control" type="text" id="country" value={this.state.country} onChange={this.handleChange}/><span style={{ fontSize: 22, color: "red" }}>*</span></td>
                     </tr>
@@ -351,7 +357,6 @@ class UserDetailsForm extends Component {
                     <tr>
                         <td>Upload Identity proof : </td>
                         <td><input class="form-control" type="file" id="identityProof" accept="image/x-png,image/jpeg" onChange={this.handleChange}/>
-                        <span style={{ fontSize: 22, color: "red" }}>*</span>
                         </td>
                         <td colSpan="2">{this.state.localImageUrl?<div>Id proof preview:</div>:null}</td>
                     </tr>

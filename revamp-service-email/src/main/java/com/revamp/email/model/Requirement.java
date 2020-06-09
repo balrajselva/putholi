@@ -56,5 +56,8 @@ public class Requirement extends AuditableEntity implements java.io.Serializable
 
 	@JsonIgnore
 	private String preImages;
-
+	
+	@JsonIgnore
+	private String invoiceStatus;
+	
 }

@@ -36,6 +36,8 @@ class AddInvoice extends Component {
         postImage:null,
         fileInput:null,
         ifsc:null,
+        accountType:null,
+        vendorCode:null,
         bankName:null,
         accountNum:null
     }
@@ -265,6 +267,13 @@ class AddInvoice extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
+        else if(this.state.pincode===null || isNaN(this.state.pincode)){
+            this.setState({
+                lastErrorField:"pincode",
+                errorMessage:"Please enter valid pincode"
+            })
+            document.getElementById('pincode').style.borderColor="red";
+        }
         else if(this.state.invoiceDate===null || this.isFutureDate(this.state.invoiceDate) === true){
             console.log(this.state.invoiceDate,this.isFutureDate(this.state.invoiceDate))
             this.setState({
@@ -276,7 +285,7 @@ class AddInvoice extends Component {
         else if(this.state.invoicePreparedBy===null){
             this.setState({
                 lastErrorField:"invoicePreparedBy",
-                errorMessage:"Please select invoicePreparedBy"
+                errorMessage:"Please enter Person / Vendor Name"
             });
             document.getElementById('invoicePreparedBy').style.borderColor="red";
         }
@@ -287,6 +296,7 @@ class AddInvoice extends Component {
             })
             document.getElementById('discountDetails').style.borderColor="red";
         }
+        
         else if(this.state.itemDescription===null){
             this.setState({
                 lastErrorField:"itemDescription",
@@ -351,9 +361,12 @@ class AddInvoice extends Component {
         else if(this.state.bankName===null){
             this.setState({
                 lastErrorField:"bankName",
-                errorMessage:"Please enter bank name"
+                errorMessage:"Please Select Bank Name"
             })
         }
+
+        
+        
         else if(this.state.ifsc===null){
             this.setState({
                 lastErrorField:"ifsc",
@@ -363,7 +376,7 @@ class AddInvoice extends Component {
         else if(this.state.paymentMode===null){
             this.setState({
                 lastErrorField:"paymentMode",
-                errorMessage:"Please enter payment mode"
+                errorMessage:"Please selct payment mode"
             })
         }
         else if(this.state.accountNum===null || isNaN(this.state.totalAmount)){
@@ -372,12 +385,26 @@ class AddInvoice extends Component {
                 errorMessage:"Please enter account number"
             })
         }
+        
         else if(this.state.workStatus===null){
             this.setState({
                 lastErrorField:"workStatus",
                 errorMessage:"Please select work status"
             })
         }
+        else if(this.state.accountType===null){
+            this.setState({
+                lastErrorField:"accountType",
+                errorMessage:"Please select Account Type"
+            })
+        }
+        else if(this.state.vendorCode===null){
+            this.setState({
+                lastErrorField:"vendorCode",
+                errorMessage:"Please Enter VendorCode"
+            })
+        }
+
         else{
             document.getElementById("modal-default").style.display="none";
             document.getElementById("mainContent").class="skin-blue sidebar-mini";
@@ -398,6 +425,8 @@ class AddInvoice extends Component {
             document.getElementById('paymentMode').style.borderColor="#d2d6de";
             document.getElementById('workStatus').style.borderColor="#d2d6de";
             document.getElementById('accountNum').style.borderColor="#d2d6de";
+            document.getElementById('accountType').style.borderColor="#d2d6de";
+            document.getElementById('vendorCode').style.borderColor="#d2d6de";
             document.getElementById('postImage').style.borderColor="#d2d6de";
             console.log(this.state.quotations.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
             const invoice={
@@ -419,7 +448,10 @@ class AddInvoice extends Component {
                 tax:this.state.tax,
                 shippingCost:this.state.shippingCost,
                 totalAmount:this.state.totalAmount,
+                invoicePreparedBy:this.state.invoicePreparedBy,
                 workStatus:this.state.workStatus,
+                accountType:this.state.accountType,
+                vendorCode:this.state.vendorCode,
                 bankName:this.state.bankName,
                 ifsc:this.state.ifsc,
                 paymentMode:this.state.paymentMode,
@@ -473,6 +505,8 @@ class AddInvoice extends Component {
                     unitPrice:this.state.unitPrice,
                     tax:this.state.tax,
                     shippingCost:this.state.shippingCost,
+                    vendorCode:this.state.vendorCode,
+                    accountType:this.state.accountType,
                     totalAmount:this.state.totalAmount,
                     postImage:this.state.postImage,
                     fileInput:this.state.fileInput,
@@ -584,6 +618,14 @@ class AddInvoice extends Component {
                                                     <input type="text" className="form-control" id="comment"placeholder="Comment / Special instructions" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
+                                                    <select className="form-control select2" style={{width: '100%'}} id="accountType" value={this.state.accountType} onChange={this.handleChange}>
+                                                        <option selected="selected" disabled>Select Account Type</option>
+                                                        <option key="Savings" value="Savings Account">Savings</option>
+                                                        <option key="Current" value="Current Account">Current</option>
+                                                        <option key="Current" value="Current Account">Cash Credit</option>
+                                                    </select>                                                    
+                                                    </div>
+                                                    <div className="form-group">
                                                     <input type="text" className="form-control" id="invoicePreparedBy" placeholder="Invoice Prepared by" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
@@ -623,13 +665,28 @@ class AddInvoice extends Component {
                                                     <input type="text" className="form-control" id="totalAmount" placeholder="Total amount" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="bankName" placeholder="Bank Name" onChange={this.handleChange}/>
+                                                    <select className="form-control select2" style={{width: '100%'}} id="bankName" value={this.state.bankName} onChange={this.handleChange}>
+                                                        <option selected="selected" disabled>Select Bank Name</option>
+                                                        <option key="Axis" value="Axis">Axis</option>
+                                                        <option key="ICICI" value="ICICI">ICICI</option>
+                                                        <option key="HDFC" value="HDFC">HDFC</option>
+                                                        <option key="SBI" value="SBI">SBI</option>
+                                                        <option key="KVB" value="KVB">KVB</option>
+                                                        <option key="Others" value="Others">Others</option>
+                                                    </select>                                                    
+                                                    </div>
+                                                    <div className="form-group">
+                                                    <input type="text" className="form-control" id="vendorCode" placeholder="Vendor Code" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="ifsc" placeholder="IFSC code" onChange={this.handleChange}/>
                                                     </div>
                                                     <div className="form-group">
-                                                    <input type="text" className="form-control" id="paymentMode" placeholder="Payment Mode" onChange={this.handleChange}/>
+                                                    <select className="form-control select2" style={{width: '100%'}} id="paymentMode" value={this.state.paymentMode} onChange={this.handleChange}>
+                                                        <option selected="selected" disabled>Select Payment Mode</option>
+                                                        <option key="NEFT" value="NEFT">NEFT</option>
+                                                        <option key="RTGS" value="RTGS">RTGS</option>
+                                                    </select>                                                    
                                                     </div>
                                                     <div className="form-group">
                                                     <input type="text" className="form-control" id="accountNum" placeholder="Account Number" onChange={this.handleChange}/>
