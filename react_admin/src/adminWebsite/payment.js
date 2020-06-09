@@ -4,19 +4,38 @@ import axios from 'axios'
 
 class payment extends Component {
     state={
+        totalAmount:null,
         registrationFee:null,
+        processingFee:null,
+        interest:null,
         spinner:false
     }
 
     componentDidMount(){
+      let totalAmount = null;
+      let processingFee = null;
+      let registrationFee = null;
         axios.get(this.props.config+"/trustMemberRegistration")
         .then(res=>{
-          let resp=res.data;
-          console.log(resp);
-          this.setState({
-              registrationFee:res.data,
-              spinner:false
-          })
+          totalAmount = res.data;
+          axios.get(this.props.config+"/getProcessingFee")
+            .then(response=>{
+              processingFee = Math.round(Number(totalAmount) * Number(response.data));
+              registrationFee = Math.round(Number(totalAmount) - Number(processingFee))
+              this.setState({
+                interest:response.data,
+                totalAmount:totalAmount,
+                processingFee:processingFee,
+                registrationFee:registrationFee,
+                spinner:false
+              })
+            })
+            .catch(error=>{
+              this.setState({spinner:false})
+              window.alert("Unable to fetch the processing fee due to "+ error);
+              window.alert("Please contact administrator");
+              this.props.history.push("/trustRegister");
+            })
         })
         .catch(error=>{
           window.alert("Sorry for inconvinience.Could not proceed due to "+error +"Please try again");
@@ -29,7 +48,7 @@ class payment extends Component {
         let orderId = "TRST"+new Date().getTime();
         let paymentPayload = {
             order_id:orderId,
-            amount:this.state.registrationFee
+            amount:this.state.totalAmount
         }
         console.log(paymentPayload)
         let donationUserPayload={
@@ -61,12 +80,22 @@ class payment extends Component {
                     <div className="form-group has-feedback">
                       <label for="name">Name</label>
                       <input type="text" className="form-control" placeholder="Name" id="name" value={this.props.location.currentUser.firstName} disabled/>
-                      <span className="glyphicon glyphicon-envelope form-control-feedback" />
+                      <span className="glyphicon glyphicon-user form-control-feedback" />
+                    </div>
+                    <div className="form-group has-feedback">
+                      <label for="registrationFee">Total Amount</label>
+                      <input type="text" className="form-control" placeholder="Total Amount" id="totalAmount" value={this.state.totalAmount+" INR"} disabled/>
+                      <span className="glyphicon glyphicon-euro form-control-feedback" />
                     </div>
                     <div className="form-group has-feedback">
                       <label for="registrationFee">Registration Fee</label>
-                      <input type="text" className="form-control" placeholder="Registration fee" id="registrationFee" value={this.state.registrationFee} disabled/>
-                      <span className="glyphicon glyphicon-lock form-control-feedback" />
+                      <input type="text" className="form-control" placeholder="Registration fee" id="registrationFee" value={this.state.registrationFee+" INR"} disabled/>
+                      <span className="glyphicon glyphicon-euro form-control-feedback" />
+                    </div>
+                    <div className="form-group has-feedback">
+                      <label for="registrationFee">Bank Processing Fee {(Number(this.state.interest)*100).toFixed(2)} %</label>
+                      <input type="text" className="form-control" placeholder="Bank Processing Fee" id="bankProcessingFee" value={this.state.processingFee+" INR"} disabled/>
+                      <span className="glyphicon glyphicon-euro form-control-feedback" />
                     </div>
                     <div className="row">
                       {/* /.col */}

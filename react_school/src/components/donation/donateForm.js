@@ -439,7 +439,7 @@ class DonationForm extends Component {
                           </div>
                           </div>
                           <div className="form-actions" id="onebn">
-                          <button tye="submit" className="btn send_btn">Login</button>
+                          <button tye="submit" className="btn send_btn">Login</button>&nbsp;&nbsp;
                           <a className="btn dark_btn" href="/donation">Back to Search Results</a>
                         </div>
                     </fieldset>
