@@ -86,6 +86,12 @@ public class Invoice extends AuditableEntity {
 
 	@Column(name = "work_status")
 	private String workStatus;
+	
+	@Column(name = "acct_type")
+	private String accountType;
+	
+	@Column(name = "vendor_code")
+	private String vendorCode;
 
 	@Column(name = "invoice_status")
 	private String invoiceStatus;
