@@ -65,117 +65,25 @@ class adminInvoiceCheck extends Component {
               }
             }
           }
-        }
-        else if(target.id==="Reject"){
-          if(this.props.location.currentUser.role==="Admin"){
-            invoiceStatus="AdminRejectedInvoice";
-            adminComments=this.state.adminComments;
-          }
-          else if(this.props.location.currentUser.role==="Reviewer"){
-            invoiceStatus="ReviewerRejectedInvoice";
-            reviewerComments=this.state.reviewerComments;
-          }
-          else if(this.props.location.currentUser.role==="Approver"){
-            invoiceStatus="ApproverRejectedInvoice";
-            approverComments=this.state.approverComments;
-          }
-        }
-        let fundDisbursement={
-            invoiceId:this.props.location.invoice.id,
-            invoiceAmount:this.props.location.invoice.invoiceAmount,
-            adminComments:adminComments,
-            reviewerComments:reviewerComments,
-            approverComments:approverComments,
-            initiatedBy:this.props.location.currentUser.userid,
-            bankName:this.props.location.invoice.bankName,
-            ifscCode:this.props.location.invoice.ifsc,
-            accountNumber:this.props.location.invoice.accountNum,
-            paymentMode:this.props.location.invoice.paymentMode
-        }
-        console.log(fundDisbursement)
-        axios.post(this.props.config+"/fundDisbursement",fundDisbursement)
-        .then(res=>{
-          if(res.data!==""){
-              axios.post(this.props.config+"/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
-              .then(res=>{
-                console.log(res)
-                let params ={
-                  fundMasterList:fund,
-                  invoiceList:this.props.location.invoice
-                }
-                console.log(params)
-                axios.post(this.props.config+"/invoice/updateFund",params)
+          axios.post(this.props.config+"/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
+          .then(res=>{
+            console.log(res)
+            let params ={
+              fundMasterList:fund,
+              invoiceList:this.props.location.invoice
+            }
+            console.log(params)
+            axios.post(this.props.config+"/invoice/updateFund",params)
+            .then(res=>{
+              if(invoiceStatus === "ApprovedInvoice"){
+                axios.put(this.props.config+"/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/"+this.props.location.invoice.workStatus)
                 .then(res=>{
-                  if(invoiceStatus === "ApprovedInvoice"){
-                    axios.put(this.props.config+"/updateRequirement/"+this.props.location.invoice.requirement.requirementId+"/"+this.props.location.invoice.workStatus)
-                    .then(res=>{
-                      axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
+                  axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
+                  .then(res=>{
+                    if(this.state.isProjectCompleted === true){
+                      axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/ALL_INVOICES_PROCESSED")
                       .then(res=>{
-                        if(this.state.isProjectCompleted === true){
-                          axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/ALL_INVOICES_PROCESSED")
-                          .then(res=>{
-                            this.setState({spinner:false});
-                            window.alert("Status updated successfully");
-                            if(this.props.location.currentUser.role==="Admin"){
-                              this.props.history.push({ 
-                                pathname:"/reviewInvoice", 
-                                currentUser:this.props.location.currentUser,
-                                school:this.props.location.school
-                              });
-                            }
-                            else if(this.props.location.currentUser.role==="Reviewer"){
-                              this.props.history.push({ 
-                                pathname:"/reviewer", 
-                                currentUser:this.props.location.currentUser,
-                                school:this.props.location.school
-                              });
-                            }
-                            else if(this.props.location.currentUser.role==="Approver"){
-                              this.props.history.push({ 
-                                pathname:"/approver", 
-                                currentUser:this.props.location.currentUser,
-                                school:this.props.location.school
-                              });
-                            }
-                          })
-                          .catch(error=>{
-                            window.alert("Failed to udpate school status due to "+error);
-                          })
-                        }
-                        else{
-                          this.setState({spinner:false});
-                          window.alert("Status updated successfully");
-                          if(this.props.location.currentUser.role==="Admin"){
-                            this.props.history.push({ 
-                              pathname:"/reviewInvoice", 
-                              currentUser:this.props.location.currentUser,
-                              school:this.props.location.school
-                            });
-                          }
-                          else if(this.props.location.currentUser.role==="Reviewer"){
-                            this.props.history.push({ 
-                              pathname:"/reviewer", 
-                              currentUser:this.props.location.currentUser,
-                              school:this.props.location.school
-                            });
-                          }
-                          else if(this.props.location.currentUser.role==="Approver"){
-                            this.props.history.push({ 
-                              pathname:"/approver", 
-                              currentUser:this.props.location.currentUser,
-                              school:this.props.location.school
-                            });
-                          }
-                        }
-                      })
-                    })
-                      .catch(error=>{
                         this.setState({spinner:false});
-                        window.alert("Requirement updation failed due to "+error);
-                      })
-                    }
-                    else{
-                      this.setState({spinner:false});
                         window.alert("Status updated successfully");
                         if(this.props.location.currentUser.role==="Admin"){
                           this.props.history.push({ 
@@ -198,15 +106,139 @@ class adminInvoiceCheck extends Component {
                             school:this.props.location.school
                           });
                         }
+                      })
+                      .catch(error=>{
+                        window.alert("Failed to udpate school status due to "+error);
+                      })
                     }
+                    else{
+                      this.setState({spinner:false});
+                      window.alert("Status updated successfully");
+                      if(this.props.location.currentUser.role==="Admin"){
+                        this.props.history.push({ 
+                          pathname:"/reviewInvoice", 
+                          currentUser:this.props.location.currentUser,
+                          school:this.props.location.school
+                        });
+                      }
+                      else if(this.props.location.currentUser.role==="Reviewer"){
+                        this.props.history.push({ 
+                          pathname:"/reviewer", 
+                          currentUser:this.props.location.currentUser,
+                          school:this.props.location.school
+                        });
+                      }
+                      else if(this.props.location.currentUser.role==="Approver"){
+                        this.props.history.push({ 
+                          pathname:"/approver", 
+                          currentUser:this.props.location.currentUser,
+                          school:this.props.location.school
+                        });
+                      }
+                    }
+                  })
                 })
+                  .catch(error=>{
+                    this.setState({spinner:false});
+                    window.alert("Requirement updation failed due to "+error);
+                  })
+                }
+                else{
+                  this.setState({spinner:false});
+                    window.alert("Status updated successfully");
+                    if(this.props.location.currentUser.role==="Admin"){
+                      this.props.history.push({ 
+                        pathname:"/reviewInvoice", 
+                        currentUser:this.props.location.currentUser,
+                        school:this.props.location.school
+                      });
+                    }
+                    else if(this.props.location.currentUser.role==="Reviewer"){
+                      this.props.history.push({ 
+                        pathname:"/reviewer", 
+                        currentUser:this.props.location.currentUser,
+                        school:this.props.location.school
+                      });
+                    }
+                    else if(this.props.location.currentUser.role==="Approver"){
+                      this.props.history.push({ 
+                        pathname:"/approver", 
+                        currentUser:this.props.location.currentUser,
+                        school:this.props.location.school
+                      });
+                    }
+                }
+            })
+          })
+          .catch(error=>{
+              this.setState({spinner:false});
+              window.alert("Status updated failed due to "+error);
+          })
+        }
+        else if(target.id==="Reject"){
+          if(this.props.location.currentUser.role==="Admin"){
+            invoiceStatus="AdminRejectedInvoice";
+            adminComments=this.state.adminComments;
+          }
+          else if(this.props.location.currentUser.role==="Reviewer"){
+            invoiceStatus="ReviewerRejectedInvoice";
+            reviewerComments=this.state.reviewerComments;
+          }
+          else if(this.props.location.currentUser.role==="Approver"){
+            invoiceStatus="ApproverRejectedInvoice";
+            approverComments=this.state.approverComments;
+          }
+          axios.post(this.props.config+"/invoice/status/"+this.props.location.invoice.id+"/"+this.props.location.currentUser.userid+"/"+invoiceStatus)
+          .then(res=>{
+            axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_REJECTED")
+              .then(res=>{
+                this.setState({spinner:false});
+                window.alert("Invoice rejection is successfull");
+                if(this.props.location.currentUser.role==="Admin"){
+                  this.props.history.push({ 
+                    pathname:"/reviewInvoice", 
+                    currentUser:this.props.location.currentUser,
+                    school:this.props.location.school
+                  });
+                }
+                else if(this.props.location.currentUser.role==="Reviewer"){
+                  this.props.history.push({ 
+                    pathname:"/reviewer", 
+                    currentUser:this.props.location.currentUser,
+                    school:this.props.location.school
+                  });
+                }
+                else if(this.props.location.currentUser.role==="Approver"){
+                  this.props.history.push({ 
+                    pathname:"/approver", 
+                    currentUser:this.props.location.currentUser,
+                    school:this.props.location.school
+                  });
+                }
               })
-            }
-        })
-        .catch(error=>{
+          })
+          .catch(error=>{
             this.setState({spinner:false});
-            window.alert("Status updated failed due to "+error);
-        })
+            window.alert("Invoice rejection failed due to "+error);
+          })
+        }
+        // let fundDisbursement={
+        //     invoiceId:this.props.location.invoice.id,
+        //     invoiceAmount:this.props.location.invoice.invoiceAmount,
+        //     adminComments:adminComments,
+        //     reviewerComments:reviewerComments,
+        //     approverComments:approverComments,
+        //     initiatedBy:this.props.location.currentUser.userid,
+        //     bankName:this.props.location.invoice.bankName,
+        //     ifscCode:this.props.location.invoice.ifsc,
+        //     accountNumber:this.props.location.invoice.accountNum,
+        //     paymentMode:this.props.location.invoice.paymentMode
+        // }
+        // console.log(fundDisbursement)
+        // axios.post(this.props.config+"/fundDisbursement",fundDisbursement)
+        // .then(res=>{
+          // if(res.data!==""){
+             
       }
 
    componentDidMount(){

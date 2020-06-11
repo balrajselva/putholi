@@ -125,4 +125,18 @@ public class InvoiceController {
 		invoiceService.updateStatus(invoiceId,userId,status);
 		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
 	}
+
+	@PostMapping("/invoice/updateStatus")
+	public ResponseEntity<String> updateStatus(@RequestBody Payload payload) {
+		if(payload.getAdminComments()!=null) {
+			invoiceService.updateAdminComments(payload.getInvoiceId(), payload.getAdminComments());
+		}
+		else if(payload.getApproverComments()!=null){
+			invoiceService.updateApproverComments(payload.getInvoiceId(), payload.getApproverComments());
+		}
+		else if(payload.getReviewerComments()!=null){
+			invoiceService.updateReviewerComments(payload.getInvoiceId(), payload.getReviewerComments());
+		}
+		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
+	}
 }

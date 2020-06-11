@@ -77,10 +77,10 @@ class adminPendingWorkflow extends Component {
                 nextPage="workOrder"
                 pageLink="Initiate Work Order";
             }
-            if(this.state.schools[i].schoolStatus==="INVOICE_APPROVED"){
-                nextPage="fundDisbursement"
-                pageLink="Initiate Fund Disbursement";
-            }
+            // if(this.state.schools[i].schoolStatus==="INVOICE_APPROVED"){
+            //     nextPage="fundDisbursement"
+            //     pageLink="Initiate Fund Disbursement";
+            // }
             const newTo = {
                 pathname: "/"+nextPage, 
                 school:this.state.schools[i],
