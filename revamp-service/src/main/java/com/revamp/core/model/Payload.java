@@ -9,5 +9,14 @@ import java.util.List;
 @Setter
 public class Payload{
     private FundAllotment fundMasterList;
+
     private Invoice invoiceList;
+
+    private String adminComments;
+
+    private String approverComments;
+
+    private String reviewerComments;
+
+    private Long invoiceId;
 }

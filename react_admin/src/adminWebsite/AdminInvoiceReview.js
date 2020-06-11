@@ -153,7 +153,7 @@ createTable=()=>{
      if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
       continue
     // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
-     if(this.props.location.currentUser.role === "Admin" && invoice[k].invoiceStatus !== "InvoiceAdded")
+     if(this.props.location.currentUser.role === "Admin" && (invoice[k].invoiceStatus !== "AdminReviewedInvoice" || invoice[k].invoiceStatus === "ReviewerConfirmedInvoice" || invoice[k].invoiceStatus === "ApprovedInvoice" || invoice[k].invoiceStatus === "AdminRejectedInvoice"))
       continue
      else if(this.props.location.currentUser.role === "Approver" && invoice[k].invoiceStatus !== "AdminReviewedInvoice")
        continue
