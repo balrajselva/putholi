@@ -53,6 +53,12 @@ class trustLogin extends Component {
               currentUser: res.data 
             });
           }
+          else if(res.data!=="" && (res.data.role==="Super User"||res.data.role==="Super Admin") && res.data.status==="SuperAdminApproved"){
+            this.props.history.push({
+              pathname: '/superAdminAccessReview',
+              currentUser: res.data 
+            });
+          }
           else if(res.data!=="" && res.data.role==="Approver" && res.data.status==="SuperAdminApproved"){
             this.props.history.push({
               pathname: '/approver',
