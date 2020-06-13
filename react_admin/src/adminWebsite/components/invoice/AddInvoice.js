@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import '../quotation/reviewQuotation.css';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 class AddInvoice extends Component {
 
@@ -161,6 +163,13 @@ class AddInvoice extends Component {
                             getQuotationList:false,
                             spinner:false
                         })
+                    })
+                }
+                else{
+                    this.setState({
+                        quotations:resp,
+                        getQuotationList:false,
+                        spinner:false
                     })
                 }
             }
@@ -456,11 +465,84 @@ class AddInvoice extends Component {
             document.getElementById('accountType').style.borderColor="#d2d6de";
             document.getElementById('vendorCode').style.borderColor="#d2d6de";
             document.getElementById('postImage').style.borderColor="#d2d6de";
-            console.log(this.state.quotations.filter(req => parseInt(req.requirementId) === parseInt(this.state.currentReqId)))
-            const invoice={
-                school:this.props.location.school.schoolId+"",
-                requirement:this.state.currentReqId,
-                projectId:this.props.location.school.projects[0].projectId,
+            confirmAlert({
+                title: 'Confirm to submit',
+                message: 'Are you sure to do this.',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => this.saveForm()
+                  },
+                  {
+                    label: 'No',
+                    onClick: () => {}
+                  }
+                ]
+              });
+        }
+    }
+
+    saveForm=()=>{
+        const invoice={
+            school:this.props.location.school.schoolId+"",
+            requirement:this.state.currentReqId,
+            projectId:this.props.location.school.projects[0].projectId,
+            companyName:this.state.companyName,
+            address_line_1:this.state.address_line_1,
+            city:this.state.city,
+            street:this.state.street,
+            pincode:this.state.pincode,
+            phoneNumber:this.state.phoneNumber,
+            comment:this.state.comment,
+            invoiceDate:this.state.invoiceDate,
+            quantity:this.state.quantity,
+            discountDetails:this.state.discountDetails,
+            itemDescription:this.state.itemDescription,
+            unitPrice:this.state.unitPrice,
+            tax:this.state.tax,
+            shippingCost:this.state.shippingCost,
+            totalAmount:this.state.totalAmount,
+            invoicePreparedBy:this.state.invoicePreparedBy,
+            workStatus:this.state.workStatus,
+            accountType:this.state.accountType,
+            vendorCode:this.state.vendorCode,
+            bankName:this.state.bankName,
+            ifsc:this.state.ifsc,
+            paymentMode:this.state.paymentMode,
+            accountNum:this.state.accountNum,
+            invoiceStatus:"InvoiceAdded",
+            proofOfId:{
+                image:this.state.fileInput,
+                comments:"",
+            },
+        }
+        this.setState({
+            spinner:true
+        });
+        var regFormModel=new FormData();
+        regFormModel.set('payload',JSON.stringify(invoice));
+        regFormModel.append('files',this.state.fileInput);
+        if(this.state.postImage!==null){
+            regFormModel.append('postImage',this.state.postImage);
+        }
+        console.log(regFormModel);
+        axios.post(this.props.config+'/invoiceUpload',regFormModel)
+        .then(res=>{ 
+            console.log(res);
+            this.setState({
+                spinner:false,
+                invoiceId:res.data
+            })
+            updateList(res);
+            window.alert("Succesfully uploaded invoice!!!");
+        })
+        .catch(error=>{
+            window.alert("Failed to save invoice due to "+error);
+        })
+        let updateList=(res)=>{
+            let ql={
+                invoiceId:res.data,
+                requirementId:this.state.currentReqId,
                 companyName:this.state.companyName,
                 address_line_1:this.state.address_line_1,
                 city:this.state.city,
@@ -468,90 +550,33 @@ class AddInvoice extends Component {
                 pincode:this.state.pincode,
                 phoneNumber:this.state.phoneNumber,
                 comment:this.state.comment,
+                invoicePreparedBy:this.state.invoicePreparedBy,
                 invoiceDate:this.state.invoiceDate,
                 quantity:this.state.quantity,
                 discountDetails:this.state.discountDetails,
                 itemDescription:this.state.itemDescription,
+                quantity:this.state.quantity,
                 unitPrice:this.state.unitPrice,
                 tax:this.state.tax,
                 shippingCost:this.state.shippingCost,
-                totalAmount:this.state.totalAmount,
-                invoicePreparedBy:this.state.invoicePreparedBy,
-                workStatus:this.state.workStatus,
-                accountType:this.state.accountType,
                 vendorCode:this.state.vendorCode,
-                bankName:this.state.bankName,
-                ifsc:this.state.ifsc,
-                paymentMode:this.state.paymentMode,
-                accountNum:this.state.accountNum,
+                accountType:this.state.accountType,
+                totalAmount:this.state.totalAmount,
+                postImage:this.state.postImage,
+                fileInput:this.state.fileInput,
                 invoiceStatus:"InvoiceAdded",
-                proofOfId:{
-                    image:this.state.fileInput,
-                    comments:"",
-                },
-            }
+                localImageUrl:this.state.localImageUrl
+            };
+            let a=this.state.quotations[this.state.invoiceRefNum].invoiceList;
+            a.push(ql);
+            let i=[...this.state.quotations];
+            i[this.state.invoiceRefNum].invoiceList=a;
+            i[this.state.invoiceRefNum].requirement.invoiceStatus="INVOICE_IN_PROGRESS"
+            console.log(i);
             this.setState({
-                spinner:true
-            });
-            var regFormModel=new FormData();
-            regFormModel.set('payload',JSON.stringify(invoice));
-            regFormModel.append('files',this.state.fileInput);
-            if(this.state.postImage!==null){
-                regFormModel.append('postImage',this.state.postImage);
-            }
-            console.log(regFormModel);
-            axios.post(this.props.config+'/invoiceUpload',regFormModel)
-            .then(res=>{ 
-                console.log(res);
-                this.setState({
-                    spinner:false,
-                    invoiceId:res.data
-                })
-                updateList(res);
-                window.alert("Succesfully uploaded invoice!!!");
+                quotations:i,
             })
-            .catch(error=>{
-                window.alert("Failed to save invoice due to "+error);
-            })
-            let updateList=(res)=>{
-                let ql={
-                    invoiceId:res.data,
-                    requirementId:this.state.currentReqId,
-                    companyName:this.state.companyName,
-                    address_line_1:this.state.address_line_1,
-                    city:this.state.city,
-                    street:this.state.street,
-                    pincode:this.state.pincode,
-                    phoneNumber:this.state.phoneNumber,
-                    comment:this.state.comment,
-                    invoicePreparedBy:this.state.invoicePreparedBy,
-                    invoiceDate:this.state.invoiceDate,
-                    quantity:this.state.quantity,
-                    discountDetails:this.state.discountDetails,
-                    itemDescription:this.state.itemDescription,
-                    quantity:this.state.quantity,
-                    unitPrice:this.state.unitPrice,
-                    tax:this.state.tax,
-                    shippingCost:this.state.shippingCost,
-                    vendorCode:this.state.vendorCode,
-                    accountType:this.state.accountType,
-                    totalAmount:this.state.totalAmount,
-                    postImage:this.state.postImage,
-                    fileInput:this.state.fileInput,
-                    invoiceStatus:"InvoiceAdded",
-                    localImageUrl:this.state.localImageUrl
-                };
-                let a=this.state.quotations[this.state.invoiceRefNum].invoiceList;
-                a.push(ql);
-                let i=[...this.state.quotations];
-                i[this.state.invoiceRefNum].invoiceList=a;
-                i[this.state.invoiceRefNum].requirement.invoiceStatus="INVOICE_IN_PROGRESS"
-                console.log(i);
-                this.setState({
-                    quotations:i,
-                })
-                console.log(i)
-            }
+            console.log(i)
         }
     }
     
