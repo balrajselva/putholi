@@ -99,7 +99,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return repository.findBySchoolId(schoolId);
 	}
 
-	@Override
+    @Override
+    public List<Invoice> getInvoiceByRequirementId(long requirementId) {
+        return repository.findByRequirementId(requirementId);
+    }
+
+    @Override
 	@Transactional
 	public void updateInvoiceAndFund(FundAllotment fundAllotment, Invoice invoice) {
 		Invoice invoice1 = repository.findByInvoiceId(invoice.getId());

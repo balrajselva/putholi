@@ -25,6 +25,8 @@ public interface InvoiceService {
 
 	List<Invoice> getInvoiceBySchoolId(long schoolId);
 
+    List<Invoice> getInvoiceByRequirementId(long requirementId);
+
     void updateInvoiceAndFund(FundAllotment fundMasterList, Invoice invoiceList);
 
     void updateStatus(Long invoiceId, Long userId,String status);

@@ -10,7 +10,7 @@ import java.util.List;
 public class Payload{
     private FundAllotment fundMasterList;
 
-    private Invoice invoiceList;
+    private Invoice invoice;
 
     private String adminComments;
 

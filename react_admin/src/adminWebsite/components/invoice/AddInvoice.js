@@ -38,10 +38,12 @@ class AddInvoice extends Component {
         ifsc:null,
         accountType:null,
         vendorCode:null,
+        oldInvoices:[],
         bankName:null,
-        accountNum:null
+        accountNum:null,
+        commentsTable:false,
+        oldInvoicesComments:true
     }
-
 
     handleChange=({target})=>{
         console.log(target)
@@ -145,11 +147,23 @@ class AddInvoice extends Component {
             for(let i=0;i<resp.length;i++){
                 resp[i].invoiceList=[]
             };
-            this.setState({
-                quotations:resp,
-                getQuotationList:false,
-                spinner:false
-            })
+            for(let j=0;j<resp.length;j++){
+                console.log(resp[j].requirement.requirementId)
+                if(resp[j].requirement.invoiceStatus === "INVOICE_REJECTED"){
+                    axios.get(this.props.config+"/invoice/requirement/"+resp[j].requirement.requirementId)
+                    .then(res=>{
+                        console.log("Invoices",res.data)
+                        let invList=[...this.state.oldInvoices];
+                        invList.push(res.data)
+                        this.setState({
+                            oldInvoices:invList,
+                            quotations:resp,
+                            getQuotationList:false,
+                            spinner:false
+                        })
+                    })
+                }
+            }
         })
     }    
     updateCurrentReqId=(e)=>{
@@ -182,8 +196,7 @@ class AddInvoice extends Component {
             quotations:i,
         })
      }
-     deletePostImage=(e)=>{
-     }
+
     createTable=()=>{
         var rows=[];
         let rowsUpdated=false;
@@ -193,7 +206,7 @@ class AddInvoice extends Component {
             }	
             rowsUpdated=true;
             rows.push(<tr>
-                <td>{i+1}</td>
+                <td>{this.state.quotations[i].requirementId}</td>
                 <td>{this.state.quotations[i].itemDescription}</td>
                 <td>{this.state.quotations[i].quantity}</td>      
                 <td>{this.state.quotations[i].totalAmount}</td>   
@@ -213,6 +226,24 @@ class AddInvoice extends Component {
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
+
+    createCommentsTable=()=>{
+        var rows=[];
+        let rowsUpdated=false;
+        for(let i=0;i<this.state.oldInvoices.length;i++){
+            rowsUpdated=true;
+            rows.push(    
+                <tr>
+                    <td>{this.state.oldInvoices[i][0].requirement.requirementId}</td>
+                    <td>{this.state.oldInvoices[i][0].adminComments}</td>
+                </tr>
+            )
+        }
+        if(rowsUpdated==false)
+            rows.push(<tr ><td align="center" colSpan="5">No rejected quotations!</td></tr>)
+        return rows;
+    }
+
     isFutureDate=(idate)=>{
         var today = new Date().getTime();
         var given = idate.split("-");
@@ -364,9 +395,6 @@ class AddInvoice extends Component {
                 errorMessage:"Please Select Bank Name"
             })
         }
-
-        
-        
         else if(this.state.ifsc===null){
             this.setState({
                 lastErrorField:"ifsc",
@@ -528,29 +556,25 @@ class AddInvoice extends Component {
     }
     
     render() {	
-        console.log(this.state.quotations);
+        console.log(this.state);
         console.log(this.props);
         return (
             <div>
             <div style={{fontSize:"large"}}>
-            {this.state.getQuotationList?this.quotationList():null}
-                <div className="content-wrapper">
+            <div className="content-wrapper">
                     <section className="content-header">
+                        {this.state.getQuotationList?this.quotationList():null}
                         <h1>
                         {this.props.location.school.schoolInfo.schoolName}
                         <small>added on</small>
                         </h1>
-                        <ol className="breadcrumb">
-                        <li><a href="../../index.html"><i className="fa fa-dashboard" /> Home</a></li>
-                        <li><a href="#">UI</a></li>
-                        </ol>
                     </section>
                     <section className="content">
                         <div className="row">
                         <div className="col-xs-12">
                             <div className="box">
                             <div className="box-header">
-                                <h3 className="box-title">Upload appropriate documents</h3>
+                                <h4 className="box-title">Upload Invoice for following requirements</h4>
                                 <div className="box-tools">
                                 <div className="input-group input-group-sm" style={{width: 150}}>
                                     <input type="text" name="table_search" className="form-control pull-right" placeholder="Search" />
@@ -564,7 +588,7 @@ class AddInvoice extends Component {
                                 <table className="table table-hover">
                                     <tbody>
                                         <tr>
-                                        <th>ID</th>
+                                        <th>Requirement ID</th>
                                         <th>Requirement</th>
                                         <th>Units</th>
                                         <th>Quoted Amount</th>
@@ -577,6 +601,31 @@ class AddInvoice extends Component {
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
+                            </div>
+                            </div>
+                            </section>
+                            
+                    <section className="content">
+                        <div className="row">
+                        <div className="col-xs-12">
+                        <div className="box">
+                            <div className="box-header">
+                                <h4 className="box-title">Rejected Invoices</h4>
+                            <div className="box-body table-responsive no-padding">
+                                <table className="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th>Requirement ID</th>
+                                            <th>Admin Comments</th>
+                                        </tr>
+                                        {this.state.getQuotationList?null:this.createCommentsTable()}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h4>Can re-upload this invoice in first table</h4>
+                            </div>
+                        
                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                             {this.state.spinner?<div class="spinner"></div>:null}
                             <div className="modal fade" id="modal-default">
@@ -622,7 +671,7 @@ class AddInvoice extends Component {
                                                         <option selected="selected" disabled>Select Account Type</option>
                                                         <option key="Savings" value="Savings Account">Savings</option>
                                                         <option key="Current" value="Current Account">Current</option>
-                                                        <option key="Current" value="Current Account">Cash Credit</option>
+                                                        <option key="CashCredit" value="Current Account">Cash Credit</option>
                                                     </select>                                                    
                                                     </div>
                                                     <div className="form-group">

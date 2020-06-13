@@ -108,6 +108,11 @@ public class InvoiceController {
 		return ResponseEntity.ok().body(invoiceService.getInvoiceBySchoolId(schoolId));
 	}
 
+	@GetMapping("/invoice/requirement/{school_id}")
+	public ResponseEntity<List<Invoice>> getInvoiceByRequrementid(@PathVariable("school_id") long schoolId) {
+		return ResponseEntity.ok().body(invoiceService.getInvoiceByRequirementId(schoolId));
+	}
+
 	@DeleteMapping("/invoice/{id}")
 	public ResponseEntity<String> deleteInvoice(@PathVariable("id") long invoiceId) {
 		invoiceService.deleteQuotation(invoiceId);
@@ -116,7 +121,16 @@ public class InvoiceController {
 
 	@PostMapping("/invoice/updateFund")
 	public ResponseEntity<String> update(@RequestBody Payload payload) {
-		invoiceService.updateInvoiceAndFund(payload.getFundMasterList(),payload.getInvoiceList());
+		invoiceService.updateInvoiceAndFund(payload.getFundMasterList(),payload.getInvoice());
+        if(payload.getInvoice() != null && payload.getAdminComments()!=null) {
+            invoiceService.updateAdminComments(payload.getInvoice().getId(), payload.getAdminComments());
+        }
+        if(payload.getInvoice() != null && payload.getApproverComments()!=null){
+            invoiceService.updateApproverComments(payload.getInvoice().getId(), payload.getApproverComments());
+        }
+        if(payload.getInvoice() != null && payload.getReviewerComments()!=null){
+            invoiceService.updateReviewerComments(payload.getInvoice().getId(), payload.getReviewerComments());
+        }
 		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
 	}
 
@@ -128,13 +142,13 @@ public class InvoiceController {
 
 	@PostMapping("/invoice/updateStatus")
 	public ResponseEntity<String> updateStatus(@RequestBody Payload payload) {
-		if(payload.getAdminComments()!=null) {
+		if(payload.getInvoiceId() != null && payload.getAdminComments() != null) {
 			invoiceService.updateAdminComments(payload.getInvoiceId(), payload.getAdminComments());
 		}
-		else if(payload.getApproverComments()!=null){
+		if(payload.getInvoiceId() != null && payload.getApproverComments()!=null){
 			invoiceService.updateApproverComments(payload.getInvoiceId(), payload.getApproverComments());
 		}
-		else if(payload.getReviewerComments()!=null){
+		if(payload.getInvoiceId() != null &&payload.getReviewerComments()!=null){
 			invoiceService.updateReviewerComments(payload.getInvoiceId(), payload.getReviewerComments());
 		}
 		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);

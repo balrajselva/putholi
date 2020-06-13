@@ -127,38 +127,40 @@ createTable=()=>{
     var reqId=this.state.requirements[i].requirementId;
     var quotation=null;
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
+    console.log(invoice)
     // filter will always return a list
     for(let k=0;k<invoice.length;k++){
-    if(invoice[k] === null || invoice[k] === undefined || invoice[k].invoiceStatus === null){
-      continue;
-    }
-    var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
-    for(let j=0;j<this.state.quoList[reqId].length;j++){
-      var tempQuo=this.state.quoList[reqId][j];
-      if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
-        quotation = tempQuo;
-        break;
+      if(invoice[k] === null || invoice[k] === undefined || invoice[k].invoiceStatus === null){
+        continue;
       }
-    }
-    const newTo = { 
-      pathname: "/adminInvoiceCheck", 
-      school:this.props.location.school,
-      currentUser:this.props.location.currentUser,
-      invoice:invoice[k],
-      fund:fund[0],
-      quotation:quotation,
-      requirement:this.state.requirements[i],
-      ...this.props
-     };
-     if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
-      continue
-    // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
-     if(this.props.location.currentUser.role === "Admin" && (invoice[k].invoiceStatus !== "AdminReviewedInvoice" || invoice[k].invoiceStatus === "ReviewerConfirmedInvoice" || invoice[k].invoiceStatus === "ApprovedInvoice" || invoice[k].invoiceStatus === "AdminRejectedInvoice"))
-      continue
-     else if(this.props.location.currentUser.role === "Approver" && invoice[k].invoiceStatus !== "AdminReviewedInvoice")
-       continue
-     else if(this.props.location.currentUser.role === "Reviewer" && invoice[k].invoiceStatus !== "ReviewerConfirmedInvoice")
-      continue
+      var fund=this.state.fund.filter(fund => fund.requirementId === reqId);
+      for(let j=0;j<this.state.quoList[reqId].length;j++){
+        var tempQuo=this.state.quoList[reqId][j];
+        if(tempQuo.quotationStatus==="QUOTATION_ACCEPTED"){
+          quotation = tempQuo;
+          break;
+        }
+      }
+      console.log(quotation,fund)
+      const newTo = { 
+        pathname: "/adminInvoiceCheck", 
+        school:this.props.location.school,
+        currentUser:this.props.location.currentUser,
+        invoice:invoice[k],
+        fund:fund[0],
+        quotation:quotation,
+        requirement:this.state.requirements[i],
+        ...this.props
+      };
+      if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
+        continue
+      // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
+      if(this.props.location.currentUser.role === "Admin" && (invoice[k].invoiceStatus === "AdminReviewedInvoice" || invoice[k].invoiceStatus === "ReviewerConfirmedInvoice" || invoice[k].invoiceStatus === "ApprovedInvoice" || invoice[k].invoiceStatus === "AdminRejectedInvoice"))
+        continue
+      else if(this.props.location.currentUser.role === "Approver" && invoice[k].invoiceStatus !== "ReviewerConfirmedInvoice")
+        continue
+      else if(this.props.location.currentUser.role === "Reviewer" && invoice[k].invoiceStatus !== "AdminReviewedInvoice")
+        continue
 
       rowsUpdated=true;
       rows.push(<tr>

@@ -38,6 +38,7 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
     
     List<Invoice> findByInvoiceStatus(String invoiceStatus);
 
-
+    @Query("SELECT u FROM Invoice u where u.requirement.requirementId=:requirementId")
+    List<Invoice> findByRequirementId(long requirementId);
 }
 
