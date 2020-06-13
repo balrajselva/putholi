@@ -70,7 +70,11 @@ class adminInvoiceCheck extends Component {
             console.log(res)
             let params ={
               fundMasterList:fund,
-              invoiceList:this.props.location.invoice
+              invoice:this.props.location.invoice,
+              invoiceId:this.props.location.invoice.invoiceId,
+              adminComments:this.state.adminComments,
+              approverComments:this.state.approverComments,
+              reviewerComments:this.state.reviewerComments
             }
             console.log(params)
             axios.post(this.props.config+"/invoice/updateFund",params)
@@ -192,29 +196,39 @@ class adminInvoiceCheck extends Component {
           .then(res=>{
             axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_REJECTED")
               .then(res=>{
-                this.setState({spinner:false});
-                window.alert("Invoice rejection is successfull");
-                if(this.props.location.currentUser.role==="Admin"){
-                  this.props.history.push({ 
-                    pathname:"/reviewInvoice", 
-                    currentUser:this.props.location.currentUser,
-                    school:this.props.location.school
-                  });
+                let params ={
+                  invoiceId:this.props.location.invoice.id,
+                  adminComments:this.state.adminComments,
+                  approverComments:this.state.approverComments,
+                  reviewerComments:this.state.reviewerComments
                 }
-                else if(this.props.location.currentUser.role==="Reviewer"){
-                  this.props.history.push({ 
-                    pathname:"/reviewer", 
-                    currentUser:this.props.location.currentUser,
-                    school:this.props.location.school
-                  });
-                }
-                else if(this.props.location.currentUser.role==="Approver"){
-                  this.props.history.push({ 
-                    pathname:"/approver", 
-                    currentUser:this.props.location.currentUser,
-                    school:this.props.location.school
-                  });
-                }
+                  console.log(params)
+                  axios.post(this.props.config+"/invoice/updateStatus",params)
+                  .then(res=>{
+                  this.setState({spinner:false});
+                  window.alert("Invoice rejection is successfull");
+                  if(this.props.location.currentUser.role==="Admin"){
+                    this.props.history.push({ 
+                      pathname:"/reviewInvoice", 
+                      currentUser:this.props.location.currentUser,
+                      school:this.props.location.school
+                    });
+                  }
+                  else if(this.props.location.currentUser.role==="Reviewer"){
+                    this.props.history.push({ 
+                      pathname:"/reviewer", 
+                      currentUser:this.props.location.currentUser,
+                      school:this.props.location.school
+                    });
+                  }
+                  else if(this.props.location.currentUser.role==="Approver"){
+                    this.props.history.push({ 
+                      pathname:"/approver", 
+                      currentUser:this.props.location.currentUser,
+                      school:this.props.location.school
+                    });
+                  }
+                })
               })
           })
           .catch(error=>{
@@ -245,6 +259,16 @@ class adminInvoiceCheck extends Component {
         if(this.props.location.currentUser.role==="Admin"){
             document.getElementById("reviewerComments").setAttribute('disabled',true)
             document.getElementById("approverComments").setAttribute('disabled',true)
+            if(this.props.location.invoice.reviewerComments!==null){
+              this.setState({
+                reviewerComments:this.props.location.invoice.reviewerComments
+              })
+            }
+            if(this.props.location.invoice.approverComments!==null){
+              this.setState({
+                reviewerComments:this.props.location.invoice.approverComments
+              })
+            }
         }
         else if(this.props.location.currentUser.role==="Reviewer"){
             document.getElementById("adminComments").setAttribute('disabled',true)
