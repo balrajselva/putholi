@@ -9,20 +9,20 @@
 
 # Eclipse #
 RemoteSystemsTempFiles/*
-revamp-service/.classpath
-revamp-service/.project
-revamp-service/.settings
-revamp-service/RemoteSystemsTempFiles
-revamp-service/.idea
+data-service/.classpath
+data-service/.project
+data-service/.settings
+data-service/RemoteSystemsTempFiles
+data-service/.idea
 /.recommenders/
 
 
 # Intellij
-revamp-service/.idea/*
+data-service/.idea/*
 revamp-service/*.iml
 revamp-service/*.iws
-revamp-service/.idea
-revamp-service/workspace.xml
+data-service/.idea
+data-service/workspace.xml
 
 
 revamp-service.iml
