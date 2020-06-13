@@ -34,25 +34,17 @@ class DonationList extends Component {
                     return(<div className="span3 element isotope-item" >
                             <div className="hover_img">
                             {donationLists.schoolImages.map(images => (
-                                
-                                   <img src={'data:image/png;base64,'+ images.image} alt="" ></img>
-                                ))}  
-                                <span className="portfolio_zoom"><a href="" rel="prettyPhoto[portfolio1]"></a></span>
-                                <span className="portfolio_link"><a href="">View item</a></span>
+                                <img src={'data:image/png;base64,'+ images.image} alt="" ></img>
+                            ))}  
                             </div>
                             <div className="item_description">
-                                <h6>
-                              
-                                    {donationLists.schoolInfo.schoolName}</h6>
+                                <h4><b>{donationLists.schoolInfo.schoolName}</b></h4>
                                 <div className="descr">
-                                    Needs 
+                                    <h5><i>Requirements</i></h5>
                                 {donationLists.projects.map(projectData => (
                                               projectData.requirements.map((value,index) =>
                                     <div>{value.quantity} {value.assetName} </div>
-                                              )
-                                ))}  
-                   
-
+                                )))}  
                                 </div>
                                 <div className="descr">Click Here to  <button onClick={e => this.toDonate(donationLists.schoolId)}>
                                     Donate
