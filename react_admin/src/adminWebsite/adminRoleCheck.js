@@ -20,6 +20,10 @@ class adminRoleCheck extends Component {
       if(target.id==="Accepted"){
         if(this.state.currentUser.role==="Admin")
           this.state.status="AdminReviewed";
+        else if(this.state.currentUser.role==="Super Admin")
+          this.state.status="SuperAdminApproved";
+        else if(this.state.currentUser.role==="Super User")
+          this.state.status="SuperUserApproved";
         else if(this.state.currentUser.role==="Reviewer")
           this.state.status="ReviewerConfirmed";
         else if(this.state.currentUser.role==="Approver")
@@ -32,6 +36,10 @@ class adminRoleCheck extends Component {
       else{
         if(this.state.currentUser.role==="Admin")
           this.state.status="AdminRejected";
+        else if(this.state.currentUser.role==="Super Admin")
+          this.state.status="SuperAdminRejected";
+        else if(this.state.currentUser.role==="Super User")
+          this.state.status="SuperUserRejected";
         else if(this.state.currentUser.role==="Reviewer")
           this.state.status="ReviewerRejected";
         else if(this.state.currentUser.role==="Approver")
@@ -52,6 +60,18 @@ class adminRoleCheck extends Component {
           if(this.state.currentUser.role==="Admin"){
             this.props.history.push({ 
               pathname:"/accessReview", 
+              currentUser:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Super Admin"){
+            this.props.history.push({ 
+              pathname:"/superAdminRoleCheck", 
+              currentUser:this.state.currentUser
+            });
+          }
+          else if(this.state.currentUser.role==="Super User"){
+            this.props.history.push({ 
+              pathname:"/superUserRoleCheck", 
               currentUser:this.state.currentUser
             });
           }

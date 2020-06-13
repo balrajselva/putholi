@@ -155,8 +155,7 @@ class AddInvoice extends Component {
                     axios.get(this.props.config+"/invoice/requirement/"+resp[j].requirement.requirementId)
                     .then(res=>{
                         console.log("Invoices",res.data)
-                        let invList=[...this.state.oldInvoices];
-                        invList.push(res.data)
+                        let invList=[...this.state.oldInvoices,...res.data];
                         this.setState({
                             oldInvoices:invList,
                             quotations:resp,
@@ -243,8 +242,9 @@ class AddInvoice extends Component {
             rowsUpdated=true;
             rows.push(    
                 <tr>
-                    <td>{this.state.oldInvoices[i][0].requirement.requirementId}</td>
-                    <td>{this.state.oldInvoices[i][0].adminComments}</td>
+                    <td>{this.state.oldInvoices[i].id}</td>
+                    <td>{this.state.oldInvoices[i].requirement.requirementId}</td>
+                    <td>{this.state.oldInvoices[i].adminComments}</td>
                 </tr>
             )
         }
@@ -478,7 +478,7 @@ class AddInvoice extends Component {
                     onClick: () => {}
                   }
                 ]
-              });
+            });
         }
     }
 
@@ -641,6 +641,7 @@ class AddInvoice extends Component {
                                 <table className="table table-hover">
                                     <tbody>
                                         <tr>
+                                            <th>Invoice ID</th>
                                             <th>Requirement ID</th>
                                             <th>Admin Comments</th>
                                         </tr>
@@ -648,7 +649,7 @@ class AddInvoice extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <h4>Can re-upload this invoice in first table</h4>
+                            <h4>Please re-upload/add invoice with appropriate information</h4>
                             </div>
                         
                             {this.state.errorMessage!=null?<div className="col-md-12" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
