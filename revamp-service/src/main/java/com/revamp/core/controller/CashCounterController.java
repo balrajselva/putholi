@@ -14,11 +14,19 @@ public class CashCounterController {
     @Value("${bank.processing.fee}")
     private String processingFee;
 
+    @Value("${adjustable.amount}")
+    private String adjustableAmount;
+
     @Autowired
     private CashCounterService cashCounterService;
 
     @GetMapping("/getProcessingFee")
     public ResponseEntity<String> getProcessingFee(){
         return ResponseEntity.ok(processingFee);
+    }
+
+    @GetMapping("/getAdjustableAmount")
+    public ResponseEntity<String> getAdjustableAmount(){
+        return ResponseEntity.ok(adjustableAmount);
     }
 }

@@ -44,6 +44,7 @@ import AdminInvoiceReview from '../adminWebsite/AdminInvoiceReview';
 import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
 import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
 import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
+import SuperAdminLayout from '../adminWebsite/components/layouts/SuperAdminLayout';
 
 class App extends Component {
   state = {
@@ -126,6 +127,15 @@ class App extends Component {
         )}/>
       )
     }
+    const SuperAdminLayoutRoute=({component:Component,...rest})=>{
+      return(
+        <Route {...rest} render={props=>(
+          <SuperAdminLayout {...props}>
+            <Component {...props}/>
+          </SuperAdminLayout>
+        )}/>
+      )
+    }
     return (
       <div>   
         <Router history={history} config={this.state.config}>
@@ -136,6 +146,10 @@ class App extends Component {
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger config={this.state.config}/>}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props} config={this.state.config}/>}/>
             <Route path="/payment" history={history} component={(props)=><Payment {...props}{...this.props} config={this.state.config}/>}/>
+            <SuperAdminLayoutRoute path="/accessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
+            <SuperAdminLayoutRoute path="/superAdminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
+            <SuperAdminLayoutRoute path="/superUserRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
+
             <AdminLayoutRoute path="/reassignVolunteer" history={history} component={(props)=><ReassignVolunteer {...props}{...this.props} config={this.state.config}/>}/>            
             <AdminLayoutRoute path="/adminNewSchoolReview" history={history} component={(props)=><AdminNewSchoolReview {...props} config={this.state.config}/>} />
             <AdminLayoutRoute path="/adminPendingWorkflow" history={history} component={(props)=><AdminPendingWorkflow {...props} config={this.state.config}/>}/>

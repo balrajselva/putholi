@@ -4,6 +4,7 @@ import axios from "axios";
 class DonationPayment extends Component {
   state={
     processingFee:null,
+    adjustableAmount:null,
     spinner:true
   }
   constructor(props) {
@@ -14,9 +15,13 @@ class DonationPayment extends Component {
   componentDidMount(){
     axios.get(this.props.config+"/getProcessingFee")
     .then(response=>{
-      this.setState({
-        processingFee:response.data,
-        spinner:false
+      axios.get(this.props.config+"/getAdjustableAmount")
+      .then(response1=>{
+        this.setState({
+          processingFee:response.data,
+          adjustableAmount:response1.data,
+          spinner:false
+        })
       })
     })
     .catch(error=>{
@@ -62,14 +67,24 @@ class DonationPayment extends Component {
 
 let projectUpdatePayload = {}
 var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) + Number(this.props.history.location.user.ContributionAmount);
-
-    if ((Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) < Number(this.props.history.location.user.collectedAmount))) {
+  console.log(Number(this.props.history.location.user.estimate)-Number(this.props.history.location.user.ContributionAmount) === Number(this.props.history.location.user.contribution))
+  console.log(this.props.history.location.user.estimate,this.props.history.location.user.ContributionAmount,this.props.history.location.user.contribution,this.state.adjustableAmount)
+  console.log((Number(this.props.history.location.user.contribution)*Number(this.state.processingFee))<Number(this.state.adjustableAmount))
+    if((Number(this.props.history.location.user.estimate)-Number(this.props.history.location.user.ContributionAmount) === Number(this.props.history.location.user.contribution)) && (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee))<=Number(this.state.adjustableAmount)){
+      projectUpdatePayload={
+        projectId: this.props.history.location.user.projectId,
+        estimate: this.props.history.location.user.estimate,
+        collectedAmount: finalCollectedAmount,
+        status:'PROJECT_COMPLETED'
+      }
+      axios.put(this.props.config+"/updateSchool/"+this.props.history.location.user.schoolId+"/READY_FOR_ALLOTMENT")
+    }
+    else if ((Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) < Number(this.props.history.location.user.collectedAmount))) {
       projectUpdatePayload={
           projectId: this.props.history.location.user.projectId,
           estimate: this.props.history.location.user.estimate,
           collectedAmount: finalCollectedAmount,
-                status:'PROJECT_INCOMPLETED'
-
+          status:'PROJECT_INCOMPLETED'
       }
     }
     else{
@@ -78,7 +93,6 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
           estimate: this.props.history.location.user.estimate,
           collectedAmount: finalCollectedAmount,
           status:'PROJECT_COMPLETED'
-
       }
     }
     let orderIdPayload={

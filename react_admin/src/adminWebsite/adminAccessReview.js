@@ -36,6 +36,20 @@ class adminAccessReview extends Component {
                     currentUser:this.state.currentUser
                 };
             }
+            else if(this.state.currentUser.role==="Super Admin"){
+                newTo = { 
+                    pathname: "/superAdminRoleCheck", 
+                    user:this.state.users[i],
+                    currentUser:this.state.currentUser
+                };
+            }
+            else if(this.state.currentUser.role==="Super User"){
+                newTo = { 
+                    pathname: "/superUserRoleCheck", 
+                    user:this.state.users[i],
+                    currentUser:this.state.currentUser
+                };
+            }
             else if(this.state.currentUser.role==="Reviewer"){
                 newTo = { 
                     pathname: "/reviewerRoleCheck", 
