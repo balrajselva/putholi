@@ -58,7 +58,7 @@ public class SchoolController {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
 			System.out.println(school);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+			if(regFormModel.getFiles() != null) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
 				long id = schoolService.save(school, filesInBytes,imgPath);
@@ -155,7 +155,7 @@ public class SchoolController {
         try {
             System.out.println("..regFormModel.getPayload().."+regFormModel );
             DEOInfo deoInfo = new ObjectMapper().readValue(regFormModel.getPayload(), DEOInfo.class);
-            if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+            if(regFormModel.getFiles() != null) {
                 Map<String, byte[]> filesInBytes = WebUtilities
                         .convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
                 long id = schoolService.saveDEOresponse(deoInfo, filesInBytes,imgPath);

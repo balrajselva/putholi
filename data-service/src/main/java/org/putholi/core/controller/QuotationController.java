@@ -55,14 +55,14 @@ public class QuotationController {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			Quotation quotation = new ObjectMapper().readValue(regFormModel.getPayload(), Quotation.class);
 			System.out.println(quotation);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+			if(regFormModel.getFiles() != null) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
 				Map<String, byte[]> preImageInBytes = null;
-				if(regFormModel.getPreImage() != null) {
-					 preImageInBytes = WebUtilities
-							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPreImage()));
-				}
+//				if(regFormModel.getPreImage() != null) {
+//					 preImageInBytes = WebUtilities
+//							.convertMultiPartToBytes(regFormModel.getPreImage());
+//				}
 				id = quotationService.save(quotation, filesInBytes, preImageInBytes, imgPath);
 			} else {
 				id = quotationService.save(quotation, null, null, imgPath);

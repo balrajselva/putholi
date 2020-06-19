@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import '../registerForm/registerForm.css';
 import axios from 'axios';
+import '../../css/sliderImage.css';
 
 class registerForm extends Component {
     state={
@@ -20,16 +21,47 @@ class registerForm extends Component {
         role:null, 
         email:null,
         phoneNumber:null,
-        identityProof:null,
+        identityProof:[],
         comments:null,
         password:null,
-        localImageUrl:null,
+        localImageUrl:[],
         password:null,
         confirmPassword:null,
         createLocalityDropDown:false,
-        lastErrorField:null
+        lastErrorField:null,
+        currentIndex: 0,
+        translateValue: 0
     }
 
+    goToPrevSlide = () => {
+        if (this.state.currentIndex === 0)
+          return;
+        this.setState(prevState => ({
+          currentIndex: prevState.currentIndex - 1,
+          translateValue: prevState.translateValue + this.slideWidth()
+        }))
+    }
+
+    goToNextSlide = () => {
+    // Exiting the method early if we are at the end of the images array.
+    // We also want to reset currentIndex and translateValue, so we return
+    // to the first image in the array.
+    if (this.state.currentIndex === this.state.localImageUrl.length - 1) {
+        return this.setState({
+        currentIndex: 0,
+        translateValue: 0
+        })
+    }
+
+    // This will not run if we met the if condition above
+    this.setState(prevState => ({
+        currentIndex: prevState.currentIndex + 1,
+        translateValue: prevState.translateValue + -(this.slideWidth())
+    }));
+    }
+    slideWidth = () => {
+    return document.querySelector('.slide').clientWidth
+    }
     submitClicked=()=>{
         //var emailRegex=/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z0-9]+$/;
         var emailRegex=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -180,7 +212,9 @@ class registerForm extends Component {
             }
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(user));
-            regFormModel.append('files',this.state.identityProof);
+            this.state.identityProof.forEach(file=>{
+                regFormModel.append('files',file);
+            })
             console.log(regFormModel);
             this.props.saveUser(regFormModel);
         }
@@ -188,31 +222,38 @@ class registerForm extends Component {
 
     handleChange=({target})=>{
         if(target.id==="identityProof"){
-            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
-                window.alert("Image size should be within 5MB");
-                return
-            }
-            else{
-                this.setState({spinner:true});
-                const reader=new FileReader();
-                const file=target.files[0]; 
-                if (file && file.type.match('image.*')) {
-                    reader.readAsDataURL(file);
+            for(let i=0;i<target.files.length;i++){
+                if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 5000){
+                    window.alert("Image size should be within 5MB");
+                    return
                 }
                 else{
-                    this.setState({
-                        identityProof:null,
-                        localImageUrl:null,
-                        spinner:false
-                    })
-                }
-                reader.onloadend=()=>{
-                    this.setState({
-                        identityProof:target.files[0],
-                        localImageUrl:reader.result,
-                        spinner:false
-                    })
-                }            
+                    this.setState({spinner:true});
+                    const reader=new FileReader();
+                    const file=target.files[i]; 
+                    if (file && file.type.match('image.*')) {
+                        reader.readAsDataURL(file);
+                    }
+                    else{
+                        this.setState({
+                            identityProof:null,
+                            localImageUrl:null,
+                            spinner:false
+                        })
+                    }
+                    reader.onloadend=()=>{
+                        console.log(target.files[i])
+                        let tempFile=[...this.state.identityProof];
+                        tempFile.push(target.files[i]);
+                        let tempUrls =[...this.state.localImageUrl];
+                        tempUrls.push(reader.result);
+                        this.setState({
+                            identityProof:tempFile,
+                            localImageUrl:tempUrls,
+                            spinner:false
+                        })
+                    }          
+                }  
             }
         }
         else{
@@ -258,6 +299,32 @@ class registerForm extends Component {
     
 
     render() {
+        console.log(this.state)
+        const Slide = ({ image }) => {
+            const styles = {
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '50% 60%'
+            }
+            return <div className="slide" style={styles}></div>
+          }
+      
+          const LeftArrow = (props) => {
+            return (
+              <div className="backArrow arrow" onClick={props.goToPrevSlide} >
+                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
+      
+          const RightArrow = (props) => {
+            return (
+              <div className="nextArrow arrow" onClick={props.goToNextSlide}>
+                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
         return (
             <div>
                <div className="row">
@@ -357,7 +424,31 @@ class registerForm extends Component {
                     </div>
                 </div>
                 {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
-                {this.state.localImageUrl?<img style={{marginLeft:"10px"}} width="80%" height="100%" src={this.state.localImageUrl} alt="Identity proof"/>:null}
+                {this.state.localImageUrl?
+                        <div className="page_container">
+                <div className="wrap">
+                <div className="container">
+                  <div className="row pad25">
+                    <div className="span8">
+                <div className="slider">
+                    <div className="slider-wrapper"
+                      style={{
+                        transform: `translateX(${this.state.translateValue}px)`,
+                        transition: 'transform ease-out 0.45s'
+                      }}>
+                      {this.state.localImageUrl.map((value, index) =>
+                        <Slide key={index} image={value} />
+                      )}
+                    </div>
+                    <LeftArrow
+                      goToPrevSlide={this.goToPrevSlide}
+                    />
+
+                    <RightArrow
+                      goToNextSlide={this.goToNextSlide}
+                    />
+                  </div></div></div></div></div></div>
+                :null}
                 <div className="checkbox icheck" style={{marginLeft:'4%'}}>
                     <input type="checkbox" id="checkBox"/> I agree to the <a href="#">terms and conditions</a>
                 </div>
