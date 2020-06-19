@@ -27,45 +27,41 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Transactional
-	public long save(User user, Map<String, byte[]> files, String imgPath) {
+	public long save(User user, List<Map<String, byte[]>> files, String imgPath) {
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..UserServiceImpl.."+fileSubPath);
+		long userId=userRepository.save(user).getUserid();
 		if (files != null && files.size() > 0) {
-
-			files.forEach((k,v) -> {
-				Set<IdentityProof> siSet = new HashSet<IdentityProof>();
-				String filePath = fileSubPath+ user.getFirstName()+"_";
-				IdentityProof id = new IdentityProof(filePath+k,v,user.getProofOfId().getComments());
-				id.setUser(user);
-				siSet.add(id);
-				user.setIdentityProof(siSet);
-			});
-		}
-		if (files != null && files.size() > 0) {
-			this.saveImgToFS(imgPath,fileSubPath,user.getIdentityProof());
+			for(int i=0;i<files.size();i++) {
+				files.get(i).forEach((k, v) -> {
+					Set<IdentityProof> siSet = new HashSet<IdentityProof>();
+					String filePath = fileSubPath + userId + "_";
+					// Save image only in fileSystem
+					this.saveImgToFS(imgPath, fileSubPath, v, filePath + k);
+					IdentityProof id = new IdentityProof(filePath + k);
+					id.setUser(user);
+					siSet.add(id);
+					user.setIdentityProof(siSet);
+				});
+			}
 		}
 		return userRepository.save(user).getUserid();
 	}
-	private void saveImgToFS(String dirPath, String fileSubPath, Set<IdentityProof> list) {
-		list.forEach(schoolImg -> {
-			String tmpDirPath = dirPath+"\\"+fileSubPath;
-			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
-				try {
-					Files.createDirectories(Paths.get(tmpDirPath));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
-
-
+	private void saveImgToFS(String dirPath, String fileSubPath, byte[] image,String filePath) {
+		String tmpDirPath = dirPath+"\\"+fileSubPath;
+		if(!Files.isDirectory(Paths.get(tmpDirPath))) {
 			try {
-				Files.write(path, schoolImg.getImage());
+				Files.createDirectories(Paths.get(tmpDirPath));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		});
+		}
+		Path path = Paths.get(dirPath+"\\"+filePath);
+		try {
+			Files.write(path, image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Transactional

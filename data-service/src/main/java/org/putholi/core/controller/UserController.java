@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost")
 @RestController
@@ -47,13 +44,6 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
-//	@PostMapping("/user")
-//	public ResponseEntity<User> save(@RequestBody User user) {
-//		System.out.println("save method called --- "+user);
-//		long id = userService.save(user, null, imgPath);
-//		user.setUserid(id);
-//		return ResponseEntity.ok().body(user);
-//	}
 	@PostMapping("/user")
 	public ResponseEntity<User> multiUploadFileModel(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
 													 HttpServletRequest request) {
@@ -61,9 +51,12 @@ public class UserController {
 		try {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			user = new ObjectMapper().readValue(regFormModel.getPayload(), User.class);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
-				Map<String, byte[]> filesInBytes = WebUtilities
-						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
+			if(regFormModel.getFiles() != null ) {
+				List<Map<String, byte[]>> filesInBytes = new ArrayList<>();
+				for(int i=0;i<regFormModel.getFiles().length;i++) {
+					filesInBytes.add(WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()[i])));
+				}
 				long id = userService.save(user, filesInBytes,imgPath);
 			} else {
 				long id = userService.save(user, null, imgPath);

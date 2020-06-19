@@ -1,0 +1,141 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+.card-list {
+    width: 85vw;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px
+}
+
+body {
+    margin: 0;
+    padding:0;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 18px;
+    color: #313131;
+    position:relative;
+  }
+
+.donation-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #95dada;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 25px;
+    cursor: pointer;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
+}
+.donation-container:hover {
+transform: scale(1.05);
+}
+
+.progress-bar {
+    position: relative;
+    height: 20px;
+    width: 750px;
+    border-radius: 50px;
+    border: 1px solid #333;
+}
+
+.filler {
+    background: #1DA598;
+    height: 100%;
+    border-radius: inherit;
+    transition: width .2s ease-in;
+}
+.dark_btn, .dark_btn:hover {
+    background:#313131; 
+	color: #fff;
+}
+.slider {
+  position: relative;
+  width: 60%;
+  height: 384px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.slider-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.slide {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+.arrow {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform ease-in .1s;
+}
+
+.nextArrow {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  z-index: 999;
+  color: #fff;
+}
+
+.backArrow {
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  z-index: 999;
+  color: #fff;
+}
+
+.fa-arrow-right:before, .fa-arrow-left:before {
+  color: #222
+}
+.triangle {
+  border-right: 10px solid; 
+  border-bottom: 10px solid;
+  height: 30px;
+  width: 30px;
+  transform: rotate(-45deg);
+}
+
+
+/* Arrow holder */
+.arrowed {
+	position: relative;
+	height: 200px; width: 200px;
+	margin: 0 20px 20px 0;
+	border: 1px solid rgba(0,0,0,0.25);
+}
+
+/* Just centering the examples */
+.arrowed div {
+	position: absolute;
+	top: 0; bottom: 0; left: 0; right: 0;
+	margin: auto;
+}
+
+/* -- ARROW 1      -- */
+
+.arrow-1 {
+	height: 15px; width: 15px;
+	border: 1px solid tomato;
+	border-width: 2px 2px 0 0;
+	transform: rotate(45deg);
+}
+.label {
+  display: inline-block;
+  width: 200px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import axios from 'axios'
+import '../adminWebsite/css/sliderImage.css';
 
 class ViewSelectedQuotation extends Component {
     state={
@@ -16,7 +17,10 @@ class ViewSelectedQuotation extends Component {
         adminComments:null,
         approverComments:null,
         reviewerComments:null,
-        showImage:false
+        showImage:false,
+        otherQuotations:null,
+        currentIndex: 0,
+        translateValue: 0
     } 
 
     handleChange=({target})=>{
@@ -161,6 +165,15 @@ class ViewSelectedQuotation extends Component {
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
+
+    viewOtherQuotations=(e)=>{
+        let reqId=e.target.id;
+        let temp= this.state.reqList[reqId].filter( req => req.quotationStatus === "QUOTATION_ADDED" )
+        this.setState({
+            otherQuotations:temp
+        })
+    }
+
     getContent=()=>{
         var content=[];
         let updated=false;
@@ -174,7 +187,7 @@ class ViewSelectedQuotation extends Component {
                     Requirement:{this.props.location.school.projects[0].requirements[i].assetName}
                     </h4>
                    
-                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1">View Other Quotations</button>  
+                    <button  id={iter} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1" onClick={(e)=>this.viewOtherQuotations(e)}>View Other Quotations</button>  
                     <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default2">View Preimages</button>  
                     
                     
@@ -228,7 +241,63 @@ class ViewSelectedQuotation extends Component {
             content.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return content;
     }
+
+    goToPrevSlide = () => {
+        if (this.state.currentIndex === 0)
+          return;
+        this.setState(prevState => ({
+          currentIndex: prevState.currentIndex - 1,
+          translateValue: prevState.translateValue + this.slideWidth()
+        }))
+    }
+
+    goToNextSlide = () => {
+    // Exiting the method early if we are at the end of the images array.
+    // We also want to reset currentIndex and translateValue, so we return
+    // to the first image in the array.
+    if (this.state.currentIndex === this.state.otherQuotations.length - 1) {
+        return this.setState({
+        currentIndex: 0,
+        translateValue: 0
+        })
+    }
+
+    // This will not run if we met the if condition above
+    this.setState(prevState => ({
+        currentIndex: prevState.currentIndex + 1,
+        translateValue: prevState.translateValue + -(this.slideWidth())
+    }));
+    }
+    slideWidth = () => {
+    return document.querySelector('.slide').clientWidth
+    }
+
     render() {
+        const Slide = ({ image }) => {
+            const styles = {
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '50% 60%'
+            }
+            return <div className="slide" style={styles}></div>
+          }
+      
+          const LeftArrow = (props) => {
+            return (
+              <div className="backArrow arrow" onClick={props.goToPrevSlide} >
+                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
+      
+          const RightArrow = (props) => {
+            return (
+              <div className="nextArrow arrow" onClick={props.goToNextSlide}>
+                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
         return (
             <div>
             <div style={{fontSize:"large"}}>
@@ -288,6 +357,7 @@ class ViewSelectedQuotation extends Component {
                       <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
+                                Selected quotation
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
                                 <span aria-hidden="true">×</span></button>
                             </div>
@@ -301,7 +371,7 @@ class ViewSelectedQuotation extends Component {
                       </div>    
                     </div>
                 </div>    
-                <div className="modal" id="modal-default1">
+                <div className="modal" id="modal-default2">
                       <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -320,15 +390,38 @@ class ViewSelectedQuotation extends Component {
                     </div>
                 </div>    
 
-                <div className="modal" id="modal-default2">
+                <div className="modal" id="modal-default1">
                       <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
+                                Other quotations
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
                                 <span aria-hidden="true">×</span></button>
                             </div>
-                            window.alert("Display Preimages here")
                             <div className="modal-body">
+                            <div className="page_container">
+                <div className="wrap">
+                <div className="container">
+                  <div className="row pad25">
+                    <div className="span8">
+                        <div className="slider">
+                            <div className="slider-wrapper"
+                            style={{
+                                transform: `translateX(${this.state.translateValue}px)`,
+                                transition: 'transform ease-out 0.45s'
+                            }}>
+                            {this.state.otherQuotations!==null ? this.state.otherQuotations.map((value, index) =>
+                                <Slide key={index} image={'data:image/png;base64,'+value.quotationImages[0].image} />
+                            ):null}
+                            </div>
+                            <LeftArrow
+                            goToPrevSlide={this.goToPrevSlide}
+                            />
+
+                            <RightArrow
+                            goToNextSlide={this.goToNextSlide}
+                            />
+                        </div></div></div></div></div></div>
                             <div className="row">
                                 <section className="content">
                                 <img src={'data:image/png;base64,'+this.state.preimage} id ="image1" alt="" ></img>

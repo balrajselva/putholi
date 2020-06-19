@@ -44,14 +44,14 @@ public class InvoiceController {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			Invoice invoice = new ObjectMapper().readValue(regFormModel.getPayload(), Invoice.class);
 			System.out.println(invoice);
-			if(regFormModel.getFiles() != null && regFormModel.getFiles().length > 0) {
+			if(regFormModel.getFiles() != null ) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
 				Map<String, byte[]> postImageInBytes = null;
-				if(regFormModel.getPreImage() != null) {
-					postImageInBytes = WebUtilities
-							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPostImage()));
-				}
+//				if(regFormModel.getPreImage() != null) {
+//					postImageInBytes = WebUtilities
+//							.convertMultiPartToBytes(regFormModel.getPostImage());
+//				}
 				 id = invoiceService.save(invoice, filesInBytes, postImageInBytes, imgPath);
 			} else {
 				 id = invoiceService.save(invoice, null, null, imgPath);

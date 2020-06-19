@@ -30,10 +30,10 @@ class viewRequirements extends Component {
         lastErrorField:null,
         fileInput:null,
         errorMessage:null,
-        currentReqId:null,
+        currentReqId:null,  
         quotationRefNum:null,
-        preImagesInput:null,
-        localPreImageUrl:null,
+        preImagesInput:[],
+        localPreImageUrl:[],
         quotaionList:[],
         quotationId:null,
         quoCount:0
@@ -48,43 +48,56 @@ class viewRequirements extends Component {
         console.log("handle change",target)
         if(target.id==="fileInput" || (parseInt(target.id.split("/").length) === parseInt(3) && target.id.split("/")[2]==="preImagesInput")){
             console.log("image input");
-            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
-                window.alert("Image size should be within 5MB");
-                return
-             }
-             else{
-              this.setState({spinner:true});
-              const reader=new FileReader();
-              const file=target.files[0]; 
-              if (file && file.type.match('image.*')) {
-                  reader.readAsDataURL(file);
-              }
-              else{
-                  this.setState({
-                    fileInput:null,
-                      localImageUrl:null,
-                      errorMessage:"",
-                      spinner:false
-                  })
-              }
-              reader.onloadend=()=>{
-                if(target.id==="fileInput"){
-                  this.setState({
-                      fileInput:target.files[0],
-                      localImageUrl:reader.result,
-                      errorMessage:"",
-                      spinner:false
-                  })
+            for(let i=0;i<target.files.length;i++){
+                if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 5000){
+                    window.alert("Image size should be within 5MB");
+                    return
                 }
-                else {
+                else{
+                this.setState({spinner:true});
+                const reader=new FileReader();
+                const file=target.files[i]; 
+                if (file && file.type.match('image.*')) {
+                    reader.readAsDataURL(file);
+                }
+                else{
                     this.setState({
-                        preImagesInput:target.files[0],
-                        localPreImageUrl:reader.result,
+                        fileInput:null,
+                        localImageUrl:null,
                         errorMessage:"",
                         spinner:false
                     })
                 }
-              }
+                reader.onloadend=()=>{
+                    if(target.id==="fileInput"){
+                        this.setState({
+                            fileInput:target.files[i],
+                            localImageUrl:reader.result,
+                            errorMessage:"",
+                            spinner:false
+                        })
+                    }
+                    else {
+                        if(this.state.preImagesInput !== [] && this.state.preImagesInput.length >= 4){
+                            this.setState({
+                                errorMessage:"Can upload only 4 Pre-Images at the max",
+                                spinner:false
+                            })
+                            return
+                        }
+                        let tempFile=[...this.state.preImagesInput];
+                        tempFile.push(target.files[i]);
+                        let tempUrls =[...this.state.localPreImageUrl];
+                        tempUrls.push(reader.result);
+                        this.setState({
+                            preImagesInput:tempFile,
+                            localPreImageUrl:tempUrls,
+                            errorMessage:"",
+                            spinner:false
+                        })
+                    }
+                }
+                }
             }
         }
         else{
@@ -132,13 +145,14 @@ class viewRequirements extends Component {
         })
     }    
     updateCurrentReqId=(e)=>{
-        if(e.target.ref !=="preImages" && this.state.preImagesInput ===null){
-            this.setState({errorMessage:"Please upload Pre-Image of requirement"});
+        if(this.state.requirements[e.target.id.split("/")[1]].preImages.length === 0 && e.target.ref !=="preImages" && (this.state.preImagesInput === [] || this.state.preImagesInput.length < 2)){
+            this.setState({errorMessage:"Please upload atleast 2 Pre-Images of requirement"});
             return;
         }
         this.setState({
             currentReqId:e.target.id.split("/")[0],
-            quotationRefNum:e.target.id.split("/")[1]
+            quotationRefNum:e.target.id.split("/")[1],
+            errorMessage:null
         })
         document.getElementById('modal-default').style.display='block';
     }
@@ -197,7 +211,7 @@ class viewRequirements extends Component {
                 </td>                    
                 <td>{this.state.requirements[i].quotaionList.length>0?this.state.requirements[i].quotaionList.map((req,j)=><div>{req.fileInput.name}<button class="btn btn-default" id={req.quotationId+"/"+i+"/"+j} onClick={(e)=>this.deleteQuotation(e)}>Delete</button></div>):null}
                 </td>
-                <td>{this.state.requirements[i].preImages !==null && this.state.requirements[i].preImages.length>0?this.state.requirements[i].preImages.map((req,j)=><div>{req.fileInput.name}</div>):null}
+                <td>{this.state.requirements[i].preImages !==null && this.state.requirements[i].preImages.length>0?this.state.requirements[i].preImages.map((req)=><div>{req.name}</div>):null}
                 </td>
             </tr>)			
         }
@@ -205,12 +219,15 @@ class viewRequirements extends Component {
             rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return rows;
     }
+    
     isFutureDate=(idate)=>{
         var today = new Date().getTime();
         var given = idate.split("-");
-        var inputDate = 0 - new Date(given[2], given[1] - 1, given[0]).getTime();
+        var inputDate = new Date(given[0],given[1] - 1, given[2]).getTime();
+        console.log(new Date(given[0],given[1] - 1, given[2]),given,today,inputDate)
         return (today - inputDate) < 0;
     }
+
 	saveClicked=()=>{
         var mobNumRegex=/^(\+\d{1,3}[- ]?)?\d{10}$/;
         if(this.state.lastErrorField!==null)
@@ -255,14 +272,14 @@ class viewRequirements extends Component {
             })
             document.getElementById('pincode').style.borderColor="red";
         }
-        else if(this.state.quotationValidityDate===null || this.isFutureDate(this.state.quotationValidityDate) === true){
+        else if(this.state.quotationValidityDate===null || this.isFutureDate(this.state.quotationValidityDate) === false){
             this.setState({
                 lastErrorField:"quotationValidityDate",
                 errorMessage:"Please select valid quotationValidityDate"
             });
             document.getElementById('quotationValidityDate').style.borderColor="red";
         }
-        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate) === false){
+        else if(this.state.quotationDate===null || this.isFutureDate(this.state.quotationDate) === true){
             this.setState({
                 lastErrorField:"quotationDate",
                 errorMessage:"Please enter valid Quotation Date"
@@ -388,8 +405,10 @@ class viewRequirements extends Component {
             var regFormModel=new FormData();
             regFormModel.set('payload',JSON.stringify(quotation));
             regFormModel.append('files',this.state.fileInput);
-            if(this.state.preImagesInput!==null){
-                regFormModel.append('preImage',this.state.preImagesInput)
+            if(this.state.preImagesInput!==[]){
+                this.state.preImagesInput.forEach(file=>{
+                    regFormModel.append('preImage',file);
+                })
             }
             axios.post(this.props.config+'/quotation',regFormModel)
             .then(res=>{
@@ -436,12 +455,12 @@ class viewRequirements extends Component {
                 quoTemp.push(ql);
                 let i=[...this.state.requirements];
                 i[this.state.quotationRefNum].quotaionList=quoTemp;
-                let preImgTemp=this.state.requirements[this.state.quotationRefNum].preImages;
-                preImgTemp.push({fileInput:this.state.preImagesInput});
+                let preImgTemp=[...this.state.requirements[this.state.quotationRefNum].preImages];
+                preImgTemp.push(...this.state.preImagesInput);
                 i[this.state.quotationRefNum].preImages= preImgTemp;
                 this.setState({
                     requirements:i,
-                    preImagesInput:null
+                    preImagesInput:[]
                 })
             }
         }

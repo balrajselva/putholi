@@ -17,24 +17,16 @@ import javax.persistence.*;
 public class IdentityProof extends AuditableEntity{
 	public IdentityProof() {}
 
-	public IdentityProof(String filePath, byte[] image, String comments) {
+	public IdentityProof(String filePath) {
 		this.filePath = filePath;
-		this.image = image;
-		this.comments = comments;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "identity_proof_id", nullable = false)
 	private long identity_proof_id;
-	
-	@Column(name="image",length = 10000,nullable = false)
-	private byte[] image;
 
 	@Column(name = "filepath")
 	private String filePath;
-
-	@Column(name = "comments")
-	String comments;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)

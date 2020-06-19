@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface UserService {
 
-	long save(User user, Map<String, byte[]> filesInBytes, String imgPath);
+	long save(User user, List<Map<String, byte[]>>filesInBytes, String imgPath);
 
 	User get(long id);
 	
