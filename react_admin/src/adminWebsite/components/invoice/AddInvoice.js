@@ -35,7 +35,7 @@ class AddInvoice extends Component {
         invoiceId:null,
         workStatus:null,
         paymentMode:null,
-        postImage:null,
+        postImage:[],
         fileInput:null,
         ifsc:null,
         accountType:null,
@@ -44,6 +44,7 @@ class AddInvoice extends Component {
         bankName:null,
         accountNum:null,
         commentsTable:false,
+        localPostImageUrl:[],
         oldInvoicesComments:true
     }
 
@@ -81,34 +82,46 @@ class AddInvoice extends Component {
             }
         }
         else if(target.id==="postImage"){
-            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
-                window.alert("Image size should be within 5MB");
-                return
-             }
-             else{
-              this.setState({spinner:true});
-              const reader=new FileReader();
-              const file=target.files[0]; 
-              if (file && file.type.match('image.*')) {
-                  reader.readAsDataURL(file);
-              }
-              else{
-                  this.setState({
-                      postImage:null,
-                      localImageUrl:null,
-                      errorMessage:"",
-                      spinner:false
-                  })
-              }
-              reader.onloadend=()=>{
-                  console.log("postImage")
-                  this.setState({
-                      postImage:target.files[0],
-                      localImageUrl:reader.result,
-                      errorMessage:"",
-                      spinner:false
-                  })
-              }
+            for(let i=0;i<target.files.length;i++){
+                if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 5000){
+                    window.alert("Image size should be within 5MB");
+                    return
+                }
+                else{
+                this.setState({spinner:true});
+                const reader=new FileReader();
+                const file=target.files[i]; 
+                if (file && file.type.match('image.*')) {
+                    reader.readAsDataURL(file);
+                }
+                else{
+                    this.setState({
+                        postImage:[],
+                        localPostImageUrl:[],
+                        errorMessage:"",
+                        spinner:false
+                    })
+                }
+                reader.onloadend=()=>{
+                    if(this.state.postImage !== [] && this.state.postImage.length >= 4){
+                        this.setState({
+                            errorMessage:"Can upload only 4 Post-Images at the max",
+                            spinner:false
+                        })
+                        return
+                    }
+                    let tempFile=[...this.state.postImage];
+                    tempFile.push(target.files[i]);
+                    let tempUrls =[...this.state.localImageUrl];
+                    tempUrls.push(reader.result);                    
+                    this.setState({
+                        postImage:tempFile,
+                        localPostImageUrl:tempUrls,
+                        errorMessage:"",
+                        spinner:false
+                    })
+                }
+                }
             }
         }
         else{
@@ -392,10 +405,16 @@ class AddInvoice extends Component {
                 errorMessage:"Please upload invoice"
             })
         }
-        else if(this.state.postImage===null){
+        else if(this.state.postImage===[]){
             this.setState({
                 lastErrorField:"postImage",
                 errorMessage:"Please upload post image"
+            })
+        }
+        else if(this.state.postImage.length < 2){
+            this.setState({
+                lastErrorField:"postImage",
+                errorMessage:"Please upload atleast 2 Post-Images"
             })
         }
         else if(this.state.bankName===null){
@@ -522,8 +541,10 @@ class AddInvoice extends Component {
         var regFormModel=new FormData();
         regFormModel.set('payload',JSON.stringify(invoice));
         regFormModel.append('files',this.state.fileInput);
-        if(this.state.postImage!==null){
-            regFormModel.append('postImage',this.state.postImage);
+        if(this.state.postImage!==[]){
+            this.state.postImage.forEach(image=>{
+                regFormModel.append('postImage',image);
+            })
         }
         console.log(regFormModel);
         axios.post(this.props.config+'/invoiceUpload',regFormModel)

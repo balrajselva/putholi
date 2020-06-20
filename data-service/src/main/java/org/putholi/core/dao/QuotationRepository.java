@@ -18,7 +18,7 @@ public interface QuotationRepository extends CrudRepository<Quotation, Long> {
 
 	List<Quotation> findByRequirementId(@Param("requirementId") long requirementId);
 
-	List<Quotation> findBySchoolIdAndRequirementId(long schoolId, long requirementId);
+	List<Quotation> findBySchoolIdAndRequirementId(@Param("schoolId")long schoolId,@Param("requirementId") long requirementId);
 
 	Quotation findByQuotationId(@Param("quotationId") long quotationId);
 
@@ -27,5 +27,5 @@ public interface QuotationRepository extends CrudRepository<Quotation, Long> {
 	Integer updateQuotationStatus(@Param("quotationId")Long id,@Param("quotationStatus")String status);
 
 	@Query("FROM Quotation s where s.schoolId = :schoolId and s.quotationStatus = 'QUOTATION_ACCEPTED'")
-	List<Quotation> findBySchoolIdAndStatus(long schoolId);
+	List<Quotation> findBySchoolIdAndStatus(@Param("schoolId") long schoolId);
 }

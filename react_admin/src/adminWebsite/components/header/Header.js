@@ -24,7 +24,6 @@ class Header extends Component {
                         <li className="dropdown messages-menu">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                             <i className="fa fa-envelope-o" />
-                            <span className="label label-success">4</span>
                         </a>
                         <ul className="dropdown-menu">
                             <li className="header">You have 4 messages</li>
@@ -101,7 +100,6 @@ class Header extends Component {
                         <li className="dropdown notifications-menu">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                             <i className="fa fa-bell-o" />
-                            <span className="label label-warning">10</span>
                         </a>
                         <ul className="dropdown-menu">
                             <li className="header">You have 10 notifications</li>
@@ -143,7 +141,6 @@ class Header extends Component {
                         <li className="dropdown tasks-menu">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                             <i className="fa fa-flag-o" />
-                            <span className="label label-danger">9</span>
                         </a>
                         <ul className="dropdown-menu">
                             <li className="header">You have 9 tasks</li>
