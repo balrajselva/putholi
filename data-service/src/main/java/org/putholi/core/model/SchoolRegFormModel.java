@@ -20,5 +20,6 @@ public class SchoolRegFormModel {
 
   	private MultipartFile[] postImage;
 
-  	private MultipartFile[] receipt;
+  	private MultipartFile[] receipts;
+
 }

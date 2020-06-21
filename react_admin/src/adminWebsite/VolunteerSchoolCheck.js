@@ -75,13 +75,13 @@ class VolunteerSchoolCheck extends Component {
                 pageLink="Process WorkOrder";
             }
 
-            if(this.state.school.schoolStatus==="null"){
+            if(this.state.school.schoolStatus==="ALL_INVOICES_PROCESSED"){
                 newTo = { 
-                    pathname: "/addInvoice", 
+                    pathname: "/uploadReceipt", 
                     school:this.state.school,
                     currentUser:this.props.location.currentUser
                 };
-                pageLink="Add Invoice";
+                pageLink="Upload Receipt";
             }
             if(this.state.school.schoolStatus==="QuotationAdded"){
                 pageLink="Wait for quotation approval";

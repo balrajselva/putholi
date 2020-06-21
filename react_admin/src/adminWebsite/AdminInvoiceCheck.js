@@ -60,7 +60,10 @@ class adminInvoiceCheck extends Component {
                   count++;
                 }
               }
-              if(parseInt(count) === this.props.location.school.projects[i].requirements.length-1){
+              if(this.props.location.school.projects[i].requirements.length > 1 && parseInt(count) === this.props.location.school.projects[i].requirements.length-1){
+                this.setState({isProjectCompleted:true})
+              }
+              if(this.props.location.school.projects[i].requirements.length == 1 && parseInt(count) === this.props.location.school.projects[i].requirements.length){
                 this.setState({isProjectCompleted:true})
               }
             }

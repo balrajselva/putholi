@@ -155,7 +155,7 @@ class AddSchool extends Component {
       let hasError=null;
       this.setState({reqError:null})
       this.state.reqList.map(reqList=>{
-         if(reqList.assetName===this.state.assetName){
+         if(reqList.assetName===this.state.assetName || reqList.assetName===this.state.otherAssetName){
             this.setState({reqError:"*Can not have duplicate requirements*"})
             hasError=true;
             return
