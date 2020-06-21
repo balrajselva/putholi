@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -110,7 +111,7 @@ public class Invoice extends AuditableEntity {
 	private Set<InvoiceImage> invoiceImages;
 
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
-	private Set<PostImage> postImages;
+	private List<PostImage> postImages;
 
 	@JsonProperty("proofOfId")
 	@Transient

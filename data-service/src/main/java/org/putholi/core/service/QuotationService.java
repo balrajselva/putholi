@@ -11,7 +11,7 @@ public interface QuotationService {
 
 	long save(Quotation quotation);
 
-	Optional<Quotation> getQuotation(long id);
+	Quotation getQuotation(long id);
 
 	List<Quotation> getQuotations();
 
@@ -31,7 +31,7 @@ public interface QuotationService {
 
 	List<Quotation> findBySchoolIdAndStatus(long schoolId);
 
-    long save(Quotation quotation, Map<String,byte[]> filesInBytes, Map<String,byte[]> preImageInBytes, String imgPath);
+    long save(Quotation quotation, Map<String,byte[]> filesInBytes, List<Map<String,byte[]>> preImageInBytes, String imgPath);
 
 	void rejectQuotation(UpdateQuotation updateQuotation);
 }

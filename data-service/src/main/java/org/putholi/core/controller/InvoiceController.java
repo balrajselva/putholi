@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +45,17 @@ public class InvoiceController {
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
 			Invoice invoice = new ObjectMapper().readValue(regFormModel.getPayload(), Invoice.class);
 			System.out.println(invoice);
+			Map<String, byte[]> filesInBytes =null;
 			if(regFormModel.getFiles() != null ) {
-				Map<String, byte[]> filesInBytes = WebUtilities
+				filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				Map<String, byte[]> postImageInBytes = null;
-//				if(regFormModel.getPreImage() != null) {
-//					postImageInBytes = WebUtilities
-//							.convertMultiPartToBytes(regFormModel.getPostImage());
-//				}
+			}
+			if(regFormModel.getPostImage() != null ) {
+				List<Map<String, byte[]>> postImageInBytes = new ArrayList<>();
+				for(int i=0;i<regFormModel.getPostImage().length;i++) {
+					postImageInBytes.add(WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getPostImage()[i])));
+				}
 				 id = invoiceService.save(invoice, filesInBytes, postImageInBytes, imgPath);
 			} else {
 				 id = invoiceService.save(invoice, null, null, imgPath);

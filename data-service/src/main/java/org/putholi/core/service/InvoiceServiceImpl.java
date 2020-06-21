@@ -6,6 +6,7 @@ import org.putholi.core.dao.RequirementRepository;
 import org.putholi.core.model.*;
 import org.putholi.exception.InvoiceFileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 @Service
 @Transactional(readOnly = false)
 public class InvoiceServiceImpl implements InvoiceService {
+
+	@Value("${image.path}")
+	private String imgPath;
 
 	@Autowired
 	public InvoiceRepository repository;
@@ -34,7 +36,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	@Transactional
-	public long save(Invoice invoice, Map<String, byte[]> files, Map<String,byte[]> postImage, String imgPath) {
+	public long save(Invoice invoice, Map<String, byte[]> files, List<Map<String,byte[]>> postImage, String imgPath) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
@@ -43,21 +45,25 @@ public class InvoiceServiceImpl implements InvoiceService {
 			files.forEach((k,v) -> {
 				Set<InvoiceImage> siSet = new HashSet<InvoiceImage>();
 				String filePath = fileSubPath+ invoice.getId()+"_";
-				InvoiceImage si = new InvoiceImage(filePath+k,v,invoice.getProofOfId().getComments());
+				this.saveImgToFS(imgPath,fileSubPath,v,filePath+k);
+				InvoiceImage si = new InvoiceImage(filePath+k,null,invoice.getProofOfId().getComments());
 				si.setInvoice(invoice);
 				siSet.add(si);
 				invoice.setInvoiceImages(siSet);
 			});
 		}
 		if (postImage != null && postImage.size() > 0) {
-			postImage.forEach((k,v) -> {
-				Set<PostImage> siSet = new HashSet<>();
-				String filePath = fileSubPath+ invoice.getId()+"_";
-				PostImage si = new PostImage(filePath+k,v,invoice.getProofOfId().getComments());
-				si.setInvoice(invoice);
-				siSet.add(si);
-				invoice.setPostImages(siSet);
-			});
+			List<PostImage> siSet = new ArrayList<>();
+			for (int i=0;i<postImage.size();i++) {
+				postImage.get(i).forEach((k, v) -> {
+					String filePath = fileSubPath + invoice.getId() + "_";
+					this.saveImgToFS(imgPath, fileSubPath, v, filePath + k);
+					PostImage si = new PostImage(filePath + k, null, invoice.getProofOfId().getComments());
+					si.setInvoice(invoice);
+					siSet.add(si);
+				});
+			}
+			invoice.setPostImages(siSet);
 		}
 
 		// Invoice Status will be "INVOICE_IN_PROGRESS" in requirement table
@@ -66,24 +72,30 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		// Save invoice
 		repository.save(invoice);
-		if (files != null && files.size() > 0) {
-			this.saveImgToFS(imgPath,fileSubPath,invoice.getInvoiceImages());
-		}
 		return invoice.getId();
 	}
 
 
 	@Override
 	public Invoice getFile(long id) {
-		 return repository.findById(id)
-	                .orElseThrow(() -> new InvoiceFileNotFoundException("File not found with id " + id));
-	    
+		Invoice invoice = repository.findById(id)
+				.orElseThrow(() -> new InvoiceFileNotFoundException("File not found with id " + id));
+		for(PostImage postImage:invoice.getPostImages()){
+			postImage.setImage(getImgFromFS(postImage.getFilePath()));
+		}
+		return invoice;
 	}
 
 	@Override
 	public List<Invoice> getAllInvoice() {
 		// TODO Auto-generated method stub
-		return (List<Invoice>) repository.findAll();
+		List<Invoice> invoices = (List<Invoice>) repository.findAll();
+		for(Invoice invoice:invoices) {
+			for (PostImage postImage : invoice.getPostImages()) {
+				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+		}
+		return invoices;
 	}
 
 	@Override
@@ -98,12 +110,24 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public List<Invoice> getInvoiceBySchoolId(long schoolId) {
-		return repository.findBySchoolId(schoolId);
+		List<Invoice> invoices = repository.findBySchoolId(schoolId);
+		for(Invoice invoice:invoices) {
+			for (PostImage postImage : invoice.getPostImages()) {
+				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+		}
+		return invoices;
 	}
 
     @Override
     public List<Invoice> getInvoiceByRequirementId(long requirementId) {
-        return repository.findByRequirementId(requirementId);
+		List<Invoice> invoices = repository.findByRequirementId(requirementId);
+		for(Invoice invoice:invoices) {
+			for (PostImage postImage : invoice.getPostImages()) {
+				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+		}
+        return invoices;
     }
 
     @Override
@@ -137,25 +161,23 @@ public class InvoiceServiceImpl implements InvoiceService {
         repository.updateReviewerComments(invoiceId,reviewerComments);
     }
 
-    private void saveImgToFS(String dirPath, String fileSubPath, Set<InvoiceImage> list) {
-		list.forEach(schoolImg -> {
-			String tmpDirPath = dirPath+"\\"+fileSubPath;
-			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
-				try {
-					Files.createDirectories(Paths.get(tmpDirPath));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
-
+	private void saveImgToFS(String dirPath, String fileSubPath, byte[] image,String filePath) {
+		String tmpDirPath = dirPath+"\\"+fileSubPath;
+		if(!Files.isDirectory(Paths.get(tmpDirPath))) {
 			try {
-				Files.write(path, schoolImg.getImage());
+				Files.createDirectories(Paths.get(tmpDirPath));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		});
+		}
+
+		Path path = Paths.get(dirPath+"\\"+filePath);
+
+		try {
+			Files.write(path, image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -164,5 +186,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return repository.findByInvoiceStatus(invoiceStatus);
 	}
 
+	private byte[] getImgFromFS(String filePath) {
+		Path path = Paths.get(imgPath+"\\"+filePath);
+		try {
+			return Files.readAllBytes(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

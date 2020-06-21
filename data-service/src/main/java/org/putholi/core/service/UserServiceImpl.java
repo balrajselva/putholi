@@ -4,6 +4,7 @@ import org.putholi.core.dao.UserRepository;
 import org.putholi.core.model.IdentityProof;
 import org.putholi.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,14 +15,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+	@Value("${image.path}")
+	private String imgPath;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -33,8 +34,8 @@ public class UserServiceImpl implements UserService {
 		long userId=userRepository.save(user).getUserid();
 		if (files != null && files.size() > 0) {
 			for(int i=0;i<files.size();i++) {
+				List<IdentityProof> siSet = new ArrayList<>();
 				files.get(i).forEach((k, v) -> {
-					Set<IdentityProof> siSet = new HashSet<IdentityProof>();
 					String filePath = fileSubPath + userId + "_";
 					// Save image only in fileSystem
 					this.saveImgToFS(imgPath, fileSubPath, v, filePath + k);
@@ -88,7 +89,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User get(long id) {
-		return userRepository.findById(id).orElse(null);
+		User user = userRepository.findById(id).orElse(null);
+		for(IdentityProof identityProof:user.getIdentityProof()) {
+			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		}
+		return user;
 	}
 
 	public User findByEmailAddress(String email) {
@@ -112,7 +117,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByEmailAddressPassword(String emailAddress, String password) {
+	public User findByEmailAddressPassword(String imgPath, String emailAddress, String password) {
 		return userRepository.findByEmailAddressPassword(emailAddress,password);
 	}
 
@@ -121,4 +126,13 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByDistrict(district);
 	}
 
+	private byte[] getImgFromFS(String filePath) {
+		Path path = Paths.get(imgPath+"\\"+filePath);
+		try {
+			return Files.readAllBytes(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

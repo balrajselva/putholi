@@ -21,7 +21,7 @@ public interface UserService {
 	
 	User updateUserStatus(long id, String status);
 
-	User findByEmailAddressPassword(String emailAddress, String password);
+	User findByEmailAddressPassword(String imgPath, String emailAddress, String password);
 
     List<User> findByDistrict(String district);
 

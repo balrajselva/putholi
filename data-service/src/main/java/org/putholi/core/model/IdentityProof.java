@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -32,4 +33,7 @@ public class IdentityProof extends AuditableEntity{
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnore
 	private User user;
+
+	@Transient
+	private byte[] image;
 }
