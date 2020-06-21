@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -63,7 +66,8 @@ public class Requirement extends AuditableEntity {
 	private User user;
 
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "requirement" ,cascade = CascadeType.ALL)
-	private Set<PreImage> preImages;
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<PreImage> preImages;
 
 	public Requirement() {
 	}

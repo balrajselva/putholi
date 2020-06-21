@@ -30,7 +30,7 @@ public class PreImage extends AuditableEntity{
     @Column(name = "image_id")
     private long imageId;
 
-    @Column(name = "image",length = 100000,nullable = false)
+    @Transient
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.EAGER)

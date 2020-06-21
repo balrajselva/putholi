@@ -43,13 +43,12 @@ public class QuotationController {
 	}
 
 	@GetMapping("/quotation/{id}")
-	public Optional<Quotation> getQuotation(@PathVariable("id") long quotationId) {
+	public Quotation getQuotation(@PathVariable("id") long quotationId) {
 		return quotationService.getQuotation(quotationId);
 	}
 
 	@PostMapping("/quotation")
-	public ResponseEntity<?> setQuotation(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
-												  HttpServletRequest request) {
+	public ResponseEntity<?> setQuotation(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel, HttpServletRequest request) {
 		try {
 			long id;
 			System.out.println("..regFormModel.getPayload().."+regFormModel );
@@ -58,11 +57,13 @@ public class QuotationController {
 			if(regFormModel.getFiles() != null) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				Map<String, byte[]> preImageInBytes = null;
-//				if(regFormModel.getPreImage() != null) {
-//					 preImageInBytes = WebUtilities
-//							.convertMultiPartToBytes(regFormModel.getPreImage());
-//				}
+				List<Map<String, byte[]>> preImageInBytes = null;
+				if(regFormModel.getPreImage() != null) {
+					for(int i=0;i<regFormModel.getPreImage().length;i++) {
+						preImageInBytes.add(WebUtilities
+								.convertMultiPartToBytes(Arrays.asList(regFormModel.getPreImage()[i])));
+					}
+				}
 				id = quotationService.save(quotation, filesInBytes, preImageInBytes, imgPath);
 			} else {
 				id = quotationService.save(quotation, null, null, imgPath);

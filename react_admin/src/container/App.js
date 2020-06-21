@@ -178,16 +178,16 @@ class App extends Component {
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/approverInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
-            <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute path="/reviewerApproveQuotation" component={(props)=><ViewSelectedQuotation {...props} config={this.state.config}/>}/>
+            <ReviewerLayoutRoute path="/reviewerSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props} config={this.state.config}/>}/>
+            <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
+            <ReviewerLayoutRoute path="/reviewerApproveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverReviewQuotation" component={(props)=><ViewSelectedQuotation {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props} config={this.state.config}/>}/>
-            <ReviewerLayoutRoute path="/reviewerSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props} config={this.state.config}/>}/>
+            <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
-            <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
-            <ReviewerLayoutRoute path="/reviewerApproveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
           </Switch>
         </Router>

@@ -3,11 +3,14 @@ package org.putholi.core.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 import java.util.Set;
 
 
@@ -73,5 +76,6 @@ public class User  extends AuditableEntity{
 	private ProofOfId proofOfId;
 
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user",cascade = CascadeType.ALL)
-	private Set<IdentityProof> identityProof;
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<IdentityProof> identityProof;
 }

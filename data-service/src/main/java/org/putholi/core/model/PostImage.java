@@ -22,7 +22,6 @@ public class PostImage extends AuditableEntity{
     public PostImage(String filePath, byte[] image, String comments) {
         this.filePath = filePath;
         this.image = image;
-        this.comments = comments;
     }
 
     @Id
@@ -30,7 +29,7 @@ public class PostImage extends AuditableEntity{
     @Column(name = "image_id")
     private long imageId;
 
-    @Column(name = "image",length = 100000,nullable = false)
+    @Transient
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,11 +37,7 @@ public class PostImage extends AuditableEntity{
     @JsonIgnore
     private Invoice invoice;
 
-    @Column(name = "comments")
-    String comments;
-
     @Column(name = "filepath")
     private String filePath;
-
 
 }
