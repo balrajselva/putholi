@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -32,6 +33,7 @@ public class QuotationImage extends AuditableEntity {
     private long imageId;
 
     @Transient
+    @Nullable
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.EAGER)

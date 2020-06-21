@@ -46,6 +46,11 @@ public class QuotationServiceImpl implements QuotationService {
 	public Quotation getQuotation(long id) {
 		Quotation quotation = quotationRepository.findById(id).get();
 		quotation.setRequirement(requirementRepository.findById(quotation.getRequirementId()).get());
+		for(QuotationImage quotationImage: quotation.getQuotationImages()){
+			if(quotationImage.getFilePath() != null) {
+				quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+			}
+		}
 		for(PreImage preImage: quotation.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}
@@ -57,6 +62,11 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = (List<Quotation>) quotationRepository.findAll();
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}
@@ -79,6 +89,11 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = quotationRepository.findByQuotationStatus(quotationStatus);
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}
@@ -91,8 +106,15 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = quotationRepository.findBySchoolId(schoolId);
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
-				preImage.setImage(getImgFromFS(preImage.getFilePath()));
+				if(preImage.getFilePath() != null) {
+					preImage.setImage(getImgFromFS(preImage.getFilePath()));
+				}
 			}
 		}
 		return quotations;
@@ -103,6 +125,11 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = quotationRepository.findByRequirementId(requirementId);
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}
@@ -115,6 +142,11 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = quotationRepository.findBySchoolIdAndRequirementId(schoolId, requirementId);
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}
@@ -175,6 +207,11 @@ public class QuotationServiceImpl implements QuotationService {
 		List<Quotation> quotations = quotationRepository.findBySchoolIdAndStatus(schoolId);
 		for (Quotation quotation1 : quotations) {
 			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
 			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
 				preImage.setImage(getImgFromFS(preImage.getFilePath()));
 			}

@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -57,7 +54,7 @@ public class QuotationController {
 			if(regFormModel.getFiles() != null) {
 				Map<String, byte[]> filesInBytes = WebUtilities
 						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				List<Map<String, byte[]>> preImageInBytes = null;
+				List<Map<String, byte[]>> preImageInBytes = new ArrayList<>();
 				if(regFormModel.getPreImage() != null) {
 					for(int i=0;i<regFormModel.getPreImage().length;i++) {
 						preImageInBytes.add(WebUtilities

@@ -80,6 +80,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public Invoice getFile(long id) {
 		Invoice invoice = repository.findById(id)
 				.orElseThrow(() -> new InvoiceFileNotFoundException("File not found with id " + id));
+		for(InvoiceImage invoiceImage: invoice.getInvoiceImages()){
+			if(invoiceImage.getFilePath() != null) {
+				invoiceImage.setImage(getImgFromFS(invoiceImage.getFilePath()));
+			}
+		}
 		for(PostImage postImage:invoice.getPostImages()){
 			postImage.setImage(getImgFromFS(postImage.getFilePath()));
 		}
@@ -91,6 +96,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 		// TODO Auto-generated method stub
 		List<Invoice> invoices = (List<Invoice>) repository.findAll();
 		for(Invoice invoice:invoices) {
+			for(InvoiceImage invoiceImage: invoice.getInvoiceImages()){
+				if(invoiceImage.getFilePath() != null) {
+					invoiceImage.setImage(getImgFromFS(invoiceImage.getFilePath()));
+				}
+			}
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
 			}
@@ -112,6 +122,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public List<Invoice> getInvoiceBySchoolId(long schoolId) {
 		List<Invoice> invoices = repository.findBySchoolId(schoolId);
 		for(Invoice invoice:invoices) {
+			for(InvoiceImage invoiceImage: invoice.getInvoiceImages()){
+				if(invoiceImage.getFilePath() != null) {
+					invoiceImage.setImage(getImgFromFS(invoiceImage.getFilePath()));
+				}
+			}
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
 			}
@@ -123,6 +138,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<Invoice> getInvoiceByRequirementId(long requirementId) {
 		List<Invoice> invoices = repository.findByRequirementId(requirementId);
 		for(Invoice invoice:invoices) {
+			for(InvoiceImage invoiceImage: invoice.getInvoiceImages()){
+				if(invoiceImage.getFilePath() != null) {
+					invoiceImage.setImage(getImgFromFS(invoiceImage.getFilePath()));
+				}
+			}
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
 			}

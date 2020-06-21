@@ -45,6 +45,7 @@ import ReviewerInvoiceReview from '../adminWebsite/ReviewerInvoiceReview';
 import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
 import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
 import SuperAdminLayout from '../adminWebsite/components/layouts/SuperAdminLayout';
+import UploadReceipt from '../adminWebsite/components/receipt/UploadReceipt';
 
 class App extends Component {
   state = {
@@ -141,7 +142,7 @@ class App extends Component {
         <Router history={history} config={this.state.config}>
           <Switch config={this.state.config}>
             <Route path="/confirmation" component={()=><ConfirmatinScreen config={this.state.config}/>}/>
-            <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)} config={this.state.config}/>}/>}/>
+            <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)} config={this.state.config}/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger config={this.state.config}/>}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props} config={this.state.config}/>}/>
@@ -170,11 +171,12 @@ class App extends Component {
             <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute exact path="/approverInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props} config={this.state.config}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props} config={this.state.config}/>}/>
-            <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props} config={this.state.config}/>}/>}/>
-            <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props} config={this.state.config}/>}/>}/>
-            <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props} config={this.state.config}/>}/>}/>
-            <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props} config={this.state.config}/>}/>}/>
-            <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props} config={this.state.config}/>}/>}/>
+            <SponsorLayoutRoute path="/referVolunteer" history={history} component={(props)=><ReferVolunteer {...props} config={this.state.config}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolCheck" history={history} component={(props)=><VolunteerSchoolCheck {...props} config={this.state.config}/>}/>
+            <VolunteerLayoutRoute path="/volunteerSchoolReview" history={history} component={(props)=><VolunteerSchoolReview {...props} config={this.state.config}/>}/>
+            <VolunteerLayoutRoute path="/viewRequirements" history={history} component={(props)=><RequirementHome {...props} config={this.state.config}/>}/>
+            <VolunteerLayoutRoute path="/addInvoice" history={history} component={(props)=><AddInvoice {...props} config={this.state.config}/>}/>
+            <VolunteerLayoutRoute path="/uploadReceipt" history={history} component={(props)=><UploadReceipt {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/reviewer" component={(props)=><ReviewerPendingWorkflow {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/approverInvoiceReview" component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>

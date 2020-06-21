@@ -14,7 +14,10 @@ class reviewQuotation extends Component {
         selectedQuotations:[],
         errorMessage:null,
         quotationImage:null,
-        adminComments:null
+        adminComments:null,
+        preImages:null,
+        currentIndex: 0,
+        translateValue: 0
     } 
 
     approveQuotation=()=>{
@@ -168,6 +171,10 @@ class reviewQuotation extends Component {
     closeModel=()=>{
         document.getElementById('modal-default').style.display='none';
     }
+
+    closeModel1=()=>{
+        document.getElementById('modal-default1').style.display='none';
+    }
     
     selectQuotationImage=(e)=>{
         this.setState({spinner:true});
@@ -185,6 +192,17 @@ class reviewQuotation extends Component {
                 document.getElementById('modal-default').style.display='block';
             }
         }
+    }
+
+    viewPreImage=(e)=>{
+        this.setState({spinner:true});
+        let reqId=e.target.id.split("/");
+        this.setState({
+            preImages: this.state.quotationList[reqId][0].requirement.preImages,
+            spinner:false
+        })
+        console.log(this.state.quotationList[reqId][0].requirement.preImages)
+        document.getElementById('modal-default1').style.display='block';
     }
 
     createTable=(iter)=>{
@@ -233,7 +251,7 @@ class reviewQuotation extends Component {
                     <h4>
                     {this.props.location.school.projects[0].requirements[i].assetName}
                     </h4>
-                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">View Preimages</button>  
+                    <button  id={this.props.location.school.projects[0].requirements[i].requirementId} type="button" class="btn btn-default" onClick={(e)=>this.viewPreImage(e)}>View Preimages</button>  
                     </section>
                     <section className="content">
                         <div className="row">
@@ -284,7 +302,62 @@ class reviewQuotation extends Component {
             content.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>)
         return content;
     }
+
+    goToPrevSlide = () => {
+        if (this.state.currentIndex === 0)
+          return;
+        this.setState(prevState => ({
+          currentIndex: prevState.currentIndex - 1,
+          translateValue: prevState.translateValue + this.slideWidth()
+        }))
+    }
+
+    goToNextSlide = () => {
+    // Exiting the method early if we are at the end of the images array.
+    // We also want to reset currentIndex and translateValue, so we return
+    // to the first image in the array.
+    if (this.state.currentIndex === this.state.preImages.length - 1) {
+        return this.setState({
+        currentIndex: 0,
+        translateValue: 0
+        })
+    }
+
+    // This will not run if we met the if condition above
+    this.setState(prevState => ({
+        currentIndex: prevState.currentIndex + 1,
+        translateValue: prevState.translateValue + -(this.slideWidth())
+    }));
+    }
+    slideWidth = () => {
+        return document.querySelector('.slide').clientWidth
+    }
     render() {
+        const Slide = ({ image }) => {
+            const styles = {
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '50% 60%'
+            }
+            return <div className="slide" style={styles}></div>
+          }
+      
+          const LeftArrow = (props) => {
+            return (
+              <div className="backArrow arrow" onClick={props.goToPrevSlide} >
+                <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
+      
+          const RightArrow = (props) => {
+            return (
+              <div className="nextArrow arrow" onClick={props.goToNextSlide}>
+                <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+              </div>
+            );
+          }
         return (
             <div>
             <div style={{fontSize:"large"}}>
@@ -357,7 +430,46 @@ class reviewQuotation extends Component {
                     </div>
                     </div>
                 </div>
-            </div>
+                <div className="modal" id="modal-default1">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel1}>
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                <div className="page_container">
+                                    <div className="wrap">
+                                    <div className="container">
+                                    <div className="row pad25">
+                                        <div className="span8">
+                                    <div className="slider">
+                                        <div className="slider-wrapper"
+                                        style={{
+                                            transform: `translateX(${this.state.translateValue}px)`,
+                                            transition: 'transform ease-out 0.45s'
+                                        }}>
+                                        {this.state.preImages!==null?this.state.preImages.map((value, index) =>
+                                            <Slide key={index} image={'data:image/png;base64,'+value.image} />
+                                        ):null}
+                                        </div>
+                                        <LeftArrow
+                                        goToPrevSlide={this.goToPrevSlide}
+                                        />
+
+                                        <RightArrow
+                                        goToNextSlide={this.goToNextSlide}
+                                        />
+                                    </div></div></div></div></div></div>
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                    </div>
+                </div>
         </div>
         )
     }

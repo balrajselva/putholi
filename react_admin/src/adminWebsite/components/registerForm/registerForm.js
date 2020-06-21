@@ -425,7 +425,7 @@ class registerForm extends Component {
                 </div>
                 {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
                 {this.state.localImageUrl?
-                        <div className="page_container">
+                <div className="page_container">
                 <div className="wrap">
                 <div className="container">
                   <div className="row pad25">
