@@ -14,6 +14,9 @@ state={
   requirements:null,
   getRequirementList:true,
   invoiceImage:null,
+  localReceiptImageUrl:[],
+  receiptCount:0,
+  receipts:[],
   invoiceList:null
 }
 
@@ -52,14 +55,6 @@ closeModel=()=>{
     document.getElementById('modal-default').style.display='none';
 }
 
-handleChange=({target})=>{
-  document.getElementById(target.id).style.borderColor="#d2d6de";
-  this.setState({
-      [target.id]:target.value,
-      errorMessage:null
-  })
-}
-
 selectInvoiceImage=(e)=>{
     this.setState({spinner:true});
     let invoiceId=e.target.id;
@@ -80,31 +75,34 @@ onSubmit=(e)=>{
   e.preventDefault();
   let newStatus = "Work_In_Progress";
   if(e.target.id==="Reject"){
-      newStatus="InvoiceRejected"
+      newStatus="ReceiptsUploaded"
   }
   this.setState({
     spinner:true
+  })
+  var regFormModel=new FormData();
+  if(this.state.receipts!==[]){
+      this.state.receipts.forEach(image=>{
+          regFormModel.append('receipts',image);
+      })
+  }
+  console.log(regFormModel);
+  axios.post(this.props.config+'/invoiceReceipt',regFormModel)
+  .then(res=>{ 
+      console.log(res);
+      this.setState({
+          spinner:false,
+          invoiceId:res.data
+      })
+      window.alert("Succesfully uploaded receipts!!!");
+  })
+  .catch(error=>{
+      window.alert("Failed to upload receipts due to "+error);
   })
     axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
     .then(res=>{
       this.setState({
         spinner:false
-      })
-      let params ={
-        fundMasterList:this.state.fund,
-        invoiceList:this.state.invoiceList
-      }
-      axios.post(this.props.config+"/invoice/updateFund",params)
-      .then(res=>{
-        window.alert("Status updated successfully!");
-        this.props.history.push({
-                pathname:"/adminPendingWorkflow",
-                currentUser:this.props.location.currentUser,
-                ...this.props
-        })
-        .catch(error=>{
-          window.alert("Updation failed due to "+error)
-        })
       })
     })
     .catch(error=>{
@@ -127,6 +125,86 @@ viewInvoice=(e)=>{
     document.getElementById('modal-default').style.display='block';
 }
 
+handleChange=({target})=>{
+    console.log(target)
+    let invoiceId=target.id.split("/")[0];
+    let requirementId=target.id.split("/")[1];
+    document.getElementById(target.id).style.borderColor="#d2d6de";
+    if(target.type==="file"){
+      if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
+          window.alert("Image size should be within 5MB");
+          return
+      }
+      else{
+      this.setState({spinner:true});
+      const reader=new FileReader();
+      const file=target.files[0]; 
+      if (file && file.type.match('image.*')) {
+          reader.readAsDataURL(file);
+      }
+      else{
+          this.setState({
+              receipts:[],
+              localReceiptImageUrl:[],
+              errorMessage:"",
+              spinner:false
+          })
+      }
+      reader.onloadend=()=>{                
+          this.setState({
+              receipts:target.files[0],
+              localReceiptImageUrl:reader.result,
+              errorMessage:"",
+              spinner:false
+          })
+          this.saveReceipt(invoiceId,requirementId,target.files[0]);
+      }
+    }
+  }
+}
+
+saveReceipt=(invoiceId,requirementId,receipt)=>{
+  const invoice={
+      id:invoiceId,
+      requirement:{
+        requirementId:requirementId
+      }
+  }
+  this.setState({
+      spinner:true
+  });
+  var regFormModel=new FormData();
+  regFormModel.set('payload',JSON.stringify(invoice));
+  regFormModel.append('receipts',receipt);
+  console.log(regFormModel);
+  axios.post(this.props.config+'/invoiceReceipt',regFormModel)
+  .then(res=>{ 
+      console.log(res);
+      let receiptCountTemp = parseInt(this.state.receiptCount) + 1;
+      this.setState({
+          spinner:false,
+          receiptCount:receiptCountTemp
+      })
+      updateList(receipt,invoiceId);
+      window.alert("Succesfully uploaded receipt!!!");
+  })
+  .catch(error=>{
+      window.alert("Failed to save receipt due to "+error);
+  })
+  let updateList=(receipt,invoiceId)=>{
+      let invoice = this.state.invoiceList.filter(invoice => parseInt(invoice.id) === parseInt(invoiceId))
+      console.log(invoice)
+      let ql=invoice[0];
+      ql.receipts=receipt;
+      let a=this.state.invoiceList;
+      a[invoiceId]=ql;
+      console.log(a,ql);
+      this.setState({
+          invoiceList:a,
+      })
+  }
+}
+
 closeModel=()=>{
     document.getElementById('modal-default').style.display='none';
 }
@@ -136,19 +214,24 @@ createTable=()=>{
   let rowsUpdated=false;
   for(let i=0;i<this.state.requirements.length;i++){
     var reqId=this.state.requirements[i].requirementId;
-    var quotation=null;
-
     // filter will always return a list
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
+    let count =0;
+    invoice.map(inv=>{
+      if(inv.receipts.length >0)
+        count ++;
+    })
+    if(count === invoice.length){
+      continue
+    }
     console.log(invoice)
-
     rowsUpdated=true;
     rows.push(<tr>
         <td>{this.state.requirements[i].assetName}</td>
-        <td>{invoice.length}</td>
-        <td>{invoice.length>0?invoice.map((invoice,j)=><div><button class="btn btn-default" id={invoice.id+"/"+invoice.requirement.requirementId+"/"+j} onClick={(e)=>this.viewInvoice(e)}>{"Invoice " + invoice.id}</button></div>):null}</td>
-        <td>{invoice.length>0?invoice.map((invoice,j)=><div><button class="btn btn-default" id={invoice.id+"/"+invoice.requirement.requirementId+"/"+j} onClick={(e)=>this.uploadReceipt(e)}>{"Upload receipt for invoice "+invoice.id}</button></div>):null}</td>
-        <td></td>
+        <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?<div><button class="btn btn-default" id={invoice.id+"/"+invoice.requirement.requirementId+"/"+j} onClick={(e)=>this.viewInvoice(e)}>{"Invoice " + invoice.id}</button></div>:null):null}</td>
+        <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?<div>
+            <label for={invoice.id+"/"+invoice.requirement.requirementId} className="btn btn-default" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>{"Upload receipt for invoice "+invoice.id}</label>
+            <input class="hidden" type="file" id={invoice.id+"/"+invoice.requirement.requirementId} onChange={this.handleChange}/></div>:null):null}</td>
     </tr>)			
 }
   if(rowsUpdated==false)
@@ -166,7 +249,6 @@ render() {
     return (
       <div className="content-wrapper">
         <section className="content-header">
-            {/* Small boxes (Stat box) */}
             <div className="row">
             <SmallBoxCard content={this.props.location.currentUser.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
             {/* ./col */}
@@ -193,10 +275,8 @@ render() {
                     <table className="table table-hover">
                     <tbody><tr>
                           <th>Requirement </th>
-                          <th>Invoice count</th>
                           <th>View Invoices</th>
                           <th>Upload Receipt</th>
-                          <th>Receipt details</th>
                         </tr>
                         {this.state.getRequirementList?null:this.createTable()}
                       </tbody></table>
@@ -205,8 +285,7 @@ render() {
                   </div>
                 </div>
                 <div className="timeline-footer">
-                 <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Confirm</button>
-                 <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>
+                 <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Submit</button>
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                

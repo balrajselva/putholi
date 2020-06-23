@@ -47,5 +47,4 @@ public class QuotationImage extends AuditableEntity {
     @Column(name = "filepath")
     private String filePath;
 
-
 }

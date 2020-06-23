@@ -113,6 +113,9 @@ public class Invoice extends AuditableEntity {
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
 	private List<PostImage> postImages;
 
+	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "invoice" ,cascade = CascadeType.ALL)
+	private Set<Receipt> receipts;
+
 	@JsonProperty("proofOfId")
 	@Transient
 	private ProofOfId proofOfId;
