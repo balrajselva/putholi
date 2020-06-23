@@ -75,6 +75,30 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoice.getId();
 	}
 
+	@Override
+	@Transactional
+	public long saveReceipt(Invoice invoice, Map<String, byte[]> files) {
+		System.out.println("..SchoolServiceImpl.."+imgPath);
+		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
+		System.out.println("..SchoolServiceImpl.."+fileSubPath);
+		Requirement requirement= requirementRepository.findById(invoice.getRequirement().getRequirementId()).get();
+		if (files != null && files.size() > 0) {
+			files.forEach((k,v) -> {
+				Set<Receipt> siSet = new HashSet<>();
+				String filePath = fileSubPath+ invoice.getId()+"_";
+				this.saveImgToFS(imgPath,fileSubPath,v,filePath+k);
+				Receipt si = new Receipt(filePath+k,null);
+				si.setInvoice(invoice);
+				siSet.add(si);
+				invoice.setReceipts(siSet);
+			});
+		}
+
+		// Save invoice
+		repository.save(invoice);
+		return invoice.getId();
+	}
+
 
 	@Override
 	public Invoice getFile(long id) {

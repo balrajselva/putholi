@@ -10,21 +10,20 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "invoiceimage")
+@Table(name = "receipt")
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class InvoiceImage extends AuditableEntity {
+public class Receipt extends AuditableEntity {
 
     private static final long serialVersionUID = -2136842348977561820L;
 
-    public InvoiceImage() {}
+    public Receipt() {}
 
-    public InvoiceImage(String filePath, byte[] image, String comments) {
+    public Receipt(String filePath, byte[] image) {
         this.filePath = filePath;
         this.image = image;
-        this.comments = comments;
     }
 
     @Id
@@ -41,11 +40,7 @@ public class InvoiceImage extends AuditableEntity {
     @JsonIgnore
     private Invoice invoice;
 
-    @Column(name = "comments")
-    String comments;
-
     @Column(name = "filepath")
     private String filePath;
 
 }
-

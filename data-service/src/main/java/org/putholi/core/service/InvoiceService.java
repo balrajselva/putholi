@@ -39,4 +39,6 @@ public interface InvoiceService {
     
     List<Invoice> findByInvoiceStatus(String invoiceStatus);
 
+    long saveReceipt(Invoice invoice, Map<String,byte[]> filesInBytes);
+
 }

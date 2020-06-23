@@ -143,4 +143,25 @@ public class InvoiceController {
 		}
 		return new ResponseEntity<>("UPDATE Response", HttpStatus.OK);
 	}
+
+	@PostMapping(value = "/invoiceReceipt")
+	public ResponseEntity<?> invoiceReceiptUpload(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
+											   HttpServletRequest request) {
+		long id;
+		try {
+			System.out.println("..regFormModel.getPayload().."+regFormModel );
+			Invoice invoice = new ObjectMapper().readValue(regFormModel.getPayload(), Invoice.class);
+			System.out.println(invoice);
+			Map<String, byte[]> filesInBytes =null;
+			if(regFormModel.getReceipts() != null ) {
+				filesInBytes = WebUtilities
+						.convertMultiPartToBytes(Arrays.asList(regFormModel.getReceipts()));
+			}
+			id = invoiceService.saveReceipt(invoice, filesInBytes);
+		} catch (IOException ex) {
+			logger.debug("Error on multiUploadFileModel {}", ex);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(id, HttpStatus.OK);
+	}
 }
