@@ -41,10 +41,13 @@
         <expresscheckout.version>1.1.2</expresscheckout.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springfox-swagger.version>2.0.2</springfox-swagger.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
         <c3p0.version>0.9.5.4</c3p0.version>
         <jackson-mapper-asl.version>1.9.8</jackson-mapper-asl.version>
-        <jackson-databind.version>2.9.10.4</jackson-databind.version>
+        <jackson-annotations.version>2.11.0</jackson-annotations.version>
+        <jackson-core.version>2.11.0</jackson-core.version>
+        <jackson-databind.version>2.11.0</jackson-databind.version>
         <jackson-dataformat-cbor.version>2.9.6</jackson-dataformat-cbor.version>
         <mysql-connector-java.version>8.0.20</mysql-connector-java.version>
         <ehcache.version>2.9.0</ehcache.version>
@@ -124,8 +127,8 @@
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
+                <version>${springfox-swagger-ui.version}</version>
+            </dependency>           
             <dependency>
                 <groupId>com.mchange</groupId>
                 <artifactId>c3p0</artifactId>
@@ -141,11 +144,21 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson-databind.version}</version>
             </dependency>
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-annotations</artifactId>
+			    <version>${jackson-annotations.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-core</artifactId>
+			    <version>${jackson-core.version}</version>
+			</dependency>            
             <dependency>
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-cbor</artifactId>
                 <version>${jackson-dataformat-cbor.version}</version>
-            </dependency>
+            </dependency>         
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
