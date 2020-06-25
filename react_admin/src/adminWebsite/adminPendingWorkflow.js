@@ -77,6 +77,10 @@ class adminPendingWorkflow extends Component {
                 nextPage="workOrder"
                 pageLink="Initiate Work Order";
             }
+            if(this.state.schools[i].schoolStatus==="RECEIPTS_UPLOADED"){
+                nextPage="reviewReceipts"
+                pageLink="Review receipts";
+            }
             // if(this.state.schools[i].schoolStatus==="INVOICE_APPROVED"){
             //     nextPage="fundDisbursement"
             //     pageLink="Initiate Fund Disbursement";
@@ -92,7 +96,8 @@ class adminPendingWorkflow extends Component {
                     this.state.schools[i].schoolStatus==="QuotationAdded" || this.state.schools[i].schoolStatus==="READY_FOR_ALLOTMENT" ||
                     this.state.schools[i].schoolStatus==="FUND_ALLOTED" || this.state.schools[i].schoolStatus==="WORK_ORDER_INITIATED" ||
                     this.state.schools[i].schoolStatus==="REVIEWER_REJECTED_QUOTATION" || this.state.schools[i].schoolStatus==="APPROVER_REJECTED_QUOTATION" ||
-                    this.state.schools[i].schoolStatus==="DEO_EMAIL_SENT" || this.state.schools[i].schoolStatus==="DEO_REJECTED"){
+                    this.state.schools[i].schoolStatus==="DEO_EMAIL_SENT" || this.state.schools[i].schoolStatus==="DEO_REJECTED" ||
+                    this.state.schools[i].schoolStatus==="RECEIPTS_UPLOADED"){
                 rowsUpdated=true;
                 rows.push(<tr>
                     <td>{this.state.schools[i].schoolId}</td>

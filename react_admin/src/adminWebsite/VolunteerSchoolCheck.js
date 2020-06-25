@@ -83,6 +83,25 @@ class VolunteerSchoolCheck extends Component {
                 };
                 pageLink="Upload Receipt";
             }
+
+            if(this.state.school.schoolStatus==="RECEIPTS_UPLOADED"){
+                newTo = { 
+                    pathname: "/volunteerSchoolCheck", 
+                    school:this.state.school,
+                    currentUser:this.props.location.currentUser
+                };
+                pageLink="More details";
+            }
+
+            if(this.state.school.schoolStatus==="ADMIN_REJECTED_RECEIPTS"){
+                newTo = { 
+                    pathname: "/uploadReceipt", 
+                    school:this.state.school,
+                    currentUser:this.props.location.currentUser
+                };
+                pageLink="Upload Receipt";
+            }
+
             if(this.state.school.schoolStatus==="QuotationAdded"){
                 pageLink="Wait for quotation approval";
             }

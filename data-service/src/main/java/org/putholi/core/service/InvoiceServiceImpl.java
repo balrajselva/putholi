@@ -82,15 +82,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		Requirement requirement= requirementRepository.findById(invoice.getRequirement().getRequirementId()).get();
+		invoice= repository.findByInvoiceId(invoice.getId());
 		if (files != null && files.size() > 0) {
-			files.forEach((k,v) -> {
+			Invoice finalInvoice = invoice;
+			files.forEach((k, v) -> {
 				Set<Receipt> siSet = new HashSet<>();
-				String filePath = fileSubPath+ invoice.getId()+"_";
+				String filePath = fileSubPath+ finalInvoice.getId()+"_";
 				this.saveImgToFS(imgPath,fileSubPath,v,filePath+k);
 				Receipt si = new Receipt(filePath+k,null);
-				si.setInvoice(invoice);
+				si.setInvoice(finalInvoice);
 				siSet.add(si);
-				invoice.setReceipts(siSet);
+				finalInvoice.setReceipts(siSet);
 			});
 		}
 
@@ -112,6 +114,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 		for(PostImage postImage:invoice.getPostImages()){
 			postImage.setImage(getImgFromFS(postImage.getFilePath()));
 		}
+		for (Receipt receipt : invoice.getReceipts()) {
+			if(receipt.getFilePath() != null) {
+				receipt.setImage(getImgFromFS(receipt.getFilePath()));
+			}
+		}
 		return invoice;
 	}
 
@@ -127,6 +134,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 			}
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+			for (Receipt receipt : invoice.getReceipts()) {
+				if(receipt.getFilePath() != null) {
+					receipt.setImage(getImgFromFS(receipt.getFilePath()));
+				}
 			}
 		}
 		return invoices;
@@ -154,6 +166,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
 			}
+			for (Receipt receipt : invoice.getReceipts()) {
+				if(receipt.getFilePath() != null) {
+					receipt.setImage(getImgFromFS(receipt.getFilePath()));
+				}
+			}
 		}
 		return invoices;
 	}
@@ -169,6 +186,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 			}
 			for (PostImage postImage : invoice.getPostImages()) {
 				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+			for (Receipt receipt : invoice.getReceipts()) {
+				if(receipt.getFilePath() != null) {
+					receipt.setImage(getImgFromFS(receipt.getFilePath()));
+				}
 			}
 		}
         return invoices;
