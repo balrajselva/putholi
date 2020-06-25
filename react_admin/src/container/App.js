@@ -46,6 +46,7 @@ import AdminInvoiceCheck from '../adminWebsite/AdminInvoiceCheck';
 import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
 import SuperAdminLayout from '../adminWebsite/components/layouts/SuperAdminLayout';
 import UploadReceipt from '../adminWebsite/components/receipt/UploadReceipt';
+import ReviewReceipts from '../adminWebsite/components/receipt/ReviewReceipts';
 
 class App extends Component {
   state = {
@@ -168,6 +169,7 @@ class App extends Component {
             <AdminLayoutRoute exact path="/reviewInvoice" component={(props)=><AdminInvoiceReview {...props} config={this.state.config}/>}/>
             <AdminLayoutRoute exact path="/adminInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props} config={this.state.config}/>}/>
             <AdminLayoutRoute exact path="/adminDEOtrigger" component={(props)=><EmailDEOTrigger {...props} config={this.state.config}/>}/>
+            <AdminLayoutRoute exact path="/reviewReceipts" component={(props)=><ReviewReceipts {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute exact path="/reviewerInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute exact path="/approverInvoiceCheck" component={(props)=><AdminInvoiceCheck {...props} config={this.state.config}/>}/>
             <SponsorLayoutRoute path="/trustMemberScreen" history={history} component={(props)=><TrustMemberScreen {...props} config={this.state.config}/>}/>
