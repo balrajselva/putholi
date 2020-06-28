@@ -199,6 +199,15 @@ public class QuotationServiceImpl implements QuotationService {
 		else  if(status.startsWith("REVIEWER")) {
 			projectRepository.updateReviewerStatus(school.getProjects().iterator().next().getProjectId(), PuthuyirLookUp.valueOf(status), updateQuotation.getReviewerComments());
 		}
+		if(status.equals(PuthuyirLookUp.REVIEWER_REJECTED_QUOTATION.name()) || status.equals(PuthuyirLookUp.APPROVER_REJECTED_QUOTATION.name())){
+			updateQuotation.getRejectQuotations().forEach((k,v)->{
+				for(Quotation quotation:v){
+					Quotation tempQuotation = quotationRepository.findByQuotationId(quotation.getQuotationId());
+					tempQuotation.setQuotationStatus(PuthuyirLookUp.QUOTATION_ADDED.toString());
+					quotationRepository.save(tempQuotation);
+				}
+			});
+		}
 		requirementRepository.updateRequirementStatus(school.getProjects().iterator().next().getProjectId(),status);
 	}
 

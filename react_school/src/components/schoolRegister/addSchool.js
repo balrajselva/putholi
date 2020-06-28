@@ -5,6 +5,8 @@ import '../../css/School_registration.css';
 import Tabs from '../../components/Tabs/Tabs';
 import axios from 'axios';
 import BeneficiarySummary from './BeneficiarySummary';
+import './sliderImage.css';
+
 
 class AddSchool extends Component {
     constructor(props) {
@@ -38,8 +40,8 @@ class AddSchool extends Component {
       otherAssetType:null,
       quantity:null,
       comments:null,
-      fileInput:null,
-      localImageUrl:null,
+      fileInput:[],
+      localImageUrl:[],
       errorMessage:null,
       lastErrorField:null,
       spinner:false,
@@ -52,8 +54,41 @@ class AddSchool extends Component {
       assetNameList:null,
       priority:null,
       maxPriority:null,
-      reqError:null
+      reqError:null,
+      currentIndex: 0,
+      translateValue: 0
     }
+
+    goToPrevSlide = () => {
+      if (this.state.currentIndex === 0)
+        return;
+      this.setState(prevState => ({
+        currentIndex: prevState.currentIndex - 1,
+        translateValue: prevState.translateValue + this.slideWidth()
+      }))
+  }
+
+  goToNextSlide = () => {
+  // Exiting the method early if we are at the end of the images array.
+  // We also want to reset currentIndex and translateValue, so we return
+  // to the first image in the array.
+  if (this.state.currentIndex === this.state.localImageUrl.length - 1) {
+      return this.setState({
+      currentIndex: 0,
+      translateValue: 0
+      })
+  }
+
+  // This will not run if we met the if condition above
+  this.setState(prevState => ({
+      currentIndex: prevState.currentIndex + 1,
+      translateValue: prevState.translateValue + -(this.slideWidth())
+  }));
+  }
+  slideWidth = () => {
+      return document.querySelector('.slide').clientWidth
+  }
+
     componentDidMount(){
       axios.get(this.props.config+"/lookup/getAll")
       .then(res=>{
@@ -63,31 +98,37 @@ class AddSchool extends Component {
     }
     handleChange=({target})=>{
       if(target.id==="fileInput"){
-         if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
-            window.alert("Image size should be within 5MB");
-            return
-         }
-         else{
-          this.setState({spinner:true});
-          const reader=new FileReader();
-          const file=target.files[0];
-          if (file && file.type.match('image.*')) {
-              reader.readAsDataURL(file);
-          }
-          else{
-              this.setState({
-                  identityProof:null,
-                  localImageUrl:null,
+         for(let i=0;i<target.files.length;i++){
+            if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 5000){
+               window.alert("Image size should be within 5MB");
+               return
+            }
+            else{
+            this.setState({spinner:true});
+            const reader=new FileReader();
+            const file=target.files[i];
+            if (file && file.type.match('image.*')) {
+               reader.readAsDataURL(file);
+            }
+            else{
+               this.setState({
+                     identityProof:null,
+                     localImageUrl:null,
+                     spinner:false
+               })
+            }
+            reader.onloadend=()=>{
+               let tempFile=[...this.state.fileInput];
+               tempFile.push(target.files[i]);
+               let tempUrls =[...this.state.localImageUrl];
+               tempUrls.push(reader.result);
+               this.setState({
+                  fileInput:tempFile,
+                  localImageUrl:tempUrls,
                   spinner:false
-              })
-          }
-          reader.onloadend=()=>{
-              this.setState({
-                  fileInput:target.files[0],
-                  localImageUrl:reader.result,
-                  spinner:false
-              })
-          }
+               })
+               }
+            }
          }
       }
       else{
@@ -369,7 +410,9 @@ class AddSchool extends Component {
       console.log(schoolDetails);
       var regFormModel=new FormData();
       regFormModel.set('payload',JSON.stringify(schoolDetails));
-      regFormModel.append('files',this.state.fileInput)
+      this.state.fileInput.forEach(file=>{
+         regFormModel.append('files',file);
+     })
       axios.post(this.props.config+'/school',regFormModel,{
          headers:{'Content-Type':'multipart/form-data'}
       })
@@ -384,10 +427,33 @@ class AddSchool extends Component {
       })
    }
    }
-   getLookup=()=>{
 
-   }
     render() {
+      const Slide = ({ image }) => {
+         const styles = {
+             backgroundImage: `url(${image})`,
+             backgroundSize: 'cover',
+           backgroundRepeat: 'no-repeat',
+           backgroundPosition: '50% 60%'
+         }
+         return <div className="slide" style={styles}></div>
+       }
+   
+       const LeftArrow = (props) => {
+         return (
+           <div className="backArrow arrow" onClick={props.goToPrevSlide} >
+             <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+           </div>
+         );
+       }
+   
+       const RightArrow = (props) => {
+         return (
+           <div className="nextArrow arrow" onClick={props.goToNextSlide}>
+             <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+           </div>
+         );
+       }
          return (
 <div className="container">
    <section>
@@ -660,8 +726,31 @@ class AddSchool extends Component {
                                        <textarea className="input-xlarge" id="comments" value={this.state.comments} onChange={this.handleChange} rows="3"></textarea>
                                     </div>
                                     {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
-                                    {this.state.localImageUrl?<img style={{marginLeft:"10px"}} width="80%" height="100%" src={this.state.localImageUrl} alt="Identity proof"/>:null}
-                                 </div>
+                                    {this.state.localImageUrl?
+                <div className="page_container">
+                <div className="wrap">
+                <div className="container">
+                  <div className="row pad25">
+                    <div className="span8">
+                <div className="slider">
+                    <div className="slider-wrapper"
+                      style={{
+                        transform: `translateX(${this.state.translateValue}px)`,
+                        transition: 'transform ease-out 0.45s'
+                      }}>
+                      {this.state.localImageUrl.map((value, index) =>
+                        <Slide key={index} image={value} />
+                      )}
+                    </div>
+                    <LeftArrow
+                      goToPrevSlide={this.goToPrevSlide}
+                    />
+
+                    <RightArrow
+                      goToNextSlide={this.goToNextSlide}
+                    />
+                  </div></div></div></div></div></div>
+                :null}                                 </div>
                               </div>
                            </div>
                         </div>
@@ -672,7 +761,7 @@ class AddSchool extends Component {
                            <div style={{color:"red",fontSize:"15px",marginBottom:"5px"}}>
                                        {this.state.errorMessage}
                                     </div>
-                            <button type="submit" class="btn send_btn" onClick={(e)=>this.handleSubmit(e)}>Submit</button>
+                            <button type="submit" class="btn send_btn" onClick={(e)=>this.handleSubmit(e)}>Submit</button>&nbsp;&nbsp;
                             <button class="btn dark_btn">Cancel</button>
                         </div>
                         {this.state.spinner?<div class="spinner"></div>:null}

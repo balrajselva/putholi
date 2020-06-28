@@ -53,7 +53,8 @@ class ViewSelectedQuotation extends Component {
             schoolId:this.props.location.school.schoolId,
             status:status,
             approverComments:this.state.approverComments,
-            reviewerComments:this.state.reviewerComments
+            reviewerComments:this.state.reviewerComments,
+            rejectQuotations:this.state.reqList
         }
         axios.post(this.props.config+"/updateSelectedQuotation",updatequotation)
         .then(res=>{
