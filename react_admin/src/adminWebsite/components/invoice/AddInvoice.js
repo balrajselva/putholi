@@ -252,6 +252,9 @@ class AddInvoice extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.oldInvoices.length;i++){
+            if(this.state.oldInvoices[i].status!=="AdminRejectedInvoice"){
+                continue
+            }
             rowsUpdated=true;
             rows.push(    
                 <tr>

@@ -41,4 +41,5 @@ public interface InvoiceService {
 
     long saveReceipt(Invoice invoice, Map<String,byte[]> filesInBytes);
 
+    List<Invoice> getPaidInvoiceBySchoolId(long schoolId);
 }

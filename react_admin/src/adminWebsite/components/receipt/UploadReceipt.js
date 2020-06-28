@@ -29,15 +29,22 @@ componentDidMount(){
     this.setState({
         requirements:resp
   })
+  // TODO: get all the below only for active projects
+
   axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
   .then(res=>{
       console.log("Quotations",res.data);
       this.setState({
           quoList:res.data
       })
-      axios.get(this.props.config+"/invoice/"+this.props.location.school.schoolId)
+      axios.get(this.props.config+"/invoice/getPaid/"+this.props.location.school.schoolId)
       .then(res=>{
           console.log("Invoices",res.data)
+          for(let i=0;i<res.length;i++){
+            if(res.receipts === undefined || res.receipts === null){
+              res[i].receipts=[]
+            }
+          };
           this.setState({
             invoiceList:res.data,
             getRequirementList:false,
@@ -70,48 +77,6 @@ selectInvoiceImage=(e)=>{
     })
     document.getElementById('modal-default').style.display='block';
 }
-
-// onSubmit=(e)=>{
-//   e.preventDefault();
-//   let newStatus = "Work_In_Progress";
-//   if(e.target.id==="Reject"){
-//       newStatus="ReceiptsUploaded"
-//   }
-//   this.setState({
-//     spinner:true
-//   })
-//   var regFormModel=new FormData();
-//   if(this.state.receipts!==[]){
-//       this.state.receipts.forEach(image=>{
-//           regFormModel.append('receipts',image);
-//       })
-//   }
-//   console.log(regFormModel);
-//   axios.post(this.props.config+'/invoiceReceipt',regFormModel)
-//   .then(res=>{ 
-//       console.log(res);
-//       this.setState({
-//           spinner:false,
-//           invoiceId:res.data
-//       })
-//       window.alert("Succesfully uploaded receipts!!!");
-//   })
-//   .catch(error=>{
-//       window.alert("Failed to upload receipts due to "+error);
-//   })
-//     axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
-//     .then(res=>{
-//       this.setState({
-//         spinner:false
-//       })
-//     })
-//     .catch(error=>{
-//         this.setState({
-//             spinner:false
-//         })
-//         window.alert("File upload failed due to "+error)
-//     })
-// }
 
 viewInvoice=(e)=>{
     console.log(e.target.id)

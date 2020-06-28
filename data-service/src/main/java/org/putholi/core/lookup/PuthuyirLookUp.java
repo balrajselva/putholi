@@ -41,6 +41,7 @@ public enum PuthuyirLookUp {
     DEO_REJECTED("status","DEO_REJECTED","DEO_REJECTED"),
     DEO_EMAIL_SENT("status","DEO_EMAIL_SENT","DEO_EMAIL_SENT"),
     FUND_ALLOTED("status","FUND_ALLOTED","FUND_ALLOTED"),
+    PROJECT_CLOSED("status","PROJECT_CLOSED","PROJECT_CLOSED"),
     SUCCESS("paymentStatus","PAYMENT_SUCCESS","PAYMENT_SUCCESS");
 	private final String field;
 	private final String key;

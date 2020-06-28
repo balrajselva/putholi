@@ -15,5 +15,8 @@ public interface ProjectService {
 	Optional<Project> get(long id);
 	
 	List<Project> findBySchoolId(long id);
-	
+
+    void updateProjectStatus(long projectId,String status);
+
+	void updateReceiptComments(long projectId,String comment);
 }
