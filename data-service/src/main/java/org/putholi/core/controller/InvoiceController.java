@@ -98,6 +98,11 @@ public class InvoiceController {
 		return ResponseEntity.ok().body(invoiceService.getInvoiceBySchoolId(schoolId));
 	}
 
+	@GetMapping("/invoice/getPaid/{school_id}")
+	public ResponseEntity<List<Invoice>> getAllPadiInvoice(@PathVariable("school_id") long schoolId) {
+		return ResponseEntity.ok().body(invoiceService.getPaidInvoiceBySchoolId(schoolId));
+	}
+
 	@GetMapping("/invoice/requirement/{school_id}")
 	public ResponseEntity<List<Invoice>> getInvoiceByRequrementid(@PathVariable("school_id") long schoolId) {
 		return ResponseEntity.ok().body(invoiceService.getInvoiceByRequirementId(schoolId));

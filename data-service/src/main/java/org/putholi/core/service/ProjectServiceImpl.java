@@ -1,6 +1,7 @@
 package org.putholi.core.service;
 
 import org.putholi.core.dao.ProjectRepository;
+import org.putholi.core.dao.RequirementRepository;
 import org.putholi.core.lookup.PuthuyirLookUp;
 import org.putholi.core.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepository;
+
+	@Autowired
+	private RequirementRepository requirementRepository;
 
 	@Transactional
 	public long saveOrUpdate(Project project) {
@@ -53,4 +57,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectRepository.findBySchoolId(id);
 	}
 
+	@Override
+	public void updateProjectStatus(long projectId, String status) {
+		projectRepository.updateProjectStatus(projectId,PuthuyirLookUp.valueOf(status),null);
+		if(status=="PROJECT_CLOSED"){
+			requirementRepository.updateRequirementStatus(projectId,status);
+		}
+	}
+
+	@Override
+	public void updateReceiptComments(long projectId, String comment) {
+		projectRepository.updateReceiptComments(projectId,comment);
+	}
 }

@@ -175,6 +175,27 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return invoices;
 	}
 
+	@Override
+	public List<Invoice> getPaidInvoiceBySchoolId(long schoolId) {
+		List<Invoice> invoices = repository.findPaidInvoiceBySchoolId(schoolId);
+		for(Invoice invoice:invoices) {
+			for(InvoiceImage invoiceImage: invoice.getInvoiceImages()){
+				if(invoiceImage.getFilePath() != null) {
+					invoiceImage.setImage(getImgFromFS(invoiceImage.getFilePath()));
+				}
+			}
+			for (PostImage postImage : invoice.getPostImages()) {
+				postImage.setImage(getImgFromFS(postImage.getFilePath()));
+			}
+			for (Receipt receipt : invoice.getReceipts()) {
+				if(receipt.getFilePath() != null) {
+					receipt.setImage(getImgFromFS(receipt.getFilePath()));
+				}
+			}
+		}
+		return invoices;
+	}
+
     @Override
     public List<Invoice> getInvoiceByRequirementId(long requirementId) {
 		List<Invoice> invoices = repository.findByRequirementId(requirementId);

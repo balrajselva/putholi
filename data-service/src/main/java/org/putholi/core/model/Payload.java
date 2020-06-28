@@ -17,4 +17,6 @@ public class Payload{
     private String reviewerComments;
 
     private Long invoiceId;
+
+    private Long projectId;
 }

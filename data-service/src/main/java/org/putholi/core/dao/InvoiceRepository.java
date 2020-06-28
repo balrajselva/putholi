@@ -14,6 +14,9 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
     @Query("SELECT u FROM Invoice u where u.school.schoolId=:schoolId")
     List<Invoice> findBySchoolId(@Param("schoolId") long schoolId);
 
+    @Query("SELECT u FROM Invoice u where u.school.schoolId=:schoolId AND u.invoiceStatus='PAYMENT_COMPLETED'")
+    List<Invoice> findPaidInvoiceBySchoolId(@Param("schoolId") long schoolId);
+
     @Query("SELECT u FROM Invoice u where u.id=:invoiceId")
     Invoice findByInvoiceId(@Param("invoiceId")long invoiceId);
 

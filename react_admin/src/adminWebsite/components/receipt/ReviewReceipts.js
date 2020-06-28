@@ -70,46 +70,75 @@ selectInvoiceImage=(e)=>{
     document.getElementById('modal-default').style.display='block';
 }
 
+handleChange=({target})=>{
+  document.getElementById(target.id).style.borderColor="#d2d6de";
+  this.setState({
+      errorMessage:null
+  })
+  this.setState({ 
+      [target.id]: target.value , 
+      lastErrorField:null,
+      errorMessage:""
+  });
+}    
+
 onSubmit=(e)=>{
   e.preventDefault();
-  let newStatus = "Work_In_Progress";
-  if(e.target.id==="Reject"){
-      newStatus="ReceiptsUploaded"
-  }
-  this.setState({
-    spinner:true
-  })
-  var regFormModel=new FormData();
-  if(this.state.receipts!==[]){
-      this.state.receipts.forEach(image=>{
-          regFormModel.append('receipts',image);
-      })
-  }
-  console.log(regFormModel);
-  axios.post(this.props.config+'/invoiceReceipt',regFormModel)
-  .then(res=>{ 
-      console.log(res);
-      this.setState({
-          spinner:false,
-          invoiceId:res.data
-      })
-      window.alert("Succesfully uploaded receipts!!!");
-  })
-  .catch(error=>{
-      window.alert("Failed to upload receipts due to "+error);
-  })
-    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+  let newStatus = null;
+  if(e.target.id==="Accept"){
+    this.setState({
+      spinner:true
+    })
+    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/OPEN_FOR_REQUIREMENTS")
     .then(res=>{
-      this.setState({
-        spinner:false
+      axios.post(this.props.config+"/project/updateStatus/"+this.props.location.school.projects[0].projectId+"/PROJECT_CLOSED")
+      .then(res=>{
+        this.setState({
+          spinner:false
+        })
+        window.alert("Status updated successfully!")
       })
     })
     .catch(error=>{
         this.setState({
             spinner:false
         })
-        window.alert("File upload failed due to "+error)
+        window.alert("Filed to update school status due to "+error)
     })
+  }
+  else if(e.target.id==="Reject"){
+    newStatus="ADMIN_REJECTED_RECEIPTS"
+    if(this.state.adminComments === null){
+      this.setState({
+        errorMessage:"Please provide reson for rejection",
+        lastErrorField:"adminComments"
+      })
+      return
+    }
+    this.setState({
+      spinner:true
+    })
+    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+    .then(res=>{
+      let payload={
+        adminComments:this.state.adminComments,
+        projectId:this.props.location.school.projects[0].projectId
+      }
+      axios.post(this.props.config+"/project/updateReceiptComments",payload)
+      .then(res=>{
+        this.setState({
+          spinner:false
+        })
+        window.alert("Status updated successfully!")
+      })
+    })
+    .catch(error=>{
+        this.setState({
+            spinner:false
+        })
+        window.alert("Filed to update school status due to "+error)
+    })
+  }
 }
 
 viewInvoice=(e)=>{
@@ -163,7 +192,7 @@ createTable=()=>{
 
 render() {
   const schoolList={
-    pathname:"/volunteerSchoolCheck",
+    pathname:"/reviewReceipts",
     currentUser:this.props.location.currentUser,
     ...this.props
   }
@@ -172,7 +201,7 @@ render() {
       <div className="content-wrapper">
         <section className="content-header">
             <div className="row">
-            <SmallBoxCard content={this.props.location.currentUser.role} linkTo="/volunteerSchoolCheck" colour="bg-green"/>
+            <SmallBoxCard content={this.props.location.currentUser.role} linkTo="/reviewReceipts" colour="bg-green"/>
             {/* ./col */}
             <SmallBoxCard content="Logout" linkTo="/login" colour="bg-red"/>{/* ./col */}
             </div>
@@ -209,13 +238,13 @@ render() {
                                     <th>Admin Comments </th>
                                 </tr>
                                 <tr>
-                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.props.location.school.projects[0].adminComments} rows="3" disabled></textarea></td>
+                                    <td><textarea className="input-xlarge" ref ="comment" id="adminComments" value={this.state.adminComments} rows="3" onChange={this.handleChange} placeholder="Compulsory for rejection.."></textarea></td>
                                 </tr>
                             </tbody></table>
                         </div>
                 <div className="timeline-footer">
                  <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Accept</button>&nbsp;
-                 <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Reject</button>&nbsp;
+                 <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>&nbsp;
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                

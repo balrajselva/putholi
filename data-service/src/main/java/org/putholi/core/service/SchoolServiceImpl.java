@@ -1,6 +1,7 @@
 package org.putholi.core.service;
 
 import org.putholi.core.dao.DEORepository;
+import org.putholi.core.dao.ProjectRepository;
 import org.putholi.core.dao.SchoolRepository;
 import org.putholi.core.dao.UserRepository;
 import org.putholi.core.lookup.PuthuyirLookUp;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static java.sql.Types.NULL;
+
 @Service
 @Transactional
 public class SchoolServiceImpl implements SchoolService {
@@ -29,6 +32,9 @@ public class SchoolServiceImpl implements SchoolService {
 
 	@Autowired
 	private DEORepository deoRepository;
+
+	@Autowired
+	private ProjectRepository projectRepository;
 
 	@Transactional
 	public long save(final School school, Map<String, byte[]> files, String imgPath) {
@@ -154,19 +160,31 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
+	@Transactional
 	public School updateSchoolStatus(long id, String status) {
-		schoolRepository.updateSchoolStatus(id, status);
+		School school = schoolRepository.findBySchoolId(id);
+		if(status == "OPEN_FOR_REQUIREMENTS"){
+			userRepository.updateUserSchoolStatus(school.getVolunteerId(), NULL);
+			schoolRepository.updateSchoolStatusAndVolunteerId(id,status,school.getVolunteerId());
+		}
+		else{
+			schoolRepository.updateSchoolStatus(id, status);
+		}
 		return schoolRepository.findById(id).orElse(null);
 	}
 
 	@Override
+	@Transactional
 	public School updateVolunteerId(long id, Long volunteerId) {
 		schoolRepository.updateVolunteerId(id,volunteerId);
+		projectRepository.updateVolunteerId(id,volunteerId);
 		return schoolRepository.findById(id).orElse(null);
 	}
 
+	@Transactional
 	public School updateSchoolStatusAndVolunteerId(long id, Long volunteerId, String status) {
 		schoolRepository.updateSchoolStatusAndVolunteerId(id, status, volunteerId);
+		projectRepository.updateVolunteerId(id,volunteerId);
 		return schoolRepository.findById(id).orElse(null);
 	}
 

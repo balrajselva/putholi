@@ -46,6 +46,15 @@ public class Project extends AuditableEntity {
 	@Enumerated(EnumType.STRING)
 	private PuthuyirLookUp status;
 
+	@Column(name = "IsActiveProject")
+	private String IsActiveProject;
+
+	@Column(name ="VolunteerId")
+	private Long volunteerId;
+
+	@Column(name = "receiptComments")
+	private String receiptComments;
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project", cascade = CascadeType.ALL)
 	private List<Requirement> requirements;
 
