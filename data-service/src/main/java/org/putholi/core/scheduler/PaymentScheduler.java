@@ -16,7 +16,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 /*
- * Scheduler looks up invoice table and picks up record(s) that are in 'INVOICEAPPROVED'
+ * Scheduler looks up invoice table and picks up record(s) that are in 'ApprovedInvoice'
  * status and generates payment file.
  * Once invoice file is generated, updates invoice records to 'PAYMENTINTIATED'
  * 
@@ -49,7 +49,7 @@ public class PaymentScheduler {
 	public void findApprovedInvoices() {
 		logger.info("Start Invoice Scheduler :{}", ZonedDateTime.now());
 		try {
-			List<Invoice> invoices = invoiceService.findByInvoiceStatus("INVOICEAPPROVED");
+			List<Invoice> invoices = invoiceService.findByInvoiceStatus("ApprovedInvoice");
 			if (invoices != null) {
 				logger.info("Nnumber of invoices in Approved Status : {}", invoices.size());
 				createPaymentFile(invoices);
