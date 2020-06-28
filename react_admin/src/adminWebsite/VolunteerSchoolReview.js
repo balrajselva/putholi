@@ -95,9 +95,6 @@ class VolunteerSchoolReview extends Component {
                         <div className="row">
                                     <div className="col-xs-12">
                                     <div className="box">
-                                        {/* <div className="box-header">
-                                            <h4 className="box-title">Search Users</h4>
-                                        </div> */}
                                         <div className="box-body table-responsive no-padding">
                                             <table className="table table-hover">
                                             <tbody>
@@ -115,30 +112,18 @@ class VolunteerSchoolReview extends Component {
                                         </div>
                                         </div>
                         <div className="timeline-footer">
-                        <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
+                        <button  type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
                             <a id="Accepted" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Accept</a>&nbsp;
                             <a id="Rejected" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</a>&nbsp;
                             <Link to={{pathname:"/volunteerSchoolCheck", currentUser:this.props.location.currentUser}} className="btn btn-primary btn-xs">Back to List</Link>
                         </div>
                         </div>
                     </li>
-                    {/* END timeline item */}
-                    {/* timeline item */}
-                    
-                    {/* END timeline item */}
-                    {/* timeline item */}
-                    {/* END timeline item */}
-                    {/* timeline time label */}
-                    {/* /.timeline-label */}
-                    {/* timeline item */}
-                    {/* END timeline item */}
-                    {/* timeline item */}
                     <li>
                         <div className="timeline-footer">
                         <a href="#" className="btn btn-xs bg-maroon">Go to Top</a>
                         </div>
                     </li>
-                    {/* END timeline item */}
                     </ul>
                 </div>
                 {/* /.col */}

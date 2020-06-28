@@ -6,8 +6,40 @@ import imageCss from '../adminWebsite/css/imageCss.css';
 class adminSchoolCheck extends Component {
     state={
         spinner:false,
-        status:null
+        status:null,
+        currentIndex: 0,
+        translateValue: 0
     }
+
+    goToPrevSlide = () => {
+      if (this.state.currentIndex === 0)
+        return;
+      this.setState(prevState => ({
+        currentIndex: prevState.currentIndex - 1,
+        translateValue: prevState.translateValue + this.slideWidth()
+      }))
+  }
+
+  goToNextSlide = () => {
+  // Exiting the method early if we are at the end of the images array.
+  // We also want to reset currentIndex and translateValue, so we return
+  // to the first image in the array.
+  if (this.state.currentIndex === this.props.location.school.schoolImages.length - 1) {
+      return this.setState({
+      currentIndex: 0,
+      translateValue: 0
+      })
+  }
+
+  // This will not run if we met the if condition above
+  this.setState(prevState => ({
+      currentIndex: prevState.currentIndex + 1,
+      translateValue: prevState.translateValue + -(this.slideWidth())
+  }));
+  }
+  slideWidth = () => {
+      return document.querySelector('.slide').clientWidth
+  }
     createReqList=()=>{
         let rows=[];
         for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
@@ -81,6 +113,31 @@ class adminSchoolCheck extends Component {
       }
       else if(this.props.location.currentUser.role==="Reviewer"){
         returnLink = "reviewer"
+      }
+      const Slide = ({ image }) => {
+        const styles = {
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: '50% 60%'
+        }
+        return <div className="slide" style={styles}></div>
+      }
+  
+      const LeftArrow = (props) => {
+        return (
+          <div className="backArrow arrow" onClick={props.goToPrevSlide} >
+            <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+          </div>
+        );
+      }
+  
+      const RightArrow = (props) => {
+        return (
+          <div className="nextArrow arrow" onClick={props.goToNextSlide}>
+            <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
+          </div>
+        );
       }
         return (
             <div className="content-wrapper">
@@ -161,7 +218,7 @@ class adminSchoolCheck extends Component {
                                         </div>
                                         </div>
                             <div className="timeline-footer">
-                                <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>
+                                <button  type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Click to view School Pictures</button>&nbsp;
                                 <a id="Rejected" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>RejectSchool</a>&nbsp;
                                 <a id="Accepted" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm Requirements</a>&nbsp;
                                 <Link to={{pathname:returnLink, currentUser:this.props.location.currentUser}} className="btn btn-primary btn-xs">Back to List</Link>
@@ -188,8 +245,29 @@ class adminSchoolCheck extends Component {
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <img src={'data:image/png;base64,'+this.props.location.school.schoolImages[0].image} id ="image1" alt="" ></img>
-                                </section>
+                                <div className="page_container">
+                                    <div className="wrap">
+                                    <div className="container">
+                                    <div className="row pad25">
+                                        <div className="span8">
+                                    <div className="slider">
+                                        <div className="slider-wrapper"
+                                        style={{
+                                            transform: `translateX(${this.state.translateValue}px)`,
+                                            transition: 'transform ease-out 0.45s'
+                                        }}>
+                                        {this.props.location.school.schoolImages!==null?this.props.location.school.schoolImages.map((value, index) =>
+                                            <Slide key={index} image={'data:image/png;base64,'+value.image} />
+                                        ):null}
+                                        </div>
+                                        <LeftArrow
+                                        goToPrevSlide={this.goToPrevSlide}
+                                        />
+
+                                        <RightArrow
+                                        goToNextSlide={this.goToNextSlide}
+                                        />
+                                    </div></div></div></div></div></div>                                </section>
                             </div>
                         </div>
                       </div>    

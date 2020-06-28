@@ -20,9 +20,8 @@ public class SchoolImage extends AuditableEntity {
 	
 	public SchoolImage() {}
 	
-	public SchoolImage(String filePath, byte[] image, String comments) {
+	public SchoolImage(String filePath, String comments) {
 		this.filePath = filePath;
-		this.image = image;
 		this.comments = comments;
 	}
 
@@ -31,7 +30,7 @@ public class SchoolImage extends AuditableEntity {
 	@Column(name = "image_id")
 	private long imageId;
 
-	@Column(name = "image",length = 10000,nullable = false)
+	@Transient
 	private byte[] image;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

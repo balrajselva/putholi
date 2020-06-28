@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -59,11 +60,14 @@ public class SchoolController {
 			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
 			System.out.println(school);
 			if(regFormModel.getFiles() != null) {
-				Map<String, byte[]> filesInBytes = WebUtilities
-						.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()));
-				long id = schoolService.save(school, filesInBytes,imgPath);
+				List<Map<String, byte[]>> filesInBytes = new ArrayList<>();
+				for(int i=0;i<regFormModel.getFiles().length;i++) {
+					filesInBytes.add(WebUtilities
+							.convertMultiPartToBytes(Arrays.asList(regFormModel.getFiles()[i])));
+				}
+				long id = schoolService.save(school, filesInBytes);
 			} else {
-				long id = schoolService.save(school, null, imgPath);
+				long id = schoolService.save(school, null);
 			}
 		} catch (IOException ex) {
 			logger.debug("Error on multiUploadFileModel {}", ex);

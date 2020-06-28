@@ -51,7 +51,7 @@ public class SchoolSerializer extends StdSerializer<School> {
 			.collect(Collectors.toSet());
 	}
 	
-	private SchoolImageWrapper convertImageWrapper(Set<SchoolImage> images) {
+	private SchoolImageWrapper convertImageWrapper(List<SchoolImage> images) {
 		SchoolImageWrapper imageWrapper = new SchoolImageWrapper();
 		
 		images.forEach(image -> {

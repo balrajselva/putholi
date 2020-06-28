@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 		System.out.println("..UserServiceImpl.."+fileSubPath);
 		long userId=userRepository.save(user).getUserid();
 		if (files != null && files.size() > 0) {
+			List<IdentityProof> siSet = new ArrayList<>();
 			for(int i=0;i<files.size();i++) {
-				List<IdentityProof> siSet = new ArrayList<>();
 				files.get(i).forEach((k, v) -> {
 					String filePath = fileSubPath + userId + "_";
 					// Save image only in fileSystem

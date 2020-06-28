@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -60,7 +62,8 @@ public class School extends AuditableEntity {
 	private Long volunteerId;
 	
 	@OneToMany(fetch = FetchType.EAGER,  mappedBy = "school" ,cascade = CascadeType.ALL)
-	private Set<SchoolImage> schoolImages;
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<SchoolImage> schoolImages;
 	
 	
 	@Transient

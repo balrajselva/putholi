@@ -200,7 +200,7 @@ class AssignToVolunteer extends Component {
                       </div>
                     </div>
                     <div className="modal-footer">
-                      <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                      <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>&nbsp;&nbsp;
                       <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={()=>this.saveVolunteer()}>Save Changes</button>
                     </div>
                   </div>

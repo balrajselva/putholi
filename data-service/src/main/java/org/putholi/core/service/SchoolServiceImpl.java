@@ -7,6 +7,7 @@ import org.putholi.core.dao.UserRepository;
 import org.putholi.core.lookup.PuthuyirLookUp;
 import org.putholi.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ import static java.sql.Types.NULL;
 @Transactional
 public class SchoolServiceImpl implements SchoolService {
 
+	@Value("${image.path}")
+	private String imgPath;
+
 	@Autowired
 	private SchoolRepository schoolRepository;
 	
@@ -37,20 +41,23 @@ public class SchoolServiceImpl implements SchoolService {
 	private ProjectRepository projectRepository;
 
 	@Transactional
-	public long save(final School school, Map<String, byte[]> files, String imgPath) {
+	public long save(final School school, List<Map<String, byte[]>> files) {
 		System.out.println("..SchoolServiceImpl.."+imgPath);
 		String fileSubPath = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now())+"\\";
 		System.out.println("..SchoolServiceImpl.."+fileSubPath);
 		school.setSchoolStatus("SCHOOL_REGISTERED");
 		if (files != null && files.size() > 0) {
-			files.forEach((k,v) -> {
-				Set<SchoolImage> siSet = new HashSet<SchoolImage>();
-				String filePath = fileSubPath+ school.getSchoolInfo().getSchoolName()+"_";
-				SchoolImage si = new SchoolImage(filePath+k,v,school.getProofOfId().getComments());
-				si.setSchool(school);
-				siSet.add(si);
-				school.setSchoolImages(siSet);
-			});
+			List<SchoolImage> siSet = new ArrayList<>();
+			for(int i=0;i<files.size();i++) {
+				files.get(i).forEach((k, v) -> {
+					String filePath = fileSubPath + school.getSchoolId() + "_";
+					this.saveImgToFS(imgPath, fileSubPath, v, filePath + k);
+					SchoolImage si = new SchoolImage(filePath + k, school.getProofOfId().getComments());
+					si.setSchool(school);
+					siSet.add(si);
+					school.setSchoolImages(siSet);
+				});
+			}
 		}
 		
 		Set<Project> project = new HashSet<Project>();
@@ -61,9 +68,6 @@ public class SchoolServiceImpl implements SchoolService {
 		this.setUser(school);
 		
 		schoolRepository.save(school);
-		if (files != null && files.size() > 0) {
-			this.saveImgToFS(imgPath,fileSubPath,school.getSchoolImages());
-		}
 		return school.getSchoolId();
 	}
 	
@@ -85,59 +89,32 @@ public class SchoolServiceImpl implements SchoolService {
 		project.setSchool(school);
 		return project;
 	}
-	
-	private void saveImgToFS(String dirPath, String fileSubPath, Set<SchoolImage> list) {
-		list.forEach(schoolImg -> {
-			String tmpDirPath = dirPath+"\\"+fileSubPath;
-			if(!Files.isDirectory(Paths.get(tmpDirPath))) {
-				try {
-					Files.createDirectories(Paths.get(tmpDirPath));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			Path path = Paths.get(dirPath+"\\"+schoolImg.getFilePath());
-			
-			
-            try {
-				Files.write(path, schoolImg.getImage());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-
 
 	@Override
 	public List<School> getAll() {
-		return (List<School>) schoolRepository.findAll();
+		return getImageForSchoolList((List<School>) schoolRepository.findAll());
 	}
 
 	@Override
 	public List<School> getAllByCity(String cityId) {
-		return schoolRepository.findByAddressCity(cityId);
+		return getImageForSchoolList(schoolRepository.findByAddressCity(cityId));
 	}
 
 	@Override
 	public List<School> getAllByDistrict(String districtId) {
-		return schoolRepository.findByAddressDistrict(districtId);
+		return getImageForSchoolList(schoolRepository.findByAddressDistrict(districtId));
 	}
-
-//	@Override
-//	public List<School> getAllByName(String contains) {
-//		return schoolRepository.getAllByName(contains);
-//	}
 
 	@Override
 	public List<School> getAllByLocality(String localityId) {
-		return schoolRepository.findByAddressLocality(localityId);
+		List<School> school = schoolRepository.findByAddressLocality(localityId);
+		return getImageForSchoolList(school);
 	}
 	
 	@Override
 	public List<School> getByUserId(long userId) {
-		return schoolRepository.getByUserId(userId);
+		List<School> school = schoolRepository.getByUserId(userId);
+		return getImageForSchoolList(school);
 	}
 
 	@Override
@@ -162,6 +139,7 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	@Transactional
 	public School updateSchoolStatus(long id, String status) {
+		schoolRepository.updateSchoolStatus(id, status);
 		School school = schoolRepository.findBySchoolId(id);
 		if(status == "OPEN_FOR_REQUIREMENTS"){
 			userRepository.updateUserSchoolStatus(school.getVolunteerId(), NULL);
@@ -170,29 +148,70 @@ public class SchoolServiceImpl implements SchoolService {
 		else{
 			schoolRepository.updateSchoolStatus(id, status);
 		}
-		return schoolRepository.findById(id).orElse(null);
+		return getImageForSchool(schoolRepository.findById(id).orElse(null));
 	}
 
 	@Override
 	@Transactional
 	public School updateVolunteerId(long id, Long volunteerId) {
 		schoolRepository.updateVolunteerId(id,volunteerId);
+		School school = schoolRepository.findById(id).orElse(null);
 		projectRepository.updateVolunteerId(id,volunteerId);
-		return schoolRepository.findById(id).orElse(null);
+		return getImageForSchool(school);
 	}
 
 	@Transactional
 	public School updateSchoolStatusAndVolunteerId(long id, Long volunteerId, String status) {
 		schoolRepository.updateSchoolStatusAndVolunteerId(id, status, volunteerId);
 		projectRepository.updateVolunteerId(id,volunteerId);
-		return schoolRepository.findById(id).orElse(null);
+		return getImageForSchool(schoolRepository.findById(id).orElse(null));
 	}
 
 	@Override
 	public School get(long id) {
-		return schoolRepository.findById(id).orElse(null);
+		return getImageForSchool(schoolRepository.findById(id).orElse(null));
 	}
 
-	
+	private void saveImgToFS(String dirPath, String fileSubPath, byte[] image,String filePath) {
+		String tmpDirPath = dirPath+"\\"+fileSubPath;
+		if(!Files.isDirectory(Paths.get(tmpDirPath))) {
+			try {
+				Files.createDirectories(Paths.get(tmpDirPath));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		Path path = Paths.get(dirPath+"\\"+filePath);
+		try {
+			Files.write(path, image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	private byte[] getImgFromFS(String filePath) {
+		Path path = Paths.get(imgPath+"\\"+filePath);
+		try {
+			return Files.readAllBytes(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private List<School> getImageForSchoolList(List<School> schools){
+		schools.forEach(schoolTemp -> {
+			for (SchoolImage schoolImage : schoolTemp.getSchoolImages()) {
+				schoolImage.setImage(getImgFromFS(schoolImage.getFilePath()));
+			}
+		});
+		return schools;
+	}
+
+	private School getImageForSchool(School schools){
+		for (SchoolImage schoolImage : schools.getSchoolImages()) {
+			schoolImage.setImage(getImgFromFS(schoolImage.getFilePath()));
+		}
+		return schools;
+	}
 }

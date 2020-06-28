@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface SchoolService {
 
-	long save(School school, Map<String, byte[]> filesInBytes, String imgPath);
+	long save(School school, List<Map<String, byte[]>> filesInBytes);
 
 	School get(long id);
 	
