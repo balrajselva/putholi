@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 					IdentityProof id = new IdentityProof(filePath + k);
 					id.setUser(user);
 					siSet.add(id);
-					user.setIdentityProof(siSet);
 				});
 			}
+			user.setIdentityProof(siSet);
 		}
 		return userRepository.save(user).getUserid();
 	}

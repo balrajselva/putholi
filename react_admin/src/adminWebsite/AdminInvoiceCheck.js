@@ -39,6 +39,7 @@ class adminInvoiceCheck extends Component {
         let approverComments=null;
         let reviewerComments=null;
         let fund=this.props.location.fund;
+        let projectCompletion=false;
         if(target.id==="Accept"){
           if(this.props.location.currentUser.role==="Admin"){
             invoiceStatus="AdminReviewedInvoice";
@@ -62,9 +63,11 @@ class adminInvoiceCheck extends Component {
               }
               if(this.props.location.school.projects[i].requirements.length > 1 && parseInt(count) === this.props.location.school.projects[i].requirements.length-1){
                 this.setState({isProjectCompleted:true})
+                projectCompletion=true
               }
               if(this.props.location.school.projects[i].requirements.length == 1 && parseInt(count) === this.props.location.school.projects[i].requirements.length){
                 this.setState({isProjectCompleted:true})
+                projectCompletion=true
               }
             }
           }
@@ -87,7 +90,7 @@ class adminInvoiceCheck extends Component {
                 .then(res=>{
                   axios.put(this.props.config+"/updateRequirement/invoiceStatus/"+ this.props.location.invoice.requirement.requirementId+"/INVOICE_APPROVED")
                   .then(res=>{
-                    if(this.state.isProjectCompleted === true){
+                    if(projectCompletion === true){
                       axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/ALL_INVOICES_PROCESSED")
                       .then(res=>{
                         this.setState({spinner:false});
@@ -300,6 +303,7 @@ class adminInvoiceCheck extends Component {
       else if(this.props.location.currentUser.role==="Reviewer"){
         returnLink = "reviewerAccessReview"
       }
+      let disable = parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid!==null?this.props.location.fund.totalAmountPaid:0)<=parseInt(this.props.location.fund.allottedAmount);
         return (
             <div className="content-wrapper">
                 <section className="content-header">
@@ -338,7 +342,9 @@ class adminInvoiceCheck extends Component {
                                     <li>Payment Status : {this.props.location.fund.fundStatus}</li>
                                     {
                                     this.props.location.currentUser.role==="Admin"?        
-                                    <li>Exceeding allotted amount : {parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid!==null?this.props.location.fund.totalAmountPaid:0)<=parseInt(this.props.location.fund.allottedAmount)?<h4>No</h4>:<h4><b>Yes</b>{document.getElementById("Accept").setAttribute("disabled",true)}</h4>}</li>:null
+                                    <li>Exceeding allotted amount : {disable?<h4>No</h4>:<h4><b>Yes</b></h4>}
+                                    {disable?null:document.getElementById("Accept").setAttribute("disabled",true)}</li>
+                                    :null
                                     }
                                 </ul>
                                 <h4>Address of the School</h4>

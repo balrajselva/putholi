@@ -55,9 +55,9 @@ public class SchoolServiceImpl implements SchoolService {
 					SchoolImage si = new SchoolImage(filePath + k, school.getProofOfId().getComments());
 					si.setSchool(school);
 					siSet.add(si);
-					school.setSchoolImages(siSet);
 				});
 			}
+			school.setSchoolImages(siSet);
 		}
 		
 		Set<Project> project = new HashSet<Project>();

@@ -24,13 +24,16 @@ constructor(){
 }
  
  render() {
+     console.log(this.state.donationList)
     const { donationList,searchField} = this.state;
     var filteredDonationList = '';
     if(searchField){
     filteredDonationList = donationList.filter
     (donation => donation.schoolInfo.schoolName.includes(searchField))
     }else{
-    filteredDonationList = this.state.donationList;
+    filteredDonationList = this.state.donationList.filter(donation=>
+        donation.schoolStatus === "APPROVER_APPROVED_QUOTATION" && donation.enable_donation === "Y"
+    );
     }
     return (
         <div className="page_container">

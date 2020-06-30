@@ -155,7 +155,7 @@ createTable=()=>{
       if(this.props.location.currentUser.role !== "Admin" && (this.props.location.invoice.invoiceStatus === "AdminRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ReviewerRejectedInvoice" || this.props.location.invoice.invoiceStatus === "ApproverRejectedInvoice" ))
         continue
       // console.log(this.props.location.currentUser.role,invoice[0].invoiceStatus,invoice[0].invoiceStatus !== "InvoiceAdded")
-      if(this.props.location.currentUser.role === "Admin" && (invoice[k].invoiceStatus === "AdminReviewedInvoice" || invoice[k].invoiceStatus === "ReviewerConfirmedInvoice" || invoice[k].invoiceStatus === "ApprovedInvoice" || invoice[k].invoiceStatus === "AdminRejectedInvoice"))
+      if(this.props.location.currentUser.role === "Admin" && (invoice[k].invoiceStatus === "AdminReviewedInvoice" || invoice[k].invoiceStatus === "ReviewerConfirmedInvoice" || invoice[k].invoiceStatus === "ApprovedInvoice" || invoice[k].invoiceStatus === "AdminRejectedInvoice" || invoice[k].invoiceStatus === "PAYMENT_COMPLETED"))
         continue
       else if(this.props.location.currentUser.role === "Approver" && invoice[k].invoiceStatus !== "ReviewerConfirmedInvoice")
         continue
@@ -288,8 +288,8 @@ render() {
                   </div>
                 </div>
                 <div className="timeline-footer">
-                 <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Confirm</button>
-                 <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>
+                &nbsp;<button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Confirm</button>&nbsp;&nbsp;
+                 <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>&nbsp;&nbsp;
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                

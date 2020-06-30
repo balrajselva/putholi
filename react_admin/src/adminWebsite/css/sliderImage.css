@@ -34,13 +34,6 @@ body {
 transform: scale(1.05);
 }
 
-.progress-bar {
-    position: relative;
-    height: 20px;
-    width: 750px;
-    border-radius: 50px;
-    border: 1px solid #333;
-}
 
 .filler {
     background: #1DA598;
@@ -54,7 +47,7 @@ transform: scale(1.05);
 }
 .slider {
   position: relative;
-  width: 60%;
+  width: 45%;
   height: 384px;
   overflow: hidden;
   white-space: nowrap;

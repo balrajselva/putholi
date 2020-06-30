@@ -54,7 +54,7 @@ transform: scale(1.05);
 }
 .slider {
   position: relative;
-  width: 60%;
+  width: 45%;
   height: 384px;
   overflow: hidden;
   white-space: nowrap;
@@ -110,7 +110,9 @@ transform: scale(1.05);
   width: 30px;
   transform: rotate(-45deg);
 }
-
+.label{
+  width:100%
+}
 
 /* Arrow holder */
 .arrowed {
