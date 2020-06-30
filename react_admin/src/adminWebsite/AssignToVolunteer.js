@@ -173,7 +173,7 @@ class AssignToVolunteer extends Component {
                       {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                       <a><button type="submit" className="btn btn-info" onClick={(e)=>this.onSubmit(e)}>
                           Confirm Volunteer to this school
-                        </button></a>
+                        </button></a>&nbsp;&nbsp;
                       <Link to={schoolList}><button type="button" className="btn btn-primary">
                           Back
                         </button></Link>

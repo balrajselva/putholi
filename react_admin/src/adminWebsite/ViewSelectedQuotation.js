@@ -19,8 +19,11 @@ class ViewSelectedQuotation extends Component {
         reviewerComments:null,
         showImage:false,
         otherQuotations:null,
+        preImages:[],
         currentIndex: 0,
-        translateValue: 0
+        translateValue: 0,
+        currentIndex1: 0,
+        translateValue1: 0
     } 
 
     handleChange=({target})=>{
@@ -175,6 +178,14 @@ class ViewSelectedQuotation extends Component {
         })
     }
 
+    viewPreImages=(e)=>{
+        let reqId=e.target.id;
+        let temp= this.state.reqList[reqId].filter( req => req.quotationStatus === "QUOTATION_ACCEPTED" )
+        this.setState({
+            preImages:temp[0].requirement.preImages
+        })
+    }
+
     getContent=()=>{
         var content=[];
         let updated=false;
@@ -188,8 +199,8 @@ class ViewSelectedQuotation extends Component {
                     Requirement:{this.props.location.school.projects[0].requirements[i].assetName}
                     </h4>
                    
-                    <button  id={iter} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1" onClick={(e)=>this.viewOtherQuotations(e)}>View Other Quotations</button>  
-                    <button  type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default2">View Preimages</button>  
+                    <button id={iter} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1" onClick={(e)=>this.viewOtherQuotations(e)}>View Other Quotations</button>&nbsp;&nbsp;
+                    <button id={iter} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default2" onClick={(e)=>this.viewPreImages(e)}>View Preimages</button>  
                     
                     
                     </section>
@@ -269,6 +280,22 @@ class ViewSelectedQuotation extends Component {
         translateValue: prevState.translateValue + -(this.slideWidth())
     }));
     }
+
+    goToNextSlide1 = () => {
+        // Exiting the method early if we are at the end of the images array.
+        // We also want to reset currentIndex and translateValue, so we return
+        // to the first image in the array.
+        if (this.state.currentIndex1 === this.state.preImages - 1) {
+            return this.setState({
+            currentIndex1: 0,
+            translateValue1: 0
+            })
+        }
+        this.setState(prevState => ({
+            currentIndex1: prevState.currentIndex1 + 1,
+            translateValue1: prevState.translateValue1 + -(this.slideWidth())
+        }));
+    }
     slideWidth = () => {
     return document.querySelector('.slide').clientWidth
     }
@@ -321,9 +348,6 @@ class ViewSelectedQuotation extends Component {
                 <div className="row">
                                     <div className="col-xs-12">
                                     <div className="box">
-                                        {/* <div className="box-header">
-                                            <h4 className="box-title">Search Users</h4>
-                                        </div> */}
                                         <div className="box-body table-responsive no-padding">
                                             <table className="table table-hover">
                                             <tbody>
@@ -379,12 +403,32 @@ class ViewSelectedQuotation extends Component {
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.closeModel}>
                                 <span aria-hidden="true">×</span></button>
                             </div>
-                            window.alert("Display Other Quotations here")
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <img src={'data:image/png;base64,'+this.state.preimage} id ="image1" alt="" ></img>
-                                </section>
+                                <div className="page_container">
+                                    <div className="wrap">
+                                    <div className="container">
+                                    <div className="row pad25">
+                                        <div className="span4">
+                                    <div className="slider">
+                                        <div className="slider-wrapper"
+                                        style={{
+                                            transform: `translateX(${this.state.translateValue}px)`,
+                                            transition: 'transform ease-out 0.45s'
+                                        }}>
+                                        {this.state.preImages!==null?this.state.preImages.map((value, index) =>
+                                            <Slide key={index} image={'data:image/png;base64,'+value.image} />
+                                        ):null}
+                                        </div>
+                                        <LeftArrow
+                                        goToPrevSlide={this.goToPrevSlide}
+                                        />
+
+                                        <RightArrow
+                                        goToNextSlide={this.goToNextSlide1}
+                                        />
+                                    </div></div></div></div></div></div>                                     </section>
                             </div>
                         </div>
                       </div>    
@@ -404,7 +448,7 @@ class ViewSelectedQuotation extends Component {
                 <div className="wrap">
                 <div className="container">
                   <div className="row pad25">
-                    <div className="span8">
+                    <div className="span4">
                         <div className="slider">
                             <div className="slider-wrapper"
                             style={{

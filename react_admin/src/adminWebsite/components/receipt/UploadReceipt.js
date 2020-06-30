@@ -45,6 +45,11 @@ componentDidMount(){
               res[i].receipts=[]
             }
           };
+          res.data.map(data=>{
+            if(data.receipts === undefined || data.receipts === null){
+              data.receipts=[]
+            }
+          })
           this.setState({
             invoiceList:res.data,
             getRequirementList:false,
@@ -181,15 +186,15 @@ createTable=()=>{
     var reqId=this.state.requirements[i].requirementId;
     // filter will always return a list
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
+    console.log(invoice)
     let count =0;
     invoice.map(inv=>{
-      if(inv.receipts!==null && inv.receipts.length >0)
+      if(inv.receipts.length >0)
         count ++;
     })
     if(count === invoice.length){
       continue
     }
-    console.log(invoice)
     rowsUpdated=true;
     rows.push(<tr>
         <td>{invoice.length>0?this.state.requirements[i].assetName:null}</td>

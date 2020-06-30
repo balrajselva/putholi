@@ -228,7 +228,7 @@ render() {
                   </div>
                 </div>
                 <div className="timeline-footer">
-                 <button type="button" className="btn btn-primary" onClick={(e)=>this.onSubmit(e)}>Confirm</button>
+                 &nbsp;<button type="button" className="btn btn-primary" onClick={(e)=>this.onSubmit(e)}>Confirm</button>&nbsp;&nbsp;
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                
