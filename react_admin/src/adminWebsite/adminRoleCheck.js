@@ -65,13 +65,13 @@ class adminRoleCheck extends Component {
           }
           else if(this.state.currentUser.role==="Super Admin"){
             this.props.history.push({ 
-              pathname:"/superAdminRoleCheck", 
+              pathname:"/superAdminAccessReview", 
               currentUser:this.state.currentUser
             });
           }
           else if(this.state.currentUser.role==="Super User"){
             this.props.history.push({ 
-              pathname:"/superUserRoleCheck", 
+              pathname:"/superUserAccessReview", 
               currentUser:this.state.currentUser
             });
           }
@@ -105,6 +105,12 @@ class adminRoleCheck extends Component {
         }
         else if(this.state.currentUser.role==="Reviewer"){
           returnLink = "reviewerAccessReview"
+        }
+        else if(this.state.currentUser.role==="Super User"){
+          returnLink = "superUserAccessReview"
+        }
+        else if(this.state.currentUser.role==="Super Admin"){
+          returnLink = "superAdminAccessReview"
         }
         let reviewButtonContent="";
         if(this.state.currentUser.role==="Admin"){

@@ -19,6 +19,8 @@ class ViewSelectedQuotation extends Component {
         reviewerComments:null,
         showImage:false,
         otherQuotations:null,
+        errorMessage:null,
+        lastErrorField:null,
         preImages:[],
         currentIndex: 0,
         translateValue: 0,
@@ -39,16 +41,40 @@ class ViewSelectedQuotation extends Component {
         let status=null;
         console.log(e.target.id);
         if(e.target.id==="Accepted"){
-            if(this.props.location.currentUser.role==="Reviewer")
+            if(this.props.location.currentUser.role==="Reviewer"){
                 status="ReviewerConfirmed";
-            else if(this.props.location.currentUser.role==="Approver")
+                if(this.state.reviewerComments === null){
+                    this.setState({errorMessage:"Please add comments"})
+                }
+                document.getElementById(e.target.id).style.borderColor="red";
+                return
+            }
+            else if(this.props.location.currentUser.role==="Approver"){
                 status="ApproverConfirmed";
+                if(this.state.reviewerComments === null){
+                    this.setState({errorMessage:"Please add comments"})
+                }
+                document.getElementById(e.target.id).style.borderColor="red";
+                return
+            }
         }
         else{
-            if(this.props.location.currentUser.role==="Reviewer")
+            if(this.props.location.currentUser.role==="Reviewer"){
                 status="ReviewerRejected";
-            else if(this.props.location.currentUser.role==="Approver")
+                if(this.state.reviewerComments === null){
+                    this.setState({errorMessage:"Please add comments"})
+                }
+                document.getElementById(e.target.id).style.borderColor="red";
+                return
+            }
+            else if(this.props.location.currentUser.role==="Approver"){
                 status="ApproverRejected";
+                if(this.state.reviewerComments === null){
+                    this.setState({errorMessage:"Please add comments"})
+                }
+                document.getElementById(e.target.id).style.borderColor="red";
+                return
+            }
         }
         this.setState({spinner:true});
         console.log(status);

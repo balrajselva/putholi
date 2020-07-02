@@ -149,6 +149,7 @@ class App extends Component {
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props} config={this.state.config}/>}/>
             <Route path="/payment" history={history} component={(props)=><Payment {...props}{...this.props} config={this.state.config}/>}/>
             <SuperAdminLayoutRoute path="/superAdminAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
+            <SuperAdminLayoutRoute path="/superUserAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
             <SuperAdminLayoutRoute path="/superAdminRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
             <SuperAdminLayoutRoute path="/superUserRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
             <AdminLayoutRoute path="/reassignVolunteer" history={history} component={(props)=><ReassignVolunteer {...props}{...this.props} config={this.state.config}/>}/>            

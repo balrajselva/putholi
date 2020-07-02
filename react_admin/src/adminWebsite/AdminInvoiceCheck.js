@@ -24,7 +24,7 @@ class adminInvoiceCheck extends Component {
     }
 
     updateStatus=({target})=>{
-      if((this.props.location.currentUser.role==="Admin" && this.state.adminComments === null) || (this.props.location.currentUser.role==="Reviewer" && this.state.reviewerComments === null) || (this.props.location.currentUser.role==="Approver" && this.state.approverComments === null)){
+      if((this.props.location.currentUser.role==="Admin" && this.state.adminComments === null && this.state.adminComments === "") || (this.props.location.currentUser.role==="Reviewer" && this.state.reviewerComments === null && this.state.reviewerComments === "") || (this.props.location.currentUser.role==="Approver" && this.state.approverComments === null && this.state.approverComments === "")){
         this.setState({
                 errorMessage:"Please provide proper comment"
             })
