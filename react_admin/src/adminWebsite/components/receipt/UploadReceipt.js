@@ -40,11 +40,11 @@ componentDidMount(){
       axios.get(this.props.config+"/invoice/getPaid/"+this.props.location.school.schoolId)
       .then(res=>{
           console.log("Invoices",res.data)
-          for(let i=0;i<res.length;i++){
-            if(res.receipts === undefined || res.receipts === null){
-              res[i].receipts=[]
-            }
-          };
+          // for(let i=0;i<res.length;i++){
+          //   if(res.receipts === undefined || res.receipts === null){
+          //     res[i].receipts=[]
+          //   }
+          // };
           res.data.map(data=>{
             if(data.receipts === undefined || data.receipts === null){
               data.receipts=[]
@@ -182,11 +182,13 @@ closeModel=()=>{
 createTable=()=>{
   var rows=[];
   let rowsUpdated=false;
+  let updateSchool = false;
+
   for(let i=0;i<this.state.requirements.length;i++){
     var reqId=this.state.requirements[i].requirementId;
     // filter will always return a list
     var invoice=this.state.invoiceList.filter(invoice => parseInt(invoice.requirement.requirementId) === parseInt(reqId));
-    console.log(invoice)
+    console.log(invoice)  
     let count =0;
     invoice.map(inv=>{
       if(inv.receipts.length >0)
@@ -196,6 +198,11 @@ createTable=()=>{
       continue
     }
     rowsUpdated=true;
+    let invCount = invoice.length;
+    var receipts=this.state.invoiceList.filter(invoice => invoice.receipts !== [] || invoice.receipts !== null );
+    if(invCount === receipts.length){
+      updateSchool = true;
+    }
     rows.push(<tr>
         <td>{invoice.length>0?this.state.requirements[i].assetName:null}</td>
         <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?<div><button class="btn btn-default" id={invoice.id+"/"+invoice.requirement.requirementId+"/"+j} onClick={(e)=>this.viewInvoice(e)}>{"Invoice " + invoice.id}</button></div>:null):null}</td>
@@ -206,23 +213,25 @@ createTable=()=>{
 }
   if(rowsUpdated==false){
       rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>);
-      axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/RECEIPTS_UPLOADED")
-    .then(res=>{
-      this.setState({
-        spinner:false
-      })
-      this.props.history.push({ 
-        pathname:"/volunteerSchoolCheck", 
-        currentUser:this.props.location.currentUser,
-        school:this.props.location.school
-      });
-    })
-    .catch(error=>{
+      if(updateSchool === true){
+        axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/RECEIPTS_UPLOADED")
+      .then(res=>{
         this.setState({
-            spinner:false
+          spinner:false
         })
-        window.alert("File update school due to "+error)
-    })
+        this.props.history.push({ 
+          pathname:"/volunteerSchoolCheck", 
+          currentUser:this.props.location.currentUser,
+          school:this.props.location.school
+        });
+      })
+      .catch(error=>{
+          this.setState({
+              spinner:false
+          })
+          window.alert("File update school due to "+error)
+      })
+    }
   }
   return rows;
 }
