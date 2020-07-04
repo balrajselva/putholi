@@ -113,6 +113,8 @@ createTable=()=>{
       continue
     if(this.props.location.currentUser.role==="Approver" && this.state.invoiceList[i].invoiceStatus !== "ReviewerConfirmedInvoice")
       continue
+  
+
       const newTo = { 
       pathname: nextPage, 
       school:this.state.invoiceList[i].school,

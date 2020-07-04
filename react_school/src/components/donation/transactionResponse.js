@@ -7,8 +7,19 @@ import axios from 'axios'
 class transactionResponse extends Component {
     componentDidMount(){
         console.log(window.location.href)
-        let orderId=window.location.href.split("?")[1].split("&")[0].split("=")[1];
-        let status=window.location.href.split("?")[1].split("&")[1].split("=")[1];
+        let urlParams=window.location.href.split("?")[1].split("&");
+        let orderId = null;
+        let status = null;
+        for(let i=0;i<urlParams.length;i++){
+            if(urlParams[i].split("=")[0] === "status"){
+                status = urlParams[i].split("=")[1]
+            }
+            else if(urlParams[i].split("=")[0] === "order_id"){
+                orderId = urlParams[i].split("=")[1]
+            }
+        }
+        // let orderId=window.location.href.split("?")[1].split("&")[0].split("=")[1];
+        // let status=window.location.href.split("?")[1].split("&")[1].split("=")[1];
         if(orderId.startsWith("SCHL") && status==='CHARGED'){
             axios.get(this.props.config+'/donate/paymentDonation/'+orderId+"/SUCCESS")
             .then(res=>{

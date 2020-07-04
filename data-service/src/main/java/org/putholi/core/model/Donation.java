@@ -73,5 +73,11 @@ public class Donation extends AuditableEntity implements java.io.Serializable {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private PuthuyirLookUp status;
+
+	@Column(name = "isSchoolReadyForAllotment")
+	private String isSchoolReadyForAllotment;
+
+	@Column(name = "adjustableAmount")
+	private Integer adjustableAmount;
 	
 }

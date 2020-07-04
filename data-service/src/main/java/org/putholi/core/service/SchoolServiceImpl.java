@@ -141,9 +141,9 @@ public class SchoolServiceImpl implements SchoolService {
 	public School updateSchoolStatus(long id, String status) {
 		schoolRepository.updateSchoolStatus(id, status);
 		School school = schoolRepository.findBySchoolId(id);
-		if(status == "OPEN_FOR_REQUIREMENTS"){
+		if(status.equals("OPEN_FOR_REQUIREMENTS")){
 			userRepository.updateUserSchoolStatus(school.getVolunteerId(), NULL);
-			schoolRepository.updateSchoolStatusAndVolunteerId(id,status,school.getVolunteerId());
+			schoolRepository.updateSchoolStatusAndVolunteerId(id,status, (long) NULL);
 		}
 		else{
 			schoolRepository.updateSchoolStatus(id, status);

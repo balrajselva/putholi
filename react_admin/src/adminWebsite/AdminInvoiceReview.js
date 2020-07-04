@@ -161,7 +161,9 @@ createTable=()=>{
         continue
       else if(this.props.location.currentUser.role === "Reviewer" && invoice[k].invoiceStatus !== "AdminReviewedInvoice")
         continue
-
+      // second level filter for admin
+      if(this.props.location.currentUser.role==="Admin" && this.state.invoiceList[i].invoiceStatus === "PAYMENTINITIATED")
+        continue
       rowsUpdated=true;
       rows.push(<tr>
           <td>{this.state.requirements[i].assetName}</td>

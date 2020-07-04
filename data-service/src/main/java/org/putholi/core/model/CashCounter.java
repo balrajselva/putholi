@@ -36,4 +36,7 @@ public class CashCounter {
 
     @Column(name = "total_available_balance")
     private BigInteger totalAvailableBalance;
+
+    @Column(name = "total_adjusted_amount")
+    private BigInteger totalAdjustedAmount;
 }

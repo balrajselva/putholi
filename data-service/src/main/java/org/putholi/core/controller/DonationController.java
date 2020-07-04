@@ -1,8 +1,7 @@
 package org.putholi.core.controller;
 
-import org.putholi.core.model.Donation;
-import org.putholi.core.model.DonationUser;
-import org.putholi.core.model.TrustDonation;
+import org.putholi.core.lookup.PuthuyirLookUp;
+import org.putholi.core.model.*;
 import org.putholi.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +38,12 @@ public class DonationController {
 	@Autowired
 	private CashCounterService cashCounterService;
 
+	@Autowired
+	private SchoolService schoolService;
+
+	@Autowired
+	private DonationOrgService donationOrgService;
+
 	/**
 	 * 
 	 * @param donation
@@ -68,6 +73,12 @@ public class DonationController {
 		DonationUser donationResponse = donationUserService.save(donation);
 		return ResponseEntity.ok().body(donationResponse);
 	}
+
+	@PostMapping("/donateOrg/save")
+	public ResponseEntity<DonationOrg> saveDonationOrg(@RequestBody DonationOrg donation) {
+		DonationOrg donationResponse = donationOrgService.save(donation);
+		return ResponseEntity.ok().body(donationResponse);
+	}
 	
 	/**
 	 * 
@@ -75,24 +86,9 @@ public class DonationController {
 	 * @return donation
 	 */
 	@PostMapping("/donate/findByEmailId")
-	public String findEmail(@RequestBody DonationUser donation) {
-		String status = "";
-		
-		DonationUser user=null;
-		try {
-			user = donationUserService.findByEmailAddress(donation.getEmailAddress());
-			
-		if(user == null) {
-			status = "FAILURE";
-		}
-		else {
-			status = "SUCCESS";
-		}
-		}catch(Exception e) {
-				status = "SUCCESS";
-		}
-		
-		return status;
+	public DonationUser findEmail(@RequestBody DonationUser donation) {
+		DonationUser user= donationUserService.findByEmailAddress(donation.getEmailAddress());
+		return user;
 	}
 	
 	/**
@@ -138,6 +134,9 @@ public class DonationController {
 			donation.setPaymentStatus(status);
 			requirementService.updateRequirements(donation);
 			cashCounterService.saveInflowCashDonor(donation);
+			if(donation.getIsSchoolReadyForAllotment().equals("Y")) {
+				schoolService.updateSchoolStatus(donation.getSchool().getSchoolId(), PuthuyirLookUp.READY_FOR_ALLOTMENT.name());
+			}
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));
 		}
 		else{

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useImperativeHandle } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../registerForm/registerForm.css';
 import '../../../src/css/School_registration.css';
@@ -15,6 +15,8 @@ class DonationForm extends Component {
       isAlreadyRegistered: 'block',
       isDonorRegistered: 'none',
       isAlreadyDonorRegistered: 'block',
+      isOrganizationalDonation: 'none',
+      isIndividualDonation: 'block',
       estimatedTotalAmt: null,
       collectedAmount: null,
       contributeLimit: null,
@@ -35,10 +37,13 @@ class DonationForm extends Component {
       email: null,
       emailError: '',
       isClicked: "1",
+      isIndivClicked: "1",
       isRegisteredClicked: "1",
       userLogin: [],
       emailFlag: '',
-      LoginInforValidation: ''
+      LoginInforValidation: '',
+      errorMessage:null,
+      lastErrorField:null
     }
   }
 
@@ -108,25 +113,18 @@ class DonationForm extends Component {
         }
         axios.post(this.props.config+'/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
           .then(response => {
-            if (response.data === "SUCCESS") {
-              this.setState({
-                emailError: 'Email Already exist'
-              });
+            if (response.data !== null) {
+              Object.assign(params,response.data)
             }
-            else {
-              this.setState({
-                emailError: ''
+            console.log("Before loading", params);
+            axios.post(this.props.config+'/donate/save', params, { headers: { 'Accept': 'application/json' } })
+            .then((response) => {
+              var requestPayload = Object.assign(requestJSON, response.data);
+              this.props.history.push({
+                pathname: '/donationPayment',
+                user: requestPayload,
               });
-              console.log("Before loading", params);
-              axios.post(this.props.config+'/donate/save', params, { headers: { 'Accept': 'application/json' } })
-                .then((response) => {
-                  var requestPayload = Object.assign(requestJSON, response.data);
-                  this.props.history.push({
-                    pathname: '/donationPayment',
-                    user: requestPayload,
-                  });
-                })
-            }
+            })
           })
       }
       flagOption = "2";
@@ -163,6 +161,15 @@ class DonationForm extends Component {
       }
     }
   };
+
+  handleChange=({target})=>{
+    document.getElementById(target.id).style.borderColor="#d2d6de";
+    this.setState({ 
+        [target.id]: target.value , 
+        lastErrorField:null,
+        errorMessage:""
+    });
+  }
 
   validate = (data) => {
     let userNameError = "";
@@ -278,6 +285,22 @@ class DonationForm extends Component {
     }
   }
 
+  individualOrOrgEvent(e) {
+    if (e === "Indiv") {
+      this.setState({ isIndividualDonation: 'block' });
+      this.setState({ isOrganizationalDonation: 'none' });
+      this.setState({ isIndivClicked: "1" })
+    } else if (e === "Org") {
+      this.setState({ isIndividualDonation: 'none' });
+      this.setState({ isOrganizationalDonation: 'block' });
+      this.setState({ isIndivClicked: "0" })
+    } else {
+      this.setState({ isIndividualDonation: 'none' });
+      this.setState({ isOrganizationalDonation: 'none' });
+      this.setState({ isIndivClicked: null })
+    }
+  }
+
   registeredDonorEvent(e) {
     if (e === "1") {
       this.setState({ isAlreadyDonorRegistered: 'block' });
@@ -315,27 +338,27 @@ class DonationForm extends Component {
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">School Name</label>
                         <div className="controls">
-                          <input readOnly className="input-xlarge disabled" id="disabledInput" type="text"
+                          <input readOnly className="input disabled" id="disabledInput" type="text"
                             placeholder={this.props.history.location.state.state[0].schoolInfo.schoolName} disabled=""></input>
                         </div>
                       </div>
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">Estimated Total Amount</label>
                         <div className="controls">
-                          <input readOnly className="input-xlarge disabled" id="disabledInput"
+                          <input readOnly className="input disabled" id="disabledInput"
                             type="text" placeholder={this.props.history.location.state.state[0].projects[0].estimate} disabled=""></input>
                         </div>
                       </div>
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">Collected Amount</label>
                         <div className="controls">
-                          <input readOnly className="input-xlarge disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
+                          <input readOnly className="input disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
                         </div>
                       </div>
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">You can contribute Upto</label>
                         <div className="controls">
-                          <input readOnly className="input-xlarge disabled" id="disabledInput" name="yourContribution" type="text"
+                          <input readOnly className="input disabled" id="disabledInput" name="yourContribution" type="text"
                             placeholder={this.calculateContribution()} value={this.calculateContribution()}></input>
                         </div>
                       </div>
@@ -350,11 +373,12 @@ class DonationForm extends Component {
                         </div>
                       </div>
                       <h3>Donor Type</h3>
-                          <input type="radio" class="bn22" name="bndontype" value="Indiv" checked="checked" /> Individual
-                          <input type="radio" class="bn33" name="bndontype" value="Org"  /> Organization                          
+                          <input type="radio" class="bn22" name="bndontype" value="Indiv" style={{marginTop:"-3px"}} checked={this.state.isIndivClicked === "1"} onClick={e => this.individualOrOrgEvent(e.target.value)}/> Individual &nbsp;
+                          <input type="radio" class="bn33" name="bndontype" value="Org" style={{marginTop:"-3px"}} checked={this.state.isIndivClicked === "0"} onClick={e => this.individualOrOrgEvent(e.target.value)}/> Organization   
+                      <div style={{display:this.state.isIndividualDonation}}>                       
                       <h3>Already Registered Donor??</h3>
-                          <input type="radio" class="bn2" name="bn" value="1" checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes
-                          <input type="radio" class="bn3" name="bn" value="2" checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
                         <div style={{ display: this.state.isAlreadyRegistered }}>
                         <div id="onebn">
                           <div style={{ fontSize: 12, color: "red" }}  >
@@ -438,6 +462,116 @@ class DonationForm extends Component {
                           </div>
                           </div>
                           </div>
+                          </div>
+                          <div style={{ display: this.state.isOrganizationalDonation}}>
+                        <div id="onebn">
+                          <div style={{ fontSize: 12, color: "red" }}  >
+                            
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Organization name </label>
+                          <div className="controls">
+                            <input type="text" id="orgName" name="orgName" value={this.state.orgName} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Email</label>
+                          <div className="controls">
+                            <input type="text" id="orgEmail" name="orgEmail" value={this.state.orgEmail} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Contact</label>
+                          <div className="controls">
+                            <input type="text" id="orgNumber" name="orgNumber" value={this.state.orgNumber} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Organization Address</label>
+                          <div className="controls">
+                            <input type="text" id="orgAddress" name="orgAddress" value={this.state.orgAddress} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Organization country</label>
+                          <div className="controls">
+                            <input type="text" id="orgCountry" name="orgCountry" value={this.state.orgCountry} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Organization type</label>
+                          <div className="controls">
+                          <select className="orgType" id="orgType" value={this.state.orgType} onChange={this.handleChange} style={{width: '100%'}}>
+                            <option key="Coporate" value="Coporate" selected="selected">Coporate</option>
+                            <option key="Registered" value="Registered" >Registered</option>
+                            <option key="UnRegistered" value="UnRegistered" >UnRegistered</option>
+                          </select>               
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Entity type</label>
+                          <div className="controls">
+                          <select className="orgType" id="entityType" value={this.state.entityType} onChange={this.handleChange} style={{width: '100%'}}>
+                          <option key="Private" value="Private" selected="selected">Private</option>
+                            <option key="Public" value="Public" >Public</option>
+                            <option key="NGO" value="NGO" >NGO</option>                          </select>               
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Registration number</label>
+                          <div className="controls">
+                            <input type="text" id="orgRegNum" name="orgRegNum" value={this.state.orgRegNum} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Your First name</label>
+                          <div className="controls">
+                            <input type="text" id="firstName" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Your Last name</label>
+                          <div className="controls">
+                            <input type="text" id="lastName" name="lastName" value={this.state.lastName} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Role/Designation</label>
+                          <div className="controls">
+                            <input type="text" id="orgRole" name="orgRole" value={this.state.orgRole} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Password</label>
+                          <div className="controls">
+                            <input type="password" id="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Confirm Password</label>
+                          <div className="controls">
+                            <input type="password" id="confirmPassword" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Have branches in other countries?</label>
+                          <div className="controls">
+                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Money to be transferred in Indian Rupees Only?</label>
+                          <div className="controls">
+                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          </div>
+                          </div>
+                        </div>
+                        {this.state.errorMessage!==null?<div style={{ fontSize: 12, color: "red" }}  >
+                            {this.state.errorMessage}
+                            </div>:null}
                           <div className="form-actions" id="onebn">
                           <button tye="submit" className="btn send_btn">Login</button>&nbsp;&nbsp;
                           <a className="btn dark_btn" href="/donation">Back to Search Results</a>

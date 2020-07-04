@@ -160,7 +160,8 @@ class AddInvoice extends Component {
             let resp=res.data;
             console.log(res.data)
             for(let i=0;i<resp.length;i++){
-                resp[i].invoiceList=[]
+                if(resp[i].invoiceList === null || resp[i].invoiceList === undefined)
+                    resp[i].invoiceList=[]
             };
             for(let j=0;j<resp.length;j++){
                 console.log(resp[j].requirement.requirementId)
@@ -222,8 +223,15 @@ class AddInvoice extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.quotations.length;i++){
-            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS" || this.state.quotations[i].requirement.status === "Fully_Completed"){
+            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS"){
                 continue;
+            }
+            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_REJECTED"){
+                let rejectedInv = this.state.oldInvoices.map(inv=>inv.requirement.requirementId === this.state.quotations[i].requirementId ? inv : null)
+                console.log(rejectedInv)
+                if(rejectedInv.length >0 && rejectedInv[0].invoiceStatus !== "AdminRejectedInvoice"){
+                    continue
+                }
             }	
             rowsUpdated=true;
             rows.push(<tr>
@@ -265,7 +273,7 @@ class AddInvoice extends Component {
             )
         }
         if(rowsUpdated==false)
-            rows.push(<tr ><td align="center" colSpan="5">No rejected quotations!</td></tr>)
+            rows.push(<tr ><td align="center" colSpan="5">No rejected Invoices!</td></tr>)
         return rows;
     }
 

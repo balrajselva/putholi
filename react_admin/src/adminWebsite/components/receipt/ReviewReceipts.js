@@ -97,6 +97,10 @@ onSubmit=(e)=>{
           spinner:false
         })
         window.alert("Status updated successfully!")
+        this.props.history.push({ 
+          pathname:"/adminPendingWorkflow", 
+          currentUser:this.props.location.currentUser
+        });
       })
     })
     .catch(error=>{
@@ -130,6 +134,10 @@ onSubmit=(e)=>{
           spinner:false
         })
         window.alert("Status updated successfully!")
+        this.props.history.push({ 
+          pathname:"/adminPendingWorkflow", 
+          currentUser:this.props.location.currentUser
+        });
       })
     })
     .catch(error=>{
