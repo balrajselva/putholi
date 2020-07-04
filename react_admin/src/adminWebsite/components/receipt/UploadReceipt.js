@@ -182,7 +182,8 @@ closeModel=()=>{
 createTable=()=>{
   var rows=[];
   let rowsUpdated=false;
-  let updateSchool = false;
+  let invCount = 0;
+  let receiptsCount =0;
 
   for(let i=0;i<this.state.requirements.length;i++){
     var reqId=this.state.requirements[i].requirementId;
@@ -198,22 +199,21 @@ createTable=()=>{
       continue
     }
     rowsUpdated=true;
-    let invCount = invoice.length;
+    invCount += invoice.length;
     var receipts=this.state.invoiceList.filter(invoice => invoice.receipts !== [] || invoice.receipts !== null );
-    if(invCount === receipts.length){
-      updateSchool = true;
-    }
+    receiptsCount += receipts.length;
     rows.push(<tr>
-        <td>{invoice.length>0?this.state.requirements[i].assetName:null}</td>
+        <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?this.state.requirements[i].assetName:null):null}</td>
         <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?<div><button class="btn btn-default" id={invoice.id+"/"+invoice.requirement.requirementId+"/"+j} onClick={(e)=>this.viewInvoice(e)}>{"Invoice " + invoice.id}</button></div>:null):null}</td>
         <td>{invoice.length>0?invoice.map((invoice,j)=>invoice.receipts.length ===0 ?<div>
             <label for={invoice.id+"/"+invoice.requirement.requirementId} className="btn btn-default" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>{"Upload receipt for invoice "+invoice.id}</label>
             <input class="hidden" type="file" id={invoice.id+"/"+invoice.requirement.requirementId} onChange={this.handleChange}/></div>:null):null}</td>
     </tr>)			
-}
-  if(rowsUpdated==false){
+  }
+  console.log(invCount,receiptsCount)
+  if(rowsUpdated === false){
       rows.push(<tr ><td align="center" colSpan="5">No new records found!</td></tr>);
-      if(updateSchool === true){
+      if(invCount==receiptsCount){
         axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/RECEIPTS_UPLOADED")
       .then(res=>{
         this.setState({

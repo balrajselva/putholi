@@ -75,9 +75,10 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
         projectId: this.props.history.location.user.projectId,
         estimate: this.props.history.location.user.estimate,
         collectedAmount: finalCollectedAmount,
-        status:'PROJECT_COMPLETED'
+        status:'PROJECT_COMPLETED',
+        adjustableAmount:Number(this.props.history.location.user.contribution)*Number(this.state.processingFee),
+        isSchoolReadyForAllotment:"Y"
       }
-      axios.put(this.props.config+"/updateSchool/"+this.props.history.location.user.schoolId+"/READY_FOR_ALLOTMENT")
     }
     else if ((Number(Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee)))) < Number(this.props.history.location.user.collectedAmount))) {
       projectUpdatePayload={

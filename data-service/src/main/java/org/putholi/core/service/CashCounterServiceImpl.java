@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = false)
@@ -23,6 +24,9 @@ public class CashCounterServiceImpl implements CashCounterService {
         cashCounter.setTotalAvailableBalance(cashCounter.getTotalAvailableBalance().add(BigInteger.valueOf(donation.getAmount())));
         cashCounter.setTotalInflowCashDonor(cashCounter.getTotalInflowCashDonor().add(BigInteger.valueOf(donation.getAmount())));
         cashCounter.setTotalDonorBalance(cashCounter.getTotalDonorBalance().add(BigInteger.valueOf(donation.getAmount())));
+        if(Objects.nonNull(donation.getAdjustableAmount())) {
+            cashCounter.setTotalAdjustedAmount(cashCounter.getTotalAdjustedAmount().add(BigInteger.valueOf(donation.getAdjustableAmount())));
+        }
         cashCounterRepository.save(cashCounter);
         return Boolean.TRUE;
     }

@@ -53,7 +53,7 @@ class reviewQuotation extends Component {
     }
 
     rejectQuotation=()=>{
-        if(this.state.adminComments === null){
+        if(this.state.adminComments === null || this.state.adminComments===""){
             this.setState({errorMessage:"Please add comments"})
             document.getElementById("adminComments").style.borderColor="red";
             return
