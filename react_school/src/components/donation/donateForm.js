@@ -42,8 +42,23 @@ class DonationForm extends Component {
       userLogin: [],
       emailFlag: '',
       LoginInforValidation: '',
+      orgName:null,
+      orgAddress:null,
+      orgCountry:null,
+      orgEmail:null,
+      orgNumber:null,
+      orgRegNum:null,
+      orgRole:null,
+      orgType:null,
+      orgFirstName:null,
+      orgLastName:null,
+      entityType:null,
+      haveBranchInOtherCountries:null,
+      password:null,
+      confirmPassword:null,
       errorMessage:null,
-      lastErrorField:null
+      lastErrorField:null,
+      ismoneyInRupeesClicked:"1"
     }
   }
 
@@ -301,6 +316,14 @@ class DonationForm extends Component {
     }
   }
 
+  moneyInRupeesEvent(e) {
+    if (e === "1") {
+      this.setState({ ismoneyInRupeesClicked: "1" })
+    } else if (e === "0") {
+      this.setState({ ismoneyInRupeesClicked: "0" })
+    }
+  }
+
   registeredDonorEvent(e) {
     if (e === "1") {
       this.setState({ isAlreadyDonorRegistered: 'block' });
@@ -335,6 +358,8 @@ class DonationForm extends Component {
                   <form onSubmit={this.submitClicked} className="form-horizontal">
                     <fieldset>
                       <legend>Appreciate your interest in Donating fund for development of the school. Please use the payment gateway to pay the fund</legend>
+                      {/* style={{float:"right",border:"1px solid black",marginRight:"5%"}} */}
+                      <div>
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">School Name</label>
                         <div className="controls">
@@ -372,13 +397,14 @@ class DonationForm extends Component {
                           </div>
                         </div>
                       </div>
+                      </div>
                       <h3>Donor Type</h3>
                           <input type="radio" class="bn22" name="bndontype" value="Indiv" style={{marginTop:"-3px"}} checked={this.state.isIndivClicked === "1"} onClick={e => this.individualOrOrgEvent(e.target.value)}/> Individual &nbsp;
                           <input type="radio" class="bn33" name="bndontype" value="Org" style={{marginTop:"-3px"}} checked={this.state.isIndivClicked === "0"} onClick={e => this.individualOrOrgEvent(e.target.value)}/> Organization   
                       <div style={{display:this.state.isIndividualDonation}}>                       
                       <h3>Already Registered Donor??</h3>
-                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
-                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          <input type="radio" class="bn2" name="bnReg" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="bnNotReg" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
                         <div style={{ display: this.state.isAlreadyRegistered }}>
                         <div id="onebn">
                           <div style={{ fontSize: 12, color: "red" }}  >
@@ -464,39 +490,36 @@ class DonationForm extends Component {
                           </div>
                           </div>
                           <div style={{ display: this.state.isOrganizationalDonation}}>
-                        <div id="onebn">
-                          <div style={{ fontSize: 12, color: "red" }}  >
-                            
-                          </div>
-                          </div>
+                          <br/>
+                          <h3>Organization details:</h3>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Organization name </label>
                           <div className="controls">
-                            <input type="text" id="orgName" name="orgName" value={this.state.orgName} onChange={this.handleChange}></input>
+                            <input type="text" id="orgName" name="orgName" value={this.state.orgName} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Email</label>
                           <div className="controls">
-                            <input type="text" id="orgEmail" name="orgEmail" value={this.state.orgEmail} onChange={this.handleChange}></input>
+                            <input type="text" id="orgEmail" name="orgEmail" value={this.state.orgEmail} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Contact</label>
                           <div className="controls">
-                            <input type="text" id="orgNumber" name="orgNumber" value={this.state.orgNumber} onChange={this.handleChange}></input>
+                            <input type="text" id="orgNumber" name="orgNumber" value={this.state.orgNumber} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Organization Address</label>
                           <div className="controls">
-                            <input type="text" id="orgAddress" name="orgAddress" value={this.state.orgAddress} onChange={this.handleChange}></input>
+                            <input type="text" id="orgAddress" name="orgAddress" value={this.state.orgAddress} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Organization country</label>
                           <div className="controls">
-                            <input type="text" id="orgCountry" name="orgCountry" value={this.state.orgCountry} onChange={this.handleChange}></input>
+                            <input type="text" id="orgCountry" name="orgCountry" value={this.state.orgCountry} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
@@ -506,7 +529,7 @@ class DonationForm extends Component {
                             <option key="Coporate" value="Coporate" selected="selected">Coporate</option>
                             <option key="Registered" value="Registered" >Registered</option>
                             <option key="UnRegistered" value="UnRegistered" >UnRegistered</option>
-                          </select>               
+                          </select><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
@@ -515,57 +538,61 @@ class DonationForm extends Component {
                           <select className="orgType" id="entityType" value={this.state.entityType} onChange={this.handleChange} style={{width: '100%'}}>
                           <option key="Private" value="Private" selected="selected">Private</option>
                             <option key="Public" value="Public" >Public</option>
-                            <option key="NGO" value="NGO" >NGO</option>                          </select>               
+                            <option key="NGO" value="NGO" >NGO</option>                          
+                            </select><span style={{ fontSize: 22, color: "red" }}>*</span>               
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Registration number</label>
                           <div className="controls">
-                            <input type="text" id="orgRegNum" name="orgRegNum" value={this.state.orgRegNum} onChange={this.handleChange}></input>
+                            <input type="text" id="orgRegNum" name="orgRegNum" value={this.state.orgRegNum} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Your First name</label>
                           <div className="controls">
-                            <input type="text" id="firstName" name="firstName" value={this.state.firstName} onChange={this.handleChange}></input>
+                            <input type="text" id="orgFirstName" name="orgFirstName" value={this.state.orgFirstName} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Your Last name</label>
                           <div className="controls">
-                            <input type="text" id="lastName" name="lastName" value={this.state.lastName} onChange={this.handleChange}></input>
+                            <input type="text" id="orgLastName" name="orgLastName" value={this.state.orgLastName} onChange={this.handleChange}></input>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Role/Designation</label>
                           <div className="controls">
-                            <input type="text" id="orgRole" name="orgRole" value={this.state.orgRole} onChange={this.handleChange}></input>
+                            <input type="text" id="orgRole" name="orgRole" value={this.state.orgRole} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Password</label>
                           <div className="controls">
-                            <input type="password" id="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                            <input type="password" id="password" name="password" value={this.state.password} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Confirm Password</label>
                           <div className="controls">
-                            <input type="password" id="confirmPassword" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}></input>
+                            <input type="password" id="confirmPassword" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}></input><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Have branches in other countries?</label>
                           <div className="controls">
-                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
-                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          <select className="orgType" id="v" value={this.state.b} onChange={this.handleChange} style={{width: '100%'}}>
+                            <option selected="selected" disabled>Select Yes/no</option>
+                            <option key="Yes" value="Yes" >Yes</option>
+                            <option key="No" value="No" >No</option>
+                          </select><span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Money to be transferred in Indian Rupees Only?</label>
                           <div className="controls">
-                          <input type="radio" class="bn2" name="bn" value="1" style={{marginTop:"-3px"}} checked={this.state.isClicked === "1"} onClick={e => this.registeredUserEvent(e.target.value)} /> Yes &nbsp;
-                          <input type="radio" class="bn3" name="bn" value="2" style={{marginTop:"-3px"}} checked={this.state.isClicked === "2"} onClick={e => this.registeredUserEvent(e.target.value)} /> No
+                          <input type="radio" class="bn2" name="bnInRup" value="1" style={{marginTop:"-3px"}} checked={this.state.ismoneyInRupeesClicked === "1"} onClick={e => this.moneyInRupeesEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="bnNotInRup" value="0" style={{marginTop:"-3px"}} checked={this.state.ismoneyInRupeesClicked === "0"} onClick={e => this.moneyInRupeesEvent(e.target.value)} /> No <span style={{ fontSize: 22, color: "red" }}>*</span>
                           </div>
                           </div>
                         </div>
