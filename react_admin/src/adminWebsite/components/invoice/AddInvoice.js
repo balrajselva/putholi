@@ -223,7 +223,7 @@ class AddInvoice extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.quotations.length;i++){
-            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS"){
+            if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_IN_PROGRESS" || this.state.quotations[i].requirement.status === "Fully_Completed"){
                 continue;
             }
             if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_REJECTED"){

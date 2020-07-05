@@ -17,6 +17,8 @@ class DonationForm extends Component {
       isAlreadyDonorRegistered: 'block',
       isOrganizationalDonation: 'none',
       isIndividualDonation: 'block',
+      isRegisteredOrg: 'none',
+      isNewOrg: 'none',
       estimatedTotalAmt: null,
       collectedAmount: null,
       contributeLimit: null,
@@ -39,6 +41,7 @@ class DonationForm extends Component {
       isClicked: "1",
       isIndivClicked: "1",
       isRegisteredClicked: "1",
+      isOrgClicked:null,
       userLogin: [],
       emailFlag: '',
       LoginInforValidation: '',
@@ -300,6 +303,18 @@ class DonationForm extends Component {
     }
   }
 
+  registeredOrgEvent(e) {
+    if (e === "1") {
+      this.setState({ isRegisteredOrg: 'block' });
+      this.setState({ isNewOrg: 'none' });
+      this.setState({ isOrgClicked: e })
+    } else if (e === "2") {
+      this.setState({ isRegisteredOrg: 'none' });
+      this.setState({ isNewOrg: 'block' });
+      this.setState({ isOrgClicked: e })
+    }
+  }
+
   individualOrOrgEvent(e) {
     if (e === "Indiv") {
       this.setState({ isIndividualDonation: 'block' });
@@ -491,6 +506,32 @@ class DonationForm extends Component {
                           </div>
                           <div style={{ display: this.state.isOrganizationalDonation}}>
                           <br/>
+                          <h3>Already Registered Organization??</h3>
+                          <input type="radio" class="bn2" name="orgReg" value="1" style={{marginTop:"-3px"}} checked={this.state.isOrgClicked === "1"} onClick={e => this.registeredOrgEvent(e.target.value)} /> Yes &nbsp;
+                          <input type="radio" class="bn3" name="orgNotReg" value="2" style={{marginTop:"-3px"}} checked={this.state.isOrgClicked === "2"} onClick={e => this.registeredOrgEvent(e.target.value)} /> No
+                          </div>
+                          <div style={{ display: this.state.isRegisteredOrg }}>
+                        <div id="onebn">
+                          <div style={{ fontSize: 12, color: "red" }}  >
+                            {this.state.loginCredentialError}
+                            {this.state.userNameError}
+                            {this.state.passwordError}
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Email </label>
+                          <div className="controls">
+                            <input type="text" id="username" name="username" value={this.state.username}></input>
+                          </div>
+                          </div>
+                          <div className="control-group">
+                          <label className="control-label" for="inputSuccess">Password</label>
+                          <div className="controls">
+                            <input type="password" id="password" name="password" value={this.state.password}></input>
+                          </div>
+                          </div>
+                        </div>
+                          <div style={{ display: this.state.isNewOrg}}>
                           <h3>Organization details:</h3>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Organization name </label>
