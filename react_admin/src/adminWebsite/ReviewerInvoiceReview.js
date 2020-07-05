@@ -144,6 +144,16 @@ createTable=()=>{
 }
 
 render() {
+  let returnPath = null;
+  if(this.props.location.currentUser.role==="Admin"){
+    returnPath = "/reviewInvoice"
+  }
+  else if(this.props.location.currentUser.role==="Approver"){
+    returnPath = "/approverInvoiceReview"
+  }
+  else if(this.props.location.currentUser.role==="Reviewer"){
+    returnPath = "/reviewerInvoiceReview"
+  }
   const schoolList={
     pathname:"/adminPendingWorkflow",
     currentUser:this.props.location.currentUser,
