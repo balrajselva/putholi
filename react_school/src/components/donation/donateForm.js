@@ -73,79 +73,80 @@ class DonationForm extends Component {
     let params = {};
     let flagOption = "";
     let requestJSON = {};
-
-    if (this.state.isClicked === "1") {
-      params = {
-        emailAddress: data.get('username'),
-        password: data.get('password'),
-      }
-      let requestJSON =
-      {
-        "contribution": data.get('contribution'),
-        "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].schoolId,
-        "projectId": this.props.history.location.state.state[0].projects[0].projectId,
-        "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
-        "collectedAmount":data.get('yourContribution'),
-        "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
-        "requirements": this.props.history.location.state.state[0].projects[0].requirements
-      }
-
-      if (isValid) {
-        axios.post(this.props.config+'/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
-          .then((response) => {
-            if (response.data.emailAddress === "email") {
-              this.setState({
-                loginCredentialError: 'Please Enter registered Username and Credentials'
-              });
-            } else {
-              this.setState({
-                loginCredentialError: ''
-              });
-              var requestPayload = Object.assign(requestJSON, response.data);
-              this.props.history.push({
-                pathname: '/donationPayment',
-                user: requestPayload,
-              });
-            }
-          });
-      }
-      flagOption = "1";
-    }
-    if (this.state.isClicked === "2") {
-      let requestJSON =
-      {
-        "contribution": data.get('contribution'),
-        "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
-        "schoolId" :this.props.history.location.state.state[0].schoolId,
-        "projectId": this.props.history.location.state.state[0].projects[0].projectId,
-        "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
-        "collectedAmount": data.get('yourContribution'),
-        "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
-        "requirements": this.props.history.location.state.state[0].projects[0].requirements
-      }
-
-      if (isValid) {
-        let emailValidation = {
-          emailAddress: data.get('email'),
+    if(this.state.isIndivClicked === "1"){
+      if (this.state.isClicked === "1") {
+        params = {
+          emailAddress: data.get('username'),
+          password: data.get('password'),
         }
-        axios.post(this.props.config+'/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
-          .then(response => {
-            if (response.data !== null) {
-              Object.assign(params,response.data)
-            }
-            console.log("Before loading", params);
-            axios.post(this.props.config+'/donate/save', params, { headers: { 'Accept': 'application/json' } })
+        let requestJSON =
+        {
+          "contribution": data.get('contribution'),
+          "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
+          "schoolId" :this.props.history.location.state.state[0].schoolId,
+          "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+          "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
+          "collectedAmount":data.get('yourContribution'),
+          "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
+          "requirements": this.props.history.location.state.state[0].projects[0].requirements
+        }
+
+        if (isValid) {
+          axios.post(this.props.config+'/donate/findDonationUser', params, { headers: { 'Accept': 'application/json' } })
             .then((response) => {
-              var requestPayload = Object.assign(requestJSON, response.data);
-              this.props.history.push({
-                pathname: '/donationPayment',
-                user: requestPayload,
-              });
-            })
-          })
+              if (response.data.emailAddress === "email") {
+                this.setState({
+                  loginCredentialError: 'Please Enter registered Username and Credentials'
+                });
+              } else {
+                this.setState({
+                  loginCredentialError: ''
+                });
+                var requestPayload = Object.assign(requestJSON, response.data);
+                this.props.history.push({
+                  pathname: '/donationPayment',
+                  user: requestPayload,
+                });
+              }
+            });
+        }
+        flagOption = "1";
       }
-      flagOption = "2";
+      if (this.state.isClicked === "2") {
+        let requestJSON =
+        {
+          "contribution": data.get('contribution'),
+          "schoolName": this.props.history.location.state.state[0].schoolInfo.schoolName,
+          "schoolId" :this.props.history.location.state.state[0].schoolId,
+          "projectId": this.props.history.location.state.state[0].projects[0].projectId,
+          "estimate" : this.props.history.location.state.state[0].projects[0].estimate,
+          "collectedAmount": data.get('yourContribution'),
+          "ContributionAmount" :this.props.history.location.state.state[0].projects[0].collectedAmount,
+          "requirements": this.props.history.location.state.state[0].projects[0].requirements
+        }
+
+        if (isValid) {
+          let emailValidation = {
+            emailAddress: data.get('email'),
+          }
+          axios.post(this.props.config+'/donate/findByEmailId', emailValidation, { headers: { 'Accept': 'application/json' } })
+            .then(response => {
+              if (response.data !== null) {
+                Object.assign(params,response.data)
+              }
+              console.log("Before loading", params);
+              axios.post(this.props.config+'/donate/save', params, { headers: { 'Accept': 'application/json' } })
+              .then((response) => {
+                var requestPayload = Object.assign(requestJSON, response.data);
+                this.props.history.push({
+                  pathname: '/donationPayment',
+                  user: requestPayload,
+                });
+              })
+            })
+        }
+        flagOption = "2";
+      }
     }
     if (isValid) {
       this.setState({
@@ -291,14 +292,17 @@ class DonationForm extends Component {
     if (e === "1") {
       this.setState({ isAlreadyRegistered: 'block' });
       this.setState({ isRegisteredUser: 'none' });
+      this.setState({ isOrganizationalDonation: 'none' });
       this.setState({ isClicked: e })
     } else if (e === "2") {
       this.setState({ isRegisteredUser: 'block' });
       this.setState({ isAlreadyRegistered: 'none' });
+      this.setState({ isOrganizationalDonation: 'none' });
       this.setState({ isClicked: e })
     } else {
       this.setState({ isRegisteredUser: 'none' });
       this.setState({ isAlreadyRegistered: 'none' });
+      this.setState({ isOrganizationalDonation: 'none' });
       this.setState({ isClicked: null })
     }
   }
@@ -313,12 +317,19 @@ class DonationForm extends Component {
       this.setState({ isNewOrg: 'block' });
       this.setState({ isOrgClicked: e })
     }
+    else{
+      this.setState({ isRegisteredOrg: 'none' });
+      this.setState({ isNewOrg: 'none' });
+      this.setState({ isOrgClicked: e })
+    }
   }
 
   individualOrOrgEvent(e) {
     if (e === "Indiv") {
       this.setState({ isIndividualDonation: 'block' });
       this.setState({ isOrganizationalDonation: 'none' });
+      this.setState({isNewOrg:"none"})
+      this.setState({isRegisteredOrg:"none"})
       this.setState({ isIndivClicked: "1" })
     } else if (e === "Org") {
       this.setState({ isIndividualDonation: 'none' });
