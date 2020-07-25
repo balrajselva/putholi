@@ -74,6 +74,12 @@ public class DonationController {
 		return ResponseEntity.ok().body(donationResponse);
 	}
 
+	@PostMapping("/donate/saveOrg")
+	public ResponseEntity<DonationOrg> saveOrg(@RequestBody DonationOrg donation) {
+		DonationOrg donationResponse = donationOrgService.save(donation);
+		return ResponseEntity.ok().body(donationResponse);
+	}
+
 	@PostMapping("/donateOrg/save")
 	public ResponseEntity<DonationOrg> saveDonationOrg(@RequestBody DonationOrg donation) {
 		DonationOrg donationResponse = donationOrgService.save(donation);
@@ -88,6 +94,12 @@ public class DonationController {
 	@PostMapping("/donate/findByEmailId")
 	public DonationUser findEmail(@RequestBody DonationUser donation) {
 		DonationUser user= donationUserService.findByEmailAddress(donation.getEmailAddress());
+		return user;
+	}
+
+	@PostMapping("/donate/findOrgByEmailId")
+	public DonationOrg findOrgEmail(@RequestBody DonationOrg donation) {
+		DonationOrg user= donationOrgService.findByEmailAddress(donation.getOrgEmail());
 		return user;
 	}
 	
@@ -111,7 +123,22 @@ public class DonationController {
 		
 		return ResponseEntity.ok().body(user);
 	}
-	
+
+	@PostMapping("/donate/findDonationOrg")
+	public ResponseEntity<DonationOrg> findDonationOrg(@RequestBody DonationOrg donationOrg) {
+
+		DonationOrg org = donationOrgService.
+				findByEmailAddressPassword(donationOrg.getOrgEmail(),donationOrg.getPassword());
+
+		if(org == null) {
+			DonationOrg donationOrg1 = new DonationOrg();
+			donationOrg1.setOrgEmail("email");
+			return new ResponseEntity<DonationOrg>(donationOrg1,HttpStatus.OK);
+		}
+
+		return ResponseEntity.ok().body(org);
+	}
+
 	/**
 	 * 
 	 * @param donation Id

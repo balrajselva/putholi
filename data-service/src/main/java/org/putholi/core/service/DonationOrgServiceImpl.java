@@ -17,4 +17,14 @@ public class DonationOrgServiceImpl implements DonationOrgService {
     public DonationOrg save(DonationOrg donationOrg) {
         return donationOrgRepository.save(donationOrg);
     }
+
+    @Override
+    public DonationOrg findByEmailAddressPassword(String orgEmail, String password) {
+        return donationOrgRepository.findByEmailAndPassword(orgEmail,password);
+    }
+
+    @Override
+    public DonationOrg findByEmailAddress(String orgEmail) {
+        return donationOrgRepository.findByEmail(orgEmail);
+    }
 }
