@@ -28,6 +28,9 @@ public class DonationOrg extends AuditableEntity implements java.io.Serializable
     @Column(name = "organization_name")
     private String orgName;
 
+    @Column(name ="org_email")
+    private String orgEmail;
+
     @Column(name = "organization_contact")
     private String orgContact;
 
@@ -60,5 +63,8 @@ public class DonationOrg extends AuditableEntity implements java.io.Serializable
 
     @Column(name = "money_in_rupees")
     private String moneyInRupees;
+
+    @Column(name="password")
+    private String password;
 
 }
