@@ -160,7 +160,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
                               <lable>Donor Email ID
                             </lable></td>
                             <td>
-                              {this.props.history.location.user.emailAddress}
+                              {this.props.history.location.user.emailAddress!==undefined?this.props.history.location.user.emailAddress:this.props.history.location.user.orgEmail}
                             </td>
                           </tr>
                           <tr>
@@ -168,7 +168,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
                               <lable>Donor Phone Number
                               </lable></td>
                             <td>
-                              {this.props.history.location.user.phoneNumber}
+                              {this.props.history.location.user.phoneNumber!==undefined?this.props.history.location.user.phoneNumber:this.props.history.location.user.orgContact}
                             </td>
                           </tr>
                           <tr>
@@ -184,7 +184,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
                               <lable>Donor Type
                             </lable></td>
                             <td>
-                              {this.props.history.location.user.donationuserid}
+                              {this.props.history.location.user.donarType}
                             </td>
                           </tr>
                           <tr>
