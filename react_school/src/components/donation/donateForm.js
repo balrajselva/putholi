@@ -110,7 +110,7 @@ class DonationForm extends Component {
                 this.setState({
                   loginCredentialError: ''
                 });
-                var requestPayload = Object.assign(requestJSON, response.data);
+                var requestPayload = Object.assign(requestJSON, response.data, {"donarType":"Individual"});
                 this.props.history.push({
                   pathname: '/donationPayment',
                   user: requestPayload,
@@ -147,7 +147,7 @@ class DonationForm extends Component {
               console.log("Before loading", params);
               axios.post(this.props.config+'/donate/save', params, { headers: { 'Accept': 'application/json' } })
               .then((response) => {
-                var requestPayload = Object.assign(requestJSON, response.data);
+                var requestPayload = Object.assign(requestJSON, response.data, {"donarType":"Individual"});
                 this.props.history.push({
                   pathname: '/donationPayment',
                   user: requestPayload,
@@ -212,15 +212,16 @@ class DonationForm extends Component {
           axios.post(this.props.config+'/donate/findDonationOrg', params, { headers: { 'Accept': 'application/json' } })
             .then((response) => {
               this.setState({spinner:false})
-              if (response.data.emailAddress === "email") {
+              if (response.data.orgEmail === "email") {
                 this.setState({
-                  loginCredentialError: 'Please Enter registered Credentials'
+                  orgError: 'Please Enter registered Credentials'
                 });
               } else {
                 this.setState({
-                  loginCredentialError: ''
+                  orgError: ''
                 });
-                var requestPayload = Object.assign(requestJSON, response.data);
+                var requestPayload = Object.assign(requestJSON, response.data, {"donarType":"Corporate"});
+                console.log(requestPayload,response.data)
                 this.props.history.push({
                   pathname: '/donationPayment',
                   user: requestPayload,
@@ -257,7 +258,7 @@ class DonationForm extends Component {
           axios.post(this.props.config+'/donate/saveOrg', params, { headers: { 'Accept': 'application/json' } })
           .then((response) => {
             this.setState({spinner:false})
-            var requestPayload = Object.assign(requestJSON, response.data);
+            var requestPayload = Object.assign(requestJSON, response.data, {"donarType":"Corporate"});
             this.props.history.push({
               pathname: '/donationPayment',
               user: requestPayload,
@@ -273,7 +274,8 @@ class DonationForm extends Component {
     this.setState({ 
         [target.id]: target.value , 
         lastErrorField:null,
-        errorMessage:""
+        errorMessage:"",
+        orgError:""
     });
   }
 

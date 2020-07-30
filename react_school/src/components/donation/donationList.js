@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './donation_style.css'
+import MultipleImage from '../multipleImage/MultipleImage';
 class DonationList extends Component {
 
     constructor(props) {
@@ -31,12 +32,8 @@ class DonationList extends Component {
                 <div className="projects isotope" >
                     {this.props.donationList.map(donationLists => {
                     if(donationLists.enable_donation === "Y"){
-                    return(<div className="span3 element isotope-item" >
-                            <div className="hover_img">
-                            {donationLists.schoolImages.map(images => (
-                                <img src={'data:image/png;base64,'+ images.image} alt="" ></img>
-                            ))}  
-                            </div>
+                    return(<div className="span6 element isotope-item" >
+                            <MultipleImage images={donationLists.schoolImages}/>  
                             <div className="item_description">
                                 <h4><b>{donationLists.schoolInfo.schoolName}</b></h4>
                                 <div className="descr">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './donation_style.css'
+import MultipleImage from '../multipleImage/MultipleImage';
 class DonationDetails extends Component {
   constructor(props) {
     super(props);
