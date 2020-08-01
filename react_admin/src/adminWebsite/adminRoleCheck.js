@@ -3,6 +3,7 @@ import './components/header/Header.css';
 import './css/adminMainPage.css';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import MultipleImage from './components/multipleImage/MultipleImage';
 
 class adminRoleCheck extends Component {
     state={
@@ -130,11 +131,6 @@ class adminRoleCheck extends Component {
                       {this.props.location.user.firstName}
                       <small>added on</small>
                     </h1>
-                    <ol className="breadcrumb">
-                      <li><a href="../../admin_main_screen.html"><i className="fa fa-dashboard" /> Home</a></li>
-                      <li><a href="#">UI</a></li>
-                      <li className="active">Timeline</li>
-                    </ol>
                   </section>
                   <section className="content">
                     <div className="row">
@@ -199,7 +195,7 @@ class adminRoleCheck extends Component {
                               
                               <div className="timeline-footer">
                               
-                                <button  type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">View User Picture</button>
+                                <div className="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">View User Picture</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Accepted" onClick={(target)=>this.updateStatus(target)}>{reviewButtonContent}</div>&nbsp;
                                 <div className="btn btn-primary btn-xs" id="Rejected" onClick={(target)=>this.updateStatus(target)}>Reject Access</div>&nbsp;
                                 <Link to={{pathname:returnLink, users:this.state.users, currentUser:this.state.currentUser}} className="btn btn-primary btn-xs">Back to User List</Link>
@@ -217,8 +213,7 @@ class adminRoleCheck extends Component {
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <img src={'data:image/png;base64,'+this.props.location.user.identityProof[0].image} id ="image1" alt="" ></img>
-                                
+                                <MultipleImage images={this.props.location.user.identityProof}/>
                                 </section>
                             </div>
                         </div>

@@ -77,9 +77,12 @@ class MultipleImage extends Component {
                                         transform: `translateX(${this.state.translateValue}px)`,
                                         transition: 'transform ease-out 0.45s'
                                     }}>
-                                    {this.props.images.map((value, index) =>
+                                    {this.props.images!==undefined ?this.props.images.map((value, index) =>
                                         <Slide key={index} image={'data:image/png;base64,'+value.image} />
-                                    )}
+                                    ):null}
+                                    {this.props.rawImages!==undefined ?this.props.rawImages.map((value, index) =>
+                                        <Slide key={index} image={value} />
+                                    ):null}
                                     </div>
                                     <LeftArrow
                                     goToPrevSlide={this.goToPrevSlide}

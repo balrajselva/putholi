@@ -6,6 +6,7 @@ import Tabs from '../../components/Tabs/Tabs';
 import axios from 'axios';
 import BeneficiarySummary from './BeneficiarySummary';
 import './sliderImage.css';
+import MultipleImage from '../multipleImage/MultipleImage';
 
 
 class AddSchool extends Component {
@@ -54,40 +55,8 @@ class AddSchool extends Component {
       assetNameList:null,
       priority:null,
       maxPriority:null,
-      reqError:null,
-      currentIndex: 0,
-      translateValue: 0
+      reqError:null
     }
-
-    goToPrevSlide = () => {
-      if (this.state.currentIndex === 0)
-        return;
-      this.setState(prevState => ({
-        currentIndex: prevState.currentIndex - 1,
-        translateValue: prevState.translateValue + this.slideWidth()
-      }))
-  }
-
-  goToNextSlide = () => {
-  // Exiting the method early if we are at the end of the images array.
-  // We also want to reset currentIndex and translateValue, so we return
-  // to the first image in the array.
-  if (this.state.currentIndex === this.state.localImageUrl.length - 1) {
-      return this.setState({
-      currentIndex: 0,
-      translateValue: 0
-      })
-  }
-
-  // This will not run if we met the if condition above
-  this.setState(prevState => ({
-      currentIndex: prevState.currentIndex + 1,
-      translateValue: prevState.translateValue + -(this.slideWidth())
-  }));
-  }
-  slideWidth = () => {
-      return document.querySelector('.slide').clientWidth
-  }
 
     componentDidMount(){
       axios.get(this.props.config+"/lookup/getAll")
@@ -99,8 +68,8 @@ class AddSchool extends Component {
     handleChange=({target})=>{
       if(target.id==="fileInput"){
          for(let i=0;i<target.files.length;i++){
-            if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 5000){
-               window.alert("Image size should be within 5MB");
+            if(target.files[i] && target.files[i].type.match('image.*') && parseFloat(target.files[i].size/1024).toFixed(2) > 2000){
+               window.alert("Image size should be within 2MB");
                return
             }
             else{
@@ -346,7 +315,7 @@ class AddSchool extends Component {
             });
       
         }
-        else if(this.state.pincode===null){
+        else if(this.state.pincode===null || this.state.pincode ===""){
             this.setState({
                 lastErrorField:"pincode",
                 errorMessage:"Please enter pincode"
@@ -429,31 +398,6 @@ class AddSchool extends Component {
    }
 
     render() {
-      const Slide = ({ image }) => {
-         const styles = {
-             backgroundImage: `url(${image})`,
-             backgroundSize: 'cover',
-           backgroundRepeat: 'no-repeat',
-           backgroundPosition: '50% 60%'
-         }
-         return <div className="slide" style={styles}></div>
-       }
-   
-       const LeftArrow = (props) => {
-         return (
-           <div className="backArrow arrow" onClick={props.goToPrevSlide} >
-             <i className="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
-           </div>
-         );
-       }
-   
-       const RightArrow = (props) => {
-         return (
-           <div className="nextArrow arrow" onClick={props.goToNextSlide}>
-             <i className="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
-           </div>
-         );
-       }
          return (
 <div className="container">
    <section>
@@ -725,31 +669,9 @@ class AddSchool extends Component {
                                     <div className="controls">
                                        <textarea className="input-xlarge" id="comments" value={this.state.comments} onChange={this.handleChange} rows="3"></textarea>
                                     </div>
-                                    {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
-                                    {this.state.localImageUrl?
-                <div className="page_container">
-                <div className="wrap">
-                <div className="container">
-                  <div className="row pad25">
-                    <div className="span8">
-                <div className="slider">
-                    <div className="slider-wrapper"
-                      style={{
-                        transform: `translateX(${this.state.translateValue}px)`,
-                        transition: 'transform ease-out 0.45s'
-                      }}>
-                      {this.state.localImageUrl.map((value, index) =>
-                        <Slide key={index} image={value} />
-                      )}
-                    </div>
-                    <LeftArrow
-                      goToPrevSlide={this.goToPrevSlide}
-                    />
-
-                    <RightArrow
-                      goToNextSlide={this.goToNextSlide}
-                    />
-                  </div></div></div></div></div></div>
+                                    {this.state.localImageUrl.length>0?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
+                                    {this.state.localImageUrl.length>0?
+               <MultipleImage rawImages={this.state.localImageUrl}/>
                 :null}                                 </div>
                               </div>
                            </div>

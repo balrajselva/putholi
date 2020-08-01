@@ -47,6 +47,8 @@ import EmailDEOTrigger from '../adminWebsite/EmailDEOTrigger';
 import SuperAdminLayout from '../adminWebsite/components/layouts/SuperAdminLayout';
 import UploadReceipt from '../adminWebsite/components/receipt/UploadReceipt';
 import ReviewReceipts from '../adminWebsite/components/receipt/ReviewReceipts';
+import NewUserLoginConfirmation from '../adminWebsite/NewUserLoginConfirmation';
+import RejectedUser from '../adminWebsite/RejectedUser';
 
 class App extends Component {
   state = {
@@ -144,6 +146,8 @@ class App extends Component {
           <Switch config={this.state.config}>
             <Route path="/confirmation" component={()=><ConfirmatinScreen config={this.state.config}/>}/>
             <Route path="/trustRegister" history={history}component={()=><TrustRegister saveUser={(user)=>this.saveUser(user)} config={this.state.config}/>}/>
+            <Route path="/newUserLoginConfirm" component={()=><NewUserLoginConfirmation/>}/>
+            <Route path="/rejectedUser" component={()=><RejectedUser/>}/>
             <Route exact path="/login" history={history} component={()=><TrustLogin config={this.state.config}/>}/>
             <Route path="/emailDEO/:schoolID"  component={()=><DEOEmailTrigger config={this.state.config}/>}/>
             <Route path="/volunteerRegister" history={history} component={(props)=><VolunteerRegister saveUser={(user)=>this.saveUser(user)}{...props}{...this.props} config={this.state.config}/>}/>
