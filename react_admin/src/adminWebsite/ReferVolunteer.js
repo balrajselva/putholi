@@ -73,7 +73,7 @@ class ReferVolunteer extends Component {
             const cryptr = new Cryptr('myTotalySecretKey');
             const encryptedName = cryptr.encrypt(this.state.currentUser.firstName);
             const encryptedEmail =cryptr.encrypt(this.state.currentUser.emailAddress);
-            const url1 = "http://localhost:3001/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
+            const url1 = "http://localhost:3000/volunteerRegister?"+encryptedName+"&"+encryptedEmail;
             this.setState({
                 url:url1,
                 spinner:true
@@ -113,6 +113,10 @@ class ReferVolunteer extends Component {
                         .then((response) => {
                             window.alert("Data saved successfully!");
                             this.setState({spinner:false})
+                            this.props.history.push({ 
+                                pathname:"/trustMemberScreen", 
+                                currentUser:this.state.currentUser
+                            });
                     })
                 }
             })
@@ -222,7 +226,7 @@ class ReferVolunteer extends Component {
                                     </button>
                                 </div>
                             </div>
-                            {this.state.url!=null?<div>{this.state.url}</div>:null}
+                            {/* {this.state.url!=null?<div>{this.state.url}</div>:null} */}
                             </div>
                         </div>
                         </div>

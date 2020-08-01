@@ -69,18 +69,32 @@ public class UserServiceImpl implements UserService {
 	@Modifying
 	public User updateUserStatus(long id, String status) {
 		userRepository.updateUserStatus(id, status);
-		return userRepository.findById(id).orElse(null);
+		User user = userRepository.findById(id).orElse(null);
+		for(IdentityProof identityProof:user.getIdentityProof()) {
+			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		}
+		return user;
 	}
 
 	@Override
 	public User updateUserSchoolStatus(long id, long schoolId) {
 		userRepository.updateUserSchoolStatus(id, schoolId);
-		return userRepository.findById(id).orElse(null);
+		User user = userRepository.findById(id).orElse(null);
+		for(IdentityProof identityProof:user.getIdentityProof()) {
+			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		}
+		return user;
 	}
 
 	@Override
 	public List<User> findAllVolunteers() {
-		return userRepository.findAllVolunteers();
+		List<User> userList= userRepository.findAllVolunteers();
+		for(User user:userList) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
+		}
+		return userList;
 	}
 
 	@Override
@@ -97,11 +111,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User findByEmailAddress(String email) {
-		return userRepository.findByEmailAddress(email);
+		User user = userRepository.findByEmailAddress(email);
+		for(IdentityProof identityProof:user.getIdentityProof()) {
+			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		}
+		return user;
 	}
 
 	public List<User> findAllUsers() {
-		return (List<User>) userRepository.findAll();
+		List<User> userList= (List<User>) userRepository.findAll();
+		for(User user:userList) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
+		}
+		return userList;
 	}
 
 	@Override
@@ -113,17 +137,34 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findByStatus(String status) {
-		return userRepository.findByStatus(status);
+		List<User> userList= userRepository.findByStatus(status);
+		for(User user:userList) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
+		}
+		return userList;
 	}
 
 	@Override
 	public User findByEmailAddressPassword(String imgPath, String emailAddress, String password) {
-		return userRepository.findByEmailAddressPassword(emailAddress,password);
+		User user = userRepository.findByEmailAddressPassword(emailAddress,password);
+		for(IdentityProof identityProof:user.getIdentityProof()) {
+			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		}
+		return user;
 	}
 
 	@Override
 	public List<User> findByDistrict(String district) {
-		return userRepository.findByDistrict(district);
+		List<User> userList= userRepository.findByDistrict(district);
+		for(User user:userList) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
+		}
+		return userList;
+
 	}
 
 	private byte[] getImgFromFS(String filePath) {

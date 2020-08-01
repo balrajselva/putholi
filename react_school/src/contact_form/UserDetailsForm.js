@@ -22,7 +22,6 @@ class UserDetailsForm extends Component {
         email:this.props.user.emailAddress,
         phoneNumber:null,
         identityProof:null,
-        comments:null,
         password:this.props.user.password,
         localImageUrl:null,
         confirmPassword:null,
@@ -60,7 +59,7 @@ class UserDetailsForm extends Component {
             });
             document.getElementById('addressLine_1').style.borderColor="red";
         }
-        else if(this.state.pincode===null){
+        else if(this.state.pincode===null || this.state.pincode===""){
             this.setState({
                 lastErrorField:"pincode",
                 errorMessage:"Please enter pincode"
@@ -165,10 +164,8 @@ class UserDetailsForm extends Component {
                 emailAddress:this.props.user.emailAddress,
                 phoneNumber:this.state.phoneNumber,
                 proofOfId:{
-                    image:this.state.fileInput,
-                    comments:this.state.comments,
+                    image:this.state.fileInput
                  },
-                comments:this.state.comments,
                 password:this.state.password
             }
             var regFormModel=new FormData();
@@ -208,8 +205,8 @@ class UserDetailsForm extends Component {
             })
         }
         else if(target.id==="identityProof"){
-            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 5000){
-                window.alert("Image size should be within 5MB");
+            if(target.files[0] && target.files[0].type.match('image.*') && parseFloat(target.files[0].size/1024).toFixed(2) > 2000){
+                window.alert("Image size should be within 2MB");
                 return
             }
             else{
@@ -361,8 +358,8 @@ class UserDetailsForm extends Component {
                         <td colSpan="2">{this.state.localImageUrl?<div>Id proof preview:</div>:null}</td>
                     </tr>
                     <tr>
-                        <td>Comments : </td>
-                        <td><textarea  class="comments" id="comments" onChange={this.handleChange}/></td>
+                        {/* <td>Comments : </td>
+                        <td><textarea  class="comments" id="comments" onChange={this.handleChange}/></td> */}
                         <td colSpan="2">{this.state.localImageUrl?<img width="80%" height="100%" src={this.state.localImageUrl} alt="pic"/>:null}</td>
                     </tr>
                     <tr>

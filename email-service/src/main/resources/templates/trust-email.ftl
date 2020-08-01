@@ -27,8 +27,8 @@
         <tr>
             <td bgcolor="#eaeaea" style="padding: 40px 30px 40px 30px;">
                 <p>Dear ${name},</p>
-                <p> Thank you for your donation. Your generosity is appreciated! Here the details of your donation :
-                <p>Donated Amount : ${DonatedAmount}</p>
+                <p> Thank you for your registration. Your access is being reviewed. Here the details of your registration amount :
+                <p>Registration Amount : ${DonatedAmount}</p>
             </td>
         </tr>
         <tr>

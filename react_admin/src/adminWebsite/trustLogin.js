@@ -83,6 +83,18 @@ class trustLogin extends Component {
               currentUser: res.data
             });
           }
+          else if(res.data!=="" && (res.data.status==="NewUser"||res.data.status==="ApproverRejected"||res.data.status==="ReviewerRejected")){
+            this.props.history.push({
+              pathname: '/newUserLoginConfirm',
+              currentUser: res.data
+            });
+          }
+          else if(res.data!=="" && res.data.status==="AdminRejected"){
+            this.props.history.push({
+              pathname: '/rejectedUser',
+              currentUser: res.data
+            });
+          }
           else{
             document.getElementById("password").style.borderColor="red";
             this.setState({
