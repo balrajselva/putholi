@@ -190,4 +190,22 @@ public class SchoolController {
 		schoolService.updateVolunteerId(schoolId,newVolunteerId);
 		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
 	}
+
+	@PostMapping("/addRequirement")
+	public ResponseEntity<?> addRequirement(@ModelAttribute("regFormModel") SchoolRegFormModel regFormModel,
+												  HttpServletRequest request) {
+
+		try {
+			System.out.println("..regFormModel.getPayload().."+regFormModel );
+			School school = new ObjectMapper().readValue(regFormModel.getPayload(), School.class);
+			System.out.println(school);
+			schoolService.addRequirement(school);
+		} catch (IOException ex) {
+			logger.debug("Error on multiUploadFileModel {}", ex);
+			return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+
+	}
+
 }

@@ -31,4 +31,6 @@ public interface SchoolService {
 	School updateVolunteerId(long id,Long volunteerId);
 
 	School updateSchoolStatusAndVolunteerId(long id,Long volunteerId, String status);
+
+    long addRequirement(School school);
 }
