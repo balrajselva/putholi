@@ -9,4 +9,5 @@ public interface CashCounterService {
 
     Boolean saveInflowCashTrust(TrustDonation donation);
 
+    Boolean saveInflowCashOrg(Donation donation);
 }

@@ -23,10 +23,21 @@ class transactionResponse extends Component {
         if(orderId.startsWith("SCHL") && status==='CHARGED'){
             axios.get(this.props.config+'/donate/paymentDonation/'+orderId+"/SUCCESS")
             .then(res=>{
+                console.log(res)
+                let toEmailAddress = null;
+                let name = null;
+                if(res.data.donationUser !== null){
+                    toEmailAddress=res.data.donationUser.emailAddress;
+                    name=res.data.donationUser.firstName + res.data.donationUser.lastName
+                }
+                if(res.data.donationOrg !== null){
+                    toEmailAddress=res.data.donationOrg.orgEmail;
+                    name=res.data.donationOrg.firstName + res.data.donationOrg.lastName
+                }
                 let emailPayload ={
                     from:'puthyiradminteam@putholi.com',
-                    toEmailAddress:res.data.donationUser.emailAddress,
-                    name:res.data.donationUser.firstName + res.data.donationUser.lastName,
+                    toEmailAddress:toEmailAddress,
+                    name:name,
                     yourContirbutionAmount: res.data.amount,
                     subject:'Thanks !!! Your Tracking Id:'+ res.data.tracking_id,
                     trackId:res.data.tracking_id,

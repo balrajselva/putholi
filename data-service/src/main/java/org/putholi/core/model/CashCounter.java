@@ -22,6 +22,9 @@ public class CashCounter {
     @Column(name = "total_inflow_cash_donor")
     private BigInteger totalInflowCashDonor;
 
+    @Column(name = "total_inflow_cash_org")
+    private BigInteger totalInflowCashOrg;
+
     @Column(name = "total_inflow_cash_trust")
     private BigInteger totalInflowCashTrust;
 

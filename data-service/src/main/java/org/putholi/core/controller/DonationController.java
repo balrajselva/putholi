@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -160,8 +161,13 @@ public class DonationController {
 			long id = projectService.saveOrUpdate(donation.getProject().getProjectId(),donation.getEstimate(),donation.getStatus(),donation.getCollectedAmount());
 			donation.setPaymentStatus(status);
 			requirementService.updateRequirements(donation);
-			cashCounterService.saveInflowCashDonor(donation);
-			if(donation.getIsSchoolReadyForAllotment().equals("Y")) {
+			if(Objects.nonNull(donation.getDonationUser())) {
+				cashCounterService.saveInflowCashDonor(donation);
+			}
+			else if(Objects.nonNull(donation.getDonationOrg())){
+				cashCounterService.saveInflowCashOrg(donation);
+			}
+			if(Objects.nonNull(donation.getIsSchoolReadyForAllotment()) && donation.getIsSchoolReadyForAllotment().equals("Y")) {
 				schoolService.updateSchoolStatus(donation.getSchool().getSchoolId(), PuthuyirLookUp.READY_FOR_ALLOTMENT.name());
 			}
 			return ResponseEntity.ok().body(donationService.savePaymentUser(donation));

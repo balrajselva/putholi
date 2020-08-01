@@ -32,6 +32,20 @@ public class CashCounterServiceImpl implements CashCounterService {
     }
 
     @Override
+    public Boolean saveInflowCashOrg(Donation donation) {
+        // There will always be only one record in casCounter table
+        CashCounter cashCounter = cashCounterRepository.findById(1L).get();
+        cashCounter.setTotalAvailableBalance(cashCounter.getTotalAvailableBalance().add(BigInteger.valueOf(donation.getAmount())));
+        cashCounter.setTotalInflowCashOrg(cashCounter.getTotalInflowCashOrg().add(BigInteger.valueOf(donation.getAmount())));
+        cashCounter.setTotalDonorBalance(cashCounter.getTotalDonorBalance().add(BigInteger.valueOf(donation.getAmount())));
+        if(Objects.nonNull(donation.getAdjustableAmount())) {
+            cashCounter.setTotalAdjustedAmount(cashCounter.getTotalAdjustedAmount().add(BigInteger.valueOf(donation.getAdjustableAmount())));
+        }
+        cashCounterRepository.save(cashCounter);
+        return Boolean.TRUE;
+    }
+
+    @Override
     public Boolean saveInflowCashTrust(TrustDonation donation) {
         // There will always be only one record in casCounter table
         CashCounter cashCounter = cashCounterRepository.findById(1L).get();
