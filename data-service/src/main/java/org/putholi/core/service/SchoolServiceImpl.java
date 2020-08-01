@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,7 +67,6 @@ public class SchoolServiceImpl implements SchoolService {
 		
 		//set user to the Requirement.
 		this.setUser(school);
-		
 		schoolRepository.save(school);
 		return school.getSchoolId();
 	}
@@ -165,6 +165,19 @@ public class SchoolServiceImpl implements SchoolService {
 		schoolRepository.updateSchoolStatusAndVolunteerId(id, status, volunteerId);
 		projectRepository.updateVolunteerId(id,volunteerId);
 		return getImageForSchool(schoolRepository.findById(id).orElse(null));
+	}
+
+	@Override
+	@Transactional
+	public long addRequirement(School school) {
+		School schoolFromDB=schoolRepository.findBySchoolId(school.getSchoolId());
+		Set<Project> project = schoolFromDB.getProjects();
+		project.add(this.createDefaultProject(school));
+		school.setProjects(project);
+		this.setUser(school);
+		schoolRepository.save(school);
+		schoolRepository.updateSchoolStatus(school.getSchoolId(),PuthuyirLookUp.SCHOOL_REGISTERED.name());
+		return school.getSchoolId();
 	}
 
 	@Override
