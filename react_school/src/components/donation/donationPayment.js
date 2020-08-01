@@ -40,10 +40,19 @@ class DonationPayment extends Component {
         projectId: this.props.history.location.user.projectId
       }
     };
-
-    let donationUserIdPL = {
-      donationUser: {
-        donationuserid: this.props.history.location.user.donationuserid
+    let donationUserIdPL = null;
+    if(this.props.history.location.user.donationuserid !== null){
+      donationUserIdPL = {
+        donationUser: {
+          donationuserid: this.props.history.location.user.donationuserid
+        }
+      }
+    }
+    if(this.props.history.location.user.donationOrgId !== null){
+      donationUserIdPL = {
+        donationOrg: {
+          donationOrgId: this.props.history.location.user.donationOrgId
+        }
       }
     }
 
@@ -101,7 +110,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
     }
 
     var donationUserPayload = Object.assign(projectPayload, donationUserIdPL, paymentUserPayload,orderIdPayload,schoolPayload,projectUpdatePayload);
-
+    console.log(donationUserPayload)
     axios.post(this.props.config+'/donate/paymentDonation', donationUserPayload, { headers: { 'Accept': 'application/json' } })
     .then(response => {
       console.log(response) 
