@@ -5,7 +5,20 @@ import './sliderImage.css';
 class MultipleImage extends Component {
     state={
         currentIndex: 0,
-        translateValue: 0
+        translateValue: 0,
+        images:null
+    }
+
+    componentWillReceiveProps(){
+      // console.log("Props",this.props)
+      if(this.props.images !== undefined && this.props.images.length > 0){
+        this.setState({
+          images:this.props.images
+        })
+      }
+      else if(this.props.rawImages !== undefined && this.props.rawImages.length > 0){
+        this.setState({images:this.props.rawImages})
+      }
     }
 
     goToPrevSlide = () => {
@@ -22,7 +35,7 @@ class MultipleImage extends Component {
     // Exiting the method early if we are at the end of the images array.
     // We also want to reset currentIndex and translateValue, so we return
     // to the first image in the array.
-    if (this.state.currentIndex === this.props.images.length - 1) {
+    if (this.state.currentIndex === this.state.images.length - 1) {
         return this.setState({
         currentIndex: 0,
         translateValue: 0
@@ -64,7 +77,7 @@ class MultipleImage extends Component {
               </div>
             );
           }
-          console.log(this.props.images)
+          console.log(this.props)
         return (
             <div className="page_container">
                 <div className="wrap">
