@@ -173,11 +173,12 @@ public class SchoolServiceImpl implements SchoolService {
 		School schoolFromDB=schoolRepository.findBySchoolId(school.getSchoolId());
 		Set<Project> project = schoolFromDB.getProjects();
 		project.add(this.createDefaultProject(school));
-		school.setProjects(project);
-		this.setUser(school);
-		schoolRepository.save(school);
-		schoolRepository.updateSchoolStatus(school.getSchoolId(),PuthuyirLookUp.SCHOOL_REGISTERED.name());
-		return school.getSchoolId();
+		schoolFromDB.setProjects(project);
+		schoolFromDB.setRequirements(school.getRequirements());
+		this.setUser(schoolFromDB);
+		schoolRepository.save(schoolFromDB);
+		schoolRepository.updateSchoolStatus(schoolFromDB.getSchoolId(),PuthuyirLookUp.SCHOOL_REGISTERED.name());
+		return schoolFromDB.getSchoolId();
 	}
 
 	@Override

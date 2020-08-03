@@ -70,8 +70,10 @@ public class UserServiceImpl implements UserService {
 	public User updateUserStatus(long id, String status) {
 		userRepository.updateUserStatus(id, status);
 		User user = userRepository.findById(id).orElse(null);
-		for(IdentityProof identityProof:user.getIdentityProof()) {
-			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(user)) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
 		}
 		return user;
 	}
@@ -80,8 +82,10 @@ public class UserServiceImpl implements UserService {
 	public User updateUserSchoolStatus(long id, long schoolId) {
 		userRepository.updateUserSchoolStatus(id, schoolId);
 		User user = userRepository.findById(id).orElse(null);
-		for(IdentityProof identityProof:user.getIdentityProof()) {
-			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(user)) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
 		}
 		return user;
 	}
@@ -89,9 +93,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findAllVolunteers() {
 		List<User> userList= userRepository.findAllVolunteers();
-		for(User user:userList) {
-			for (IdentityProof identityProof : user.getIdentityProof()) {
-				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(userList)) {
+			for (User user : userList) {
+				for (IdentityProof identityProof : user.getIdentityProof()) {
+					identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+				}
 			}
 		}
 		return userList;
@@ -104,25 +110,31 @@ public class UserServiceImpl implements UserService {
 
 	public User get(long id) {
 		User user = userRepository.findById(id).orElse(null);
-		for(IdentityProof identityProof:user.getIdentityProof()) {
-			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(user)) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
 		}
 		return user;
 	}
 
 	public User findByEmailAddress(String email) {
 		User user = userRepository.findByEmailAddress(email);
-		for(IdentityProof identityProof:user.getIdentityProof()) {
-			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(user)) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
 		}
 		return user;
 	}
 
 	public List<User> findAllUsers() {
 		List<User> userList= (List<User>) userRepository.findAll();
-		for(User user:userList) {
-			for (IdentityProof identityProof : user.getIdentityProof()) {
-				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(userList)) {
+			for (User user : userList) {
+				for (IdentityProof identityProof : user.getIdentityProof()) {
+					identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+				}
 			}
 		}
 		return userList;
@@ -138,9 +150,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findByStatus(String status) {
 		List<User> userList= userRepository.findByStatus(status);
-		for(User user:userList) {
-			for (IdentityProof identityProof : user.getIdentityProof()) {
-				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(userList)) {
+			for (User user : userList) {
+				for (IdentityProof identityProof : user.getIdentityProof()) {
+					identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+				}
 			}
 		}
 		return userList;
@@ -149,8 +163,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmailAddressPassword(String imgPath, String emailAddress, String password) {
 		User user = userRepository.findByEmailAddressPassword(emailAddress,password);
-		for(IdentityProof identityProof:user.getIdentityProof()) {
-			identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(user)) {
+			for (IdentityProof identityProof : user.getIdentityProof()) {
+				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+			}
 		}
 		return user;
 	}
@@ -158,9 +174,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findByDistrict(String district) {
 		List<User> userList= userRepository.findByDistrict(district);
-		for(User user:userList) {
-			for (IdentityProof identityProof : user.getIdentityProof()) {
-				identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+		if(Objects.nonNull(userList)) {
+			for (User user : userList) {
+				for (IdentityProof identityProof : user.getIdentityProof()) {
+					identityProof.setImage(getImgFromFS(identityProof.getFilePath()));
+				}
 			}
 		}
 		return userList;

@@ -42,8 +42,18 @@ class adminSchoolCheck extends Component {
   }
     createReqList=()=>{
         let rows=[];
-        for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
-        rows.push(<li>{this.props.location.school.projects[0].requirements[i].reqType}-{this.props.location.school.projects[0].requirements[i].assetName}-{this.props.location.school.projects[0].requirements[i].quantity}</li>)
+        let project=null;
+        for(let i=0;i<this.props.location.school.projects.length;i++){
+          if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+            project=this.props.location.school.projects[i];
+            break;
+          }
+        }
+        if(project === null){
+          return
+        }
+        for(let i=0;i<project.requirements.length;i++){
+        rows.push(<li>{project.requirements[i].reqType}-{project.requirements[i].assetName}-{project.requirements[i].quantity}</li>)
         }
         return rows;
     }
@@ -146,9 +156,9 @@ class adminSchoolCheck extends Component {
                     {this.props.location.school.schoolInfo.schoolName}
                     <small>added on</small>
                     </h1>
-                    <ol className="breadcrumb">
+                    {/* <ol className="breadcrumb">
                     <li><a href="../../index.html"><i className="fa fa-dashboard" /> Home</a></li>
-                    </ol>
+                    </ol> */}
                 </section>
                 <section className="content">
                     <div className="row">
