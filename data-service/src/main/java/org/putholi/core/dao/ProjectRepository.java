@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 	
-	@Query("FROM Project p where p.school.schoolId = :schoolId")
+	@Query("FROM Project p where p.school.schoolId = :schoolId AND p.status='PROJECT_CREATED'")
 	List<Project> findBySchoolId(@Param("schoolId") long schoolId);
 
 	@Modifying

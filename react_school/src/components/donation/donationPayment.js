@@ -41,20 +41,22 @@ class DonationPayment extends Component {
       }
     };
     let donationUserIdPL = null;
-    if(this.props.history.location.user.donationuserid !== null){
+    console.log(this.props.history.location.user)
+    if(this.props.history.location.user.donationuserid!==undefined && this.props.history.location.user.donationuserid !== null){
       donationUserIdPL = {
         donationUser: {
           donationuserid: this.props.history.location.user.donationuserid
         }
       }
     }
-    if(this.props.history.location.user.donationOrgId !== null){
+    else if(this.props.history.location.user.donationOrgId !== undefined && this.props.history.location.user.donationOrgId !== null){
       donationUserIdPL = {
         donationOrg: {
           donationOrgId: this.props.history.location.user.donationOrgId
         }
       }
     }
+    console.log(donationUserIdPL)
 
     let paymentUserPayload = {
       amount: Math.round(Number(this.props.history.location.user.contribution) - (Number(this.props.history.location.user.contribution)*Number(this.state.processingFee))),
@@ -117,9 +119,19 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
         axios.post('http://localhost:7070/payment/orders', paymentPayload)
         .then(response => {
           console.log(response)
-          window.open(response.data.webLink,"width=200,height=200")         
+          if(response.data==="api.juspay.in"){
+            window.alert("Facing network issue. Please contact admin.")
+          }       
+          else{
+            window.open(response.data.webLink,"width=200,height=200")  
+          }
           this.props.history.push("/index");
-        });
+        })
+        .catch(error=>{
+          if(error.message==="api.juspay.in"){
+            window.alert("Facing network issue. Please contact admin.")
+          }
+        })
     })
   }
 

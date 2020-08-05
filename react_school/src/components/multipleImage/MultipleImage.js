@@ -9,8 +9,20 @@ class MultipleImage extends Component {
         images:null
     }
 
+    componentDidMount(){
+      console.log("Props",this.props,this.props.images)
+      if(this.props.images !== undefined && this.props.images.length > 0){
+        this.setState({
+          images:this.props.images
+        })
+      }
+      else if(this.props.rawImages !== undefined && this.props.rawImages.length > 0){
+        this.setState({images:this.props.rawImages})
+      }
+    }
+
     componentWillReceiveProps(){
-      // console.log("Props",this.props)
+      console.log("Props",this.props,this.props.images)
       if(this.props.images !== undefined && this.props.images.length > 0){
         this.setState({
           images:this.props.images

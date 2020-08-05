@@ -9,6 +9,17 @@ class MultipleImage extends Component {
         images:null
     }
 
+    componentDidMount(){
+      if(this.props.images !== undefined && this.props.images.length > 0){
+        this.setState({
+          images:this.props.images
+        })
+      }
+      else if(this.props.rawImages !== undefined && this.props.rawImages.length > 0){
+        this.setState({images:this.props.rawImages})
+      }
+    }
+
     componentWillReceiveProps(){
       // console.log("Props",this.props)
       if(this.props.images !== undefined && this.props.images.length > 0){
@@ -77,7 +88,7 @@ class MultipleImage extends Component {
               </div>
             );
           }
-          console.log(this.props)
+          console.log("state",this.state)
         return (
             <div className="page_container">
                 <div className="wrap">
@@ -90,7 +101,7 @@ class MultipleImage extends Component {
                                         transform: `translateX(${this.state.translateValue}px)`,
                                         transition: 'transform ease-out 0.45s'
                                     }}>
-                                     {this.props.images!==undefined ?this.props.images.map((value, index) =>
+                                    {this.props.images!==undefined ?this.props.images.map((value, index) =>
                                         <Slide key={index} image={'data:image/png;base64,'+value.image} />
                                     ):null}
                                     {this.props.rawImages!==undefined ?this.props.rawImages.map((value, index) =>

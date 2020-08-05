@@ -34,23 +34,27 @@ public class PaymentController {
 	 * @throws APIException
 	 */
 	@PostMapping("/orders")
-	public ResponseEntity<PaymentModel> getPayment(@RequestBody RequestModel paymentModel)
+	public ResponseEntity<?> getPayment(@RequestBody RequestModel paymentModel)
 			throws ClientProtocolException, IOException, APIException, APIConnectionException, AuthorizationException,
 			AuthenticationException, InvalidRequestException {
+		try {
+			JuspayEnvironment.withBaseUrl(JuspayEnvironment.PRODUCTION_BASE_URL);
+			JuspayEnvironment.withApiKey("7DB806EF81748BD83BFB59A07AEA03").withMerchantId("PUTR_TEST");
 
-		JuspayEnvironment.withBaseUrl(JuspayEnvironment.PRODUCTION_BASE_URL);
-		JuspayEnvironment.withApiKey("7DB806EF81748BD83BFB59A07AEA03").withMerchantId("PUTR_TEST");
+			Map<String, Object> params = new LinkedHashMap<String, Object>();
+			params.put("order_id", paymentModel.getOrder_id());
+			params.put("amount", paymentModel.getAmount());
+			RequestOptions requestOptions = RequestOptions.createDefault().withApiVersion("2018-07-01");
+			Order order = Order.create(params, requestOptions);
+			PaymentModel payModel = new PaymentModel();
+			payModel.setWebLink(order.getPaymentLinks().getWebLink());
+			payModel.setOrderID(order.getOrderId());
+			return ResponseEntity.ok().body(payModel);
+		}
+		catch (Exception e){
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 
-		Map<String, Object> params = new LinkedHashMap<String, Object>();
-		params.put("order_id", paymentModel.getOrder_id());
-		params.put("amount", paymentModel.getAmount());
-		RequestOptions requestOptions = RequestOptions.createDefault().withApiVersion("2018-07-01");
-		Order order = Order.create(params, requestOptions);
-		PaymentModel payModel = new PaymentModel();
-		payModel.setWebLink(order.getPaymentLinks().getWebLink());
-		payModel.setOrderID(order.getOrderId());
-
-		return ResponseEntity.ok().body(payModel);
 
 	}
 
