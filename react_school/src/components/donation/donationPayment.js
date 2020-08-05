@@ -86,7 +86,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
         projectId: this.props.history.location.user.projectId,
         estimate: this.props.history.location.user.estimate,
         collectedAmount: finalCollectedAmount,
-        status:'PROJECT_COMPLETED',
+        // status:'PROJECT_COMPLETED',
         adjustableAmount:Number(this.props.history.location.user.contribution)*Number(this.state.processingFee),
         isSchoolReadyForAllotment:"Y"
       }
@@ -95,8 +95,8 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
       projectUpdatePayload={
           projectId: this.props.history.location.user.projectId,
           estimate: this.props.history.location.user.estimate,
-          collectedAmount: finalCollectedAmount,
-          status:'PROJECT_INCOMPLETED'
+          collectedAmount: finalCollectedAmount
+          // status:'PROJECT_INCOMPLETED'
       }
     }
     else{
@@ -104,7 +104,7 @@ var finalCollectedAmount = Number(Math.round(Number(this.props.history.location.
           projectId: this.props.history.location.user.projectId,
           estimate: this.props.history.location.user.estimate,
           collectedAmount: finalCollectedAmount,
-          status:'PROJECT_COMPLETED'
+          // status:'PROJECT_COMPLETED'
       }
     }
     let orderIdPayload={
