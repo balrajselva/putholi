@@ -138,7 +138,7 @@ class viewRequirements extends Component {
                 resp[i].quotaionList=[]
             };
             this.setState({
-                requirements:resp,
+                requirements:resp.filter(r=>r.status!=="PROJECT_CLOSED"),
                 getRequirementList:false,
                 spinner:false
             })
@@ -193,6 +193,9 @@ class viewRequirements extends Component {
         var rows=[];
         let rowsUpdated=false;
         for(let i=0;i<this.state.requirements.length;i++){
+            if(this.state.requirements[i].status==="PROJECT_CLOSED"){
+                continue
+            }
             rowsUpdated=true;
             rows.push(<tr>
                 <td>{i+1}</td>
