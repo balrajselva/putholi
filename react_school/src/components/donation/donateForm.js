@@ -374,6 +374,19 @@ class DonationForm extends Component {
   }
 
   validateOrg=(data)=>{
+    let contributionError = "";
+    if (data.get('contribution').length === 0) {
+      contributionError = "Please enter Contribution Amount";
+    }
+    if (!(Number(data.get('yourContribution')) >= Number(data.get('contribution')))) {
+      contributionError = `Your Contribution Amount not more than ${data.get('yourContribution')}`;
+    }
+    if (contributionError) {
+      this.setState({
+        contributionError,
+      });
+      return false;
+    }
     if(this.state.isOrgClicked === "1"){
       if (data.get('orgLoginEmail').length === 0) {
         this.setState({orgError:"Please enter Email"})
@@ -453,6 +466,7 @@ class DonationForm extends Component {
   }
 
   calculateContribution() {
+    console.log(this.props.history.location.state.state[0].projects[0])
     return this.props.history.location.state.state[0].projects[0].estimate - this.props.history.location.state.state[0].projects[0].collectedAmount
   }
 
@@ -570,7 +584,7 @@ class DonationForm extends Component {
                       <div className="control-group">
                         <label className="control-label" for="disabledInput">Collected Amount</label>
                         <div className="controls">
-                          <input readOnly className="input disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount} disabled=""></input>
+                          <input readOnly className="input disabled" id="disabledInput" name="collectedAmount" type="text" placeholder={this.props.history.location.state.state[0].projects[0].collectedAmount!==null?this.props.history.location.state.state[0].projects[0].collectedAmount:0} disabled=""></input>
                         </div>
                       </div>
                       <div className="control-group">
@@ -689,11 +703,6 @@ class DonationForm extends Component {
                           <input type="radio" class="bn3" name="orgNotReg" value="2" style={{marginTop:"-3px"}} checked={this.state.isOrgClicked === "2"} onClick={e => this.registeredOrgEvent(e.target.value)} /> No
                           
                           <div style={{ display: this.state.isRegisteredOrg }}>
-                        <div id="onebn">
-                          <div style={{ fontSize: 12, color: "red" }}  >
-                            {this.state.orgError}
-                          </div>
-                          </div>
                           <div className="control-group">
                           <label className="control-label" for="inputSuccess">Email </label>
                           <div className="controls">

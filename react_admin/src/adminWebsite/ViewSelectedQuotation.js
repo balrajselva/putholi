@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import axios from 'axios'
 import '../adminWebsite/css/sliderImage.css';
+import MultipleImage from '../adminWebsite/components/multipleImage/MultipleImage'
 
 class ViewSelectedQuotation extends Component {
     state={
@@ -132,10 +133,21 @@ class ViewSelectedQuotation extends Component {
             document.getElementById("adminComments").setAttribute("disabled",true);
             document.getElementById("approverComments").setAttribute("disabled",true);
         }
+        let project=null;
+        for(let i=0;i<this.props.location.school.projects.length;i++){
+            if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+              project=this.props.location.school.projects[i];
+              break;
+            }
+          }
+          if(project === null){
+            return
+          }
         this.setState({
-            adminComments:this.props.location.school.projects[0].adminComments,
-            approverComments:this.props.location.school.projects[0].approverComments,
-            reviewerComments:this.props.location.school.projects[0].reviewerComments,
+            adminComments:project.adminComments,
+            approverComments:project.approverComments,
+            reviewerComments:project.reviewerComments,
+            estimate:project.estimate
         })
     }
 
@@ -207,6 +219,7 @@ class ViewSelectedQuotation extends Component {
     viewPreImages=(e)=>{
         let reqId=e.target.id;
         let temp= this.state.reqList[reqId].filter( req => req.quotationStatus === "QUOTATION_ACCEPTED" )
+        console.log(temp)
         this.setState({
             preImages:temp[0].requirement.preImages
         })
@@ -215,14 +228,24 @@ class ViewSelectedQuotation extends Component {
     getContent=()=>{
         var content=[];
         let updated=false;
-        for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
+        let project=null;
+        for(let i=0;i<this.props.location.school.projects.length;i++){
+            if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+              project=this.props.location.school.projects[i];
+              break;
+            }
+          }
+          if(project === null){
+            return
+          }
+        for(let i=0;i<project.requirements.length;i++){
             updated=true;
-            let iter=this.props.location.school.projects[0].requirements[i].requirementId;
+            let iter=project.requirements[i].requirementId;
             content.push(
                 <div>
                 <section className="content-header">
                     <h4>
-                    Requirement:{this.props.location.school.projects[0].requirements[i].assetName}
+                    Requirement:{project.requirements[i].assetName}
                     </h4>
                    
                     <button id={iter} type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default1" onClick={(e)=>this.viewOtherQuotations(e)}>View Other Quotations</button>&nbsp;&nbsp;
@@ -264,7 +287,7 @@ class ViewSelectedQuotation extends Component {
                                     <th><b>Total amount</b></th>
                                     <th><b>Warranty</b></th>
                                     </tr>
-                                    {this.props.location.school.projects[0].requirements[i].requirementId!==null?this.createTable(iter):null}
+                                    {project.requirements[i].requirementId!==null?this.createTable(iter):null}
                                     </tbody>
                                 </table>
                             </div>                            
@@ -367,7 +390,7 @@ class ViewSelectedQuotation extends Component {
                         <h4>  Total Amount : </h4>
                     </div>
                     <div className="form-group has-feedback col-md-6">
-                        <input type="input" className="form-control" id="country" value={this.props.location.school.projects[0].estimate} onChange={this.handleChange} disabled/>
+                        <input type="input" className="form-control" id="country" value={this.state.estimate} onChange={this.handleChange} disabled/>
                     </div>
                 </div>
 
@@ -432,29 +455,8 @@ class ViewSelectedQuotation extends Component {
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <div className="page_container">
-                                    <div className="wrap">
-                                    <div className="container">
-                                    <div className="row pad25">
-                                        <div className="span4">
-                                    <div className="slider">
-                                        <div className="slider-wrapper"
-                                        style={{
-                                            transform: `translateX(${this.state.translateValue}px)`,
-                                            transition: 'transform ease-out 0.45s'
-                                        }}>
-                                        {this.state.preImages!==null?this.state.preImages.map((value, index) =>
-                                            <Slide key={index} image={'data:image/png;base64,'+value.image} />
-                                        ):null}
-                                        </div>
-                                        <LeftArrow
-                                        goToPrevSlide={this.goToPrevSlide}
-                                        />
-
-                                        <RightArrow
-                                        goToNextSlide={this.goToNextSlide1}
-                                        />
-                                    </div></div></div></div></div></div>                                     </section>
+                                    {this.state.preImages!==null?<MultipleImage images={this.state.preImages}/>:null}
+                               </section>
                             </div>
                         </div>
                       </div>    
@@ -493,11 +495,6 @@ class ViewSelectedQuotation extends Component {
                             goToNextSlide={this.goToNextSlide}
                             />
                         </div></div></div></div></div></div>
-                            <div className="row">
-                                <section className="content">
-                                <img src={'data:image/png;base64,'+this.state.preimage} id ="image1" alt="" ></img>
-                                </section>
-                            </div>
                         </div>
                       </div>    
                     </div>

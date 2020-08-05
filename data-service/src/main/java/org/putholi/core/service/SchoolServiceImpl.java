@@ -218,14 +218,41 @@ public class SchoolServiceImpl implements SchoolService {
 			for (SchoolImage schoolImage : schoolTemp.getSchoolImages()) {
 				schoolImage.setImage(getImgFromFS(schoolImage.getFilePath()));
 			}
+
+			//Remove closed projects from the school
+			Set<Project> project = new HashSet<>();
+			for(Project projectTemp:schoolTemp.getProjects()){
+				if(projectTemp.getStatus().equals(PuthuyirLookUp.PROJECT_CLOSED)){
+					continue;
+				}
+				else{
+					project.add(projectTemp);
+					schoolTemp.setProjects(project);
+					break;
+				}
+			}
+
 		});
+
 		return schools;
 	}
 
-	private School getImageForSchool(School schools){
-		for (SchoolImage schoolImage : schools.getSchoolImages()) {
+	private School getImageForSchool(School school){
+		for (SchoolImage schoolImage : school.getSchoolImages()) {
 			schoolImage.setImage(getImgFromFS(schoolImage.getFilePath()));
 		}
-		return schools;
+		//Remove closed projects from the school
+		Set<Project> project = new HashSet<>();
+		for(Project projectTemp:school.getProjects()){
+			if(projectTemp.getStatus().equals(PuthuyirLookUp.PROJECT_CLOSED)){
+				continue;
+			}
+			else{
+				project.add(projectTemp);
+				school.setProjects(project);
+				break;
+			}
+		}
+		return school;
 	}
 }

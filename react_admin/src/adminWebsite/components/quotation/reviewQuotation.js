@@ -242,16 +242,26 @@ class reviewQuotation extends Component {
     getContent=()=>{
         var content=[];
         let updated=false;
-        for(let i=0;i<this.props.location.school.projects[0].requirements.length;i++){
+        let project=null;
+        for(let i=0;i<this.props.location.school.projects.length;i++){
+            if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+              project=this.props.location.school.projects[i];
+              break;
+            }
+          }
+          if(project === null){
+            return
+          }
+        for(let i=0;i<project.requirements.length;i++){
             updated=true;
-            let iter=this.props.location.school.projects[0].requirements[i].requirementId;
+            let iter=project.requirements[i].requirementId;
             content.push(
                 <div>
                 <section className="content-header">
                     <h4>
-                    {this.props.location.school.projects[0].requirements[i].assetName}
+                    {project.requirements[i].assetName}
                     </h4>
-                    <button  id={this.props.location.school.projects[0].requirements[i].requirementId} type="button" class="btn btn-default" onClick={(e)=>this.viewPreImage(e)}>View Preimages</button>  
+                    <button  id={project.requirements[i].requirementId} type="button" class="btn btn-default" onClick={(e)=>this.viewPreImage(e)}>View Preimages</button>  
                     </section>
                     <section className="content">
                         <div className="row">
@@ -287,7 +297,7 @@ class reviewQuotation extends Component {
                                     <th><b>Total amount</b></th>
                                     <th><b>Warranty</b></th>
                                     </tr>
-                                    {this.props.location.school.projects[0].requirements[i].requirementId!==null?this.createTable(iter):null}
+                                    {project.requirements[i].requirementId!==null?this.createTable(iter):null}
                                     </tbody>
                                 </table>
                             </div>                            
