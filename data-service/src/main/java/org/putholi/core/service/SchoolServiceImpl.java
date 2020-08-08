@@ -126,6 +126,7 @@ public class SchoolServiceImpl implements SchoolService {
 			files.forEach((k,v) -> {
 				Set<DEOfile> siSet = new HashSet<DEOfile>();
 				String filePath = fileSubPath+ deoInfo.getDeoInfoId()+"_";
+				this.saveImgToFS(imgPath, fileSubPath, v, filePath + k);
 				DEOfile si = new DEOfile(v);
 				si.setDeoInfo(deoInfo);
 				siSet.add(si);
@@ -179,6 +180,11 @@ public class SchoolServiceImpl implements SchoolService {
 		schoolRepository.save(schoolFromDB);
 		schoolRepository.updateSchoolStatus(schoolFromDB.getSchoolId(),PuthuyirLookUp.SCHOOL_REGISTERED.name());
 		return schoolFromDB.getSchoolId();
+	}
+
+	@Override
+	public DEOInfo getDeoResponse(long projectId) {
+		return getDEOFileForSchool(deoRepository.findBySchoolId(projectId));
 	}
 
 	@Override
@@ -254,5 +260,12 @@ public class SchoolServiceImpl implements SchoolService {
 			}
 		}
 		return school;
+	}
+
+	private DEOInfo getDEOFileForSchool(DEOInfo deoInfo){
+		for (DEOfile deofile: deoInfo.getDeoFile()) {
+			deofile.setImage(getImgFromFS(deofile.getCreatedBy()));
+		}
+		return deoInfo;
 	}
 }

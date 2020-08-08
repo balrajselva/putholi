@@ -54,34 +54,34 @@ selectInvoiceImage=(e)=>{
   document.getElementById('modal-default').style.display='block';
 }
 
-onSubmit=(e)=>{
-  e.preventDefault();
-  let newStatus = "ReviewerApprovedInvoice";
-  if(e.target.id==="Reject"){
-      newStatus="ReviewerRejectedInvoice"
-  }
-  this.setState({
-    spinner:true
-  })
-    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
-    .then(res=>{
-      this.setState({
-        spinner:false
-      })
-      window.alert("Status updated successfully!");
-      this.props.history.push({
-              pathname:"/reviewer",
-              currentUser:this.props.location.currentUser,
-              ...this.props
-      })
-    })
-    .catch(error=>{
-        this.setState({
-            spinner:false
-        })
-        window.alert("File upload failed due to "+error)
-    })
-}
+// onSubmit=(e)=>{
+//   e.preventDefault();
+//   let newStatus = "ReviewerApprovedInvoice";
+//   if(e.target.id==="Reject"){
+//       newStatus="ReviewerRejectedInvoice"
+//   }
+//   this.setState({
+//     spinner:true
+//   })
+//     axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+//     .then(res=>{
+//       this.setState({
+//         spinner:false
+//       })
+//       window.alert("Status updated successfully!");
+//       this.props.history.push({
+//               pathname:"/reviewerInvoiceCheck",
+//               currentUser:this.props.location.currentUser,
+//               ...this.props
+//       })
+//     })
+//     .catch(error=>{
+//         this.setState({
+//             spinner:false
+//         })
+//         window.alert("File upload failed due to "+error)
+//     })
+// }
 
 createTable=()=>{
   var rows=[];
@@ -261,13 +261,13 @@ render() {
                       {this.state.spinner?<div class="spinner"></div>:null}
                   </div>
                 </div>
-                <div className="timeline-footer">
+                {/* <div className="timeline-footer">
                  <button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Confirm</button>
                  <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                
-                </div>
+                </div> */}
             </div>
           </div>
         </section>

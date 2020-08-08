@@ -48,6 +48,15 @@ class reviewerPendingWorkflow extends Component {
                     ...this.props
                 };
             }
+            if(this.state.schools[i].schoolStatus==="ADMIN_DEO_APPROVED"){
+                pageLink="Review DEO response"
+                newTo = { 
+                    pathname: "/reviewerReviewDEO", 
+                    school:this.state.schools[i],
+                    currentUser:this.props.location.currentUser,
+                    ...this.props
+                };
+            }
             // if(this.state.schools[i].schoolStatus==="InvoiceReviewed"){
             //     pageLink="Review Fund Disbursement";
             //     newTo = { 

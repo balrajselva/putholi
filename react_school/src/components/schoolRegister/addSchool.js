@@ -335,7 +335,7 @@ class AddSchool extends Component {
              errorMessage:"Please add atleast one requirement"
          });
          }
-         else if(this.state.fileInput===null){
+         else if(this.state.fileInput===[]){
             this.setState({
                 lastErrorField:"fileInput",
                 errorMessage:"Please upload School Images"
@@ -376,7 +376,7 @@ class AddSchool extends Component {
          requirements:this.state.reqList,
          user:this.props.location.user
       }
-      console.log(schoolDetails);
+      console.log(schoolDetails,this.state.fileInput);
       var regFormModel=new FormData();
       regFormModel.set('payload',JSON.stringify(schoolDetails));
       this.state.fileInput.forEach(file=>{
@@ -398,6 +398,7 @@ class AddSchool extends Component {
    }
 
     render() {
+       console.log(this.state.localImageUrl)
          return (
 <div className="container">
    <section>
@@ -671,8 +672,7 @@ class AddSchool extends Component {
                                     </div>
                                     {this.state.localImageUrl.length>0?<div style={{marginLeft:"10px"}}><b>Identity proof preview :</b></div>:null}
                                     {this.state.localImageUrl.length>0?
-               <MultipleImage rawImages={this.state.localImageUrl}/>
-                :null}                                 </div>
+                                       <MultipleImage rawImages={this.state.localImageUrl}/>:null}                                 </div>
                               </div>
                            </div>
                         </div>

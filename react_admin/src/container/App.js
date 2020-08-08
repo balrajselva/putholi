@@ -49,6 +49,7 @@ import UploadReceipt from '../adminWebsite/components/receipt/UploadReceipt';
 import ReviewReceipts from '../adminWebsite/components/receipt/ReviewReceipts';
 import NewUserLoginConfirmation from '../adminWebsite/NewUserLoginConfirmation';
 import RejectedUser from '../adminWebsite/RejectedUser';
+import ReviewDeoResponse from '../adminWebsite/ReviewDeoResponse';
 
 class App extends Component {
   state = {
@@ -192,6 +193,7 @@ class App extends Component {
             <ReviewerLayoutRoute path="/reviewerRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute path="/reviewerApproveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
             <ReviewerLayoutRoute path="/reviewerAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
+            <ReviewerLayoutRoute path="/reviewerReviewDEO" history={history} component={(props)=><ReviewDeoResponse {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverAccessReview" history={history} component={(props)=><AdminAccessReview {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverReviewQuotation" component={(props)=><ViewSelectedQuotation {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverSchoolCheck" history={history} component={(props)=><AdminSchoolCheck {...props} config={this.state.config}/>}/>

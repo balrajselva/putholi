@@ -185,6 +185,10 @@ createTable=()=>{
   let invCount = 0;
   let receiptsCount =0;
 
+  if(this.state.invoiceList.length === 0){
+    rows.push(<tr ><td align="center" colSpan="5">Paid invoices are not there!</td></tr>);
+    return rows;
+  }
   for(let i=0;i<this.state.requirements.length;i++){
     var reqId=this.state.requirements[i].requirementId;
     // filter will always return a list

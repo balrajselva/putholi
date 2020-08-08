@@ -10,6 +10,7 @@ class MultipleImage extends Component {
     }
 
     componentDidMount(){
+      console.log("Props",this.props,this.props.images)
       if(this.props.images !== undefined && this.props.images.length > 0){
         this.setState({
           images:this.props.images
@@ -20,14 +21,20 @@ class MultipleImage extends Component {
       }
     }
 
-    componentWillReceiveProps(){
-      // console.log("Props",this.props)
+    componentDidUpdate(){
+      console.log("Props",this.props,this.props.images)
       if(this.props.images !== undefined && this.props.images.length > 0){
+        if(this.props.images === this.state.images){
+          return
+        }
         this.setState({
           images:this.props.images
         })
       }
       else if(this.props.rawImages !== undefined && this.props.rawImages.length > 0){
+        if(this.props.rawImages === this.state.images){
+          return
+        }
         this.setState({images:this.props.rawImages})
       }
     }
@@ -91,6 +98,7 @@ class MultipleImage extends Component {
           console.log("state",this.state)
         return (
             <div className="page_container">
+                {this.state.images !==null ?<div><b>No. of images : {this.state.images.length}</b><br/><br/></div>:null}
                 <div className="wrap">
                     <div className="container">
                         <div className="row pad25">

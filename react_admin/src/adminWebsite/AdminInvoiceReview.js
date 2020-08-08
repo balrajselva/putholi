@@ -81,44 +81,44 @@ selectInvoiceImage=(e)=>{
     document.getElementById('modal-default').style.display='block';
 }
 
-onSubmit=(e)=>{
-  e.preventDefault();
-  let newStatus = "Work_In_Progress";
-  if(e.target.id==="Reject"){
-      newStatus="InvoiceRejected"
-  }
-  this.setState({
-    spinner:true
-  })
-    axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
-    .then(res=>{
-      this.setState({
-        spinner:false
-      })
-      let params ={
-        fundMasterList:this.state.fund,
-        invoiceList:this.state.invoiceList
-      }
-      axios.post(this.props.config+"/invoice/updateFund",params)
-      .then(res=>{
-        window.alert("Status updated successfully!");
-        this.props.history.push({
-                pathname:"/adminPendingWorkflow",
-                currentUser:this.props.location.currentUser,
-                ...this.props
-        })
-        .catch(error=>{
-          window.alert("Updation failed due to "+error)
-        })
-      })
-    })
-    .catch(error=>{
-        this.setState({
-            spinner:false
-        })
-        window.alert("File upload failed due to "+error)
-    })
-}
+// onSubmit=(e)=>{
+//   e.preventDefault();
+//   let newStatus = "Work_In_Progress";
+//   if(e.target.id==="Reject"){
+//       newStatus="InvoiceRejected"
+//   }
+//   this.setState({
+//     spinner:true
+//   })
+//     axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/"+newStatus)
+//     .then(res=>{
+//       this.setState({
+//         spinner:false
+//       })
+//       let params ={
+//         fundMasterList:this.state.fund,
+//         invoiceList:this.state.invoiceList
+//       }
+//       axios.post(this.props.config+"/invoice/updateFund",params)
+//       .then(res=>{
+//         window.alert("Status updated successfully!");
+//         this.props.history.push({
+//                 pathname:"/adminPendingWorkflow",
+//                 currentUser:this.props.location.currentUser,
+//                 ...this.props
+//         })
+//         .catch(error=>{
+//           window.alert("Updation failed due to "+error)
+//         })
+//       })
+//     })
+//     .catch(error=>{
+//         this.setState({
+//             spinner:false
+//         })
+//         window.alert("File upload failed due to "+error)
+//     })
+// }
 
 createTable=()=>{
   var rows=[];
@@ -289,13 +289,13 @@ render() {
                       {this.state.spinner?<div class="spinner"></div>:null}
                   </div>
                 </div>
-                <div className="timeline-footer">
+                {/* <div className="timeline-footer">
                 &nbsp;<button type="button" className="btn btn-primary" id="Accept" onClick={(e)=>this.onSubmit(e)}>Confirm</button>&nbsp;&nbsp;
                  <button type="button" className="btn btn-primary" id="Reject" onClick={(e)=>this.onSubmit(e)}>Reject</button>&nbsp;&nbsp;
                   <Link to={schoolList}>
                     <button type="button" className="btn btn-primary">Back</button>
                   </Link>                
-                </div>
+                </div> */}
             </div>
           </div>
         </section>

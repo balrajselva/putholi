@@ -135,7 +135,10 @@ class ViewSelectedQuotation extends Component {
         }
         let project=null;
         for(let i=0;i<this.props.location.school.projects.length;i++){
-            if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+            if(this.props.location.school.projects[i].status==="PROJECT_CLOSED"){
+                continue;
+            }
+            else{
               project=this.props.location.school.projects[i];
               break;
             }

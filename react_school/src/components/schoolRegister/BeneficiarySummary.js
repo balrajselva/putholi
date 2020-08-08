@@ -31,7 +31,7 @@ class BeneficiarySummary extends Component {
             nextPage="editRequirements"
             pageLink="Edit Requirement"
         }
-        else if(this.state.schools[i].schoolStatus==="ProjectClosed"){
+        else if(this.state.schools[i].schoolStatus==="OPEN_FOR_REQUIREMENTS"){
             nextPage="addRequirements"
             pageLink="Add Requirement"
         }
