@@ -33,4 +33,6 @@ public interface SchoolService {
 	School updateSchoolStatusAndVolunteerId(long id,Long volunteerId, String status);
 
     long addRequirement(School school);
+
+	DEOInfo getDeoResponse(long projectId);
 }

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import './reviewQuotation.css'
 import axios from 'axios'
 import imageCss from '../../css/imageCss.css';
+import MultipleImage from '../multipleImage/MultipleImage';
 
 class reviewQuotation extends Component {
     state={
@@ -406,7 +407,6 @@ class reviewQuotation extends Component {
                                                     <td><textarea className="input-xlarge" ref ="comment" id="approverComments" value={this.state.approverComments} rows="3" disabled></textarea></td>
                                                 </tr>
                                             </tbody></table>
-                                            {this.state.errorMessage!=null?<div className="errorMessage" style={{color:"Red",textAlign:"center"}}>{this.state.errorMessage}</div>:null}
                                         </div>
                                         </div>
 										</div>
@@ -450,29 +450,7 @@ class reviewQuotation extends Component {
                             <div className="modal-body">
                             <div className="row">
                                 <section className="content">
-                                <div className="page_container">
-                                    <div className="wrap">
-                                    <div className="container">
-                                    <div className="row pad25">
-                                        <div className="span8">
-                                    <div className="slider">
-                                        <div className="slider-wrapper"
-                                        style={{
-                                            transform: `translateX(${this.state.translateValue}px)`,
-                                            transition: 'transform ease-out 0.45s'
-                                        }}>
-                                        {this.state.preImages!==null?this.state.preImages.map((value, index) =>
-                                            <Slide key={index} image={'data:image/png;base64,'+value.image} />
-                                        ):null}
-                                        </div>
-                                        <LeftArrow
-                                        goToPrevSlide={this.goToPrevSlide}
-                                        />
-
-                                        <RightArrow
-                                        goToNextSlide={this.goToNextSlide}
-                                        />
-                                    </div></div></div></div></div></div>
+                                {this.state.preImages!==null?<MultipleImage images={this.state.preImages}/>:null}
                                 </section>
                             </div>
                         </div>

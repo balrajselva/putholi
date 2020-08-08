@@ -73,17 +73,20 @@ class EmailDEOTrigger extends Component {
                     </div>
                     <form onSubmit={this.submitClicked} className="form-horizontal">
                         <div className="box-body">
-                            <div className="form-group">
+                        <div className="row col-md-9">
+                            <div className="form-group col-md-9">
                                 <input className="form-control" type="text" placeholder="To:" name="toAddress" value={this.state.toAddress}></input>
                             </div>
-                            <div className="form-group">
+                            </div>
+                            <div className="row col-md-9">
+                            <div className="form-group col-md-9">
                                 <input className="form-control" placeholder="Subject:" name="subject" value={this.state.subject}></input>
                             </div>
-                            <div className="form-group">
-
+                            </div>
+                            <div className="row col-md-9">
+                            <div className="form-group col-md-9">
                                 <div className="tab-content">
-                                    <div className="span4"><strong>School Name </strong>: {this.props.location.school.schoolInfo.schoolName}</div>
-
+                                    <div className="span4"><strong> School Name </strong>: {this.props.location.school.schoolInfo.schoolName}</div><br/>
                                     <table className="table table-bordered table-striped">
                                         <thead>
                                             <tr>
@@ -108,6 +111,7 @@ class EmailDEOTrigger extends Component {
                                         </tbody>
                                     </table>
                                 </div>
+                                </div>
                             </div>
                             {/* <div className="form-group">
                                 <div className="btn btn-default btn-file">
@@ -117,7 +121,6 @@ class EmailDEOTrigger extends Component {
                                 <p className="help-block">Max. 32MB</p>
                             </div> */}
                         </div>
-                        <img src={this.state.imageURL} alt="img" />
                         <div className="box-footer">
                             <div className="pull-right">
                                 <button type="submit" className="btn btn-primary"><i className="fa fa-envelope-o"></i> Send</button>

@@ -173,6 +173,11 @@ public class SchoolController {
         return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
     }
 
+	@GetMapping("/getDeoResponse/{projectId}")
+	public ResponseEntity<DEOInfo> getDeoResponse(@PathVariable("projectId") long projectId) {
+		return ResponseEntity.ok().body(schoolService.getDeoResponse(projectId));
+	}
+
 	@PostMapping("/school/assignSchool/{schoolId}/{userId}")
 	@Transactional
 	public ResponseEntity<?> assignSchool(@PathVariable("schoolId") long schoolId,@PathVariable("userId") long userId) {

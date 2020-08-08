@@ -91,7 +91,7 @@ onSubmit=(e)=>{
     })
     axios.put(this.props.config+"/updateSchool/"+this.props.location.school.schoolId+"/OPEN_FOR_REQUIREMENTS")
     .then(res=>{
-      axios.post(this.props.config+"/project/updateStatus/"+this.props.location.school.projects[0].projectId+"/PROJECT_CLOSED")
+      axios.post(this.props.config+"/project/updateStatus/"+this.props.location.school.projects[0].projectId+"/PROJECT_COMPLETED")
       .then(res=>{
         this.setState({
           spinner:false

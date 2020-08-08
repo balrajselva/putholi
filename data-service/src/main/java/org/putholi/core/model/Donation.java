@@ -32,7 +32,7 @@ public class Donation extends AuditableEntity implements java.io.Serializable {
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "donation_userid")
 	private DonationUser donationUser;
 

@@ -74,8 +74,8 @@ class Menu extends Component {
                         </span>
         </a> */ }
                       <ul className="treeview-menu ">
-                        <li><Link to={accessReview}><i className="fa fa-circle-o" /> Access Reviews</Link></li>
-                        <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i> School's New requirements </Link></li>
+                        <li><Link to={accessReview}><i className="fa fa-circle-o" />Access Reviews</Link></li>
+                        <li><Link to={adminNewSchoolReview}><i class="fa fa-circle-o"></i>School's New requirements </Link></li>
                         {/* <li><a href="admin_maintainence_school_request_list.html"><i className="fa fa-circle-o" /> School's Maintainence requests </a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Users and Roles</a></li>
                         <li><a href="#"><i className="fa fa-circle-o" /> Manage Events</a></li> */}
@@ -101,6 +101,7 @@ class Menu extends Component {
                           <i className="fa fa-angle-left pull-right" />
                         </span>
                       </a>
+                      
                       <ul className="treeview-menu">
                         <li><a href="admin_invoice_upload.html"><i className="fa fa-circle-o" />Upload Invoice</a></li>
                         <li><a href="#"><i className="fa fa-circle-o" />Manage Vendors</a></li>

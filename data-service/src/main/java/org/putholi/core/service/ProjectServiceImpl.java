@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Project project = new Project();
 		if (projectBeforeUpdate.isPresent()) {
 			projectBeforeUpdate.get().setEstimate(estimate);
-			projectBeforeUpdate.get().setStatus(status);
+//			projectBeforeUpdate.get().setStatus(status);
 			projectBeforeUpdate.get().setCollectedAmount(collectedAmount);
 			project = projectBeforeUpdate.get();
 		}
