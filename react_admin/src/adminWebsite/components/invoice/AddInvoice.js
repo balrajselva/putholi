@@ -229,7 +229,7 @@ class AddInvoice extends Component {
             if(this.state.quotations[i].requirement.invoiceStatus === "INVOICE_REJECTED"){
                 let rejectedInv = this.state.oldInvoices.map(inv=>inv.requirement.requirementId === this.state.quotations[i].requirementId ? inv : null)
                 console.log(rejectedInv)
-                if(rejectedInv.length >0 && rejectedInv[0].invoiceStatus !== "AdminRejectedInvoice"){
+                if(rejectedInv.length >0 && rejectedInv[0] !==null && rejectedInv[0].invoiceStatus !== "AdminRejectedInvoice"){
                     continue
                 }
             }	
@@ -752,7 +752,7 @@ class AddInvoice extends Component {
                                             <div className="box box-primary">
                                                 <form role="form">
                                                     <div className="form-group">
-                                                    <label for="postImage" className="form-control" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>Upload Post Image</label>
+                                                    <label for="postImage" className="form-control" style={{cursor:"pointer",border:"1px solid #d2d6de"}}>Upload atleast 2 Post Images</label>
                                                     <input class="hidden" type="file" id="postImage" onChange={this.handleChange}/>
                                                     <input type="date" className="form-control" id="invoiceDate" placeholder="Invoice Date" onChange={this.handleChange}/>
                                                     </div>

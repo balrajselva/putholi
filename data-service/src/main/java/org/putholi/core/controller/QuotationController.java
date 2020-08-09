@@ -108,6 +108,13 @@ public class QuotationController {
 		return quotationList;
 	}
 
+	@PostMapping("/getQuotationsByProject/{id}")
+	public Map<Long, List<Quotation>> findByProjectIdAndReq(@PathVariable("id") String projectId) {
+		List<Quotation> quotations=quotationService.findByProjectId(Long.valueOf(projectId));
+		Map<Long,List<Quotation>> quotationList=quotations.stream().collect(Collectors.groupingBy(Quotation::getRequirementId));
+		return quotationList;
+	}
+
 	@GetMapping("/quotations/{schoolId}")
 	public List<Quotation> findBySchoolId(@PathVariable("schoolId") long schoolId) {
 		return quotationService.findBySchoolId(schoolId);

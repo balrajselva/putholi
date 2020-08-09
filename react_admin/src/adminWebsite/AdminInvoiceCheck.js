@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import imageCss from '../adminWebsite/css/imageCss.css';
+import MultipleImage from './components/multipleImage/MultipleImage';
 
 class adminInvoiceCheck extends Component {
     state={
@@ -291,6 +292,11 @@ class adminInvoiceCheck extends Component {
               adminComments:this.props.location.invoice.adminComments
             })
         }
+        let disable = parseInt(this.props.location.invoice.totalAmount)+parseInt(this.props.location.fund.totalAmountPaid!==null?this.props.location.fund.totalAmountPaid:0)<=parseInt(this.props.location.fund.allottedAmount);
+        if(disable===false){
+          document.getElementById("Accept").setAttribute("disabled",true);
+          document.getElementById('Accept').style.pointerEvents = 'none';
+        }
    }
     
     render() {
@@ -344,8 +350,7 @@ class adminInvoiceCheck extends Component {
                                     <li>Payment Status : {this.props.location.fund.fundStatus}</li>
                                     {
                                     this.props.location.currentUser.role==="Admin"?        
-                                    <li>Exceeding allotted amount : {disable?<h4>No</h4>:<h4><b>Yes</b></h4>}
-                                    {disable?null:document.getElementById("Accept").setAttribute("disabled",true)}</li>
+                                    <li>Exceeding allotted amount : {disable?<h4>No</h4>:<h4><b>Yes</b></h4>}</li>
                                     :null
                                     }
                                 </ul>
@@ -388,6 +393,7 @@ class adminInvoiceCheck extends Component {
                                 </div>
                             </div>
                             <div className="timeline-footer">
+                            <button  type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default1">Show Post Images</button>&nbsp;
                                 <a className="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default">Show Invoice</a>&nbsp;
                                 <div id="Accept" className="btn btn-primary btn-xs" onClick={(target)=>this.updateStatus(target)}>Confirm</div>&nbsp;
                                 <div id="Reject" className="btn btn-danger btn-xs" onClick={(target)=>this.updateStatus(target)}>Reject</div>&nbsp;
@@ -416,6 +422,23 @@ class adminInvoiceCheck extends Component {
                       </div>    
                     </div>
                   </div>
+                  <div className="modal fade" id="modal-default1">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <section className="content">
+                                {this.props.location.invoice.postImages!==null?<MultipleImage images={this.props.location.invoice.postImages}/>:null}
+                                </section>
+                            </div>
+                        </div>
+                      </div>    
+                    </div>
+                    </div>
                 </section>
                 {/* /.content */}
                 {this.state.spinner?<div class="spinner"></div>:null}

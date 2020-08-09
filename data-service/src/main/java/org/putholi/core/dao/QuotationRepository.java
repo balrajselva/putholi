@@ -28,4 +28,7 @@ public interface QuotationRepository extends CrudRepository<Quotation, Long> {
 
 	@Query("FROM Quotation s where s.schoolId = :schoolId and s.quotationStatus = 'QUOTATION_ACCEPTED'")
 	List<Quotation> findBySchoolIdAndStatus(@Param("schoolId") long schoolId);
+
+	@Query("FROM Quotation s where s.projectId = :projectId")
+	List<Quotation> findByProjectId(@Param("projectId")Long projectId);
 }

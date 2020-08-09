@@ -290,6 +290,25 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 	}
 
+	@Override
+	public List<Quotation> findByProjectId(Long projectId) {
+		List<Quotation> quotations = quotationRepository.findByProjectId(projectId);
+		for (Quotation quotation1 : quotations) {
+			quotation1.setRequirement(requirementRepository.findById(quotation1.getRequirementId()).get());
+			for(QuotationImage quotationImage: quotation1.getQuotationImages()){
+				if(quotationImage.getFilePath() != null) {
+					quotationImage.setImage(getImgFromFS(quotationImage.getFilePath()));
+				}
+			}
+			for(PreImage preImage: quotation1.getRequirement().getPreImages()){
+				if(preImage.getFilePath() != null) {
+					preImage.setImage(getImgFromFS(preImage.getFilePath()));
+				}
+			}
+		}
+		return quotations;
+	}
+
 	private void saveImgToFS(String dirPath, String fileSubPath, byte[] image,String filePath) {
 		String tmpDirPath = dirPath+"\\"+fileSubPath;
 		if(!Files.isDirectory(Paths.get(tmpDirPath))) {

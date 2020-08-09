@@ -34,4 +34,6 @@ public interface QuotationService {
     long save(Quotation quotation, Map<String,byte[]> filesInBytes, List<Map<String,byte[]>> preImageInBytes, String imgPath);
 
 	void rejectQuotation(UpdateQuotation updateQuotation);
+
+    List<Quotation> findByProjectId(Long projectId);
 }

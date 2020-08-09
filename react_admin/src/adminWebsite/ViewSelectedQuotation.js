@@ -20,6 +20,7 @@ class ViewSelectedQuotation extends Component {
         reviewerComments:null,
         showImage:false,
         otherQuotations:null,
+        otherQuotationImages:[],
         errorMessage:null,
         lastErrorField:null,
         preImages:[],
@@ -113,7 +114,19 @@ class ViewSelectedQuotation extends Component {
     }
     componentDidMount(){
         console.log(this.props.location.school)
-        axios.post(this.props.config+"/getQuotations/"+this.props.location.school.schoolId)
+        for(let i=0;i<this.props.location.school.projects.length;i++){
+            if(this.props.location.school.projects[i].status==="PROJECT_CLOSED"){
+                continue
+            }
+            else{
+                project=this.props.location.school.projects[i];
+                break;
+            }
+            }
+            if(project === null){
+            return
+        }
+        axios.post(this.props.config+"/getQuotationsByProject/"+project.projectId)
         .then(res=>{
             console.log(res.data);
             this.setState({
@@ -214,8 +227,11 @@ class ViewSelectedQuotation extends Component {
     viewOtherQuotations=(e)=>{
         let reqId=e.target.id;
         let temp= this.state.reqList[reqId].filter( req => req.quotationStatus === "QUOTATION_ADDED" )
+        let tempOtherQuoImages= temp.map( req => req.quotationImages[0])
+        console.log(tempOtherQuoImages)
         this.setState({
-            otherQuotations:temp
+            otherQuotations:temp,
+            otherQuotationImages:tempOtherQuoImages
         })
     }
 
@@ -478,29 +494,7 @@ class ViewSelectedQuotation extends Component {
                                 <span aria-hidden="true">×</span></button>
                             </div>
                             <div className="modal-body">
-                            <div className="page_container">
-                <div className="wrap">
-                <div className="container">
-                  <div className="row pad25">
-                    <div className="span4">
-                        <div className="slider">
-                            <div className="slider-wrapper"
-                            style={{
-                                transform: `translateX(${this.state.translateValue}px)`,
-                                transition: 'transform ease-out 0.45s'
-                            }}>
-                            {this.state.otherQuotations!==null ? this.state.otherQuotations.map((value, index) =>
-                                <Slide key={index} image={'data:image/png;base64,'+value.quotationImages[0].image} />
-                            ):null}
-                            </div>
-                            <LeftArrow
-                            goToPrevSlide={this.goToPrevSlide}
-                            />
-
-                            <RightArrow
-                            goToNextSlide={this.goToNextSlide}
-                            />
-                        </div></div></div></div></div></div>
+                            {this.state.otherQuotationImages.length>0 ?<MultipleImage images={this.state.otherQuotationImages}/>:null}
                         </div>
                       </div>    
                     </div>
