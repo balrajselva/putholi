@@ -140,7 +140,7 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	@Transactional
 	public School updateSchoolStatus(long id, String status) {
-//		schoolRepository.updateSchoolStatus(id, status);
+		schoolRepository.updateSchoolStatus(id, status);
 		School school = schoolRepository.findBySchoolId(id);
 		if(status.equals("OPEN_FOR_REQUIREMENTS")){
 			userRepository.updateUserSchoolStatus(school.getVolunteerId(), NULL);
