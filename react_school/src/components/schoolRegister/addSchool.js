@@ -335,7 +335,7 @@ class AddSchool extends Component {
              errorMessage:"Please add atleast one requirement"
          });
          }
-         else if(this.state.fileInput===[]){
+         else if(this.state.fileInput.length === 0  || this.state.fileInput===[]){
             this.setState({
                 lastErrorField:"fileInput",
                 errorMessage:"Please upload School Images"

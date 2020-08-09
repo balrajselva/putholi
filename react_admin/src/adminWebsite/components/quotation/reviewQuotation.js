@@ -210,6 +210,7 @@ class reviewQuotation extends Component {
         var rows=[];
         let rowsUpdated=false;
         let quotationList=this.state.quotationList[iter];
+        console.log(quotationList,iter)
         for(let i=0;i<quotationList.length;i++){
             let quotation=quotationList[i];
             if(quotation.quotationStatus === "ADMIN_REJECTED_QUOTATION"){
@@ -245,7 +246,7 @@ class reviewQuotation extends Component {
         let updated=false;
         let project=null;
         for(let i=0;i<this.props.location.school.projects.length;i++){
-            if(this.props.location.school.projects[i].status==="PROJECT_CREATED"){
+            if(this.props.location.school.projects[i].status==="PROJECT_CREATED" || this.props.location.school.projects[i].status==="REVIEWER_REJECTED_QUOTATION" || this.props.location.school.projects[i].status==="APPROVER_REJECTED_QUOTATION"){
               project=this.props.location.school.projects[i];
               break;
             }
