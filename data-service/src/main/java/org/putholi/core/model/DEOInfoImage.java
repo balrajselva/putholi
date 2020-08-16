@@ -2,8 +2,11 @@ package org.putholi.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -11,14 +14,15 @@ import javax.persistence.*;
 @Table(name = "deo_file")
 @Proxy(lazy = false)
 @EntityListeners(AuditingEntityListener.class)
-@Data
-public class DEOfile extends AuditableEntity implements java.io.Serializable{
+@Getter
+@Setter
+public class DEOInfoImage extends AuditableEntity{
     private static final long serialVersionUID = -2136842348977561820L;
 
-    public DEOfile(){}
+    public DEOInfoImage(){}
 
-    public DEOfile(byte[] image) {
-        this.image = image;
+    public DEOInfoImage(String filePath) {
+        this.filePath = filePath;
     }
 
     @Id
@@ -26,13 +30,15 @@ public class DEOfile extends AuditableEntity implements java.io.Serializable{
     @Column(name = "deo_file_id")
     private long deoFileId;
 
-    @Column(name = "image",nullable = false)
-    @Lob
-    @JsonIgnore
-    private byte[] image;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="deo_info_id", nullable=false)
+    @JsonIgnore
     private DEOInfo deoInfo;
 
+    @Transient
+    @Nullable
+    private byte[] image;
+
+    @Column(name = "filepath")
+    private String filePath;
 }

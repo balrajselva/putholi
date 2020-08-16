@@ -200,7 +200,8 @@ class App extends Component {
             <ApproverLayoutRoute path="/approver" component={(props)=><ApproverPendingWorkflow {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approverRoleCheck" history={history} component={(props)=><AdminRoleCheck {...props} config={this.state.config}/>}/>
             <ApproverLayoutRoute path="/approveInvoice" history={history} component={(props)=><ReviewerInvoiceReview {...props} config={this.state.config}/>}/>
-          </Switch>
+            <ReviewerLayoutRoute path="/approverReviewDEO" history={history} component={(props)=><ReviewDeoResponse {...props} config={this.state.config}/>}/>
+        </Switch>
         </Router>
         {this.state.spinner?<div class="spinner"></div>:null}
       </div>
