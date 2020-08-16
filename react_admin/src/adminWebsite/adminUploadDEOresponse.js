@@ -30,8 +30,8 @@ class adminUploadDEOresponse extends Component {
             reader.readAsDataURL(file)
         }
         else if(target.id==="approved"){
-            // this.setState({status:"ADMIN_DEO_APPROVED"});
-            this.setState({status:"DEO_APPROVED"});
+            this.setState({status:"ADMIN_DEO_APPROVED"});
+            // this.setState({status:"DEO_APPROVED"});
         }
         else if(target.id==="rejected"){
             this.setState({status:"ADMIN_DEO_REJECTED"});
@@ -163,6 +163,7 @@ class adminUploadDEOresponse extends Component {
                             </label>
                             </div>
                         </div>
+                        {this.state.spinner?<div class="spinner"></div>:null}
                         {this.state.localImageUrl?<div style={{marginLeft:"10px"}}><b>DEO response preview :</b></div>:null}
                         {this.state.localImageUrl?<img style={{marginLeft:"10px"}} width="80%" height="100%" src={this.state.localImageUrl} alt="Identity proof"/>:null}
                         {/* /.box-body */}
@@ -194,7 +195,6 @@ class adminUploadDEOresponse extends Component {
                             <button type="submit" className="btn btn-primary" onClick={(e)=>this.onSubmit(e)}>Submit</button>&nbsp;
                             <Link to={schoolList} className="btn btn-primary">Back to User List</Link>
                         </div>
-                        {this.state.spinner?<div class="spinner"></div>:null}
                         </form>
                     </div>
                     </div>

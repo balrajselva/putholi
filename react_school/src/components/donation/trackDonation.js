@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../css/School_registration.css';
-
+import MultipleImage from '../multipleImage/MultipleImage';
 import Tabs from '../Tabs/Tabs';
 
 
@@ -12,7 +12,9 @@ class TrackDonation extends Component {
       estimatedAmt: null,
       requirements: [],
       trackingid: null,
-      balanceamt:null
+      balanceamt:null,
+      imageModal:"none",
+      preImages:[]
    };
    constructor(props) {
       super(props);
@@ -31,20 +33,31 @@ class TrackDonation extends Component {
       fetch(this.props.config+'/donation/' + this.state.trackingid).
          then(response => response.json()).
          then((repos) => {
-            console.log(repos.amt);
             this.setState({
                amt: repos.amt,
                collectedAmt: repos.collectedAmt,
                estimatedAmt: repos.estimatedAmt,
                balanceamt:repos.balanceamt,
                requirements: repos.requirements,
-            }, () => console.log(this.state.amt));
+            }, () => console.log(this.state));
          });
    }
 
+   viewPreImages=(e)=>{
+      let reqId=e.target.value;
+      console.log(reqId)
+      let temp= this.state.requirements.filter( req => req.requirementId+"" === reqId+"" )
+      console.log(temp)
+      this.setState({
+          preImages:temp[0].preImages,
+          imageModal:"block"
+      })
+  }
 
+  closeModel=()=>{
+     this.setState({imageModal:"none"})
+  }
    render() {
-
       return (
          <div className="container">
             <div className="register-box-body">
@@ -66,11 +79,11 @@ class TrackDonation extends Component {
             <section>
                <div className="row">
                   <div className="span8">
-                     <form action="Confirmation_to_add_school.html" className="form-horizontal">
+                     <form action="" className="form-horizontal">
                         <fieldset>
                            <legend>Provide school details along with requirements</legend>
                            <Tabs>
-                              <div label="Actual Requirements">
+                              <div label="School's Actual Requirements">
                                  <div className="row">
                                     <div className="span10">
                                        <div className="control-group">
@@ -86,12 +99,19 @@ class TrackDonation extends Component {
                                              <tbody>
                                                 {(this.state.requirements !== null) ? this.state.requirements.map((value, index) => {
                                                    return <tr>
-                                                      <td>{index}</td>
+                                                      <td>{index+1}</td>
                                                       <td>{this.state.requirements[index].assetName}</td>
                                                       <td>{this.state.requirements[index].quantity}</td>
-                                                      <td>Coming soon</td>
+                                                      <td>
+                                                         <button type='button' value={this.state.requirements[index].requirementId} onClick={(e)=>this.viewPreImages(e)} data-toggle="modal" data-target="#modal-default">Open</button>
+                                                      </td>
+                                                      
                                                    </tr>
+
+                        
                                                 }) : null}
+s
+                                                
                                              </tbody>
                                           </table>
                                        </div>
@@ -123,7 +143,7 @@ class TrackDonation extends Component {
                                                 </tr>
                                                 <tr>
                                                    <td>2</td>
-                                                   <td>Sriram</td>
+                                                   <td>Your Contribution</td>
                                                    <td>{this.state.amt}</td>
                                                    <td>Deposited</td>
                                                    <td>Thanks for your contribution</td>
@@ -158,7 +178,24 @@ class TrackDonation extends Component {
                      </form>
                   </div>
                </div>
+              
             </section>
+            <div style={{ display: this.state.imageModal }}>
+            <div className="modal">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                Pre work images
+                            <button type="button" className="close" aria-label="Close" onClick={this.closeModel}>
+                                <span aria-hidden="true">×</span></button>
+                            </div>
+                            <div className="modal-body">
+                            {this.state.preImages.length>0 ?<MultipleImage images={this.state.preImages}/>:null}
+                        </div>
+                      </div>    
+                    </div>
+                </div>    
+                </div>
          </div>
       )
    }

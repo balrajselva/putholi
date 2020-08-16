@@ -48,6 +48,15 @@ import axios from 'axios';
                     ...this.props
                 };
             }
+            if(this.state.schools[i].schoolStatus==="REVIEWER_DEO_APPROVED"){
+                pageLink="Approve DEO response"
+                newTo = { 
+                    pathname: "/approverReviewDEO", 
+                    school:this.state.schools[i],
+                    currentUser:this.props.location.currentUser,
+                    ...this.props
+                };
+            }
             if(newTo !== null){
                 rowsUpdated=true;
                 rows.push(<tr>

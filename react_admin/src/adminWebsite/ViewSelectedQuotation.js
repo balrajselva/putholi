@@ -114,6 +114,7 @@ class ViewSelectedQuotation extends Component {
     }
     componentDidMount(){
         console.log(this.props.location.school)
+        let project=null;
         for(let i=0;i<this.props.location.school.projects.length;i++){
             if(this.props.location.school.projects[i].status==="PROJECT_CLOSED"){
                 continue
@@ -146,7 +147,6 @@ class ViewSelectedQuotation extends Component {
             document.getElementById("adminComments").setAttribute("disabled",true);
             document.getElementById("approverComments").setAttribute("disabled",true);
         }
-        let project=null;
         for(let i=0;i<this.props.location.school.projects.length;i++){
             if(this.props.location.school.projects[i].status==="PROJECT_CLOSED"){
                 continue;

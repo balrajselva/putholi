@@ -10,15 +10,22 @@ import org.putholi.core.model.Project;
 import org.putholi.core.payload.DonationPayLoad;
 import org.putholi.core.payload.TrackDonationResponsePayLoad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = false)
 public class DonationServiceImpl implements DonationService {
+	@Value("${image.path}")
+	private String imgPath;
 
 	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	
@@ -48,7 +55,7 @@ public class DonationServiceImpl implements DonationService {
 	public TrackDonationResponsePayLoad findMyDonation(String trackingId) {
 		List<TrackDonationDTO> list = donationRepository.findByTrackingId(trackingId);
 		TrackDonationConverter converter = new TrackDonationConverter();
-		return converter.convert(list);
+		return converter.convert(list,imgPath);
 	}
 	
 	private String getTrackingId() {

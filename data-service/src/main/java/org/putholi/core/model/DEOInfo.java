@@ -1,24 +1,27 @@
 package org.putholi.core.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "deo_info")
-@EntityListeners(AuditingEntityListener.class)
 @Proxy(lazy = false)
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class DEOInfo extends AuditableEntity implements java.io.Serializable {
+@ToString
+public class DEOInfo extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deo_info_Id", nullable = false)
+    @Column(name = "deo_info_id", nullable = false)
     private long deoInfoId;
 
     @Column(name="school_id")
@@ -30,8 +33,10 @@ public class DEOInfo extends AuditableEntity implements java.io.Serializable {
     @Column(name="status")
     private String status;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="deo_file_id")
-    @JsonIgnore
-    private Set<DEOfile> deoFile;
+    @OneToMany(fetch = FetchType.EAGER,  mappedBy = "deoInfo" ,cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<DEOInfoImage> deOfiles;
+
+    public DEOInfo(){ }
+
 }
