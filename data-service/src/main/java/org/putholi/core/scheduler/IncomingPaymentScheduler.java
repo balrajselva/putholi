@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Scheduler picks up incoming payment file and reads line by line and updates
- * invoice records to PAYMENT_COMPLETED
+ * invoice records to PAYMENT_COMPLETED/FAILED based on status code
  */
 @Component
 public class IncomingPaymentScheduler {
@@ -40,7 +40,7 @@ public class IncomingPaymentScheduler {
 				String[] strArray = line.split(DELIMIT);
 				if (strArray != null && strArray.length > 0) {
 					log.info("line {}", line);
-					updateInvoiceRecords(strArray[3]);
+					updateInvoiceRecords(strArray[0], strArray[6]);
 				} else {
 					log.error("Payment record is not good enough to process {}", line);
 				}
@@ -51,9 +51,12 @@ public class IncomingPaymentScheduler {
 		log.info("End processing incoming file");
 	}
 
-	private void updateInvoiceRecords(String invoiceId) {
+	private void updateInvoiceRecords(String invoiceId, String statusCode) {
 		try {
-			invoiceService.updateStatus(Long.valueOf(invoiceId), 1l, "PAYMENT_COMPLETED");
+			if ("0".equals(statusCode))
+				invoiceService.updateStatus(Long.valueOf(invoiceId), 1l, "PAYMENT_COMPLETED");
+			else
+				invoiceService.updateStatus(Long.valueOf(invoiceId), 1l, "PAYMENT_FAILED");
 		} catch (Exception e) {
 			log.error("Error updating invoice record in payment scheduler");
 		}
