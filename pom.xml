@@ -47,7 +47,7 @@
         <jackson-mapper-asl.version>1.9.8</jackson-mapper-asl.version>
         <jackson-annotations.version>2.11.0</jackson-annotations.version>
         <jackson-core.version>2.11.0</jackson-core.version>
-        <jackson-databind.version>2.11.0</jackson-databind.version>
+        <jackson-databind.version>2.13.4.1</jackson-databind.version>
         <jackson-dataformat-cbor.version>2.9.6</jackson-dataformat-cbor.version>
         <mysql-connector-java.version>8.0.20</mysql-connector-java.version>
         <ehcache.version>2.9.0</ehcache.version>
