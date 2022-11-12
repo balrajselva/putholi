@@ -58,7 +58,7 @@
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <junit.version>4.13.1</junit.version>
         <jackson-datatype-jsr310.version>2.9.8</jackson-datatype-jsr310.version>
     </properties>
